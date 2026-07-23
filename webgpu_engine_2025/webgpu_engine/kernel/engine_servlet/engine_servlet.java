@@ -45,21 +45,18 @@ public class engine_servlet extends HttpServlet
 			scene.destroy();
 			scene=null;
 		}
-		if((configure_file=get_engine_configure_files(config))!=null) 
-			if(configure_file.configure_files_exist_flag)
-				scene=new system_scene(
-						configure_file.scene_data_path_name,
-						configure_file.scene_temparatory_path_name,
-						configure_file.scene_environment_path_name);
-		    else {
-				debug_information.println("scene configure file NOT exists");
-				System.exit(0);
-		    }
-		else{
+		if((configure_file=get_engine_configure_files(config))==null){
 			debug_information.println("scene configure file is NULL");
 			System.exit(0);
+		}else if(configure_file.configure_files_exist_flag)
+			scene=new system_scene(
+				configure_file.scene_data_path_name,
+				configure_file.scene_temparatory_path_name,
+				configure_file.scene_environment_path_name);
+		else{
+			debug_information.println("scene configure file NOT exists");
+			System.exit(0);
 		}
-		return;	
 	}
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 		throws ServletException,IOException 

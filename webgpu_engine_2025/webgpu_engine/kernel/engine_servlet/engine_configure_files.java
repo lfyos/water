@@ -2,8 +2,8 @@ package engine_servlet;
 
 import java.io.File;
 
-import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
+import kernel_common_class.debug_information;
 
 public class engine_configure_files 
 {
@@ -20,18 +20,20 @@ public class engine_configure_files
 		scene_data_path_name		=file_reader.separator(scene_data_path_name);
 		scene_temparatory_path_name	=file_reader.separator(scene_temparatory_path_name);
 		scene_environment_path_name	=file_reader.separator(scene_environment_path_name);
-    	
-    	debug_information.println("scene_data_path_name:	",scene_data_path_name);
-    	debug_information.println("temparatory_path_name:	",scene_temparatory_path_name);
-    	debug_information.println("environment_path_name:	",scene_environment_path_name);
-    	debug_information.println();
-    	
-    	if(new File(scene_data_path_name).exists())
+ 
+    	if(new File(scene_data_path_name).exists()) {
     		configure_files_exist_flag=true;
-    	else{
-    		debug_information.println("scene_data_path_name is NOT exist: ",scene_data_path_name);
-    		configure_files_exist_flag=false;
+    		return;
     	}
+ 
+    	configure_files_exist_flag=false;
+    	debug_information.println("scene_data_path_name is NOT exist: ",scene_data_path_name);
+    		
+    	debug_information.println("scene_data_path_name:	",scene_data_path_name);
+        debug_information.println("temparatory_path_name:	",scene_temparatory_path_name);
+        debug_information.println("environment_path_name:	",scene_environment_path_name);
+        debug_information.println();
+
 		return;
 	}
 }

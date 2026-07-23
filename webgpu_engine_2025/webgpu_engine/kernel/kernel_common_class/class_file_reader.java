@@ -17,7 +17,6 @@ public class class_file_reader
 			ret_val.lastModified_time=lastModified_time;
 			return ret_val;
 		}catch(Exception e){
-			debug_information.println("class get_reader Exception:",my_class.getName()+"\t"+e.toString());
 			return null;
 		}
 	}
@@ -30,7 +29,6 @@ public class class_file_reader
 			connection.getInputStream().close();
 			return lastModified_time;
 		}catch(Exception e){
-			debug_information.println("class get_last_time Exception:",my_class.getName()+"\t"+e.toString());
 			return 0;
 		}
 	}
