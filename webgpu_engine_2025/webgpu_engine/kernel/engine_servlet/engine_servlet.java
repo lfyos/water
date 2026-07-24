@@ -37,26 +37,25 @@ public class engine_servlet extends HttpServlet
 		return null;
 	};
 	
-	public void init(ServletConfig config) throws ServletException 
-	{
-		engine_configure_files configure_file;
-		
+	public void init(ServletConfig config)
+		throws ServletException 
+	{	
 		if(scene!=null) {
 			scene.destroy();
 			scene=null;
 		}
-		if((configure_file=get_engine_configure_files(config))==null){
+		engine_configure_files configure_file=get_engine_configure_files(config);
+		if(configure_file==null){
 			debug_information.println("scene configure file is NULL");
-			System.exit(0);
-		}else if(configure_file.configure_files_exist_flag)
+			throw new ServletException("scene configure file is NULL");
+		}else if(!(configure_file.configure_files_exist_flag)){
+			debug_information.println("scene configure file NOT exists");
+			throw new ServletException("scene configure file NOT exists");
+		}else
 			scene=new system_scene(
 				configure_file.scene_data_path_name,
 				configure_file.scene_temparatory_path_name,
 				configure_file.scene_environment_path_name);
-		else{
-			debug_information.println("scene configure file NOT exists");
-			System.exit(0);
-		}
 	}
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 		throws ServletException,IOException 
