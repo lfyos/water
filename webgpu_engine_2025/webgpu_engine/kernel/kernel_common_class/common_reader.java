@@ -263,12 +263,6 @@ public class common_reader
 				cw.println(pre_str,str);
 		return this;
 	}
-	public void get_text(String pre_string,common_writer cw)
-	{
-		for(String str;!(eof());)
-			if((str=get_line())!=null)
-				cw.println(pre_string,str);
-	}
 	public String get_string()
 	{
 		String ret_val;

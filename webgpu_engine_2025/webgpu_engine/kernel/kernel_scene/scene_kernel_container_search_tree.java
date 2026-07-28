@@ -209,8 +209,8 @@ public class scene_kernel_container_search_tree
 		my_lock.lock();
 		
 		while(tree.first_touch_time()>=0) {
-			String my_key[]								=tree.get_first_key();
-			ArrayList<scene_kernel_container> my_list	=tree.get_first_value();
+			String my_key[]								=tree.first_key();
+			ArrayList<scene_kernel_container> my_list	=tree.first_value();
 			tree.remove(my_key);
 			for(int i=0,ni=my_list.size();i<ni;i++)
 				my_list.get(i).destroy();

@@ -1,7 +1,7 @@
 package kernel_common_class;
 
-import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class tree_search_container<KEY_TYPE,VALUE_TYPE>
@@ -16,7 +16,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		var my_back	=p.back;
 		
 		if(my_front==null){
-			if(my_back==null) {
+			if(my_back==null){
 				first=null;
 				last=null;
 			}else{
@@ -68,26 +68,49 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		first=null;
 		last=null;
 	}
-
+	public void clear()
+	{
+		for(var p=first;p!=null;) {
+			var pp=p;
+			p=p.back;
+			
+			pp.destroy();
+		}
+		first		=null;
+		last		=null;
+		
+		tree.clear();
+	}
+	public void destroy()
+	{
+		clear();
+		
+		comparator	=null;
+		tree		=null;
+	}
 	public long first_touch_time()
 	{
-		if(first==null)
-			return -1;
-		return first.touch_time;
+		return (first==null)?-1:first.touch_time;
 	}
-	public KEY_TYPE get_first_key()
+	public KEY_TYPE first_key()
 	{
-		if(first==null)
-			return null;
-		else
-			return first.key;
+		return (first==null)?null:first.key;
 	}
-	public ArrayList<VALUE_TYPE> get_first_value()
+	public ArrayList<VALUE_TYPE> first_value()
 	{
-		if(first==null)
-			return null;
-		else
-			return first.list;
+		return (first==null)?null:first.list;
+	}
+	public long last_touch_time()
+	{
+		return (last==null)?-1:last.touch_time;
+	}
+	public KEY_TYPE last_key()
+	{
+		return (last==null)?null:last.key;
+	}
+	public ArrayList<VALUE_TYPE> last_value()
+	{
+		return (last==null)?null:last.list;
 	}
 	public int size()
 	{
@@ -135,7 +158,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		return p.list;
 	}
 	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>
-				get_tree_node_list(boolean do_sort_flag,boolean clear_all_flag)
+				get_tree_node_list(boolean do_sort_flag)
 	{
 		class tree_node_sorter extends sorter <tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>,KEY_TYPE>
 		{
@@ -150,28 +173,14 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			{
 				return comparator.compare(s.key,t);
 			}
-			public tree_node_sorter(boolean do_sort_flag,boolean clear_all_flag)
+			public tree_node_sorter(boolean do_sort_flag)
 			{
 				for(var p=first;p!=null;p=p.back)
 					data_list.add(p);
-				if(clear_all_flag) {
-					for(var p=first;p!=null;) {
-						var q=p;
-						p=p.back;
-						q.front=null;
-						q.back=null;
-					}
-					tree.clear();
-					
-					comparator	=null;
-					tree		=null;
-					first		=null;
-					last		=null;
-				}
 				if(do_sort_flag)
 					do_sort();
 			}
 		};
-		return new tree_node_sorter(do_sort_flag,clear_all_flag).data_list;
+		return new tree_node_sorter(do_sort_flag).data_list;
 	}
 }

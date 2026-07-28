@@ -14,7 +14,7 @@ public class engine_parameter_servlet extends engine_servlet
 	
 	public Class<?> get_engine_configure_class()
 	{
-		return null;
+		return getClass();
 	};
 	public engine_configure_files get_engine_configure_files(ServletConfig config) 
 	{
@@ -70,7 +70,7 @@ public class engine_parameter_servlet extends engine_servlet
 				configure_path_name=engine_class.getProtectionDomain().getCodeSource().getLocation().getPath();
 				configure_path_name=java.net.URLDecoder.decode(configure_path_name,configure_charset_name);
 			}catch(Exception e){
-				debug_information.println("jar_configure_parameter get file_path_name fail: ",
+				debug_information.println("java_configure_parameter get file_path_name fail: ",
 	    				engine_class.getName()+"\t"+configure_file_name);
 				debug_information.println("Exception:	"+e.toString());
 				configure_path_name=null;
@@ -88,7 +88,7 @@ public class engine_parameter_servlet extends engine_servlet
 			    	break;
 				}
     		}
-			debug_information.println("jar_configure_parameter is NOT exist: ",
+			debug_information.println("java_configure_parameter is NOT exist: ",
 	    			engine_class.getName()+"\t"+configure_file_name);
 			
 			common_reader reader=class_file_reader.get_reader(

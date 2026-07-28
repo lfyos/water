@@ -22,8 +22,8 @@ public class client_interface_search_tree
 			create_scene_counter scene_counter)
 	{
 		for(long my_touch_time;(my_touch_time=tree.first_touch_time())>0;){
-			String 							my_client_id_and_user_name[]=tree.get_first_key();
-			ArrayList<client_interface> 	my_client_interface_list	=tree.get_first_value();
+			String 							my_client_id_and_user_name[]=tree.first_key();
+			ArrayList<client_interface> 	my_client_interface_list	=tree.first_value();
 			
 			int size=tree.size();
 			long time_length=nanosecond_timer.absolute_nanoseconds()-my_touch_time;

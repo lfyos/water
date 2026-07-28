@@ -38,7 +38,7 @@ public class render_target_container extends tree_search_container<render_target
 		target_array.clear();
 		target_array=null;
 		
-		var list=get_tree_node_list(false,true);
+		var list=get_tree_node_list(false);
 		for(int i=0,ni=list.size();i<ni;i++) {
 			var p=list.get(i);
 			if(p==null)
@@ -47,6 +47,7 @@ public class render_target_container extends tree_search_container<render_target
 			for(int j=p.list.size()-1;j>=0;j--)
 				p.list.remove(j);
 		}
+		super.destroy();
 	}
 	public render_target_container()
 	{

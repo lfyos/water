@@ -18,7 +18,8 @@ public class file_download_manager
 	private String proxy_server,file_name,undecode_file_name;
 	private String code_str,file_ext,file_date,link_token,info_str;
 	
-	private boolean get_information(client_request_response my_request_response,system_parameter my_system_par)
+	private boolean get_information(
+		client_request_response my_request_response,system_parameter my_system_par)
 	{
 		system_par			=my_system_par;
 		request_response	=my_request_response;

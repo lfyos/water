@@ -26,9 +26,7 @@ public class switch_scene_server
 		client_request_response request_response,system_parameter system_par)
 	{
 		int number;
-		if((number=server_url_list.size())<=0)
-			return null;
-		index_id=(index_id+1)%number;
-		return server_url_list.get(index_id);
+		return	((number=server_url_list.size())<=0)
+				?null:server_url_list.get(index_id=(index_id+1)%number);
 	}
 }

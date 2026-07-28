@@ -47,7 +47,7 @@ public class tree_string_locker_container extends tree_string_search_container<l
 	
 	public void destroy()
 	{
-		for(ArrayList<locker_container> p;(p=get_first_value())!=null;) { 
+		for(ArrayList<locker_container> p;(p=first_value())!=null;) { 
 			for(int index_id;(index_id=p.size())>0;) {
 				locker_container lc=p.get(index_id);
 				p.remove(index_id);
@@ -56,7 +56,7 @@ public class tree_string_locker_container extends tree_string_search_container<l
 				while(lc.locker.getWriteHoldCount()>0)
 					lc.locker.writeLock().unlock();
 			}
-			remove(get_first_key());
+			remove(first_key());
 		}
 	}
 	

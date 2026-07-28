@@ -427,8 +427,8 @@ public class client_interface
 			create_scene_counter scene_counter)
 	{
 		for(long touch_time;(touch_time=tree.first_touch_time())>=0;){
-			String 													my_key[]=tree.get_first_key();
-			ArrayList<scene_kernel_and_client_information_container>my_list	=tree.get_first_value();
+			String 													my_key[]=tree.first_key();
+			ArrayList<scene_kernel_and_client_information_container>my_list	=tree.first_value();
 			if(my_list==null)
 				break;
 			for(scene_kernel_and_client_information_container p;my_list.size()>0;) {
@@ -507,7 +507,7 @@ public class client_interface
 		
 		if(tree!=null) {
 			while(tree.first_touch_time()>0){
-				if((list=tree.remove(tree.get_first_key()))!=null)
+				if((list=tree.remove(tree.first_key()))!=null)
 					while(list.size()>0) {
 						p=list.remove(0);
 						if(p.client_information!=null) {

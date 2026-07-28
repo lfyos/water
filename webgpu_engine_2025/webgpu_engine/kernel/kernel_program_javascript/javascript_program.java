@@ -35,7 +35,7 @@ public class javascript_program
 		default_fetch_parameter_filename+="network_parameter/fetch_parameter.txt";
 		default_fetch_parameter_filename =file_reader.separator(default_fetch_parameter_filename);
 		
-		long t1=last_modified_time=new File(default_fetch_parameter_filename).lastModified();
+		long t1=new File(default_fetch_parameter_filename).lastModified();
 		
 		default_draw_process_bar_filename =system_par.parameter_directory;
 		default_draw_process_bar_filename+="javascript_program/draw_process_bar.txt";
@@ -89,7 +89,7 @@ public class javascript_program
 		
 		request_response.println("	var default_user_process_bar_function=");
 		fr=new file_reader(default_draw_process_bar_filename,system_par.local_data_charset);
-		fr.get_text(request_response,"	");
+		fr.get_text(request_response,"\t");
 		request_response.println();
 		fr.close();
 
@@ -107,7 +107,7 @@ public class javascript_program
 				System.exit(0);
 				continue;
 			}
-			cr.get_text("\t",request_response);
+			cr.get_text(request_response,"\t");
 			cr.close();
 		}
 		
