@@ -13,13 +13,12 @@ import kernel_scene.system_parameter;
 
 public class client_interface_search_tree 
 {
+	private system_parameter system_par;
 	private ReentrantLock client_interface_search_tree_lock;
 	private tree_string_search_container<client_interface> tree;
 	
-	private void process_timeout_client_interface(
-			boolean test_timeout_flag,system_parameter my_system_par,
-			scene_kernel_container_search_tree scene_search_tree,
-			create_scene_counter scene_counter)
+	private void process_timeout_client_interface(boolean test_timeout_flag,
+			scene_kernel_container_search_tree scene_search_tree,create_scene_counter scene_counter)
 	{
 		for(long my_touch_time;(my_touch_time=tree.first_touch_time())>0;){
 			String 							my_client_id_and_user_name[]=tree.first_key();
@@ -29,15 +28,15 @@ public class client_interface_search_tree
 			long time_length=nanosecond_timer.absolute_nanoseconds()-my_touch_time;
 			
 			if(test_timeout_flag)
-				if(size<my_system_par.max_client_interface_number)
-					if(time_length<my_system_par.scene_expire_time_length)
+				if(size<system_par.max_client_interface_number)
+					if(time_length<system_par.scene_expire_time_length)
 						break;
 			debug_information.println("Delete client_interface, client id is ",my_client_id_and_user_name[0]);
 			debug_information.println("Delete client_interface, user name is ",my_client_id_and_user_name[1]);
 			debug_information.print  ("Time interval ",time_length);
-			debug_information.println(", max time interval  ",my_system_par.scene_expire_time_length);
+			debug_information.println(", max time interval  ",system_par.scene_expire_time_length);
 			debug_information.print  ("Still active client_interface number is  ",size-1);
-			debug_information.println("/",my_system_par.max_client_interface_number);
+			debug_information.println("/",system_par.max_client_interface_number);
 			
 			for(int i=my_client_interface_list.size()-1;i>=0;i--) {
 				client_interface p=my_client_interface_list.get(i);
@@ -53,15 +52,14 @@ public class client_interface_search_tree
 		}
 	}
 	public client_interface get_client_interface(client_request_response request_response,
-			scene_kernel_container_search_tree scene_search_tree,
-			create_scene_counter scene_counter,system_parameter my_system_par)
+			scene_kernel_container_search_tree scene_search_tree,create_scene_counter scene_counter)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_search_tree_lock)==null)
 			return null;
 		my_lock.lock();
 		
-		process_timeout_client_interface(true,my_system_par,scene_search_tree,scene_counter);
+		process_timeout_client_interface(true,scene_search_tree,scene_counter);
 		
 		client_interface my_client_interface;
 		ArrayList<client_interface> my_client_interface_list=tree.search(
@@ -72,7 +70,7 @@ public class client_interface_search_tree
 				my_client_interface=my_client_interface_list.get(0);
 			else{
 				my_client_interface=client_interface.create(
-						request_response,my_system_par,scene_search_tree,scene_counter);
+						request_response,system_par,scene_search_tree,scene_counter);
 				if(my_client_interface==null) 
 					debug_information.println("Create client_interface fail");
 				else{
@@ -82,7 +80,7 @@ public class client_interface_search_tree
 			}
 		}else {
 			my_client_interface=client_interface.create(
-					request_response,my_system_par,scene_search_tree,scene_counter);
+					request_response,system_par,scene_search_tree,scene_counter);
 			if(my_client_interface==null) 
 				debug_information.println("Create client_interface fail");
 			else{
@@ -93,17 +91,16 @@ public class client_interface_search_tree
 			debug_information.print  ("Creation request from ",request_response.client_id);
 			debug_information.println(",user name is ",request_response.user_name);
 			debug_information.print  ("Active container_number is ",request_response.container_id);
-			debug_information.println("/",my_system_par.max_client_container_number);
+			debug_information.println("/",system_par.max_client_container_number);
 			debug_information.print  ("Active client_interface number is  ",tree.size());
-			debug_information.println("/",my_system_par.max_client_interface_number);
+			debug_information.println("/",system_par.max_client_interface_number);
 		}
 		
 		my_lock.unlock();
 		
 		return my_client_interface;
 	}
-	public void destroy(system_parameter my_system_par,
-			scene_kernel_container_search_tree scene_search_tree,
+	public void destroy(scene_kernel_container_search_tree scene_search_tree,
 			create_scene_counter scene_counter)
 	{
 		ReentrantLock my_lock;
@@ -111,16 +108,17 @@ public class client_interface_search_tree
 			return;
 		my_lock.lock();
 		
-		process_timeout_client_interface(false,
-			my_system_par,scene_search_tree,scene_counter);
+		process_timeout_client_interface(false,scene_search_tree,scene_counter);
 
-		tree=null;
+		system_par	=null;
+		tree		=null;
 		client_interface_search_tree_lock=null;
 
 		my_lock.unlock();
 	}
-	public client_interface_search_tree()
+	public client_interface_search_tree(system_parameter my_system_par)
 	{
+		system_par=new system_parameter(my_system_par);
 		tree=new tree_string_search_container<client_interface>();
 		client_interface_search_tree_lock=new ReentrantLock();
 	}

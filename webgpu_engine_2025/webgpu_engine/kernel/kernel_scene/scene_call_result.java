@@ -17,12 +17,13 @@ public class scene_call_result
 		last_modified_time			=f.lastModified();
 		already_compress_file_flag	=false;
 
-		if((content_type=system_par.search_file_content_type(original_file_name))!=null){
-			result_file_name=content_type.path_name;
-			last_modified_time=new File(result_file_name).lastModified();
-			if(content_type.zip_link_str.compareTo("gzip")==0)
-				already_compress_file_flag=true;
-		}
+		if((content_type=system_par.search_file_content_type(original_file_name))==null)
+			return;
+		
+		result_file_name=content_type.path_name;
+		last_modified_time=new File(result_file_name).lastModified();
+		if(content_type.zip_link_str.compareTo("gzip")==0)
+			already_compress_file_flag=true;
 	}
 	public scene_call_result(long my_last_modified_time)
 	{

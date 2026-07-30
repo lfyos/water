@@ -14,16 +14,13 @@ public class file_download_manager
 {
 	private system_parameter system_par;
 	private client_request_response request_response;
+	private tree_string_locker_container string_locker_container;
 	
 	private String proxy_server,file_name,undecode_file_name;
 	private String code_str,file_ext,file_date,link_token,info_str;
 	
-	private boolean get_information(
-		client_request_response my_request_response,system_parameter my_system_par)
+	private boolean get_information()
 	{
-		system_par			=my_system_par;
-		request_response	=my_request_response;
-
 		if((proxy_server=request_response.get_parameter("proxy_server"))!=null)
 			if((proxy_server=proxy_server.trim()).length()<=0)
 				proxy_server=null;
@@ -37,50 +34,56 @@ public class file_download_manager
 		info_str			=request_response.get_parameter("proxy_info");
 
 		String str;
-		if((str=info_str)==null)
-			return false;
 		int index_id;
+		
+		if((str=info_str)==null)
+			return true;
 		if((index_id=str.indexOf(";"))<0)
-			return false;
+			return true;
 		code_str=str.substring(0,index_id);
 		
-		if((index_id=(str=str.substring(index_id+1)).indexOf(";"))<0)
-			return false;
+		str=str.substring(index_id+1);
+		if((index_id=str.indexOf(";"))<0)
+			return true;
 		String file_charset;
-		if((file_charset=str.substring(0,index_id).trim()).length()<=0)
+		if((file_charset=str.substring(0,index_id)).length()<=0)
 			file_charset=system_par.network_data_charset;
 		
-		if((index_id=(str=str.substring(index_id+1)).indexOf(";"))<0)
-			return false;
+		str=str.substring(index_id+1);
+		if((index_id=str.indexOf(";"))<0)
+			return true;
 		String file_content;
-		if((file_content=str.substring(0,index_id).trim()).length()<=0)
+		if((file_content=str.substring(0,index_id)).length()<=0)
 			file_content="text/plain";
 
-		if((index_id=(str=str.substring(index_id+1)).indexOf(";"))<0)
-			return false;
+		str=str.substring(index_id+1);
+		if((index_id=str.indexOf(";"))<0)
+			return true;
 		if((file_ext=str.substring(0,index_id)).length()<=0)
 			file_ext="txt";
 		
-		if((index_id=(str=str.substring(index_id+1)).indexOf(";"))<0)
-			return false;
-		if((link_token=str.substring(0,index_id).trim()).length()<=0)
+		str=str.substring(index_id+1);
+		if((index_id=str.indexOf(";"))<0)
+			return true;
+		if((link_token=str.substring(0,index_id)).length()<=0)
 			link_token="false";
 		
-		if((file_date=str.substring(index_id+1).trim()).length()<=0)
+		str=str.substring(index_id+1);
+		if((file_date=str).length()<=0)
 			file_date="0";
 		
 		if((undecode_file_name=request_response.get_parameter("file"))==null) {
 			debug_information.println("Request file is null in downloader,url is ",
 					request_response.implementor.get_url());
 			debug_information.println();
-			return false;
+			return true;
 		}
-		if((undecode_file_name=undecode_file_name.trim()).length()<=0){
+		if(undecode_file_name.length()<=0){
 			undecode_file_name=null;
 			debug_information.println("Request file name is empty in downloader,url is ",
 					request_response.implementor.get_url());
 			debug_information.println();
-			return false;
+			return true;
 		}
 		try{
 			file_name=java.net.URLDecoder.decode(undecode_file_name,code_str);
@@ -93,13 +96,13 @@ public class file_download_manager
 					request_response.implementor.get_url());
 			debug_information.println(e.toString());
 			debug_information.println();
-			return false;
+			return true;
 		}
 		request_response.set_charset_name(file_charset);
 		request_response.set_content_type(file_content);
-		return true;
+		return false;
 	}
-	private scene_call_result download_routine(tree_string_locker_container string_locker_container)
+	private scene_call_result download_routine()
 	{
 		if(proxy_server==null) {
 			File f=new File(system_par.temporary_file_par.temporary_root_directory_name+file_name);
@@ -124,7 +127,7 @@ public class file_download_manager
 		proxy_url+=undecode_file_name+"&proxy_info="+info_str;
 		
 		String my_file_name=directory_name+file_reader.separator(file_name);
-		if(link_token.compareTo("true")==0) {
+		if(link_token.compareTo("true")==0){
 			int index_id;
 			if((index_id=my_file_name.lastIndexOf('.'))<0)
 				my_file_name+="."+file_ext;
@@ -159,25 +162,39 @@ public class file_download_manager
 		return new scene_call_result(f,system_par);
 	}
 	private scene_call_result download_result;
+	
 	private file_download_manager(client_request_response my_request_response,
-			system_parameter my_system_par,tree_string_locker_container string_locker_container)
+			system_parameter my_system_par,tree_string_locker_container my_string_locker_container)
 	{
-		download_result=null;
+		system_par				=my_system_par;
+		request_response		=my_request_response;
+		string_locker_container	=my_string_locker_container;
+		
+		download_result			=null;
+		
+		if(get_information())
+			return;
+		if((download_result=download_routine())==null) 
+			return;
+
 		String request_modified_str;
-		if(get_information(my_request_response,my_system_par))
-			if((download_result=download_routine(string_locker_container))!=null)
-				if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
-					if(download_result.last_modified_time<=system_par.http_date_str.parse(request_modified_str)){
-						request_response.implementor.response_not_modify(
-							"response_not_modify in execute_file_call of client_interface\n file name is "
-									+download_result.original_file_name);
-						download_result=null;
-					}
+		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))==null)
+			return;
+		
+		if(download_result.last_modified_time>system_par.http_date_str.parse(request_modified_str))
+			return;
+	
+		download_result=null;
+		request_response.implementor.response_not_modify(
+			"response_not_modify in execute_file_call of client_interface\n file name is "
+			+download_result.original_file_name);
+		
+		return;
 	}
 	public static scene_call_result download(client_request_response my_request_response,
-			system_parameter my_system_par,tree_string_locker_container string_locker_container)
+			system_parameter my_system_par,tree_string_locker_container my_string_locker_container)
 	{
 		return (new file_download_manager(my_request_response,
-						my_system_par,string_locker_container)).download_result;
+						my_system_par,my_string_locker_container)).download_result;
 	}
 }

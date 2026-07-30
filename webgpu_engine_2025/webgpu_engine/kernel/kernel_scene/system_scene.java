@@ -23,8 +23,7 @@ public class system_scene
 		if(client_interface_search_tree_array!=null) {
 			for(int i=0,ni=client_interface_search_tree_array.length;i<ni;i++)
 				if(client_interface_search_tree_array[i]!=null) {
-					client_interface_search_tree_array[i].destroy(
-							system_par,scene_kernel_search_tree,scene_counter);
+					client_interface_search_tree_array[i].destroy(scene_kernel_search_tree,scene_counter);
 					client_interface_search_tree_array[i]=null;
 				}
 			client_interface_search_tree_array=null;
@@ -56,12 +55,11 @@ public class system_scene
 	{
 		scene_call_result ecr;
 		client_interface client;
-		client_interface_search_tree cist;
-		
+
 		switch(request_response.channel_string){
 		case "switch":
 		{
-			String switch_url=system_par.switch_server.get_switch_server_url(request_response,system_par);
+			String switch_url=system_par.switch_server.get_switch_server_url(request_response);
 			if(switch_url!=null)
 				if((switch_url=switch_url.trim()).length()>0){
 					debug_information.println();
@@ -73,21 +71,18 @@ public class system_scene
 				}
 		}
 		case "javascript":
-			return program_javascript.create(request_response,system_par);
+			return program_javascript.create(request_response);
 		case "buffer":
 			return file_download_manager.download(request_response,system_par,string_locker_container);
 		case "process_bar":
-			cist=client_interface_search_tree_array[request_response.container_id];
-			client=cist.get_client_interface(request_response,
-					scene_kernel_search_tree,scene_counter,system_par);
-			if(client!=null)
-				return client.process_process_bar_system_call(request_response);
+			if((client=client_interface_search_tree_array[request_response.container_id].
+				get_client_interface(request_response,scene_kernel_search_tree,scene_counter))!=null)
+					return client.process_process_bar_system_call(request_response);
 			break;
 		case "creation":
-			cist=client_interface_search_tree_array[request_response.container_id];
-			client=cist.get_client_interface(request_response,
-					scene_kernel_search_tree,scene_counter,system_par);
-			if(client==null){
+			if((client=client_interface_search_tree_array[request_response.container_id].
+				get_client_interface(request_response,scene_kernel_search_tree,scene_counter))==null)
+			{
 				request_response.reset().println("\"get_client_interface fail\"");
 				return new scene_call_result();
 			}
@@ -104,11 +99,9 @@ public class system_scene
 			test_creation_scene_lock_number(-1);
 			return ecr;
 		default:
-			cist=client_interface_search_tree_array[request_response.container_id];
-			client=cist.get_client_interface(request_response,
-					scene_kernel_search_tree,scene_counter,system_par);
-			if(client!=null)
-				return client.execute_system_call(request_response,
+			if((client=client_interface_search_tree_array[request_response.container_id].
+				get_client_interface(request_response,scene_kernel_search_tree,scene_counter))!=null)
+					return client.execute_system_call(request_response,
 							scene_kernel_search_tree,scene_counter,string_locker_container);
 			break;
 		}
@@ -151,7 +144,7 @@ public class system_scene
 		int number=system_par.max_client_container_number;
 		client_interface_search_tree_array=new client_interface_search_tree[number];
 		for(int i=0;i<number;i++)
-			client_interface_search_tree_array[i]=new client_interface_search_tree();
+			client_interface_search_tree_array[i]=new client_interface_search_tree(system_par);
 		
 		scene_kernel_search_tree	=new scene_kernel_container_search_tree();
 		string_locker_container		=new tree_string_locker_container();

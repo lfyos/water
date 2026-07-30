@@ -24,12 +24,11 @@ public class engine_servlet extends HttpServlet
 	}
 	public void destroy() 
     {
-		super.destroy();
-		
 		if(scene!=null) {
 			scene.destroy();
 			scene=null;
 		}
+		super.destroy();
 	}
 	
 	public engine_configure_files get_engine_configure_files(ServletConfig config)

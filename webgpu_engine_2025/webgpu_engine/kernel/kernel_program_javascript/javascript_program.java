@@ -12,9 +12,11 @@ import kernel_network.client_request_response;
 
 public class javascript_program
 {
-	private String default_fetch_parameter_filename,default_draw_process_bar_filename;
+	private system_parameter system_par;
+	private String default_fetch_parameter_filename;
+	private String default_draw_process_bar_filename;
 	private long last_modified_time;
-	
+
 	private static final String javascript_file_name[]=new String[] 
 	{
 		"call_server.js",				"camera.js",						"collector_loader.js",
@@ -28,9 +30,14 @@ public class javascript_program
 	};
 	public void destroy()
 	{
-	}	
-	public javascript_program(system_parameter system_par)
+		system_par=null;
+		default_fetch_parameter_filename=null;
+		default_draw_process_bar_filename=null;
+	}
+	public javascript_program(system_parameter my_system_par)
 	{
+		system_par=new system_parameter(my_system_par);
+		
 		default_fetch_parameter_filename =system_par.parameter_directory;
 		default_fetch_parameter_filename+="network_parameter/fetch_parameter.txt";
 		default_fetch_parameter_filename =file_reader.separator(default_fetch_parameter_filename);
@@ -59,9 +66,7 @@ public class javascript_program
 			cr.close();
 		}
 	}
-	
-	public scene_call_result create(
-			client_request_response request_response,system_parameter system_par)
+	public scene_call_result create(client_request_response request_response)
 	{
 		String function_date;
 		if((function_date=request_response.get_parameter("function_date"))!=null)

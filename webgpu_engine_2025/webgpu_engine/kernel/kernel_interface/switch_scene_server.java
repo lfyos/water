@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
-import kernel_scene.system_parameter;
 
 public class switch_scene_server 
 {
@@ -22,8 +21,7 @@ public class switch_scene_server
 		fr.close();
 		index_id=server_url_list.size()-1;
 	}
-	public String get_switch_server_url(
-		client_request_response request_response,system_parameter system_par)
+	public String get_switch_server_url(client_request_response request_response)
 	{
 		int number;
 		return	((number=server_url_list.size())<=0)
