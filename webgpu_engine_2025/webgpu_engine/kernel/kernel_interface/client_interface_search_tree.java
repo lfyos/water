@@ -68,20 +68,16 @@ public class client_interface_search_tree
 		if(my_client_interface_list!=null){
 			if(my_client_interface_list.size()>0)
 				my_client_interface=my_client_interface_list.get(0);
+			else if((my_client_interface=client_interface.create(request_response,
+					scene_search_tree,scene_counter,system_par))==null)
+				debug_information.println("Create client_interface fail");
 			else{
-				my_client_interface=client_interface.create(
-						request_response,system_par,scene_search_tree,scene_counter);
-				if(my_client_interface==null) 
-					debug_information.println("Create client_interface fail");
-				else{
-					debug_information.println("Create client_interface success");
-					my_client_interface_list.add(my_client_interface);
-				}
+				debug_information.println("Create client_interface success");
+				my_client_interface_list.add(my_client_interface);
 			}
-		}else {
-			my_client_interface=client_interface.create(
-					request_response,system_par,scene_search_tree,scene_counter);
-			if(my_client_interface==null) 
+		}else{
+			if((my_client_interface=client_interface.create(request_response,
+					scene_search_tree,scene_counter,system_par))==null) 
 				debug_information.println("Create client_interface fail");
 			else{
 				debug_information.println("Create client_interface success");
