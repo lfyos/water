@@ -42,8 +42,7 @@ public class dispatch_request_main
 		case "part":
 			return dispatch_part_request.do_dispatch(sk,ci);
 		case "component":
-			return dispatch_component_request.do_dispatch(
-					delay_time_length,sk,ci,string_locker_container);
+			return dispatch_component_request.do_dispatch(delay_time_length,sk,ci,string_locker_container);
 		case "modifier":
 			return dispatch_modifier_request.do_dispatch(sk, ci);
 		case "collector":

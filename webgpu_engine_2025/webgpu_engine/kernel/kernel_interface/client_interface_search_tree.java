@@ -41,7 +41,7 @@ public class client_interface_search_tree
 			for(int i=my_client_interface_list.size()-1;i>=0;i--) {
 				client_interface p=my_client_interface_list.get(i);
 				if(test_timeout_flag)
-					if(p.get_client_interface_in_processing_number()>0) {
+					if(p.operate_client_interface_in_processing_number(0)>0) {
 						tree.search(my_client_id_and_user_name);
 						return;
 					}
