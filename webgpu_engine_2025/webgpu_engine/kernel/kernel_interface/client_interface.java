@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-
 import kernel_scene.scene_kernel;
 import kernel_security.delay_manager;
 import kernel_scene.system_parameter;
@@ -28,10 +27,11 @@ public class client_interface
 	private volatile int client_interface_in_processing_number;
 	synchronized public int operate_client_interface_in_processing_number(int modify_number)
 	{
-		return (client_interface_in_processing_number+=modify_number);
+		client_interface_in_processing_number+=modify_number;
+		return client_interface_in_processing_number;
 	}
 	
-	private tree_string_search_container<scene_kernel_and_client_information_container> tree;
+	private tree_string_search_container<scene_kernel_and_client_information_container>tree;
 
 	private system_parameter system_par;
 	private client_process_bar_container process_bar_cont;
@@ -42,6 +42,18 @@ public class client_interface
 
 	private volatile ReentrantLock client_interface_lock;
 	
+	private client_process_bar get_process_bar_routine(client_request_response request_response)
+	{
+		String str;
+		int process_bar_id=-1;
+		if((str=request_response.get_parameter("process_bar"))!=null)
+			try{
+				process_bar_id=Integer.parseInt(str);
+			}catch(Exception e) {
+				process_bar_id=-1;
+			}
+		return process_bar_cont.get_process_bar(process_bar_id);
+	}
 	private scene_call_result create_scene_routine(long delay_time_length,
 			scene_kernel_container_search_tree scene_kernel_search_tree,ReentrantLock my_lock,
 			client_request_response request_response,create_scene_counter scene_counter,
@@ -375,18 +387,6 @@ public class client_interface
 			}
 		return new scene_call_result();
 	}
-	private client_process_bar get_process_bar_routine(client_request_response request_response)
-	{
-		String str;
-		int process_bar_id=-1;
-		if((str=request_response.get_parameter("process_bar"))!=null)
-			try{
-				process_bar_id=Integer.parseInt(str);
-			}catch(Exception e) {
-				process_bar_id=-1;
-			}
-		return process_bar_cont.get_process_bar(process_bar_id);
-	}
 	public void set_process_bar(
 			client_request_response request_response,boolean reset_time_flag,
 			String my_process_title,String my_ex_process_title,
@@ -426,12 +426,14 @@ public class client_interface
 			scene_kernel_container_search_tree scene_kernel_search_tree,
 			create_scene_counter scene_counter)
 	{
-		for(ArrayList<scene_kernel_and_client_information_container>my_list;tree.size()>0;){
+		while(tree.size()>0){
+			ArrayList<scene_kernel_and_client_information_container>my_list;
+					my_list		=tree.first_value();
 			String	my_key[]	=tree.first_key();
 			long	touch_time	=tree.first_touch_time();
-			if((my_list=tree.first_value())!=null){
-				for(scene_kernel_and_client_information_container p;my_list.size()>0;){
-					p=my_list.get(0);
+			if(my_list!=null){
+				while(my_list.size()>0){
+					scene_kernel_and_client_information_container p=my_list.get(0);
 					if(		  (p.update_sk_and_ci_processing_number(0)>0)
 							||(p.modify_kernel_and_client_information_lock_number(0)>0))
 					{
@@ -462,11 +464,10 @@ public class client_interface
 					if(p.scene_kernel_cont!=null) {
 						scene_kernel sk;
 						if((sk=p.scene_kernel_cont.sk)!=null)
-							if(sk.component_cont!=null)
-								if(sk.component_cont.root_component!=null){
-									statistics_user.user_scene_kernel_number--;
-									statistics_user.user_scene_component_number-=sk.component_cont.component_number;
-								}
+							if(sk.component_cont!=null){
+								statistics_user.user_scene_kernel_number--;
+								statistics_user.user_scene_component_number-=sk.component_cont.component_number;
+							}
 					}
 					debug_information.println("Execute destroy_ek_ci_node");
 					debug_information.print  ("user_scene_kernel_number:",statistics_user.user_scene_kernel_number);
@@ -502,21 +503,23 @@ public class client_interface
 			create_scene_counter scene_counter)
 	{
 		if(tree!=null) {
-			ArrayList<scene_kernel_and_client_information_container> list;
-			while((list=tree.remove(tree.first_key()))!=null) {
-				while(list.size()>0){
-					scene_kernel_and_client_information_container p=list.remove(0);
-					if(p.client_information!=null) {
-						p.client_information.destroy();
-						p.client_information=null;
-					}
-					if(p.scene_kernel_cont!=null) {
-						if(p.scene_kernel_cont.sk!=null)
-							scene_kernel_search_tree.destroy_scene_kernel_container(
-								p.scene_kernel_cont.sk.scene_name,
-								p.scene_kernel_cont.sk.link_name,
-								scene_counter);
-						p.scene_kernel_cont=null;
+			while(tree.size()>0) {
+				ArrayList<scene_kernel_and_client_information_container> list;
+				if((list=tree.remove(tree.first_key()))!=null){
+					while(list.size()>0){
+						scene_kernel_and_client_information_container p=list.remove(0);
+						if(p.client_information!=null){
+							p.client_information.destroy();
+							p.client_information=null;
+						}
+						if(p.scene_kernel_cont!=null) {
+							if(p.scene_kernel_cont.sk!=null)
+								scene_kernel_search_tree.destroy_scene_kernel_container(
+									p.scene_kernel_cont.sk.scene_name,
+									p.scene_kernel_cont.sk.link_name,
+									scene_counter);
+							p.scene_kernel_cont=null;
+						}
 					}
 				}
 			}

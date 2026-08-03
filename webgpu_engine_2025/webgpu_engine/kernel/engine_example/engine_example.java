@@ -1,24 +1,22 @@
 package engine_example;
 
-import engine_servlet.engine_parameter_servlet;
+import engine_servlet.engine_servlet;
 
 @jakarta.servlet.annotation.WebServlet(	
 	initParams= {
 		@jakarta.servlet.annotation.WebInitParam(
-			name	=	"lfy_scene_servlet_type",
-//			value	=	"servlet_initialization_parameter"
-//			value	=	"environment_variable_parameter"
-//			value	=	"webserver_configure_parameter"
-			value	=	"java_configure_parameter"
+			name	=	"lfy_init_scene_configure_class_name",
+			value	=	"engine_example.engine_example"
 		),
 		@jakarta.servlet.annotation.WebInitParam(
-			name	=	"lfy_scene_configure_file",
+			name	=	"lfy_init_scene_configure_file_name",
 			value	=	"configure.txt"
 		),
 		@jakarta.servlet.annotation.WebInitParam(
-			name	=	"lfy_scene_configure_charset",
+			name	=	"lfy_init_scene_configure_charset_name",
 			value	=	"UTF-8"
-		),
+		),	
+			
 		@jakarta.servlet.annotation.WebInitParam(
 			name	=	"lfy_data_configure_file",
 			value	=	"G:/water_all/data/configure.txt"
@@ -30,19 +28,21 @@ import engine_servlet.engine_parameter_servlet;
 		@jakarta.servlet.annotation.WebInitParam(
 			name	=	"lfy_environment_configure_file",
 			value	=	"G:/water_all/environment.txt"
-		)
+		)	
 	},
 	asyncSupported = true,
 	urlPatterns = { 
 		"/water" 
 	}
 )
-public class engine_example extends engine_parameter_servlet
+public class engine_example extends engine_servlet
 {
 	private static final long serialVersionUID = 1L;
 	
-	public Class<?> get_engine_configure_class()
+	public engine_example()
 	{
-		return getClass();
-	};
+		super(	"lfy_init_scene_configure_class_name",
+				"lfy_init_scene_configure_file_name",
+				"lfy_init_scene_configure_charset_name");
+	}
 }

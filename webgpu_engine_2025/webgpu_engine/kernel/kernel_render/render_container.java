@@ -5,21 +5,21 @@ import java.util.ArrayList;
 
 import kernel_part.part;
 import kernel_part.part_rude;
-import kernel_part.permanent_part_id_encoder;
-import kernel_scene.part_package;
-import kernel_scene.scene_parameter;
-import kernel_scene.system_parameter;
 import kernel_part.part_loader;
+import kernel_scene.part_package;
 import kernel_transformation.box;
 import kernel_part.part_parameter;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_transformation.location;
 import kernel_file_manager.file_reader;
 import kernel_part.part_loader_container;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
-import kernel_common_class.tree_string_locker_container;
+import kernel_part.permanent_part_id_encoder;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
+import kernel_common_class.tree_string_locker_container;
 import kernel_component.component_load_source_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
