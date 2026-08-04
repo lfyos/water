@@ -1,4 +1,3 @@
-/*	scene_data_path_name			*/		G:\water_all\data\configure.txt
-/*	scene_temparatory_path_name		*/		G:\temp\configure.txt
-/*	scene_environment_path_name		*/		G:\water_all\environment.txt
-		
+G:\water_all\data\configure.txt
+G:\temp\configure.txt
+G:\water_all\environment.txt

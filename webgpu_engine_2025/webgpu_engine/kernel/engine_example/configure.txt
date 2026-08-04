@@ -6,13 +6,10 @@ G:/water_all/environment.txt
 */
 
 
-
 servlet_initialization_parameter
 lfy_data_configure_file
 lfy_temparatory_configure_file
 lfy_environment_configure_file
-
-
 
 
 /*
@@ -21,7 +18,6 @@ lfy_data_configure_file
 lfy_temparatory_configure_file
 lfy_environment_configure_file
 */
-
 
 
 /*

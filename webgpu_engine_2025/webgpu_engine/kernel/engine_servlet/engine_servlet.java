@@ -33,12 +33,6 @@ public class engine_servlet extends HttpServlet
 		init_scene_configure_class_name		=my_init_scene_configure_class_name;
 		init_scene_configure_file_name		=my_init_scene_configure_file_name;
 		init_scene_configure_charset_name	=my_init_scene_configure_charset_name;
-		
-		debug_information.println();
-    	debug_information.println("init_scene_configure_class_name:		",init_scene_configure_class_name);
-        debug_information.println("init_scene_configure_file_name:		",init_scene_configure_file_name);
-        debug_information.println("init_scene_configure_charset_name:	",init_scene_configure_charset_name);
-        debug_information.println();
 	}
 	public void destroy() 
     {
@@ -105,9 +99,11 @@ public class engine_servlet extends HttpServlet
 	}
 	private String[] get_engine_configure_files(ServletConfig config)
 	{
-		String scene_configure_class_name	=config.getInitParameter(init_scene_configure_class_name);
-		String scene_configure_file_name	=config.getInitParameter(init_scene_configure_file_name);
-		String scene_configure_charset_name	=config.getInitParameter(init_scene_configure_charset_name);
+		String jar_configure_files[]=null,class_configure_files[]=null;
+		
+		String scene_configure_class_name	=init_scene_configure_class_name;
+		String scene_configure_file_name	=init_scene_configure_file_name;
+		String scene_configure_charset_name	=init_scene_configure_charset_name;
 		
 		debug_information.println();
     	debug_information.println("scene_configure_class_name:		",	scene_configure_class_name);
@@ -136,7 +132,10 @@ public class engine_servlet extends HttpServlet
 			debug_information.println("Exception:	"+e.toString());
 			configure_path_name=null;
 		}
-		if(configure_path_name!=null) {
+		if(configure_path_name==null) 
+			debug_information.println(
+				"get_engine_configure_files() get jar path name is null: ",scene_configure_class_name);
+		else{
 			configure_path_name=file_reader.separator(configure_path_name);
 			int index_id=configure_path_name.lastIndexOf(File.separatorChar);
 			if(index_id>=0)
@@ -145,43 +144,51 @@ public class engine_servlet extends HttpServlet
 				configure_path_name="";
 			configure_path_name+=file_reader.separator(scene_configure_file_name);
 			
-			if(new File(configure_path_name).exists()){
+			if(!(new File(configure_path_name).exists()))
+				debug_information.println(
+					"get_engine_configure_files() configure_path_name NOT exist: ",configure_path_name);
+			else{
 				file_reader fr=new file_reader(configure_path_name,scene_configure_charset_name);
-				String configure_files[]=read_configure_files(fr,config);
+				jar_configure_files=read_configure_files(fr,config);
 		    	fr.close();
-		    	if(configure_files!=null){
-		    		String scene_data_path_name=configure_files[0];
-		    		if(new File(scene_data_path_name).exists())
-		    			return configure_files;
+		    	if(jar_configure_files==null)
+		    		debug_information.println(
+							"get_engine_configure_files() jar_configure_files==null: ",configure_path_name);
+		    	else{
+		    		String scene_data_path_name=jar_configure_files[0];
+		    		if(!(new File(scene_data_path_name).exists())) {
+		    			jar_configure_files=null;
+		    			debug_information.println(
+							"get_engine_configure_files() scene_data_path_name NOT exist: ",scene_data_path_name);
+		    		}
 		    	}
 			}
 		}
-		debug_information.println("get_engine_configure_files() jar configure file is NOT exist: ",
-    			scene_configure_class_name+"\t"+scene_configure_file_name);
-		
+
 		common_reader reader=class_file_reader.get_reader(
 				scene_configure_file_name,engine_class,scene_configure_charset_name);
 		
-		if(reader==null) {
+		if(reader==null)
 			debug_information.println("get_engine_configure_files() class configure file is NOT exist: ",
 	    		scene_configure_class_name+"\t"+scene_configure_file_name);
-			return null;
+		else{
+			class_configure_files=read_configure_files(reader,config);
+		    reader.close();
+		    if(class_configure_files==null)
+			    debug_information.println("get_engine_configure_files() return value is null: ",
+			    	scene_configure_class_name+"\t"+scene_configure_file_name);
+		    else{
+		    	String scene_data_path_name=class_configure_files[0];
+				if(!(new File(scene_data_path_name).exists())) {
+					class_configure_files=null;
+					debug_information.println("get_engine_configure_files() file NOT exist: ",
+					    	scene_configure_class_name+"\t"+scene_configure_file_name+"\t"+scene_data_path_name);
+				}
+		    }
 		}
-		String configure_files[]=read_configure_files(reader,config);
-	    reader.close();
-	    
-	    if(configure_files==null) {
-		    debug_information.println("get_engine_configure_files() return value is null: ",
-		    	scene_configure_class_name+"\t"+scene_configure_file_name);
-		    return null;
-	    }
-		String scene_data_path_name=configure_files[0];
-		if(new File(scene_data_path_name).exists()) 
-			return configure_files;
 		
-		debug_information.println("get_engine_configure_files() file NOT exist: ",
-		    	scene_configure_class_name+"\t"+scene_configure_file_name+"\t"+scene_data_path_name);
-		   return null;
+		return 	(jar_configure_files!=null)?jar_configure_files:
+				(class_configure_files!=null)?class_configure_files:null;
 	}
 	
 	public void init(ServletConfig config)
