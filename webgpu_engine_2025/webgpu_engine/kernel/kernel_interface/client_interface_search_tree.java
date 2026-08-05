@@ -5,6 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.debug_information;
 import kernel_common_class.nanosecond_timer;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.tree_string_search_container;
 import kernel_network.client_request_response;
 import kernel_scene.create_scene_counter;
@@ -17,8 +18,7 @@ public class client_interface_search_tree
 	private ReentrantLock client_interface_search_tree_lock;
 	private tree_string_search_container<client_interface> tree;
 	
-	private void process_timeout_client_interface(boolean test_timeout_flag,
-			scene_kernel_container_search_tree scene_search_tree,create_scene_counter scene_counter)
+	private void process_timeout_client_interface(boolean test_timeout_flag,create_scene_counter scene_counter)
 	{
 		for(long my_touch_time;(my_touch_time=tree.first_touch_time())>0;){
 			String 							my_client_id_and_user_name[]=tree.first_key();
@@ -46,20 +46,21 @@ public class client_interface_search_tree
 						return;
 					}
 				my_client_interface_list.remove(i);
-				p.destroy(scene_search_tree,scene_counter);
+				p.destroy();
 			}
 			tree.remove(my_client_id_and_user_name);
 		}
 	}
 	public client_interface get_client_interface(client_request_response request_response,
-			scene_kernel_container_search_tree scene_search_tree,create_scene_counter scene_counter)
+			scene_kernel_container_search_tree scene_search_tree,
+			tree_string_locker_container string_locker_container,create_scene_counter scene_counter)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_search_tree_lock)==null)
 			return null;
 		my_lock.lock();
 		
-		process_timeout_client_interface(true,scene_search_tree,scene_counter);
+		process_timeout_client_interface(true,scene_counter);
 		
 		client_interface my_client_interface;
 		ArrayList<client_interface> my_client_interface_list=tree.search(
@@ -69,7 +70,7 @@ public class client_interface_search_tree
 			if(my_client_interface_list.size()>0)
 				my_client_interface=my_client_interface_list.get(0);
 			else if((my_client_interface=client_interface.create(request_response,
-					scene_search_tree,scene_counter,system_par))==null)
+					scene_search_tree,string_locker_container,scene_counter,system_par))==null)
 				debug_information.println("Create client_interface fail");
 			else{
 				debug_information.println("Create client_interface success");
@@ -77,7 +78,7 @@ public class client_interface_search_tree
 			}
 		}else{
 			if((my_client_interface=client_interface.create(request_response,
-					scene_search_tree,scene_counter,system_par))==null) 
+					scene_search_tree,string_locker_container,scene_counter,system_par))==null) 
 				debug_information.println("Create client_interface fail");
 			else{
 				debug_information.println("Create client_interface success");
@@ -96,15 +97,14 @@ public class client_interface_search_tree
 		
 		return my_client_interface;
 	}
-	public void destroy(scene_kernel_container_search_tree scene_search_tree,
-			create_scene_counter scene_counter)
+	public void destroy(create_scene_counter scene_counter)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_search_tree_lock)==null)
 			return;
 		my_lock.lock();
 		
-		process_timeout_client_interface(false,scene_search_tree,scene_counter);
+		process_timeout_client_interface(false,scene_counter);
 
 		system_par	=null;
 		tree		=null;

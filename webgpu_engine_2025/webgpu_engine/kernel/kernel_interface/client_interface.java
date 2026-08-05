@@ -32,6 +32,9 @@ public class client_interface
 	}
 	
 	private tree_string_search_container<scene_kernel_and_client_information_container>tree;
+	private scene_kernel_container_search_tree scene_kernel_search_tree;
+	private tree_string_locker_container string_locker_container;
+	private create_scene_counter scene_counter;
 
 	private system_parameter system_par;
 	private client_process_bar_container process_bar_cont;
@@ -55,9 +58,7 @@ public class client_interface
 		return process_bar_cont.get_process_bar(process_bar_id);
 	}
 	private scene_call_result create_scene_routine(long delay_time_length,
-			scene_kernel_container_search_tree scene_kernel_search_tree,ReentrantLock my_lock,
-			client_request_response request_response,create_scene_counter scene_counter,
-			tree_string_locker_container string_locker_container)
+			ReentrantLock my_lock,client_request_response request_response)
 	{
 		if(statistics_user.user_scene_kernel_number>=statistics_user.user_max_scene_kernel_number) {
 			debug_information.print  ("client id:",request_response.client_id);
@@ -84,9 +85,8 @@ public class client_interface
 		my_lock.unlock();
 		
 		try{
-			created_scene_kernel_only=scene_kernel_search_tree.create_scene_kernel_container(
-				request_response,string_locker_container,
-				client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
+			created_scene_kernel_only=scene_kernel_search_tree.create_scene_kernel_container(request_response,
+				string_locker_container,client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
 		}catch(Exception e) {
 			e.printStackTrace();
 
@@ -155,9 +155,7 @@ public class client_interface
 		return ecr;
 	}
 	private scene_call_result create_scene(long delay_time_length,
-			scene_kernel_container_search_tree scene_kernel_search_tree,ReentrantLock my_lock,
-			client_request_response request_response,create_scene_counter scene_counter,
-			tree_string_locker_container string_locker_container)
+			ReentrantLock my_lock,client_request_response request_response)
 	{
 		debug_information.println();
 		debug_information.println("\n#####################################################################################################");
@@ -185,9 +183,7 @@ public class client_interface
 		debug_information.println("parameter_directory	:	",				system_par.parameter_directory);
 		debug_information.println("temporary_root_directory_name	:	",	system_par.temporary_file_par.temporary_root_directory_name);
 		
-		scene_call_result ret_val=create_scene_routine(
-				delay_time_length,scene_kernel_search_tree,my_lock,
-				request_response,scene_counter,string_locker_container);
+		scene_call_result ret_val=create_scene_routine(delay_time_length,my_lock,request_response);
 		
 		now = Calendar.getInstance();  
 		long end_time=new Date().getTime();
@@ -209,10 +205,7 @@ public class client_interface
 	}
 	
 	private scene_call_result execute_system_call_routine(
-			client_request_response request_response,
-			tree_string_locker_container string_locker_container,
-			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter,ReentrantLock my_lock)
+			client_request_response request_response,ReentrantLock my_lock)
 	{
 		long delay_time_length;
 		if((delay_time_length=manager_delay.process_delay_time_length())<0){
@@ -267,11 +260,7 @@ public class client_interface
 		
 		return ecr;
 	}
-	public scene_call_result execute_system_call(
-			client_request_response request_response,
-			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter,
-			tree_string_locker_container string_locker_container)
+	public scene_call_result execute_system_call(client_request_response request_response)
 	{
 		ReentrantLock my_lock;
 		
@@ -293,8 +282,7 @@ public class client_interface
 			break;
 		default:
 			try{
-				ret_val=execute_system_call_routine(request_response,
-					string_locker_container,scene_kernel_search_tree,scene_counter,my_lock);
+				ret_val=execute_system_call_routine(request_response,my_lock);
 			}catch(Exception e) {
 				e.printStackTrace();
 				ret_val=null;
@@ -303,18 +291,14 @@ public class client_interface
 			}
 			break;
 		}
-		process_timeout(request_response,scene_kernel_search_tree,scene_counter);
+		process_timeout(request_response);
 		
 		operate_client_interface_in_processing_number(-1);
 		my_lock.unlock();
 		
 		return ret_val;
 	}
-	public scene_call_result execute_create_call(
-			client_request_response request_response,
-			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter,
-			tree_string_locker_container string_locker_container)
+	public scene_call_result execute_create_call(client_request_response request_response)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_lock)==null)
@@ -330,23 +314,21 @@ public class client_interface
 			if((delay_time_length=manager_delay.process_delay_time_length())<0)
 				debug_information.println("TIME OUT FOUND,Client ID is ",request_response.client_id);
 			else
-				ret_val=create_scene(delay_time_length,scene_kernel_search_tree,
-						my_lock,request_response,scene_counter,string_locker_container);
+				ret_val=create_scene(delay_time_length,my_lock,request_response);
 		}catch(Exception e){
 			e.printStackTrace();
 			ret_val=null;
 			debug_information.println("execute_create_call of client_interface_base fail");
 			debug_information.println(e.toString());
 		}
-		process_timeout(request_response,scene_kernel_search_tree,scene_counter);
+		process_timeout(request_response);
 		
 		operate_client_interface_in_processing_number(-1);
 		my_lock.unlock();
 
 		return ret_val;
 	}
-	private scene_call_result process_process_bar_system_call_routine(
-					client_request_response request_response)
+	private scene_call_result process_process_bar_system_call_routine(client_request_response request_response)
 	{
 		String str;
 		client_process_bar process_bar;
@@ -387,10 +369,8 @@ public class client_interface
 			}
 		return new scene_call_result();
 	}
-	public void set_process_bar(
-			client_request_response request_response,boolean reset_time_flag,
-			String my_process_title,String my_ex_process_title,
-			long my_current_process,long my_max_process)
+	public void set_process_bar(client_request_response request_response,boolean reset_time_flag,
+			String my_process_title,String my_ex_process_title,long my_current_process,long my_max_process)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_lock)==null)
@@ -422,9 +402,7 @@ public class client_interface
 
 		return ret_val;
 	}
-	private void process_timeout(client_request_response request_response,
-			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter)
+	private void process_timeout(client_request_response request_response)
 	{
 		while(tree.size()>0){
 			ArrayList<scene_kernel_and_client_information_container>my_list;
@@ -498,9 +476,7 @@ public class client_interface
 		}
 	}
 	
-	private void destroy_routine(
-			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter)
+	private void destroy_routine()
 	{
 		if(tree!=null) {
 			while(tree.size()>0) {
@@ -525,6 +501,13 @@ public class client_interface
 			}
 			tree=null;
 		}
+		if(scene_kernel_search_tree!=null)
+			scene_kernel_search_tree=null;
+		if(string_locker_container!=null)
+			string_locker_container=null;
+		if(scene_counter!=null)
+			scene_counter=null;
+		
 		if(system_par!=null)
 			system_par=null;
 		if(manager_delay!=null)
@@ -544,9 +527,7 @@ public class client_interface
 		if(statistics_user!=null)
 			statistics_user=null;			
 	}
-	public void destroy(
-			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter)
+	public void destroy()
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_lock)==null)
@@ -556,7 +537,7 @@ public class client_interface
 		operate_client_interface_in_processing_number(1);
 		
 		try{
-			destroy_routine(scene_kernel_search_tree,scene_counter);
+			destroy_routine();
 		}catch(Exception e){
 			e.printStackTrace();
 			debug_information.println("destroy of client_interface_base fail:\t",e.toString());
@@ -566,11 +547,17 @@ public class client_interface
 		my_lock.unlock();
 	}
 	
-	private client_interface(client_request_response request_response,system_parameter my_system_par)
+	private client_interface(
+			client_request_response request_response,system_parameter my_system_par,
+			scene_kernel_container_search_tree my_scene_kernel_search_tree,
+			tree_string_locker_container my_string_locker_container,create_scene_counter my_scene_counter)
 	{
 		client_interface_in_processing_number=0;
 		
 		tree=new tree_string_search_container<scene_kernel_and_client_information_container>();
+		scene_kernel_search_tree=my_scene_kernel_search_tree;
+		string_locker_container=my_string_locker_container;
+		scene_counter=my_scene_counter;
 		
 		system_par	 	=new system_parameter(my_system_par);
 		process_bar_cont=new client_process_bar_container(system_par.scene_expire_time_length);
@@ -644,16 +631,17 @@ public class client_interface
 			break;
 		}while(true);
 	}
-	public static client_interface create(
-		client_request_response request_response,
-		scene_kernel_container_search_tree scene_kernel_search_tree,
-		create_scene_counter scene_counter,system_parameter my_system_par)
+	public static client_interface create(client_request_response request_response,
+		scene_kernel_container_search_tree my_scene_kernel_search_tree,
+		tree_string_locker_container my_string_locker_container,
+		create_scene_counter my_scene_counter,system_parameter my_system_par)
 	{
-		client_interface ret_val=new client_interface(request_response,my_system_par);
+		client_interface ret_val=new client_interface(request_response,my_system_par,
+				my_scene_kernel_search_tree,my_string_locker_container,my_scene_counter);
 		if(ret_val.client_scene_file_name!=null)
 			if(ret_val.client_scene_file_charset!=null)
 				return ret_val;
-		ret_val.destroy(scene_kernel_search_tree,scene_counter);
+		ret_val.destroy();
 		return null;
 	}
 }

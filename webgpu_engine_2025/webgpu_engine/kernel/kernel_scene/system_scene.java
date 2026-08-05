@@ -23,7 +23,7 @@ public class system_scene
 		if(client_interface_search_tree_array!=null) {
 			for(int i=0,ni=client_interface_search_tree_array.length;i<ni;i++)
 				if(client_interface_search_tree_array[i]!=null) {
-					client_interface_search_tree_array[i].destroy(scene_kernel_search_tree,scene_counter);
+					client_interface_search_tree_array[i].destroy(scene_counter);
 					client_interface_search_tree_array[i]=null;
 				}
 			client_interface_search_tree_array=null;
@@ -76,12 +76,14 @@ public class system_scene
 			return file_download_manager.download(request_response,system_par,string_locker_container);
 		case "process_bar":
 			if((client=client_interface_search_tree_array[request_response.container_id].
-				get_client_interface(request_response,scene_kernel_search_tree,scene_counter))!=null)
-					return client.process_process_bar_system_call(request_response);
+				get_client_interface(request_response,
+					scene_kernel_search_tree,string_locker_container,scene_counter))!=null)
+						return client.process_process_bar_system_call(request_response);
 			break;
 		case "creation":
 			if((client=client_interface_search_tree_array[request_response.container_id].
-				get_client_interface(request_response,scene_kernel_search_tree,scene_counter))==null)
+				get_client_interface(request_response,
+						scene_kernel_search_tree,string_locker_container,scene_counter))==null)
 			{
 				request_response.reset().println("\"get_client_interface fail\"");
 				return new scene_call_result();
@@ -90,9 +92,7 @@ public class system_scene
 				request_response.reset().println("[]");
 				client.set_process_bar(request_response,true,"wait_for_other_exit","",1,2);
 				ecr=new scene_call_result();
-			}else if((ecr=client.execute_create_call(request_response,
-				scene_kernel_search_tree,scene_counter,string_locker_container))==null)
-			{
+			}else if((ecr=client.execute_create_call(request_response))==null){
 				request_response.reset().println("\"execute_create_call fail\"");
 				ecr=new scene_call_result();
 			}
@@ -100,9 +100,9 @@ public class system_scene
 			return ecr;
 		default:
 			if((client=client_interface_search_tree_array[request_response.container_id].
-				get_client_interface(request_response,scene_kernel_search_tree,scene_counter))!=null)
-					return client.execute_system_call(request_response,
-							scene_kernel_search_tree,scene_counter,string_locker_container);
+				get_client_interface(request_response,
+					scene_kernel_search_tree,string_locker_container,scene_counter))!=null)
+						return client.execute_system_call(request_response);
 			break;
 		}
 		return null;
