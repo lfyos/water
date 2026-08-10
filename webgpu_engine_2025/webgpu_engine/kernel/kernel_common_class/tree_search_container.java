@@ -1,12 +1,12 @@
 package kernel_common_class;
 
 import java.util.TreeMap;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 {
-	private Comparator<KEY_TYPE> comparator;
 	private TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>> tree;
 	private tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> first,last;
 	
@@ -63,7 +63,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	}
 	public tree_search_container(Comparator<KEY_TYPE> my_comparator)
 	{
-		comparator=my_comparator;
 		tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>(my_comparator);
 		first=null;
 		last=null;
@@ -80,13 +79,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		last		=null;
 		
 		tree.clear();
-	}
-	public void destroy()
-	{
-		clear();
-		
-		comparator	=null;
-		tree		=null;
 	}
 	public long first_touch_time()
 	{
@@ -157,30 +149,12 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		p.touch_time=0;
 		return p.list;
 	}
-	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>
-				get_tree_node_list(boolean do_sort_flag)
+	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>get_tree_node_list()
 	{
-		class tree_node_sorter extends sorter <tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>,KEY_TYPE>
-		{
-			public int compare_data(
-					tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> s,
-					tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> t)
-			{
-				return comparator.compare(s.key,t.key);
-			}
-			public int compare_key(
-					tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> s,KEY_TYPE t)
-			{
-				return comparator.compare(s.key,t);
-			}
-			public tree_node_sorter(boolean do_sort_flag)
-			{
-				for(var p=first;p!=null;p=p.back)
-					data_list.add(p);
-				if(do_sort_flag)
-					do_sort();
-			}
-		};
-		return new tree_node_sorter(do_sort_flag).data_list;
+		var ret_val=new ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>();
+		for(Iterator<KEY_TYPE> my_iterator=tree.keySet().iterator();my_iterator.hasNext();)
+			ret_val.add(tree.get(my_iterator.next()));
+
+		return ret_val;
 	}
 }

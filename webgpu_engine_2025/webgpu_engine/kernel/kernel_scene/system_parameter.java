@@ -2,11 +2,13 @@ package kernel_scene;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import kernel_file_manager.file_reader;
 import kernel_common_class.change_name;
 import kernel_interface.switch_scene_server;
 import kernel_common_class.http_date_string;
+import kernel_common_class.tree_search_container_tree_node;
 import kernel_common_class.debug_information;
 import kernel_content_type.get_content_type_change_name;
 import kernel_network.network_implementation_default_parameter;
@@ -285,13 +287,17 @@ public class system_parameter
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset);
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		http_date_str=new http_date_string();
-
-		for(int i=0,ni=content_type_change_name.data_list.size();i<ni;i++){
-			String p[]=content_type_change_name.data_list.get(i);
-			if(p[1].indexOf("link:")==0){
-				link_file_extend_name=p[0];
-				break;
-			}
+		
+		tree_search_container_tree_node<String[],String> tree_node;
+		ArrayList<tree_search_container_tree_node<String[],String>>tree_list;
+		tree_list=content_type_change_name.get_tree_node_list();
+		for(int i=0,ni=tree_list.size();i<ni;i++){
+			tree_node=tree_list.get(i);
+			for(int j=0,nj=tree_node.list.size();j<nj;j++)
+				if(tree_node.list.get(j).indexOf("link:")==0){
+					link_file_extend_name=tree_node.key[0];
+					return;
+				}
 		}
 		return;
 	}

@@ -51,9 +51,11 @@ public class client_interface_search_tree
 			tree.remove(my_client_id_and_user_name);
 		}
 	}
-	public client_interface get_client_interface(client_request_response request_response,
+	public client_interface get_client_interface(
+			client_request_response request_response,
 			scene_kernel_container_search_tree scene_search_tree,
-			tree_string_locker_container string_locker_container,create_scene_counter scene_counter)
+			tree_string_locker_container string_locker_container,
+			create_scene_counter scene_counter)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_search_tree_lock)==null)

@@ -129,6 +129,5 @@ public class compress_render_container
 		touch_component_access_part(root_component,pcps);
 		original_part_number=compress_render();
 		
-		render_cont.create_tree_render();
 	}
 }

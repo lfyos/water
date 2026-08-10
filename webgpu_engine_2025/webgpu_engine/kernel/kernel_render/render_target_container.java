@@ -32,22 +32,11 @@ public class render_target_container extends tree_search_container<render_target
 	
 	public void destroy()
 	{
-		if(target_array==null)
-			return;
-		
-		target_array.clear();
-		target_array=null;
-		
-		var list=get_tree_node_list(false);
-		for(int i=0,ni=list.size();i<ni;i++) {
-			var p=list.get(i);
-			if(p==null)
-				continue;
-			p.key=null;
-			for(int j=p.list.size()-1;j>=0;j--)
-				p.list.remove(j);
+		clear();
+		if(target_array!=null) {
+			target_array.clear();
+			target_array=null;
 		}
-		super.destroy();
 	}
 	public render_target_container()
 	{

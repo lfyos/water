@@ -13,7 +13,6 @@ import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
 import kernel_common_class.debug_information;
 import kernel_common_class.compress_network_data;
-import kernel_common_class.tree_string_locker_container;
 
 public class client_request_response extends common_writer
 {
@@ -291,8 +290,7 @@ public class client_request_response extends common_writer
 		return new long[] {begin_pointer,end_pointer};
 	}
 	
-	public void response_file_data(scene_call_result ecr,
-			system_parameter system_par,tree_string_locker_container string_locker_container)
+	public void response_file_data(scene_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();

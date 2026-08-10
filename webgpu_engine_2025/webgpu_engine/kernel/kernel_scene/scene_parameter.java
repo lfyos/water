@@ -8,6 +8,7 @@ import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_search_container_tree_node;
 import kernel_network.client_request_response;
 
 public class scene_parameter 
@@ -130,7 +131,7 @@ public class scene_parameter
 	private void get_client_parameter_name(
 		file_reader parameter_fr,client_request_response request_response)
 	{
-		ArrayList<String[]> my_client_parameter_name=new ArrayList<String[]>();
+		client_parameter_name=new change_name();
 		for(String parameter_name,parameter_value;!(parameter_fr.eof());) {
 			if((parameter_name=parameter_fr.get_string())==null)
 				continue;
@@ -140,11 +141,8 @@ public class scene_parameter
 				continue;
 			if((parameter_value=parameter_value.trim()).length()<=0)
 				continue;
-			my_client_parameter_name.add(new String[]{parameter_name,parameter_value});
+			client_parameter_name.add(new String[]{parameter_name},parameter_value);
 		}
-		client_parameter_name=new change_name();
-		client_parameter_name.data_list=my_client_parameter_name;
-		client_parameter_name.do_sort();
 	}
 	private void caculate_scene_temporary_directory_name(
 			String scene_name,client_request_response request_response,
@@ -181,19 +179,23 @@ public class scene_parameter
 				if((str_array[i]=file_directory.delete_separator(str_array[i])).length()>0)
 					my_temporary_directory_name+=str_array[i]+File.separatorChar;
 			}
-		for(int i=0,ni=client_parameter_name.get_number();i<ni;i++)
-			for(int j=0;j<2;j++) {
-				str=file_directory.delete_separator(
-						client_parameter_name.data_list.get(i)[j]);
-				if(str.length()>0)
+		
+		ArrayList<tree_search_container_tree_node<String[],String>>my_client_parameter_name_list;
+		my_client_parameter_name_list=client_parameter_name.get_tree_node_list();
+		for(int i=0,ni=my_client_parameter_name_list.size();i<ni;i++) {
+			tree_search_container_tree_node<String[],String> my_node=my_client_parameter_name_list.get(i);
+			for(int j=0,nj=my_node.key.length;j<nj;j++)
+				if((str=file_directory.delete_separator(my_node.key[j])).length()>0)
 					my_temporary_directory_name+=str+File.separatorChar;
-			}
+			for(int j=0,nj=my_node.list.size();j<nj;j++)
+				if((str=file_directory.delete_separator(my_node.list.get(j))).length()>0)
+					my_temporary_directory_name+=str+File.separatorChar;
+		}
 		if(my_temporary_directory_name.length()<=0)
-			my_temporary_directory_name="no_parameter_directory"+File.separatorChar;;
+			my_temporary_directory_name="no_parameter_directory"+File.separatorChar;
 		
 		scene_temporary_directory_name+=my_temporary_directory_name;
 	}
-	
 	public scene_parameter(
 			String my_scene_name,client_request_response request_response,
 			system_parameter system_par,scene_kernel_create_parameter ekcp)

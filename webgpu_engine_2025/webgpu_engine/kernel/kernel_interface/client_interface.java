@@ -550,7 +550,8 @@ public class client_interface
 	private client_interface(
 			client_request_response request_response,system_parameter my_system_par,
 			scene_kernel_container_search_tree my_scene_kernel_search_tree,
-			tree_string_locker_container my_string_locker_container,create_scene_counter my_scene_counter)
+			tree_string_locker_container my_string_locker_container,
+			create_scene_counter my_scene_counter)
 	{
 		client_interface_in_processing_number=0;
 		

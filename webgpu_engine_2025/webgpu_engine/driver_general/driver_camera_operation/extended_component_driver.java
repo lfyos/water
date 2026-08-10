@@ -25,10 +25,8 @@ public class extended_component_driver  extends component_driver
 	public void destroy()
 	{
 		super.destroy();
-		if(title_change_name!=null) {
-			title_change_name.destroy();
+		if(title_change_name!=null)
 			title_change_name=null;
-		}
 	}
 	public extended_component_driver(part my_component_part,
 			int my_modifier_container_id,change_name my_title_change_name)

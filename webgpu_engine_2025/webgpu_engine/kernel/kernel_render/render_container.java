@@ -48,6 +48,7 @@ public class render_container
 			tree_renders.clear();
 			tree_renders=null;
 		}
+
 		if(system_part_package!=null) {
 			system_part_package.destroy();
 			system_part_package=null;
@@ -64,30 +65,20 @@ public class render_container
 			scene_part_package=null;
 		}
 	}
-	
-	public void create_tree_render()
-	{
-		render r;
-		
-		if(tree_renders!=null)
-			tree_renders.clear();
-		if(renders!=null) {
-			tree_renders=null;
-			return;
-		}
-		tree_renders=new tree_string_search_container<render>();
-		for(int i=0,ni=renders.size();i<ni;i++) 
-			if((r=renders.get(i))!=null)
-				tree_renders.add(new String[] {r.render_name},r);
-	}
-	
 	public render search_render(String my_render_name)
 	{
-		ArrayList<render> r;
-		if(tree_renders!=null)
-			if((r=tree_renders.search(new String[]{my_render_name}))!=null)
-				if(r.size()>0)
-					return r.get(0);
+		if(tree_renders==null){
+			tree_renders=new tree_string_search_container<render>();
+			for(int i=0,ni=renders.size();i<ni;i++) {
+				render my_render;
+				if((my_render=renders.get(i))!=null)
+					tree_renders.add(new String[] {my_render.render_name},my_render);
+			}
+		}
+		ArrayList<render> my_render_list;
+		if((my_render_list=tree_renders.search(new String[]{my_render_name}))!=null)
+			if(my_render_list.size()>0)
+					return my_render_list.get(0);
 		return null;
 	}
 	
@@ -410,10 +401,8 @@ public class render_container
 				ren.destroy();
 			else if(ren.parts.size()<=0) 
 				ren.destroy();
-			else {
+			else 
 				renders.add(renders.size(),ren);
-				tree_renders.add(new String[] {ren.render_name}, ren);
-			}
 		}
 		debug_information.println("End shader and part initialization");
 		debug_information.println();
@@ -427,7 +416,7 @@ public class render_container
 		type_part_package		=new part_package[] {};
 		scene_part_package		=new part_package();
 		
-		tree_renders=new tree_string_search_container<render>();
+		tree_renders=null;
 	}
 	public render_container(render_container ren_con,
 			client_request_response request_response,
@@ -445,6 +434,5 @@ public class render_container
 		scene_part_package	=new part_package(ren_con.scene_part_package);
 		
 		tree_renders=null;
-		create_tree_render();
 	}
 }

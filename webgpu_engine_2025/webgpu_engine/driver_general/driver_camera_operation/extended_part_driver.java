@@ -43,7 +43,7 @@ public class extended_part_driver extends part_driver
 		super.destroy();
 		
 		if(title_change_name!=null){
-			title_change_name.destroy();
+			title_change_name.clear();
 			title_change_name=null;
 		}
 	}
