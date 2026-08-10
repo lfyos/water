@@ -129,26 +129,6 @@ public class compress_render_container
 		touch_component_access_part(root_component,pcps);
 		original_part_number=compress_render();
 		
-		render_cont.sorted_renders=null;
-		if(render_cont.renders==null)
-			return;
-	
-		class create_sorted_render extends sorter<render,render>
-		{
-			public int compare_data(render s,render t)
-			{
-				return s.render_name.compareTo(t.render_name);
-			}
-			public int compare_key(render s,render t)
-			{
-				return s.render_name.compareTo(t.render_name);
-			}
-			public create_sorted_render()
-			{
-				super(render_cont.renders);
-				render_cont.sorted_renders=data_list;
-			}
-		};
-		new create_sorted_render();
+		render_cont.create_tree_render();
 	}
 }

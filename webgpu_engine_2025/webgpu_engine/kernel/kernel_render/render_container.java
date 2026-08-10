@@ -21,12 +21,15 @@ import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
 import kernel_common_class.tree_string_locker_container;
 import kernel_component.component_load_source_container;
+import kernel_common_class.tree_string_search_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class render_container
 {
-	public ArrayList<render> renders,sorted_renders;
+	public ArrayList<render> renders;
 	public part_package system_part_package,type_part_package[],scene_part_package;
+	
+	private tree_string_search_container<render> tree_renders;
 	
 	public void destroy()
 	{
@@ -41,14 +44,9 @@ public class render_container
 			}
 			renders=null;
 		}
-		if(sorted_renders!=null) {
-			for(int i=0,ni=sorted_renders.size();i<ni;i++) {
-				if((r=sorted_renders.get(i))!=null){
-					r.destroy();
-					sorted_renders.set(i,null);
-				}
-			}
-			sorted_renders=null;
+		if(tree_renders!=null) {
+			tree_renders.clear();
+			tree_renders=null;
 		}
 		if(system_part_package!=null) {
 			system_part_package.destroy();
@@ -67,19 +65,29 @@ public class render_container
 		}
 	}
 	
+	public void create_tree_render()
+	{
+		render r;
+		
+		if(tree_renders!=null)
+			tree_renders.clear();
+		if(renders!=null) {
+			tree_renders=null;
+			return;
+		}
+		tree_renders=new tree_string_search_container<render>();
+		for(int i=0,ni=renders.size();i<ni;i++) 
+			if((r=renders.get(i))!=null)
+				tree_renders.add(new String[] {r.render_name},r);
+	}
+	
 	public render search_render(String my_render_name)
 	{
-		if(sorted_renders!=null)
-			for(int begin_pointer=0,end_pointer=sorted_renders.size()-1,result;begin_pointer<=end_pointer;) {
-				int middle_pointer=(begin_pointer+end_pointer)/2;
-				render r=sorted_renders.get(middle_pointer);
-				if((result=r.render_name.compareTo(my_render_name))<0)
-					begin_pointer=middle_pointer+1;
-				else if(result>0)
-					end_pointer=middle_pointer-1;
-				else 
-					return r;
-			}
+		ArrayList<render> r;
+		if(tree_renders!=null)
+			if((r=tree_renders.search(new String[]{my_render_name}))!=null)
+				if(r.size()>0)
+					return r.get(0);
 		return null;
 	}
 	
@@ -402,8 +410,10 @@ public class render_container
 				ren.destroy();
 			else if(ren.parts.size()<=0) 
 				ren.destroy();
-			else
+			else {
 				renders.add(renders.size(),ren);
+				tree_renders.add(new String[] {ren.render_name}, ren);
+			}
 		}
 		debug_information.println("End shader and part initialization");
 		debug_information.println();
@@ -416,6 +426,8 @@ public class render_container
 		system_part_package		=new part_package();
 		type_part_package		=new part_package[] {};
 		scene_part_package		=new part_package();
+		
+		tree_renders=new tree_string_search_container<render>();
 	}
 	public render_container(render_container ren_con,
 			client_request_response request_response,
@@ -431,5 +443,11 @@ public class render_container
 		for(int i=0,ni=ren_con.type_part_package.length;i<ni;i++)
 			type_part_package[i]=new part_package(ren_con.type_part_package[i]);
 		scene_part_package	=new part_package(ren_con.scene_part_package);
+<<<<<<< HEAD
+=======
+		
+		tree_renders=null;
+		create_tree_render();
+>>>>>>> 2837f168b (commit-2026-08-10)
 	}
 }
