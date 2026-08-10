@@ -443,11 +443,8 @@ public class render_container
 		for(int i=0,ni=ren_con.type_part_package.length;i<ni;i++)
 			type_part_package[i]=new part_package(ren_con.type_part_package[i]);
 		scene_part_package	=new part_package(ren_con.scene_part_package);
-<<<<<<< HEAD
-=======
 		
 		tree_renders=null;
 		create_tree_render();
->>>>>>> 2837f168b (commit-2026-08-10)
 	}
 }
