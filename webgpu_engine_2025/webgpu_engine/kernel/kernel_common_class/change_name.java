@@ -19,7 +19,7 @@ public class change_name extends tree_string_search_container<String>
 	{
 		if(my_change_name!=null){
 			ArrayList<tree_search_container_tree_node<String[],String>>list;
-			list=my_change_name.get_tree_node_list();
+			list=my_change_name.tree_get_tree_node_list();
 			for(int i=0,ni=list.size();i<ni;i++) {
 				tree_search_container_tree_node<String[],String> my_tree_node=list.get(i);
 				for(int j=0,nj=my_tree_node.list.size();j<nj;j++)

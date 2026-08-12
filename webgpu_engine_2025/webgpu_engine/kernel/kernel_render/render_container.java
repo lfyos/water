@@ -171,16 +171,17 @@ public class render_container
 			client_request_response request_response,permanent_part_id_encoder encoder[],
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		for(int i=0,j,part_number=pcps.get_number();i<part_number;i=j){
-			part i_part=pcps.data_list.get(i);
+		var data_list=pcps.get_part_list();
+		for(int i=0,j,part_number=data_list.size();i<part_number;i=j){
+			part i_part=data_list.get(i);
 			for(j=i;j<part_number;j++)
-				if(i_part.system_name.compareTo(pcps.data_list.get(j).system_name)!=0)
+				if(i_part.system_name.compareTo(data_list.get(j).system_name)!=0)
 					break;
 			part insert_part=null;
 			box  part_box	=null;
 			
 			for(;i<j;i++) {
-				i_part=pcps.data_list.get(i);
+				i_part=data_list.get(i);
 				boolean normal_flag	=i_part.is_normal_part();
 				boolean do_flag		=i_part.part_par.do_create_bottom_box_flag;
 				if((!normal_flag)||(!do_flag)){
@@ -230,7 +231,7 @@ public class render_container
 				continue;
 			}
 			ren.add_part(add_part,encoder);
-			pcps.append(add_part);
+			pcps.add(add_part,add_part);
 		}
 	}
 	private void load_one_shader(

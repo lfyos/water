@@ -1,7 +1,6 @@
 package kernel_common_class;
 
 import java.util.TreeMap;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -63,7 +62,10 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	}
 	public tree_search_container(Comparator<KEY_TYPE> my_comparator)
 	{
-		tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>(my_comparator);
+		if(my_comparator==null)
+			tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>();
+		else
+			tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>(my_comparator);
 		first=null;
 		last=null;
 	}
@@ -149,12 +151,70 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		p.touch_time=0;
 		return p.list;
 	}
-	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>get_tree_node_list()
+	public boolean operate_tree_node(tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> current_node)
+	{
+		return true;
+	}
+	
+	public int linklist_iterate_tree_node()
+	{
+		int ret_val=0;
+		for(var p=first;p!=null;p=p.back) {
+			if(operate_tree_node(p))
+				ret_val++;
+			else
+				break;
+		}
+		return ret_val;
+	}
+	public int tree_iterate_tree_node()
+	{
+		int ret_val=0;
+		for(var my_tree_node:tree.values()){
+			if(operate_tree_node(my_tree_node))
+				ret_val++;
+			else
+				break;
+		}
+		return ret_val;
+	}
+	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>linklist_get_tree_node_list()
 	{
 		var ret_val=new ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>();
-		for(Iterator<KEY_TYPE> my_iterator=tree.keySet().iterator();my_iterator.hasNext();)
-			ret_val.add(tree.get(my_iterator.next()));
-
+		for(var p=first;p!=null;p=p.back) 
+			if(operate_tree_node(p))
+				ret_val.add(p);
+			else
+				break;
 		return ret_val;
+	}
+	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>tree_get_tree_node_list()
+	{
+		var ret_val=new ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>();
+		for(var my_tree_node:tree.values())
+			if(operate_tree_node(my_tree_node))
+				ret_val.add(my_tree_node);
+			else
+				break;
+		return ret_val;
+	}
+	private ArrayList<VALUE_TYPE> from_node_list_to_value_list(
+			ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>> node_list)
+	{
+		var value_list=new ArrayList<VALUE_TYPE>();
+		for(int i=0,ni=node_list.size();i<ni;i++){
+			var item_list=node_list.get(i).list;
+			for(int j=0,nj=item_list.size();j<nj;j++)
+				value_list.add(item_list.get(j));
+		}
+		return value_list;	
+	}
+	public ArrayList<VALUE_TYPE>linklist_get_tree_value_list()
+	{
+		return from_node_list_to_value_list(linklist_get_tree_node_list());
+	}
+	public ArrayList<VALUE_TYPE>tree_get_tree_value_list()
+	{
+		return from_node_list_to_value_list(tree_get_tree_node_list());
 	}
 }

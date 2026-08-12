@@ -2,11 +2,11 @@ package kernel_part;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-import kernel_common_class.sorter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-
+import kernel_common_class.tree_search_container;
 
 public class mesh_file_collector 
 {
@@ -36,21 +36,26 @@ public class mesh_file_collector
 	}
 	public void create_head_data(file_writer head_fw,long system_max_file_data_length)
 	{
-		class mesh_file_collector_item_sorter extends sorter<mesh_file_collector_item,mesh_file_collector_item>
+		class mesh_file_collector_item_comparator implements Comparator<mesh_file_collector_item>
 		{
-			public int compare_data(mesh_file_collector_item s,mesh_file_collector_item t)
+			public int compare(mesh_file_collector_item s,mesh_file_collector_item t)
 			{
 				return (s.file_length<t.file_length)?-1:(s.file_length>t.file_length)?1:0;
 			}
-			public int compare_key(mesh_file_collector_item s,mesh_file_collector_item t)
-			{
-				return (s.file_length<t.file_length)?-1:(s.file_length>t.file_length)?1:0;
-			}
+		}
+		
+		class mesh_file_collector_item_sorter 
+			extends tree_search_container<mesh_file_collector_item,mesh_file_collector_item>
+		{
 			public mesh_file_collector_item_sorter()
 			{
-				data_list=list;
-				do_sort();
-				list=data_list;
+				super(new mesh_file_collector_item_comparator());
+				
+				if(list!=null) {
+					for(var my_mesh_file_collector_item:list)
+						add(my_mesh_file_collector_item,my_mesh_file_collector_item);
+					list=tree_get_tree_value_list();
+				}
 			}
 		}
 		

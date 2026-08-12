@@ -290,7 +290,7 @@ public class system_parameter
 		
 		tree_search_container_tree_node<String[],String> tree_node;
 		ArrayList<tree_search_container_tree_node<String[],String>>tree_list;
-		tree_list=content_type_change_name.get_tree_node_list();
+		tree_list=content_type_change_name.tree_get_tree_node_list();
 		for(int i=0,ni=tree_list.size();i<ni;i++){
 			tree_node=tree_list.get(i);
 			for(int j=0,nj=tree_node.list.size();j<nj;j++)

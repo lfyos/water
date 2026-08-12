@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.nio.charset.Charset;
 import kernel_file_manager.file_reader;
-import kernel_common_class.tree_search_container_tree_node;
 import kernel_common_class.tree_string_search_container;
 
 public class component_load_source_container 
@@ -21,17 +20,13 @@ public class component_load_source_container
 	}
 	public component_load_source_container(component_load_source_container clsc)
 	{
-		ArrayList<tree_search_container_tree_node<String[],component_load_source_item>>list;
-		list=clsc.tree.get_tree_node_list();
-
 		tree=new tree_string_search_container<component_load_source_item>();
-		
+		ArrayList<component_load_source_item>list=clsc.tree.tree_get_tree_value_list();
 		for(int i=0,ni=list.size();i<ni;i++){
-			ArrayList<component_load_source_item> list_item=list.get(i).list;
-			for(int j=0,nj=list_item.size();j<nj;j++){
-				component_load_source_item p=list_item.get(j);
-				tree.add(new String[] {p.component_name},new component_load_source_item(p));
-			}
+			component_load_source_item list_item=list.get(i);
+			tree.add(
+					new String[] {list_item.component_name},
+					new component_load_source_item(list_item));
 		}
 	}
 	private void set_component_last_time(component my_comp,long my_file_last_modified_time)

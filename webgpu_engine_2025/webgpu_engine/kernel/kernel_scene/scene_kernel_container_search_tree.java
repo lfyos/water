@@ -41,7 +41,6 @@ public class scene_kernel_container_search_tree
 				system_component_load_source_cont,pcps,system_par.last_modified_time,
 			system_par.data_root_directory_name+system_par.shader_file_name,
 			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
-		pcps.execute_append();
 		
 		String fast_load_type=request_response.get_fast_load_type();
 		
@@ -49,7 +48,6 @@ public class scene_kernel_container_search_tree
 			boftal_container,string_locker_container,null,null,fast_load_type);
 		
 		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
-		pcps.execute_append();
 		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,system_par,null,
 			boftal_container,string_locker_container,null,null,fast_load_type);
 		

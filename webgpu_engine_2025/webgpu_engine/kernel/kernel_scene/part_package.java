@@ -3,16 +3,17 @@ package kernel_scene;
 import java.io.File;
 import java.util.ArrayList;
 
-import kernel_common_class.debug_information;
-import kernel_common_class.tree_string_locker_container;
-import kernel_common_class.compress_file_data;
-import kernel_file_manager.file_directory;
-import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
-import kernel_interface.client_process_bar;
 import kernel_part.part;
 import kernel_render.render_container;
-import kernel_part.part_container_for_process_sequence;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_file_manager.file_directory;
+import kernel_interface.client_process_bar;
+import kernel_common_class.debug_information;
+import kernel_common_class.compress_file_data;
+import kernel_common_class.tree_search_container;
+import kernel_common_class.tree_string_locker_container;
+import kernel_part.comparator_for_part_container_for_process_sequence;
 
 class part_arraylist
 {
@@ -25,11 +26,9 @@ class part_arraylist
 	}
 };
 
-class part_package_collector extends part_container_for_process_sequence
+class comparator_for_part_package_collector extends comparator_for_part_container_for_process_sequence
 {
-	public part_arraylist part_package[];
-	
-	public int package_compare(part s,part t)
+	public static int package_compare(part s,part t)
 	{
 		int ret_val;
 		if((ret_val=s.part_type_id-t.part_type_id)!=0)
@@ -40,23 +39,39 @@ class part_package_collector extends part_container_for_process_sequence
 			return ret_val;
 		return 0;
 	}
-	public int compare_part(part pi,part pj)
+	public int compare(part pi,part pj)
 	{
 		int ret_val;
 		if((ret_val=package_compare(pi,pj))!=0)
 			return ret_val;
 		else
-			return super.compare_part(pi,pj);
+			return super.compare(pi,pj);
 	}
-	public int compare_key(part pi,part pj)
+	public comparator_for_part_package_collector(
+			double my_box_distance_difference_scale,
+			double my_buffer_data_length_difference_scale)
 	{
-		return compare_part(pi,pj);
+		super(my_box_distance_difference_scale,my_buffer_data_length_difference_scale);
 	}
+}
+
+class part_package_collector extends tree_search_container<part,part>
+{
+	public part_arraylist part_package[];
+	public ArrayList<part>data_list;
+
 	public part_package_collector(ArrayList<part> my_part_list,system_parameter system_par)
 	{
-		super(my_part_list,
-			system_par.box_distance_difference_scale,
-			system_par.buffer_data_length_difference_scale);
+		super(
+			new comparator_for_part_package_collector(
+				system_par.box_distance_difference_scale,
+				system_par.buffer_data_length_difference_scale));
+		
+		if(my_part_list!=null)
+			for(var my_part:my_part_list)
+				add(my_part,my_part);
+		data_list=tree_get_tree_value_list();
+		
 		
 		int package_number=0;
 		long my_package_length=0;
@@ -70,7 +85,7 @@ class part_package_collector extends part_container_for_process_sequence
 			else
 				my_package_length+=p.boftal.buffer_object_head_length;
 			if((i<(ni-1))&&(my_package_length<system_par.max_buffer_object_head_package_length))
-				if(package_compare(p,data_list.get(i+1))==0)
+				if(comparator_for_part_package_collector.package_compare(p,data_list.get(i+1))==0)
 					continue;
 			package_number++;
 			my_package_length=0;

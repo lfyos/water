@@ -1,10 +1,8 @@
 package kernel_file_manager;
 
-
 import java.io.File;
-import java.util.ArrayList;
 
-import kernel_common_class.sorter;
+import kernel_common_class.tree_string_search_container;
 
 public class travel_through_directory 
 {
@@ -23,32 +21,21 @@ public class travel_through_directory
 	}
 	public void do_travel(String file_name,boolean sort_file_name_flag)
 	{
+		class file_name_sorter extends tree_string_search_container<String>
+		{
+			public file_name_sorter(String file_name_array[])
+			{
+				if(file_name_array!=null)
+					for(int i=0,ni=file_name_array.length;i<ni;i++)
+						add(new String[] {file_name_array[i]},file_name_array[i]);
+			}
+		};
+		
 		if(exclude_file_name!=null)
 			for(int i=0,ni=exclude_file_name.length;i<ni;i++)
 				if(exclude_file_name[i].compareTo(file_name)==0)
 					return;
 
-		class file_name_sorter extends sorter<String,String>
-		{
-			public int compare_data(String s,String t)
-			{
-				return s.compareTo(t);
-			}
-			public int compare_key(String s,String t)
-			{
-				return s.compareTo(t);
-			}
-			public file_name_sorter(String file_name_array[])
-			{
-				data_list=new ArrayList<String>();
-				if(file_name_array!=null){
-					for(int i=0,ni=file_name_array.length;i<ni;i++)
-						data_list.add(file_name_array[i]);
-					do_sort();
-				}
-			}
-		};
-		
 		File f;
 		if(!((f=new File(file_name)).exists()))
 			return;
@@ -67,9 +54,11 @@ public class travel_through_directory
 			if(!continue_flag)
 				return;
 		}else {
-			if(sort_file_name_flag)
-				file_list=(new file_name_sorter(file_list)).
-						data_list.toArray(new String[file_list.length]);
+			if(sort_file_name_flag) {
+				var tree_list=(new file_name_sorter(file_list)).tree_get_tree_value_list();
+				file_list=new String[tree_list.size()];
+				tree_list.toArray(file_list);
+			}
 			operate_directory_start(path_name);
 			if(!continue_flag)
 				return;

@@ -2,12 +2,11 @@ package kernel_scene;
 
 import java.util.ArrayList;
 
-import kernel_render.render;
-import kernel_render.render_container;
 import kernel_part.part;
-import kernel_part.part_container_for_part_search;
-import kernel_common_class.sorter;
+import kernel_render.render;
 import kernel_component.component;
+import kernel_render.render_container;
+import kernel_part.part_container_for_part_search;
 
 public class compress_render_container
 {
@@ -35,24 +34,6 @@ public class compress_render_container
 		}
 		if(part_number<=0)
 			return null;
-
-		class create_sorted_part extends sorter<part,part>
-		{
-			public int compare_data(part s,part t)
-			{
-				return s.system_name.compareTo(t.system_name);
-			}
-			public int compare_key(part s,part t)
-			{
-				return s.system_name.compareTo(t.system_name);
-			}
-			public create_sorted_part()
-			{
-				super(ret_val);
-			}
-		};
-		new create_sorted_part();
-
 		for(int i=0,ni=ret_val.size();i<ni;i++){
 			part pp=ret_val.get(i);
 			pp.part_id=i;

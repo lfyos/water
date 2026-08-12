@@ -1,23 +1,13 @@
 package kernel_scene;
 
-import java.util.ArrayList;
-
-import kernel_common_class.sorter;
 import kernel_file_manager.file_reader;
+import kernel_common_class.tree_string_search_container;
 
-public class part_type_string_sorter extends sorter<String,String>
+public class part_type_string_sorter extends tree_string_search_container<String>
 {
-	public int compare_data(String s,String t)
-	{
-		return s.compareTo(t);
-	}
-	public int compare_key(String s,String t)
-	{
-		return s.compareTo(t);
-	}
 	public part_type_string_sorter(String file_name[],String type_string,String file_system_charset)
 	{
-		data_list=new ArrayList<String>();
+		String str;
 		if(file_name!=null)
 			for(int i=0,ni=file_name.length;i<ni;i++)
 				for(file_reader f=new file_reader(file_name[i],file_system_charset);;) {
@@ -25,19 +15,20 @@ public class part_type_string_sorter extends sorter<String,String>
 						f.close();
 						break;
 					}
-					data_list.add(f.get_string());
+					str=f.get_string();
+					add(new String[] {str},str);
 				}
 		if(type_string!=null)
 			for(int index_id;type_string.length()>0;)
 				if((index_id=type_string.indexOf(";"))==0)
 					type_string=type_string.substring(1);
 				else if(index_id>0) {
-					data_list.add(type_string.substring(0,index_id));
+					str=type_string.substring(0,index_id);
+					add(new String[] {str},str);
 					type_string=type_string.substring(index_id+1);
 				}else{
-					data_list.add(type_string);
+					add(new String[] {type_string},type_string);
 					break;
 				}
-		do_sort();
 	}
 }

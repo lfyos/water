@@ -342,8 +342,6 @@ public class scene_kernel
 			scene_par.scene_last_modified_time,path_name,create_parameter.scene_charset,
 			1,system_par,scene_par,encoder,request_response);
 		
-		part_cont.execute_append();
-		
 		debug_information.println("Load shaders time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -366,7 +364,6 @@ public class scene_kernel
 
 		start_time=current_time;
 		render_cont.create_bottom_box_part(part_cont,request_response,encoder,system_par,scene_par);
-		part_cont.execute_append();
 		
 		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,boftal_container,
 							string_locker_container,process_bar,"load_second_class_part",fast_load_type);
@@ -401,7 +398,6 @@ public class scene_kernel
 		start_time=new Date().getTime();
 		load_create_assemble_part(fast_load_type,request_response,
 			scene_component_load_source_cont,part_cont,encoder,boftal_container,string_locker_container);	
-		part_cont.execute_append();
 	
 		render_cont.load_part(part_type_code,4,part_loader_cont,system_par,scene_par,boftal_container,
 							string_locker_container,process_bar,"load_third_class_part",fast_load_type);

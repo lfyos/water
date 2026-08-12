@@ -133,7 +133,7 @@ public class create_assemble_part
 			part_loader_cont.load(add_part,fast_load_type,system_par,scene_par,
 				string_locker_container,already_loaded_part,boftal_container);
 			top_box_part.add(add_part);
-			pcps.append(add_part);
+			pcps.add(add_part,add_part);
 			create_part_number+=my_create_part_number;
 
 			debug_information.println();

@@ -1,16 +1,23 @@
 package kernel_component;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-import kernel_common_class.sorter;
 import kernel_transformation.point;
+import kernel_common_class.tree_search_container;
 
-public class component_link_list_sorter extends sorter <component_link_list,component_link_list>
+class component_link_list_comparator implements Comparator<component_link_list>
 {
 	private String component_sort_type;
 	private double component_sort_min_distance;
 	
-	public int compare_data(component_link_list s,component_link_list t)
+	public component_link_list_comparator(String sort_type,double sort_min_distance)
+	{
+		component_sort_type			=sort_type;
+		component_sort_min_distance	=sort_min_distance;
+		
+	}
+	public int compare(component_link_list s,component_link_list t)
 	{
 		point ps=s.comp.absolute_location.multiply(0, 0, 0);
 		point pt=t.comp.absolute_location.multiply(0, 0, 0);
@@ -142,21 +149,19 @@ public class component_link_list_sorter extends sorter <component_link_list,comp
 			return 0;
 		}
 	}
-	public int compare_key(component_link_list s,component_link_list t)
-	{
-		return compare_data(s,t);
-	}
+}
+
+public class component_link_list_sorter extends tree_search_container<component_link_list,component_link_list>
+{
+	private ArrayList<component_link_list>data_list;
+	
 	private component_link_list_sorter(component_link_list cll,String sort_type,double sort_min_distance)
 	{
-		component_sort_type			=sort_type;
-		component_sort_min_distance	=sort_min_distance;
+		super(new component_link_list_comparator(sort_type,sort_min_distance));
 		
-		data_list=new ArrayList<component_link_list>();
 		for(component_link_list p=cll;p!=null;p=p.next_list_item)
-			data_list.add(p);
-		
-		do_sort();
-		
+			add(p,p);
+		data_list=tree_get_tree_value_list();
 		for(int i=0,ni=data_list.size()-1;i<ni;i++)
 			data_list.get(i).next_list_item=data_list.get(i+1);
 		data_list.get(data_list.size()-1).next_list_item=null;

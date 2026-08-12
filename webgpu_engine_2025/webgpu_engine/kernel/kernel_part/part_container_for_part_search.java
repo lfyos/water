@@ -1,21 +1,14 @@
 package kernel_part;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import kernel_common_class.const_value;
-import kernel_common_class.sorter;
+import kernel_common_class.tree_search_container;
 
-public class part_container_for_part_search extends sorter<part,String>
+class part_comparator_for_part_search implements Comparator<part>
 {
-	public void destroy()
-	{
-		super.destroy();
-	}
-	public int compare_key(part s,String t)
-	{
-		return s.system_name.compareTo(t);
-	}
-	public int compare_data(part pi,part pj)
+	public int compare(part pi,part pj)
 	{
 		int result;
 		double diff;
@@ -52,11 +45,15 @@ public class part_container_for_part_search extends sorter<part,String>
 		
 		return 0;
 	}
-	public part_container_for_part_search(ArrayList<part> my_parts)
+}
+
+public class part_container_for_part_search extends tree_search_container<part,part>
+{
+	public ArrayList<part>get_part_list()
 	{
-		super(my_parts);
+		var data_list=tree_get_tree_value_list();
 		
-		for(int i=0,j=0,id=0,n=get_number();i<n;){
+		for(int i=0,j=0,id=0,n=data_list.size();i<n;){
 			part id_part,j_part;
 			for(id=i,j=i;j<n;j++){
 				id_part	=data_list.get(id);
@@ -70,31 +67,74 @@ public class part_container_for_part_search extends sorter<part,String>
 			for(;i<j;i++)
 				data_list.get(i).part_par.assembly_precision2=id_part.part_par.assembly_precision2;
 		}
+		
+		return data_list;
+	}
+	public void destroy()
+	{
+		super.clear();
+	}
+	public part_container_for_part_search(ArrayList<part> my_part_list)
+	{
+		super(new part_comparator_for_part_search());
+		if(my_part_list!=null)
+			for(var my_part:my_part_list)
+				add(my_part,my_part);
 	}
 	public ArrayList<part> search_part(String my_part_system_name)
 	{
-		execute_append();
+		var data_list=get_part_list();
 		
-		int search_id[];
-		if((search_id=range(my_part_system_name))==null)
-			return null;
-		
-		ArrayList<part> ret_part=new ArrayList<part>();
-		boolean top_flag=false,bottom_flag=false;
-		for(int i=search_id[0],ni=search_id[1];i<=ni;i++){
-			part my_part=data_list.get(i);
-			if(my_part.is_bottom_box_part()){
-				if(bottom_flag)
-					continue;
-				bottom_flag=true;
+		for(int begin_pointer=0,end_pointer=data_list.size()-1;;){
+			if(begin_pointer>end_pointer)
+				return new ArrayList<part>();
+				
+			int search_id=(begin_pointer+end_pointer)/2;
+			int result=data_list.get(search_id).system_name.compareTo(my_part_system_name);
+			if(result<0) {
+				begin_pointer=search_id+1;
+				continue;
 			}
-			if(my_part.is_top_box_part()){
-				if(top_flag)
-					continue;
-				top_flag=true;
+			if(result>0) {
+				end_pointer=search_id-1;
+				continue;
 			}
-			ret_part.add(my_part);
+			for(begin_pointer=search_id;;) {
+				if(data_list.get(begin_pointer).system_name.compareTo(my_part_system_name)!=0) {
+					begin_pointer++;
+					break;
+				}else if(begin_pointer>0)
+					begin_pointer--;
+				else
+					break;
+			}
+			int last_pointer=data_list.size()-1;
+			for(end_pointer=search_id;;) {
+				if(data_list.get(end_pointer).system_name.compareTo(my_part_system_name)!=0) {
+					end_pointer--;
+					break;
+				}else if(end_pointer<last_pointer)
+					end_pointer++;
+				else
+					break;
+			}
+			ArrayList<part> ret_part=new ArrayList<part>();
+			boolean top_flag=false,bottom_flag=false;
+			for(int i=begin_pointer,ni=end_pointer;i<=ni;i++){
+				part my_part=data_list.get(i);
+				if(my_part.is_bottom_box_part()){
+					if(bottom_flag)
+						continue;
+					bottom_flag=true;
+				}
+				if(my_part.is_top_box_part()){
+					if(top_flag)
+						continue;
+					top_flag=true;
+				}
+				ret_part.add(my_part);
+			}
+			return ret_part;
 		}
-		return ret_part;
 	}
 }

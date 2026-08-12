@@ -1,10 +1,11 @@
 package kernel_driver;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-import kernel_common_class.sorter;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
+import kernel_scene.client_information;
+import kernel_common_class.tree_search_container;
 
 public class modifier_container
 {
@@ -159,9 +160,9 @@ public class modifier_container
 	private ArrayList<modifier_driver_holder> sort_modifier_driver_list(
 			ArrayList<modifier_driver_holder> modifier_driver_list)
 	{
-		class modifier_driver_list_sorter extends sorter<modifier_driver_holder,modifier_driver_holder>
+		class modifier_driver_list_comparator implements Comparator<modifier_driver_holder>
 		{
-			public int compare_data(modifier_driver_holder s,modifier_driver_holder t)
+			public int compare(modifier_driver_holder s,modifier_driver_holder t)
 			{
 				if(s.md.terminate_time<t.md.terminate_time)
 					return -1;
@@ -173,17 +174,20 @@ public class modifier_container
 					return 1;
 				return 0;
 			}
-			public int compare_key(modifier_driver_holder s,modifier_driver_holder t)
-			{
-				return compare_data(s,t);
-			}
-			
+		};
+		class modifier_driver_list_sorter 
+				extends tree_search_container<modifier_driver_holder,modifier_driver_holder>
+		{
 			public modifier_driver_list_sorter()
 			{
-				super(modifier_driver_list);
+				super(new modifier_driver_list_comparator());
+				
+				if(modifier_driver_list!=null)
+					for(var my_modifier_driver_holder:modifier_driver_list)
+						add(my_modifier_driver_holder,my_modifier_driver_holder);
 			}
 		}
-		return new modifier_driver_list_sorter().data_list;
+		return new modifier_driver_list_sorter().tree_get_tree_value_list();
 	}
 	public void process(scene_kernel sk,client_information ci,boolean my_clear_modifier_flag)
 	{
