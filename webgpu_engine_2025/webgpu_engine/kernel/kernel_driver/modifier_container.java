@@ -187,7 +187,7 @@ public class modifier_container
 						add(my_modifier_driver_holder,my_modifier_driver_holder);
 			}
 		}
-		return new modifier_driver_list_sorter().tree_get_tree_value_list();
+		return new modifier_driver_list_sorter().tree_get_value_list();
 	}
 	public void process(scene_kernel sk,client_information ci,boolean my_clear_modifier_flag)
 	{

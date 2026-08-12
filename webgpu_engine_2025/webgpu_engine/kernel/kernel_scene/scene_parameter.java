@@ -181,7 +181,7 @@ public class scene_parameter
 			}
 		
 		ArrayList<tree_search_container_tree_node<String[],String>>my_client_parameter_name_list;
-		my_client_parameter_name_list=client_parameter_name.tree_get_tree_node_list();
+		my_client_parameter_name_list=client_parameter_name.tree_get_node_list();
 		for(int i=0,ni=my_client_parameter_name_list.size();i<ni;i++) {
 			tree_search_container_tree_node<String[],String> my_node=my_client_parameter_name_list.get(i);
 			for(int j=0,nj=my_node.key.length;j<nj;j++)

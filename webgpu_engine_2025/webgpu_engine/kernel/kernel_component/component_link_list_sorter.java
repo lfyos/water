@@ -161,7 +161,7 @@ public class component_link_list_sorter extends tree_search_container<component_
 		
 		for(component_link_list p=cll;p!=null;p=p.next_list_item)
 			add(p,p);
-		data_list=tree_get_tree_value_list();
+		data_list=tree_get_value_list();
 		for(int i=0,ni=data_list.size()-1;i<ni;i++)
 			data_list.get(i).next_list_item=data_list.get(i+1);
 		data_list.get(data_list.size()-1).next_list_item=null;

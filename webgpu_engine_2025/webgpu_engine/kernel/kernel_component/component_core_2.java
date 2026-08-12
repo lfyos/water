@@ -50,7 +50,7 @@ public class component_core_2 extends component_core_1
 			return;
 
 		part_type_string_sorter ptss=ccp.get_part_type_string_sorter();
-		int type_string_number=(ptss==null)?0:(ptss.tree_get_tree_value_list().size());
+		int type_string_number=(ptss==null)?0:(ptss.tree_get_value_list().size());
 		
 		part p;
 		ArrayList<part> effective_parts;

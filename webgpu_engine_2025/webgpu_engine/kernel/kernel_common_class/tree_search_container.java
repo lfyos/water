@@ -9,6 +9,9 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	private TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>> tree;
 	private tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> first,last;
 	
+	private ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>linklist_node_list,tree_node_list;
+	private ArrayList<VALUE_TYPE>linklist_value_list,tree_value_list;
+	
 	private void dismount_from_list(tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> p)
 	{
 		var my_front=p.front;
@@ -68,6 +71,11 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>(my_comparator);
 		first=null;
 		last=null;
+		
+		linklist_node_list	=null;
+		tree_node_list		=null;
+		linklist_value_list	=null;
+		tree_value_list		=null;
 	}
 	public void clear()
 	{
@@ -81,6 +89,11 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		last		=null;
 		
 		tree.clear();
+		
+		linklist_node_list	=null;
+		tree_node_list		=null;
+		linklist_value_list	=null;
+		tree_value_list		=null;
 	}
 	public long first_touch_time()
 	{
@@ -121,6 +134,12 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		mount_to_last(p);
 		p.list.add(my_value);
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
+		
+		linklist_node_list	=null;
+		tree_node_list		=null;
+		linklist_value_list	=null;
+		tree_value_list		=null;
+		
 		return p.list;
 	}
 	public ArrayList<VALUE_TYPE> search(KEY_TYPE my_key)
@@ -131,6 +150,10 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		dismount_from_list(p);
 		mount_to_last(p);
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
+		
+		linklist_node_list	=null;
+		linklist_value_list	=null;
+		
 		return p.list;
 	}
 	public ArrayList<VALUE_TYPE> remove(KEY_TYPE my_key)
@@ -139,6 +162,12 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		if(p==null)
 			return null;
 		dismount_from_list(p);
+		
+		linklist_node_list	=null;
+		tree_node_list		=null;
+		linklist_value_list	=null;
+		tree_value_list		=null;
+		
 		return p.list;
 	}
 	public ArrayList<VALUE_TYPE> move_to_first(KEY_TYPE my_key)
@@ -149,11 +178,15 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		dismount_from_list(p);
 		mount_to_first(p);
 		p.touch_time=0;
+		
+		linklist_node_list	=null;
+		linklist_value_list	=null;
+		
 		return p.list;
 	}
 	public boolean operate_tree_node(tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> current_node)
 	{
-		return true;
+		return false;
 	}
 	
 	public int linklist_iterate_tree_node()
@@ -161,9 +194,8 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		int ret_val=0;
 		for(var p=first;p!=null;p=p.back) {
 			if(operate_tree_node(p))
-				ret_val++;
-			else
 				break;
+			ret_val++;
 		}
 		return ret_val;
 	}
@@ -172,31 +204,34 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		int ret_val=0;
 		for(var my_tree_node:tree.values()){
 			if(operate_tree_node(my_tree_node))
-				ret_val++;
-			else
 				break;
+			ret_val++;
 		}
 		return ret_val;
 	}
-	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>linklist_get_tree_node_list()
+	public  ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>linklist_get_node_list()
 	{
-		var ret_val=new ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>();
-		for(var p=first;p!=null;p=p.back) 
-			if(operate_tree_node(p))
-				ret_val.add(p);
-			else
-				break;
-		return ret_val;
+		if(linklist_node_list==null){
+			linklist_node_list=new ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>();
+			for(var p=first;p!=null;p=p.back) { 
+				if(operate_tree_node(p))
+					break;
+				linklist_node_list.add(p);
+			}
+		}
+		return linklist_node_list;
 	}
-	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>tree_get_tree_node_list()
+	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>tree_get_node_list()
 	{
-		var ret_val=new ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>();
-		for(var my_tree_node:tree.values())
-			if(operate_tree_node(my_tree_node))
-				ret_val.add(my_tree_node);
-			else
-				break;
-		return ret_val;
+		if(tree_node_list==null){
+			tree_node_list=new ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>();
+			for(var my_tree_node:tree.values()) {
+				if(operate_tree_node(my_tree_node))
+					break;
+				tree_node_list.add(my_tree_node);
+			}
+		}
+		return tree_node_list;
 	}
 	private ArrayList<VALUE_TYPE> from_node_list_to_value_list(
 			ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>> node_list)
@@ -209,12 +244,16 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		}
 		return value_list;	
 	}
-	public ArrayList<VALUE_TYPE>linklist_get_tree_value_list()
+	public ArrayList<VALUE_TYPE>linklist_get_value_list()
 	{
-		return from_node_list_to_value_list(linklist_get_tree_node_list());
+		if (linklist_value_list==null)
+			linklist_value_list=from_node_list_to_value_list(linklist_get_node_list());
+		return linklist_value_list;
 	}
-	public ArrayList<VALUE_TYPE>tree_get_tree_value_list()
+	public ArrayList<VALUE_TYPE>tree_get_value_list()
 	{
-		return from_node_list_to_value_list(tree_get_tree_node_list());
+		if(tree_value_list==null)
+			tree_value_list=from_node_list_to_value_list(tree_get_node_list());
+		return tree_value_list;
 	}
 }

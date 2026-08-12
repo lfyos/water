@@ -19,6 +19,6 @@ public class part_container_for_process_sequence extends tree_search_container<p
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)
 				add(my_part,my_part);
-		data_list=tree_get_tree_value_list();
+		data_list=tree_get_value_list();
 	}
 }

@@ -55,7 +55,7 @@ public class travel_through_directory
 				return;
 		}else {
 			if(sort_file_name_flag) {
-				var tree_list=(new file_name_sorter(file_list)).tree_get_tree_value_list();
+				var tree_list=(new file_name_sorter(file_list)).tree_get_value_list();
 				file_list=new String[tree_list.size()];
 				tree_list.toArray(file_list);
 			}

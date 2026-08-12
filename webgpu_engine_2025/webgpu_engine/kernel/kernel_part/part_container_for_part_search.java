@@ -51,7 +51,7 @@ public class part_container_for_part_search extends tree_search_container<part,p
 {
 	public ArrayList<part>get_part_list()
 	{
-		var data_list=tree_get_tree_value_list();
+		var data_list=tree_get_value_list();
 		
 		for(int i=0,j=0,id=0,n=data_list.size();i<n;){
 			part id_part,j_part;
