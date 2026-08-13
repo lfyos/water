@@ -3,7 +3,6 @@ package kernel_scene;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-
 import kernel_render.render_container;
 import kernel_part.part_loader_container;
 import kernel_file_manager.file_directory;
@@ -14,6 +13,7 @@ import kernel_part.part_container_for_part_search;
 import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.tree_string_search_container;
 import kernel_component.component_load_source_container;
+import kernel_common_class.tree_search_container_tree_node;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class scene_kernel_container_search_tree 
@@ -94,11 +94,12 @@ public class scene_kernel_container_search_tree
 		debug_information.print  ("scene_interface scene_component_number:	",	scene_counter.scene_component_number);
 		debug_information.println("/",system_par.max_scene_component_number);
 		
-		ArrayList<scene_kernel_container> list;
 		scene_kernel_container p;
-		if((list=tree.search(new String[]{scene_name,link_name}))!=null) 
-			if(list.size()>0){
-				p=list.get(0);
+		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
+		
+		if((search_tree_node=tree.search(new String[]{scene_name,link_name}))!=null)
+			if(search_tree_node.list.size()>0){
+				p=search_tree_node.list.get(0);
 				p.modify_scene_kernel_link_number(1);
 				return p;
 			}
@@ -131,13 +132,13 @@ public class scene_kernel_container_search_tree
 	private void destroy_scene_kernel_container_routine(
 			String my_scene_name,String my_link_name,create_scene_counter scene_counter)
 	{
-		ArrayList<scene_kernel_container> list;
-		for(String key[]={my_scene_name,my_link_name};(list=tree.search(key))!=null;) {
-			while(list.size()>0){
-				scene_kernel_container p=list.get(0);
+		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
+		for(String key[]={my_scene_name,my_link_name};(search_tree_node=tree.search(key))!=null;) {
+			while(search_tree_node.list.size()>0){
+				scene_kernel_container p=search_tree_node.list.get(0);
 				if(p.modify_scene_kernel_link_number(-1)>0)
 					return;
-				list.remove(0);
+				search_tree_node.list.remove(0);
 				
 				if(p.sk!=null)
 					if(p.sk.component_cont!=null)
@@ -206,12 +207,14 @@ public class scene_kernel_container_search_tree
 			return;
 		my_lock.lock();
 		
-		while(tree.first_touch_time()>=0) {
-			String my_key[]								=tree.first_key();
-			ArrayList<scene_kernel_container> my_list	=tree.first_value();
-			tree.remove(my_key);
+		tree_search_container_tree_node <String[],scene_kernel_container> first_tree_node;
+		
+		while((first_tree_node=tree.get_first_tree_node())!=null){
+			String my_key[]								=first_tree_node.key;
+			ArrayList<scene_kernel_container> my_list	=first_tree_node.list;
 			for(int i=0,ni=my_list.size();i<ni;i++)
-				my_list.get(i).destroy();
+				my_list.remove(i).destroy();
+			tree.remove(my_key);
 		}
 		if(system_component_load_source_cont!=null) {
 			system_component_load_source_cont.destroy();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.nio.charset.Charset;
 import kernel_file_manager.file_reader;
 import kernel_common_class.tree_string_search_container;
+import kernel_common_class.tree_search_container_tree_node;
 
 public class component_load_source_container 
 {
@@ -12,7 +13,10 @@ public class component_load_source_container
 	
 	public void destroy()
 	{
-		tree=null;
+		if(tree!=null) {
+			tree.destroy();
+			tree=null;
+		}
 	}
 	public component_load_source_container()
 	{
@@ -38,31 +42,32 @@ public class component_load_source_container
 	}
 	public int add_component(file_reader component_fr,
 		String component_name,ArrayList<component>child_component_list,
-		boolean part_list_flag,boolean normalize_location_flag,component_construction_parameter ccp)
+		boolean part_list_flag,boolean normalize_location_flag,
+		component_construction_parameter ccp)
 	{
 		int ret_val=0;
-		var list=tree.remove(new String[]{component_name});
-		if(list==null)
-			return ret_val;
-		for(int i=0,ni=list.size();i<ni;i++) {
-			var clsi=list.get(i);
-			if(clsi==null)
-				continue;
-
-			ret_val++;
-			if(clsi.create_component_data==null) {
-				file_reader fr=new file_reader(clsi.component_file_name,clsi.component_file_charset);
-				child_component_list.add(new component(
-						clsi.token_string,fr,part_list_flag,normalize_location_flag,ccp));
-				fr.close();
-			}else {
-				component_fr.push_string(clsi.create_component_data);
-				component my_comp=new component(clsi.token_string,component_fr,
-						part_list_flag,normalize_location_flag,ccp);
-				set_component_last_time(my_comp,clsi.component_last_time);
-				child_component_list.add(my_comp);
-			}
-		}
+		component_load_source_item clsi;
+		tree_search_container_tree_node<String[],component_load_source_item> my_tree_node;
+		
+		if((my_tree_node=tree.remove(new String[]{component_name}))!=null)
+			for(int i=0,ni=my_tree_node.list.size();i<ni;i++)
+				if((clsi=my_tree_node.list.get(i))!=null){
+					if(clsi.create_component_data!=null) {
+						component_fr.push_string(clsi.create_component_data);
+						component my_comp=new component(clsi.token_string,component_fr,
+								part_list_flag,normalize_location_flag,ccp);
+						set_component_last_time(my_comp,clsi.component_last_time);
+						child_component_list.add(my_comp);
+						ret_val++;
+					}
+					if(clsi.component_file_name!=null) {
+						file_reader fr=new file_reader(clsi.component_file_name,clsi.component_file_charset);
+						child_component_list.add(new component(
+								clsi.token_string,fr,part_list_flag,normalize_location_flag,ccp));
+						fr.close();
+						ret_val++;
+					}
+				}
 		return ret_val;
 	}
 	public int file_add_source_item(String component_name,String token_string,
@@ -119,10 +124,9 @@ public class component_load_source_container
 			if(terminated_token_string.compareTo(str)==0)
 				break;
 			mount_component_file_name=part_fr.directory_name+file_reader.separator(str);
-			if(!(new File(mount_component_file_name).exists()))
-				continue;
-			ret_val+=file_add_source_item(mount_component_name,token_string,
-					mount_component_file_name,part_fr.get_charset());
+			if(new File(mount_component_file_name).exists())
+				ret_val+=file_add_source_item(mount_component_name,token_string,
+						mount_component_file_name,part_fr.get_charset());
 		}
 		return ret_val;
 	}

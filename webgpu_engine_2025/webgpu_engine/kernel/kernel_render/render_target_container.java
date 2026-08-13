@@ -32,11 +32,11 @@ public class render_target_container extends tree_search_container<render_target
 	
 	public void destroy()
 	{
-		clear();
 		if(target_array!=null) {
 			target_array.clear();
 			target_array=null;
 		}
+		super.destroy();
 	}
 	public render_target_container()
 	{
@@ -55,16 +55,16 @@ public class render_target_container extends tree_search_container<render_target
 	}
 	public void register_target(render_target new_rt)
 	{
-		ArrayList<render_target> p;
-
-		if((p=search(new_rt))==null){
+		var my_tree_node=search(new_rt);
+		
+		if(my_tree_node==null){
 			new_rt.target_id=target_array.size();
 			target_array.add(new_rt.target_id,new_rt);
 			add(new_rt,new_rt);
 		}else{
-			new_rt.target_id=p.get(0).target_id;
+			new_rt.target_id=my_tree_node.list.get(0).target_id;
 			target_array.set(new_rt.target_id,new_rt);
-			p.set(0,new_rt);
+			my_tree_node.list.set(0,new_rt);
 		}
 	}
 }

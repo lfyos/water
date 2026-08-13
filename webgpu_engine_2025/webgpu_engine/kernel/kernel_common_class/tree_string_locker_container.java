@@ -21,7 +21,9 @@ public class tree_string_locker_container extends tree_string_search_container<l
 			boolean do_destroy_flag,String locker_name[],int modify_number)
 	{
 		if(do_destroy_flag) {
-			for(ArrayList<locker_container> p;(p=first_value())!=null;) { 
+			tree_search_container_tree_node <String[],locker_container> first_tree_node;
+			while((first_tree_node=get_first_tree_node())!=null) {
+				ArrayList<locker_container> p=first_tree_node.list;
 				for(int index_id;(index_id=p.size()-1)>=0;) {
 					locker_container lc=p.remove(index_id);
 					while(lc.locker.getReadHoldCount()>0)
@@ -29,37 +31,38 @@ public class tree_string_locker_container extends tree_string_search_container<l
 					while(lc.locker.getWriteHoldCount()>0)
 						lc.locker.writeLock().unlock();
 				}
-				remove(first_key());
+				remove(first_tree_node.key);
 			}
 			return null;
 		}
 		
-		ArrayList<locker_container> list;
-		locker_container p;
+		locker_container locker_cont;
+		tree_search_container_tree_node<String[],locker_container> search_tree_node;
+		
 		
 		if(modify_number>=0){
 			int last_id;
-			for(list=add(locker_name,null);(last_id=list.size()-1)>0;)
-				list.remove(last_id);
-			if((p=list.get(0))==null) {
-				p=new locker_container();
-				list.set(0,p);
+			for(search_tree_node=add(locker_name,null);(last_id=search_tree_node.list.size()-1)>0;)
+				search_tree_node.list.remove(last_id);
+			if((locker_cont=search_tree_node.list.get(0))==null) {
+				locker_cont=new locker_container();
+				search_tree_node.list.set(0,locker_cont);
 			}
-			p.number+=modify_number;
+			locker_cont.number+=modify_number;
 		}else{
-			if((list=search(locker_name))==null)
+			if((search_tree_node=search(locker_name))==null)
 				return null;
-			if(list.size()<=0) {
+			if(search_tree_node.list.size()<=0) {
 				remove(locker_name);
 				return null;
 			}
-			p=list.get(0);
-			p.number+=modify_number;
+			locker_cont=search_tree_node.list.get(0);
+			locker_cont.number+=modify_number;
 			
-			if(p.number<=0)
+			if(locker_cont.number<=0)
 				remove(locker_name);
 		}
-		return p.locker;
+		return locker_cont.locker;
 	}
 	public void destroy()
 	{

@@ -16,6 +16,7 @@ import kernel_file_manager.file_reader;
 import kernel_part.part_loader_container;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_search_container_tree_node;
 import kernel_part.permanent_part_id_encoder;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
@@ -45,7 +46,7 @@ public class render_container
 			renders=null;
 		}
 		if(tree_renders!=null) {
-			tree_renders.clear();
+			tree_renders.destroy();
 			tree_renders=null;
 		}
 
@@ -75,10 +76,10 @@ public class render_container
 					tree_renders.add(new String[] {my_render.render_name},my_render);
 			}
 		}
-		ArrayList<render> my_render_list;
-		if((my_render_list=tree_renders.search(new String[]{my_render_name}))!=null)
-			if(my_render_list.size()>0)
-					return my_render_list.get(0);
+		tree_search_container_tree_node<String[],render> my_tree_node;
+		if((my_tree_node=tree_renders.search(new String[]{my_render_name}))!=null)
+			if(my_tree_node.list.size()>0)
+					return my_tree_node.list.get(0);
 		return null;
 	}
 	

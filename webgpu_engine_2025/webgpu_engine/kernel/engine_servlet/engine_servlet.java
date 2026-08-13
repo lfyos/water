@@ -199,13 +199,8 @@ public class engine_servlet extends HttpServlet
 			scene=null;
 		}
 		String configure_files[];
-		if((configure_files=get_engine_configure_files(config))!=null){
-			String scene_data_path_name			=configure_files[0];
-			String scene_temparatory_path_name	=configure_files[1];
-			String scene_environment_path_name	=configure_files[2];
-			scene=new system_scene(scene_data_path_name,
-						scene_temparatory_path_name,scene_environment_path_name);
-		}
+		if((configure_files=get_engine_configure_files(config))!=null)
+			scene=new system_scene(configure_files[0],configure_files[1],configure_files[2]);
 	}
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 		throws ServletException,IOException 

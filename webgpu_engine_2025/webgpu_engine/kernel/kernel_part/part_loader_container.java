@@ -7,6 +7,7 @@ import kernel_scene.system_parameter;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_common_class.tree_string_locker_container;
+import kernel_common_class.tree_search_container_tree_node;
 
 public class part_loader_container
 {
@@ -102,13 +103,14 @@ public class part_loader_container
 			String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par);
 			int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
 			String search_key[]=new String[]{boftal_token_str.substring(pre_length)};
-			ArrayList<buffer_object_file_modify_time_and_length> my_list;
+			tree_search_container_tree_node<String[],buffer_object_file_modify_time_and_length> my_tree_node;
+			
 			for(int i=0;i<boftal_number;i++) {
-				if((my_list=boftal_container.get(i).search(search_key))==null)
+				if((my_tree_node=boftal_container.get(i).search(search_key))==null)
 					continue;
-				if(my_list.size()<=0)
+				if(my_tree_node.list.size()<=0)
 					continue;
-				buffer_object_file_modify_time_and_length my_boftal=my_list.get(0);
+				buffer_object_file_modify_time_and_length my_boftal=my_tree_node.list.get(0);
 				long last_time=my_boftal.buffer_object_head_last_modify_time;
 				if(my_part.part_par.last_modified_time>last_time)
 					continue;

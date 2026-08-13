@@ -67,7 +67,7 @@ public class create_assemble_part
 			String my_search_key[]=new String[] {comp_p.part_name};
 			var component_list=part_component_container.search(my_search_key); 
 			if(component_list!=null) {
-				component_list.add(comp_p);
+				component_list.list.add(comp_p);
 				create_part_number+=my_create_part_number;
 				continue;
 			}

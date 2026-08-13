@@ -46,12 +46,11 @@ class part_comparator_for_part_search implements Comparator<part>
 		return 0;
 	}
 }
-
 public class part_container_for_part_search extends tree_search_container<part,part>
 {
 	public ArrayList<part>get_part_list()
 	{
-		var data_list=tree_get_value_list();
+		ArrayList<part> data_list=tree_get_value_list();
 		
 		for(int i=0,j=0,id=0,n=data_list.size();i<n;){
 			part id_part,j_part;
@@ -67,12 +66,11 @@ public class part_container_for_part_search extends tree_search_container<part,p
 			for(;i<j;i++)
 				data_list.get(i).part_par.assembly_precision2=id_part.part_par.assembly_precision2;
 		}
-		
 		return data_list;
 	}
 	public void destroy()
 	{
-		super.clear();
+		super.destroy();
 	}
 	public part_container_for_part_search(ArrayList<part> my_part_list)
 	{
@@ -83,7 +81,7 @@ public class part_container_for_part_search extends tree_search_container<part,p
 	}
 	public ArrayList<part> search_part(String my_part_system_name)
 	{
-		var data_list=get_part_list();
+		ArrayList<part>data_list=get_part_list();
 		
 		for(int begin_pointer=0,end_pointer=data_list.size()-1;;){
 			if(begin_pointer>end_pointer)
@@ -118,7 +116,7 @@ public class part_container_for_part_search extends tree_search_container<part,p
 				else
 					break;
 			}
-			ArrayList<part> ret_part=new ArrayList<part>();
+			ArrayList<part> ret_part_list=new ArrayList<part>();
 			boolean top_flag=false,bottom_flag=false;
 			for(int i=begin_pointer,ni=end_pointer;i<=ni;i++){
 				part my_part=data_list.get(i);
@@ -132,9 +130,9 @@ public class part_container_for_part_search extends tree_search_container<part,p
 						continue;
 					top_flag=true;
 				}
-				ret_part.add(my_part);
+				ret_part_list.add(my_part);
 			}
-			return ret_part;
+			return ret_part_list;
 		}
 	}
 }

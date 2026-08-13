@@ -63,7 +63,7 @@ public class component_core_2 extends component_core_1
 				if((p=search_parts.get(i))!=null) {
 					var my_part_type_string=ptss.search(new String[] {p.part_par.part_type_string});
 					if(my_part_type_string!=null)
-						if(my_part_type_string.size()>0)
+						if(my_part_type_string.list.size()>0)
 							effective_parts.add(p);
 				}
 		}

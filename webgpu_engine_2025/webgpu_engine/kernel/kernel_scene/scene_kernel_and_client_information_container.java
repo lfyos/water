@@ -24,7 +24,8 @@ public class scene_kernel_and_client_information_container
 	public client_information 		client_information;
 	private volatile int 			kernel_and_client_information_lock_number;
 	
-	public scene_kernel_and_client_information_container(scene_kernel_container my_scene_kernel_cont)
+	public scene_kernel_and_client_information_container(
+			scene_kernel_container my_scene_kernel_cont)
 	{
 		sk_and_ci_processing_number					=0;
 		scene_kernel_cont							=my_scene_kernel_cont;
@@ -50,11 +51,10 @@ public class scene_kernel_and_client_information_container
 		if(scene_kernel_cont.initilization_flag){
 			scene_kernel_cont.initilization_flag=false;
 			if(scene_kernel_cont.sk.component_cont==null){
-				component_load_source_container scene_component_load_source_cont;
-				scene_component_load_source_cont=new component_load_source_container(
-							system_component_load_source_cont);
+				component_load_source_container scene_component_load_source_cont=
+							new component_load_source_container(system_component_load_source_cont);
 				boolean load_scene_fail_flag=scene_kernel_cont.sk.load(
-						scene_component_load_source_cont,my_request_response,
+							scene_component_load_source_cont,my_request_response,
 							process_bar,system_boftal_container,string_locker_container);
 				scene_component_load_source_cont.destroy();
 				
