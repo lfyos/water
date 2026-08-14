@@ -63,7 +63,6 @@ public class comparator_for_part_container_for_process_sequence implements Compa
 		else
 			return (data_length_i<data_length_j)?-1:1;	//simple part process first
 	}
-	
 	public comparator_for_part_container_for_process_sequence(
 			double my_box_distance_difference_scale,
 			double my_buffer_data_length_difference_scale)

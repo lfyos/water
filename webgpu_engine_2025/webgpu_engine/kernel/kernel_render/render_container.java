@@ -49,22 +49,16 @@ public class render_container
 			tree_renders.destroy();
 			tree_renders=null;
 		}
-
-		if(system_part_package!=null) {
-			system_part_package.destroy();
+		if(system_part_package!=null) 
 			system_part_package=null;
-		}
+
 		if(type_part_package!=null) {
-			for(int i=0,ni=type_part_package.length;i<ni;i++) {
-				type_part_package[i].destroy();
+			for(int i=0,ni=type_part_package.length;i<ni;i++) 
 				type_part_package[i]=null;
-			}
 			type_part_package=null;
 		}
-		if(scene_part_package!=null) {
-			scene_part_package.destroy();
+		if(scene_part_package!=null)
 			scene_part_package=null;
-		}
 	}
 	public render search_render(String my_render_name)
 	{
@@ -143,8 +137,8 @@ public class render_container
 					if(pass_id==0)
 						all_number++;
 					else{
-						part_loader_cont.load(p,fast_load_type,system_par,scene_par,
-								string_locker_container,already_loaded_part,boftal_container);
+						part_loader_cont.load(p,fast_load_type,already_loaded_part,
+							string_locker_container,system_par,scene_par,boftal_container);
 						load_number++;
 						if(process_bar!=null)
 							process_bar.set_process_bar(false,

@@ -29,16 +29,17 @@ public class buffer_object_file_modify_time_and_length
 	}
 	public buffer_object_file_modify_time_and_length(file_reader fr)
 	{
+		buffer_object_file_modify_time_and_length_item bofmtli;
+		ArrayList<buffer_object_file_modify_time_and_length_item> bofmtli_list;
+		
 		buffer_object_head_last_modify_time	=fr.get_long();
 		buffer_object_head_length			=fr.get_long();
 		buffer_object_total_file_length		=buffer_object_head_length;
 		
 		list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
 		for(int i=0,ni=fr.get_int();i<ni;i++){
-			ArrayList<buffer_object_file_modify_time_and_length_item> bofmtli_list;
 			bofmtli_list=new ArrayList<buffer_object_file_modify_time_and_length_item>();
 			for(int j=0,nj=fr.get_int();j<nj;j++){
-				buffer_object_file_modify_time_and_length_item bofmtli;
 				bofmtli=new buffer_object_file_modify_time_and_length_item(
 						fr.get_long(),fr.get_long(),fr.get_boolean());
 				bofmtli_list.add(bofmtli_list.size(),bofmtli);
@@ -50,7 +51,6 @@ public class buffer_object_file_modify_time_and_length
 		simple_part_mesh=new part_rude(fr);
 		return;
 	}
-	
 	public buffer_object_file_modify_time_and_length(
 		part_rude pr,String root_file_name,String file_charset)
 	{
@@ -67,12 +67,9 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_head_length			=f.length();
 		buffer_object_total_file_length		=buffer_object_head_length;
 
-		buffer_object_file_modify_time_and_length_item my_item;
-		ArrayList<buffer_object_file_modify_time_and_length_item> my_item_arraylist;
-		String file_type[]=new String[]{".face",".edge",".point"};
-		
+		String file_type[]=new String[]{".face",".edge",".point"};		
 		for(int i=0,ni=file_type.length;i<ni;i++){
-			my_item_arraylist=list.get(i);
+			ArrayList<buffer_object_file_modify_time_and_length_item>my_item_arraylist=list.get(i);
 			for(int j=0;;j++){
 				String my_file_name=root_file_name+file_type[i]+j+".txt";
 				if(!((f=new File(my_file_name)).exists()))
@@ -81,8 +78,9 @@ public class buffer_object_file_modify_time_and_length
 					break;
 				if(f.length()<=0)
 					break;
+				buffer_object_file_modify_time_and_length_item my_item;
 				my_item=new buffer_object_file_modify_time_and_length_item(f.lastModified(),f.length(),
-						new File(root_file_name+file_type[i]+j+".in_head_flag").exists());
+								new File(root_file_name+file_type[i]+j+".in_head_flag").exists());
 				my_item_arraylist.add(my_item_arraylist.size(),my_item);
 				if(!(my_item.buffer_object_file_in_head_flag))
 					buffer_object_total_file_length+=my_item.buffer_object_text_file_length;
@@ -102,20 +100,21 @@ public class buffer_object_file_modify_time_and_length
 
 		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",list.size());
 		for(int i=0,ni=list.size();i<ni;i++){
-			my_item_arraylist=list.get(i);
+			ArrayList<buffer_object_file_modify_time_and_length_item> my_item_arraylist=list.get(i);
 			String file_type_str=i+":"+file_type[i].substring(1);
 			fw.println("/*\t\tbuffer_object_text_file_length["+file_type_str+"]\t*/\t",my_item_arraylist.size());
 			for(int j=0,nj=my_item_arraylist.size();j<nj;j++){
-				my_item=my_item_arraylist.get(j);
+				buffer_object_file_modify_time_and_length_item my_item=my_item_arraylist.get(j);
 				long t=my_item.buffer_object_file_last_modify_time;
+
 				fw.print  ("/*\t\t\tbuffer_object_file_last_modify_time\t["+file_type_str+","+j+"]\t*/\t",t);
 				fw.print  ("\t/*\t",sdf.format(new Date(t)));
 				fw.println("\t*/");
 
 				fw.println("/*\t\t\tbuffer_object_text_file_length\t\t["+file_type_str+","+j+"]\t*/\t",
-						my_item.buffer_object_text_file_length);
+					my_item.buffer_object_text_file_length);
 				fw.println("/*\t\t\tbuffer_object_file_in_head_flag\t\t["+file_type_str+","+j+"]\t*/\t",
-						my_item.buffer_object_file_in_head_flag?"true":"false");
+					my_item.buffer_object_file_in_head_flag?"true":"false");
 			}
 		}
 

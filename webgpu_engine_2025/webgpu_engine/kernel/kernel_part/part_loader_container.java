@@ -7,7 +7,6 @@ import kernel_scene.system_parameter;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_common_class.tree_string_locker_container;
-import kernel_common_class.tree_search_container_tree_node;
 
 public class part_loader_container
 {
@@ -16,7 +15,7 @@ public class part_loader_container
 	public void destroy()
 	{
 		part_loader pl;
-		if(part_loader_list!=null) {
+		if(part_loader_list!=null){
 			for(int i=0,ni=part_loader_list.size();i<ni;i++)
 				if((pl=part_loader_list.get(i))!=null)
 					pl.destroy();
@@ -26,9 +25,8 @@ public class part_loader_container
 	}
 	public part_loader_container()
 	{
-		part_loader_list			=new ArrayList<part_loader>();
+		part_loader_list=new ArrayList<part_loader>();
 	}
-	
 	private static void wait_for_part_loader_termination(part_loader pl,
 			system_parameter system_par,scene_parameter scene_par)
 	{
@@ -44,8 +42,6 @@ public class part_loader_container
 			debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
 		}
 	}
-
-	
 	public static void wait_for_completion(
 			ArrayList<part_loader>already_loaded_part,
 			system_parameter system_par,scene_parameter scene_par)
@@ -58,7 +54,6 @@ public class part_loader_container
 					already_loaded_part.remove(i);
 			}
 	}
-	
 	synchronized private void load_routine(part my_part,String fast_load_type,
 			system_parameter system_par,scene_parameter scene_par,
 			tree_string_locker_container string_locker_container,
@@ -91,39 +86,40 @@ public class part_loader_container
 		already_loaded_part.add(pl);
 	}
 	public void load(part my_part,String fast_load_type,
+			ArrayList<part_loader> already_loaded_part,
+			tree_string_locker_container string_locker_container,
 			system_parameter system_par,scene_parameter scene_par,
-			tree_string_locker_container string_locker_container,ArrayList<part_loader> already_loaded_part,
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container)
 	{
+		int boftal_number;
+		
 		switch(fast_load_type){
 		case "fast":
-			int boftal_number;
-			if((boftal_number=boftal_container.size())<=0)
-				break;
-			String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par);
-			int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
-			String search_key[]=new String[]{boftal_token_str.substring(pre_length)};
-			tree_search_container_tree_node<String[],buffer_object_file_modify_time_and_length> my_tree_node;
-			
-			for(int i=0;i<boftal_number;i++) {
-				if((my_tree_node=boftal_container.get(i).search(search_key))==null)
-					continue;
-				if(my_tree_node.list.size()<=0)
-					continue;
-				buffer_object_file_modify_time_and_length my_boftal=my_tree_node.list.get(0);
-				long last_time=my_boftal.buffer_object_head_last_modify_time;
-				if(my_part.part_par.last_modified_time>last_time)
-					continue;
-				my_part.boftal=my_boftal;
-				if(my_part.part_mesh==null)
-					my_part.part_mesh=my_part.boftal.simple_part_mesh;
-				if(my_part.part_mesh!=null)
-					my_part.part_mesh.free_memory();
-				return;
+			if((boftal_number=boftal_container.size())>0){
+				String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par);
+				int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
+				String search_key[]=new String[]{boftal_token_str.substring(pre_length)};
+				
+				for(int i=0;i<boftal_number;i++){
+					var my_tree_node=boftal_container.get(i).search(search_key);
+					if(my_tree_node!=null)
+						if(my_tree_node.list.size()>0){
+							var my_boftal=my_tree_node.list.get(0);
+							long last_time=my_boftal.buffer_object_head_last_modify_time;
+							if(my_part.part_par.last_modified_time<=last_time){
+								my_part.boftal=my_boftal;
+								if(my_part.part_mesh==null)
+									my_part.part_mesh=my_part.boftal.simple_part_mesh;
+								else if(my_part.part_mesh!=null)
+									my_part.part_mesh.free_memory();
+								return;
+							}
+						}
+				}
 			}
 			break;
 		}
-
+		
 		try{
 			load_routine(my_part,fast_load_type,system_par,scene_par,
 						string_locker_container,already_loaded_part);

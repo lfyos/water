@@ -24,12 +24,13 @@ public class part_loader extends Thread
 	{
 		return is_loading_flag;
 	}
-	
 	public void destroy()
 	{
-		loaded_part=null;
-		system_par=null;
-		scene_par=null;
+		loaded_part				=null;
+		fast_load_type			=null;
+		system_par				=null;
+		scene_par				=null;
+		string_locker_container	=null;
 	}
 	public part_loader(part my_loaded_part,String my_fast_load_type,
 			system_parameter my_system_par,scene_parameter my_scene_par,
@@ -43,7 +44,6 @@ public class part_loader extends Thread
 		string_locker_container	=my_string_locker_container;
 		start();
 	}
-	
 	public void run()
 	{
 		String part_temporary_file_directory=file_directory.part_file_directory(

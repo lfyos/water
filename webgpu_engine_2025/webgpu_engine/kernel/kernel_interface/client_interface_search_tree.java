@@ -26,7 +26,7 @@ public class client_interface_search_tree
 			tree_search_container_tree_node<String[],client_interface> first_tree_node;
 			if((first_tree_node=tree.get_first_tree_node())==null)
 				break;
-			long my_touch_time=first_tree_node.touch_time;
+			long 							my_touch_time				=first_tree_node.touch_time;
 			String 							my_client_id_and_user_name[]=first_tree_node.key;
 			ArrayList<client_interface> 	my_client_interface_list	=first_tree_node.list;
 			

@@ -25,7 +25,6 @@ class part_arraylist
 		last_time=0;
 	}
 };
-
 class comparator_for_part_package_collector extends comparator_for_part_container_for_process_sequence
 {
 	public static int package_compare(part s,part t)
@@ -57,55 +56,52 @@ class comparator_for_part_package_collector extends comparator_for_part_containe
 
 class part_package_collector extends tree_search_container<part,part>
 {
-	public part_arraylist part_package[];
-	public ArrayList<part>data_list;
-
+	public ArrayList<part_arraylist> part_package;
+	
 	public part_package_collector(ArrayList<part> my_part_list,system_parameter system_par)
 	{
-		super(
-			new comparator_for_part_package_collector(
+		super(new comparator_for_part_package_collector(
 				system_par.box_distance_difference_scale,
 				system_par.buffer_data_length_difference_scale));
+		
+		part_package=new ArrayList<part_arraylist>();
 		
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)
 				add(my_part,my_part);
-		data_list=tree_get_value_list();
-		
 		
 		int package_number=0;
 		long my_package_length=0;
+		ArrayList<part>data_list=tree_get_value_list();
 		
 		for(int i=0,ni=data_list.size();i<ni;i++){
-			part p=data_list.get(i);
-			p.part_package_id=package_number;
-			if(p.boftal==null)
+			part my_part=data_list.get(i);
+			my_part.part_package_id=package_number;
+			if(my_part.boftal==null)
 				debug_information.println("Find null boftal:	",
-						p.system_name+"	"+p.directory_name+p.mesh_file_name);
+						my_part.system_name+"	"+my_part.directory_name+my_part.mesh_file_name);
 			else
-				my_package_length+=p.boftal.buffer_object_head_length;
+				my_package_length+=my_part.boftal.buffer_object_head_length;
+			
+			while(package_number>(part_package.size()-1))
+				part_package.add(new part_arraylist());
+			
+			part_arraylist my_part_arraylist=part_package.get(my_part.part_package_id);
+			
+			my_part.part_package_sequence_id=my_part_arraylist.list.size();
+			my_part_arraylist.list.add(my_part.part_package_sequence_id,my_part);
+			
+			long my_last_time=my_part.boftal.buffer_object_head_last_modify_time;
+			if(my_last_time<my_part.part_par.last_modified_time)
+				my_last_time=my_part.part_par.last_modified_time;
+			if(my_part_arraylist.last_time<my_last_time)
+				my_part_arraylist.last_time=my_last_time;
+			
 			if((i<(ni-1))&&(my_package_length<system_par.max_buffer_object_head_package_length))
-				if(comparator_for_part_package_collector.package_compare(p,data_list.get(i+1))==0)
+				if(comparator_for_part_package_collector.package_compare(my_part,data_list.get(i+1))==0)
 					continue;
 			package_number++;
 			my_package_length=0;
-		}
-
-		part_package=new part_arraylist[package_number];
-		for(int i=0;i<package_number;i++)
-			part_package[i]=new part_arraylist();
-
-		for(int i=0,ni=data_list.size();i<ni;i++){
-			part p=data_list.get(i);
-			int part_package_id=p.part_package_id;
-			int part_package_sequence_id=part_package[part_package_id].list.size();
-			part_package[part_package_id].list.add(part_package_sequence_id,p);
-			p.part_package_sequence_id=part_package_sequence_id;
-			long my_last_time=p.boftal.buffer_object_head_last_modify_time;
-			if(my_last_time<p.part_par.last_modified_time)
-				my_last_time=p.part_par.last_modified_time;
-			if(part_package[part_package_id].last_time<my_last_time)
-				part_package[part_package_id].last_time=my_last_time;
 		}
 	}
 };
@@ -115,12 +111,6 @@ public class part_package
 	public String	package_file_name[];
 	public long		package_length[],package_last_time[];
 	
-	public void destroy()
-	{
-		package_file_name	=null;
-		package_length		=null;
-		package_last_time	=null;
-	}
 	public part_package()
 	{
 		package_file_name	=new String[0];
@@ -142,11 +132,11 @@ public class part_package
 			package_last_time[i]=pp.package_last_time[i];
 	}
 	private void create_package_boftal(
-			String boftal_data_file_name,String file_charset,ArrayList<part> data_list,
+			String boftal_data_file_name,ArrayList<part>my_part_array_list,
 			system_parameter system_par,scene_parameter scene_par,
 			client_process_bar process_bar,String process_bar_title)
 	{
-		int part_number=data_list.size();
+		int part_number=my_part_array_list.size();
 		
 		debug_information.println();
 		debug_information.println("Begin create_package_boftal,Total part number:",part_number+",	"+boftal_data_file_name);
@@ -156,11 +146,11 @@ public class part_package
 			process_bar.set_process_bar(true, process_bar_title,"",0,part_number);
 
 		int cut_directory_length=system_par.temporary_file_par.temporary_root_directory_name.length();
-		file_writer fw=new file_writer(boftal_data_file_name+".tmp",file_charset);
+		file_writer fw=new file_writer(boftal_data_file_name+".tmp",system_par.local_data_charset);
 		fw.println(part_number);
 		
 		for(int i=0;i<part_number;i++) {
-			part boftal_part=data_list.get(i);
+			part boftal_part=my_part_array_list.get(i);
 			String part_temporary_file_directory=file_directory.
 					part_file_directory(boftal_part,system_par,scene_par);
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
@@ -199,16 +189,15 @@ public class part_package
 		String package_directory_name	=file_directory.package_file_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name	=package_directory_name+"package_data.txt";
 		String boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
+		String my_lock_key				=package_directory_name+"package.lock";
 
 		part_package_collector ppc=new part_package_collector(rc.part_array_list(part_type_id),system_par);
 		
-		int package_number=ppc.part_package.length;
-
+		int package_number=ppc.part_package.size();
 		package_length	 =new long	 [package_number];
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 
-		String my_lock_key=package_directory_name+"package.lock";
 		string_locker_container.write_lock(my_lock_key);
 		
 		if(new File(package_data_file_name).exists()) {
@@ -230,7 +219,7 @@ public class part_package
 					package_last_time[i]=fr.get_long();
 					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
 					
-					if(new File(package_file_name[i]).lastModified()<ppc.part_package[i].last_time){
+					if(new File(package_file_name[i]).lastModified()<ppc.part_package.get(i).last_time){
 						not_create_flag=false;
 						break;
 					}
@@ -257,27 +246,33 @@ public class part_package
 			file_writer fw=new file_writer(my_package_file_name,system_par.network_data_charset);
 			fw.println("[");
 	
-			for(int j=0,nj=ppc.part_package[i].list.size();j<nj;j++) {
-				part p=ppc.part_package[i].list.get(j);
-				String my_directory=file_directory.part_file_directory(p,system_par,scene_par);
-				compress_file_data.do_uncompress(new File(my_tmp_file_name),
-					new File(my_directory+"mesh.head.gzip_text"),system_par.response_block_size,"gzip");
+			ArrayList<part> my_part_list=ppc.part_package.get(i).list;
+			for(int j=0,nj=my_part_list.size();j<nj;j++){
+				part my_part=my_part_list.get(j);
+				String my_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
+				compress_file_data.do_uncompress(
+					new File(my_tmp_file_name),
+					new File(my_directory+"mesh.head.gzip_text"),
+					system_par.response_block_size,"gzip");
 				fw.print_file(my_tmp_file_name).println((j<(nj-1))?",":"");
 				
-				debug_information.print  ("	part user_name:	",	p.user_name);
-				debug_information.print  ("		part type:	",	p.part_par.part_type_string);
-				if(p.is_normal_part())
-					debug_information.println("		part mesh_file_name:	",p.directory_name+p.mesh_file_name);
+				debug_information.print  ("	part user_name:	",	my_part.user_name);
+				debug_information.print  ("		part type:	",	my_part.part_par.part_type_string);
+				if(my_part.is_normal_part())
+					debug_information.println("		part mesh_file_name:	",
+							my_part.directory_name+my_part.mesh_file_name);
 				else 
 					debug_information.println(
-						p.is_bottom_box_part()?"		Bottom box part":"		Top box part",
-						",permanent_part_id:"	+p.permanent_part_id);
+							my_part.is_bottom_box_part()?"		Bottom box part":"		Top box part",
+							",permanent_part_id:"	+my_part.permanent_part_id);
 			}
 			fw.println("]");
 			fw.close();
 						
-			compress_file_data.do_compress(new File(my_package_file_name),
-					new File(my_tmp_file_name),system_par.response_block_size,"gzip");
+			compress_file_data.do_compress(
+					new File(my_package_file_name),
+					new File(my_tmp_file_name),
+					system_par.response_block_size,"gzip");
 			file_writer.file_rename(my_tmp_file_name,my_package_file_name);
 
 			File f=new File(my_package_file_name);
@@ -294,8 +289,8 @@ public class part_package
 				println();
 		fw.close();
 		
-		create_package_boftal(boftal_data_file_name,system_par.local_data_charset,
-			ppc.data_list,system_par,scene_par,process_bar,boftal_process_bar_title);
+		create_package_boftal(boftal_data_file_name,ppc.tree_get_value_list(),
+				system_par,scene_par,process_bar,boftal_process_bar_title);
 	
 		string_locker_container.write_unlock(my_lock_key);
 	

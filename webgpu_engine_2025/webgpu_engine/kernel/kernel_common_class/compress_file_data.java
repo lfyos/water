@@ -14,7 +14,7 @@ import java.util.zip.GZIPInputStream;
 
 public class compress_file_data 
 {
-	private static boolean gzip_compress(File f,File gf,byte data_buf[])
+	private static boolean gzip_compress(File original_f,File gf,byte data_buf[])
 	{
 		FileInputStream fis=null;
 		BufferedInputStream bis=null;
@@ -23,7 +23,7 @@ public class compress_file_data
 		
 		boolean ret_val;
 		try{
-			fis=new FileInputStream(f);
+			fis=new FileInputStream(original_f);
 			bis=new BufferedInputStream(fis);
 			fos=new FileOutputStream(gf);
 			zos=new GZIPOutputStream(fos);			
@@ -35,7 +35,7 @@ public class compress_file_data
 		}catch(Exception e){
 			e.printStackTrace();
 			
-			debug_information.println("Do GZIP file compress error:source\t",f.getAbsolutePath());
+			debug_information.println("Do GZIP file compress error:source\t",original_f.getAbsolutePath());
 			debug_information.println("Do GZIP file compress error:target\t",gf.getAbsolutePath());
 			debug_information.println("Do GZIP file compress error:error\t",e.toString());
 			
@@ -112,7 +112,7 @@ public class compress_file_data
 			}
 		return ret_val;
 	}
-	private static boolean deflate_compress(File f,File gf,byte data_buf[])
+	private static boolean deflate_compress(File original_f,File zip_f,byte data_buf[])
 	{
 		FileInputStream 		fis=null;
 		BufferedInputStream 	bis=null;
@@ -121,9 +121,9 @@ public class compress_file_data
 		
 		boolean ret_val;
 		try{
-			fis=new FileInputStream(f);
+			fis=new FileInputStream(original_f);
 			bis=new BufferedInputStream(fis);
-			fos=new FileOutputStream(gf);
+			fos=new FileOutputStream(zip_f);
 			zos=new DeflaterOutputStream(fos);
 			
 			for(int len;(len=bis.read(data_buf,0,data_buf.length))>=0;)
@@ -133,8 +133,8 @@ public class compress_file_data
 		}catch(Exception e){
 			e.printStackTrace();
 			
-			debug_information.println("Do DEFLATE file compress error:source\t",f.getAbsolutePath());
-			debug_information.println("Do DEFLATE file compress error:target\t",gf.getAbsolutePath());
+			debug_information.println("Do DEFLATE file compress error:source\t",original_f.getAbsolutePath());
+			debug_information.println("Do DEFLATE file compress error:target\t",zip_f.getAbsolutePath());
 			debug_information.println("Do DEFLATE file compress error:error\t",e.toString());
 			
 			ret_val=true;
@@ -161,7 +161,7 @@ public class compress_file_data
 			}
 		return ret_val;
 	} 
-	private static boolean deflate_uncompress(File f,File gf,byte data_buf[])
+	private static boolean deflate_uncompress(File f,File zip_f,byte data_buf[])
 	{
 		FileInputStream 	fis=null;
 		BufferedInputStream bis=null;
@@ -170,7 +170,7 @@ public class compress_file_data
 		
 		boolean ret_val;
 		try{
-			fis=new FileInputStream(gf);
+			fis=new FileInputStream(zip_f);
 			bis=new BufferedInputStream(fis);
 			gis=new DeflaterInputStream(bis);
 			fos=new FileOutputStream(f);
@@ -182,7 +182,7 @@ public class compress_file_data
 		}catch(Exception e){
 			e.printStackTrace();
 			
-			debug_information.println("Do DEFLATE file uncompress error:source\t",gf.getAbsolutePath());
+			debug_information.println("Do DEFLATE file uncompress error:source\t",zip_f.getAbsolutePath());
 			debug_information.println("Do DEFLATE file uncompress error:target\t",f.getAbsolutePath());
 			debug_information.println("Do DEFLATE file uncompress error:error\t",e.toString());
 			
@@ -210,29 +210,29 @@ public class compress_file_data
 			}
 		return ret_val;
 	} 
-	private static boolean br_compress(File f,File gf,byte data_buf[])
+	private static boolean br_compress(File original_f,File zip_f,byte data_buf[])
 	{
 		return true;
 	} 
-	private static boolean br_uncompress(File f,File gf,byte data_buf[])
+	private static boolean br_uncompress(File original_f,File zip_f,byte data_buf[])
 	{
 		return true;
 	} 
-	public static boolean do_compress(File f,File gf,
+	public static boolean do_compress(File original_f,File zip_f,
 			int response_block_size,String compress_response_header)
 	{
-		if(gf.exists()?false:true)
-			file_writer.make_directory(gf.getAbsolutePath());
+		if(zip_f.exists()?false:true)
+			file_writer.make_directory(zip_f.getAbsolutePath());
 		
 		byte data_buf[]=new byte[response_block_size];
-		gf.delete();
+		zip_f.delete();
 		switch(compress_response_header) {
 		case "br":
-			return br_compress(f,gf,data_buf);
+			return br_compress(original_f,zip_f,data_buf);
 		case "gzip":
-			return gzip_compress(f,gf,data_buf);
+			return gzip_compress(original_f,zip_f,data_buf);
 		case "deflate":
-			return deflate_compress(f,gf,data_buf);
+			return deflate_compress(original_f,zip_f,data_buf);
 		default:
 			return true;
 		}
