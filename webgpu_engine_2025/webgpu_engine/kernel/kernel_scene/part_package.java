@@ -53,7 +53,6 @@ class comparator_for_part_package_collector extends comparator_for_part_containe
 		super(my_box_distance_difference_scale,my_buffer_data_length_difference_scale);
 	}
 }
-
 class part_package_collector extends tree_search_container<part,part>
 {
 	public ArrayList<part_arraylist> part_package;
@@ -64,15 +63,14 @@ class part_package_collector extends tree_search_container<part,part>
 				system_par.box_distance_difference_scale,
 				system_par.buffer_data_length_difference_scale));
 		
-		part_package=new ArrayList<part_arraylist>();
-		
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)
 				add(my_part,my_part);
 		
 		int package_number=0;
 		long my_package_length=0;
-		ArrayList<part>data_list=tree_get_value_list();
+		var data_list=tree_get_value_list();
+		part_package=new ArrayList<part_arraylist>();
 		
 		for(int i=0,ni=data_list.size();i<ni;i++){
 			part my_part=data_list.get(i);
@@ -97,15 +95,16 @@ class part_package_collector extends tree_search_container<part,part>
 			if(my_part_arraylist.last_time<my_last_time)
 				my_part_arraylist.last_time=my_last_time;
 			
-			if((i<(ni-1))&&(my_package_length<system_par.max_buffer_object_head_package_length))
-				if(comparator_for_part_package_collector.package_compare(my_part,data_list.get(i+1))==0)
-					continue;
+			if(i<(ni-1))
+				if(my_package_length<system_par.max_buffer_object_head_package_length)
+					if(comparator_for_part_package_collector.
+						package_compare(my_part,data_list.get(i+1))==0)
+							continue;
 			package_number++;
 			my_package_length=0;
 		}
 	}
 };
-
 public class part_package 
 {
 	public String	package_file_name[];
@@ -179,7 +178,8 @@ public class part_package
 		debug_information.println();
 		debug_information.println("End create_package_boftal,Total part number:",part_number+",	"+boftal_data_file_name);
 		debug_information.println();
-
+		
+		return;
 	}
 	public part_package(String fast_load_type,
 		client_process_bar process_bar,tree_string_locker_container string_locker_container,
@@ -189,7 +189,7 @@ public class part_package
 		String package_directory_name	=file_directory.package_file_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name	=package_directory_name+"package_data.txt";
 		String boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
-		String my_lock_key				=package_directory_name+"package.lock";
+		String package_lock_key			=package_directory_name+"package.lock";
 
 		part_package_collector ppc=new part_package_collector(rc.part_array_list(part_type_id),system_par);
 		
@@ -198,7 +198,7 @@ public class part_package
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 
-		string_locker_container.write_lock(my_lock_key);
+		string_locker_container.write_lock(package_lock_key);
 		
 		if(new File(package_data_file_name).exists()) {
 			if(fast_load_type.compareTo("fast")==0) {
@@ -208,7 +208,7 @@ public class part_package
 					package_last_time[i]=fr.get_long();
 					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
 				}
-				string_locker_container.write_unlock(my_lock_key);
+				string_locker_container.write_unlock(package_lock_key);
 				return;
 			}
 			if(new File(boftal_data_file_name).exists()){
@@ -226,7 +226,7 @@ public class part_package
 				}
 				fr.close();
 				if(not_create_flag) {
-					string_locker_container.write_unlock(my_lock_key);
+					string_locker_container.write_unlock(package_lock_key);
 					return;
 				}
 			}
@@ -292,7 +292,7 @@ public class part_package
 		create_package_boftal(boftal_data_file_name,ppc.tree_get_value_list(),
 				system_par,scene_par,process_bar,boftal_process_bar_title);
 	
-		string_locker_container.write_unlock(my_lock_key);
+		string_locker_container.write_unlock(package_lock_key);
 	
 		return;
 	}

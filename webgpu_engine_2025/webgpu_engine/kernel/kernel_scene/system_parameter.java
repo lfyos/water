@@ -288,14 +288,14 @@ public class system_parameter
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		http_date_str=new http_date_string();
 		
-		tree_search_container_tree_node<String[],String> tree_node;
-		ArrayList<tree_search_container_tree_node<String[],String>>tree_list;
+		tree_search_container_tree_node<String,String> tree_node;
+		ArrayList<tree_search_container_tree_node<String,String>>tree_list;
 		tree_list=content_type_change_name.tree_get_node_list();
 		for(int i=0,ni=tree_list.size();i<ni;i++){
 			tree_node=tree_list.get(i);
 			for(int j=0,nj=tree_node.list.size();j<nj;j++)
 				if(tree_node.list.get(j).indexOf("link:")==0){
-					link_file_extend_name=tree_node.key[0];
+					link_file_extend_name=tree_node.key;
 					return;
 				}
 		}

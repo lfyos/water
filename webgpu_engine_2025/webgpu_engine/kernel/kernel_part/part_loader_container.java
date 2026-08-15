@@ -98,7 +98,7 @@ public class part_loader_container
 			if((boftal_number=boftal_container.size())>0){
 				String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par);
 				int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
-				String search_key[]=new String[]{boftal_token_str.substring(pre_length)};
+				String search_key=boftal_token_str.substring(pre_length);
 				
 				for(int i=0;i<boftal_number;i++){
 					var my_tree_node=boftal_container.get(i).search(search_key);

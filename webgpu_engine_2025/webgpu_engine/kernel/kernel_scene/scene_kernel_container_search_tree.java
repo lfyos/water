@@ -11,14 +11,14 @@ import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
 import kernel_common_class.tree_string_locker_container;
-import kernel_common_class.tree_string_search_container;
 import kernel_component.component_load_source_container;
 import kernel_common_class.tree_search_container_tree_node;
+import kernel_common_class.tree_string_array_search_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class scene_kernel_container_search_tree 
 {
-	private tree_string_search_container<scene_kernel_container> tree;
+	private tree_string_array_search_container<scene_kernel_container> tree;
 	
 	private render_container original_render;
 	public component_load_source_container system_component_load_source_cont;
@@ -235,7 +235,7 @@ public class scene_kernel_container_search_tree
 	}
 	public scene_kernel_container_search_tree()
 	{
-		tree=new tree_string_search_container<scene_kernel_container>();
+		tree=new tree_string_array_search_container<scene_kernel_container>();
 		
 		system_component_load_source_cont		=new component_load_source_container();
 		

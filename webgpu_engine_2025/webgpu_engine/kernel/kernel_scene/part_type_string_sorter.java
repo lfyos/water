@@ -16,7 +16,7 @@ public class part_type_string_sorter extends tree_string_search_container<String
 						break;
 					}
 					str=f.get_string();
-					add(new String[] {str},str);
+					add(str,str);
 				}
 		if(type_string!=null)
 			for(int index_id;type_string.length()>0;)
@@ -24,10 +24,10 @@ public class part_type_string_sorter extends tree_string_search_container<String
 					type_string=type_string.substring(1);
 				else if(index_id>0) {
 					str=type_string.substring(0,index_id);
-					add(new String[] {str},str);
+					add(str,str);
 					type_string=type_string.substring(index_id+1);
 				}else{
-					add(new String[] {type_string},type_string);
+					add(type_string,type_string);
 					break;
 				}
 	}

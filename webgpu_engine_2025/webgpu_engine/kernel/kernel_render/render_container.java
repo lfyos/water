@@ -67,11 +67,11 @@ public class render_container
 			for(int i=0,ni=renders.size();i<ni;i++) {
 				render my_render;
 				if((my_render=renders.get(i))!=null)
-					tree_renders.add(new String[] {my_render.render_name},my_render);
+					tree_renders.add(my_render.render_name,my_render);
 			}
 		}
-		tree_search_container_tree_node<String[],render> my_tree_node;
-		if((my_tree_node=tree_renders.search(new String[]{my_render_name}))!=null)
+		tree_search_container_tree_node<String,render> my_tree_node;
+		if((my_tree_node=tree_renders.search(my_render_name))!=null)
 			if(my_tree_node.list.size()>0)
 					return my_tree_node.list.get(0);
 		return null;

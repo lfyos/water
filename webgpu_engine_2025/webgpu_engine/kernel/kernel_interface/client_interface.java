@@ -66,10 +66,9 @@ public class client_interface
 			return null;
 		}
 		
-		String my_key[]=new String[] {request_response.channel_string};
-		tree_search_container_tree_node<String[],scene_kernel_and_client_information_container>my_tree_node;
+		tree_search_container_tree_node<String,scene_kernel_and_client_information_container>my_tree_node;
 	
-		if((my_tree_node=tree.search(my_key))==null) {
+		if((my_tree_node=tree.search(request_response.channel_string))==null) {
 			debug_information.print  ("Search client_interface fail,list is null,Client ID is ",request_response.client_id);
 			debug_information.println(",channel_id is ",request_response.channel_string);
 			return null;
@@ -81,13 +80,13 @@ public class client_interface
 		};
 		scene_kernel_and_client_information_container p=my_tree_node.list.get(0);
 		if(p.client_information==null){
-			tree.move_to_first(my_key);
+			tree.move_to_first(request_response.channel_string);
 			debug_information.println("my_value.client_information==null,Client ID is ",request_response.client_id);
 			debug_information.println(",channel_id is ",request_response.channel_string);
 			return null;
 		}
 		if(p.scene_kernel_cont==null){
-			tree.move_to_first(my_key);
+			tree.move_to_first(request_response.channel_string);
 			debug_information.println("my_value.scene_kernel_cont==null,Client ID is ",request_response.client_id);
 			debug_information.println(",channel_id is ",request_response.channel_string);
 			return null;
@@ -131,7 +130,7 @@ public class client_interface
 			client_process_bar process_bar;
 			if((process_bar=get_process_bar_routine(request_response))!=null)
 				process_bar.touch_time=0;
-			tree.move_to_first(new String[] {request_response.channel_string});
+			tree.move_to_first(request_response.channel_string);
 			break;
 		default:
 			try{
@@ -226,17 +225,15 @@ public class client_interface
 		my_lock.lock();
 		created_sk_and_ci.modify_kernel_and_client_information_lock_number(-1);
 		do {
-			String my_tree_key[];
 			if(created_scene_kernel_only.sk!=null)
 				if(created_scene_kernel_only.sk.component_cont!=null){
 					statistics_user.user_scene_kernel_number++;
 					statistics_user.user_scene_component_number
 						+=created_scene_kernel_only.sk.component_cont.component_number;
-					my_tree_key=new String[]{created_sk_and_ci.client_information.channel_id};
-					tree.add(my_tree_key,created_sk_and_ci);
+					tree.add(created_sk_and_ci.client_information.channel_id,created_sk_and_ci);
 					break;
 				}
-			my_tree_key=new String[]{"fail_scene"};
+			String my_tree_key="fail_scene";
 			tree.add(my_tree_key,created_sk_and_ci);
 			tree.move_to_first(my_tree_key);
 		}while(false);
@@ -405,7 +402,7 @@ public class client_interface
 	{
 		while(tree.size()>0){
 			var first_tree_node	=tree.get_first_tree_node();
-			String	my_key[]	=first_tree_node.key;
+			String	my_key		=first_tree_node.key;
 			long	touch_time	=first_tree_node.touch_time;
 			
 			for(var my_list=first_tree_node.list;my_list.size()>0;){
@@ -477,7 +474,7 @@ public class client_interface
 	{
 		scene_kernel sk;
 		scene_kernel_and_client_information_container skci_cont;
-		tree_search_container_tree_node<String[],scene_kernel_and_client_information_container> my_tree_node;
+		tree_search_container_tree_node<String,scene_kernel_and_client_information_container> my_tree_node;
 		
 		if(tree!=null) {
 			while(tree.size()>0)

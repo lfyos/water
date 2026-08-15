@@ -41,25 +41,27 @@ public class part_process_sequence
 	private void init_process_sequence(render_container render_cont,
 			double my_box_distance_difference_scale,double my_buffer_data_length_difference_scale)
 	{
-		part p;
-		buffer_object_file_modify_time_and_length_item item;
-		ArrayList<buffer_object_file_modify_time_and_length_item>item_list;
-		
-		var sort_parts=new part_container_for_process_sequence(render_cont.part_array_list(-1),
-				my_box_distance_difference_scale,my_buffer_data_length_difference_scale).data_list;
+		ArrayList<part> my_part_list=new part_container_for_process_sequence(render_cont.part_array_list(-1),
+				my_box_distance_difference_scale,my_buffer_data_length_difference_scale).tree_get_value_list();
 		
 		total_file_number		=0;
 		total_data_length		=0;
-		process_parts_sequence	=new int[sort_parts.size()][];
+		process_parts_sequence	=new int[my_part_list.size()][];
 		
-		for(int i=0,ni=sort_parts.size();i<ni;i++) {
-			for(int j=0,nj=(p=sort_parts.get(i)).boftal.list.size();j<nj;j++)
-				for(int k=0,nk=(item_list=p.boftal.list.get(j)).size();k<nk;k++)
-					if(!((item=item_list.get(k)).buffer_object_file_in_head_flag)){
+		for(int i=0,ni=my_part_list.size();i<ni;i++) {
+			part my_part=my_part_list.get(i);
+			for(int j=0,nj=my_part.boftal.boftal_list.size();j<nj;j++) {
+				ArrayList<buffer_object_file_modify_time_and_length_item>my_boftal_list;
+				my_boftal_list=my_part.boftal.boftal_list.get(j);
+				for(int k=0,nk=my_boftal_list.size();k<nk;k++) {
+					buffer_object_file_modify_time_and_length_item my_boftal=my_boftal_list.get(k);
+					if(!(my_boftal.buffer_object_file_in_head_flag)){
 						total_file_number++;
-						total_data_length+=item.buffer_object_text_file_length;
+						total_data_length+=my_boftal.buffer_object_text_file_length;
 					}
-			process_parts_sequence[i]=new int[]{p.render_id,p.part_id};
+				}
+			}
+			process_parts_sequence[i]=new int[]{my_part.render_id,my_part.part_id};
 		}
 	}
 	private void init_package_sequence(render_container render_cont)
@@ -181,10 +183,14 @@ public class part_process_sequence
 			}
 		}
 	}
-	public part_process_sequence(render_container render_cont,
-			double my_box_distance_difference_scale,double my_buffer_data_length_difference_scale)
+	public part_process_sequence(
+			render_container render_cont,
+			double my_box_distance_difference_scale,
+			double my_buffer_data_length_difference_scale)
 	{
-		init_process_sequence(render_cont,my_box_distance_difference_scale,my_buffer_data_length_difference_scale);
+		init_process_sequence(render_cont,
+				my_box_distance_difference_scale,
+				my_buffer_data_length_difference_scale);
 		init_package_sequence(render_cont);
 		init_package_priority();
 	}

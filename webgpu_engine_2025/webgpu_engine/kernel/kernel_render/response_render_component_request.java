@@ -129,11 +129,11 @@ public class response_render_component_request
 		
 		int ret_val=0;
 		String type_str[]={"face","edge","point"};
-		
+
 		for(int i=0,ni=type_str.length;i<ni;i++){
-			ArrayList<buffer_object_file_modify_time_and_length_item> item_list=p.boftal.list.get(i);
+			ArrayList<buffer_object_file_modify_time_and_length_item>item_list;
 			ci.request_response.print((i<=0)?"[":",[");
-			for(int j=0,nj=item_list.size();j<nj;j++){
+			for(int j=0,nj=(item_list=p.boftal.boftal_list.get(i)).size();j<nj;j++){
 				buffer_object_file_modify_time_and_length_item item=item_list.get(j);
 				ci.request_response.print((j<=0)?"[":",[");
 				if(!(item.buffer_object_file_in_head_flag)){

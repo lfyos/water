@@ -141,7 +141,7 @@ public class scene_parameter
 				continue;
 			if((parameter_value=parameter_value.trim()).length()<=0)
 				continue;
-			client_parameter_name.add(new String[]{parameter_name},parameter_value);
+			client_parameter_name.add(parameter_name,parameter_value);
 		}
 	}
 	private void caculate_scene_temporary_directory_name(
@@ -180,13 +180,12 @@ public class scene_parameter
 					my_temporary_directory_name+=str_array[i]+File.separatorChar;
 			}
 		
-		ArrayList<tree_search_container_tree_node<String[],String>>my_client_parameter_name_list;
+		ArrayList<tree_search_container_tree_node<String,String>>my_client_parameter_name_list;
 		my_client_parameter_name_list=client_parameter_name.tree_get_node_list();
 		for(int i=0,ni=my_client_parameter_name_list.size();i<ni;i++) {
-			tree_search_container_tree_node<String[],String> my_node=my_client_parameter_name_list.get(i);
-			for(int j=0,nj=my_node.key.length;j<nj;j++)
-				if((str=file_directory.delete_separator(my_node.key[j])).length()>0)
-					my_temporary_directory_name+=str+File.separatorChar;
+			tree_search_container_tree_node<String,String> my_node=my_client_parameter_name_list.get(i);
+			if((str=file_directory.delete_separator(my_node.key)).length()>0)
+				my_temporary_directory_name+=str+File.separatorChar;
 			for(int j=0,nj=my_node.list.size();j<nj;j++)
 				if((str=file_directory.delete_separator(my_node.list.get(j))).length()>0)
 					my_temporary_directory_name+=str+File.separatorChar;

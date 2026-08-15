@@ -28,9 +28,7 @@ public class component_load_source_container
 		ArrayList<component_load_source_item>list=clsc.tree.tree_get_value_list();
 		for(int i=0,ni=list.size();i<ni;i++){
 			component_load_source_item list_item=list.get(i);
-			tree.add(
-					new String[] {list_item.component_name},
-					new component_load_source_item(list_item));
+			tree.add(list_item.component_name,new component_load_source_item(list_item));
 		}
 	}
 	private void set_component_last_time(component my_comp,long my_file_last_modified_time)
@@ -47,9 +45,9 @@ public class component_load_source_container
 	{
 		int ret_val=0;
 		component_load_source_item clsi;
-		tree_search_container_tree_node<String[],component_load_source_item> my_tree_node;
+		tree_search_container_tree_node<String,component_load_source_item> my_tree_node;
 		
-		if((my_tree_node=tree.remove(new String[]{component_name}))!=null)
+		if((my_tree_node=tree.remove(component_name))!=null)
 			for(int i=0,ni=my_tree_node.list.size();i<ni;i++)
 				if((clsi=my_tree_node.list.get(i))!=null){
 					if(clsi.create_component_data!=null) {
@@ -77,8 +75,9 @@ public class component_load_source_container
 			if(new File(component_file_name).exists()) {
 				if(component_file_charset==null)
 					component_file_charset=Charset.defaultCharset().name();
-				tree.add(new String[] {component_name},new component_load_source_item(
-						component_name,token_string,component_file_name,component_file_charset));
+				tree.add(component_name,
+							new component_load_source_item(component_name,token_string,
+									component_file_name,component_file_charset));
 				return 1;
 			}
 		return 0;
@@ -87,7 +86,7 @@ public class component_load_source_container
 			ArrayList<String> create_component_data,long component_last_time)
 	{
 		if((component_name!=null)&&(token_string!=null)&&(create_component_data!=null)) {
-			tree.add(new String[] {component_name},new component_load_source_item(
+			tree.add(component_name,new component_load_source_item(
 					component_name,token_string,create_component_data,component_last_time));
 			return create_component_data.size();
 		}

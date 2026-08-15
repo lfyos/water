@@ -46,16 +46,15 @@ public class part_information extends jason_creator
 		int		total_buffer_object_file_number=1;
 		long	total_buffer_object_text_data_length=p.boftal.buffer_object_head_length;
 		
-		for(int i=0,ni=p.boftal.list.size();i<ni;i++) {
-			ArrayList<buffer_object_file_modify_time_and_length_item> item_list=p.boftal.list.get(i);
-			for(int j=0,nj=item_list.size();j<nj;j++) {
+		ArrayList<buffer_object_file_modify_time_and_length_item> item_list;
+		for(int i=0,ni=p.boftal.boftal_list.size();i<ni;i++)
+			for(int j=0,nj=(item_list=p.boftal.boftal_list.get(i)).size();j<nj;j++) {
 				buffer_object_file_modify_time_and_length_item item=item_list.get(j);
 				if(item.buffer_object_file_in_head_flag)
 					continue;
 				total_buffer_object_file_number++;
 				total_buffer_object_text_data_length+=item.buffer_object_text_file_length;
 			}
-		}
 		print("total_buffer_object_file_number",		total_buffer_object_file_number);
 		print("total_buffer_object_text_data_length",	total_buffer_object_text_data_length);
 	}

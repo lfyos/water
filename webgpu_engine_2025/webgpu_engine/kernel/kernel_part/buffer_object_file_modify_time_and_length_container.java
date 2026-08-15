@@ -15,19 +15,17 @@ public class buffer_object_file_modify_time_and_length_container
 
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,process_title,"",0,number);
-		
+
 		for(int i=0;i<number;i++) {
 			String my_key=fr.get_string();
 			if(fr.eof()||(my_key==null))
 				break;
 			if(process_bar!=null)
 				process_bar.set_process_bar(false,process_title,my_key,i,number);
-			add(new String[]{my_key},new buffer_object_file_modify_time_and_length(fr));
+			add(my_key,new buffer_object_file_modify_time_and_length(fr));
 		}
-		
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,process_title,"",number,number);
-		
 		fr.close();
 	}
 }
