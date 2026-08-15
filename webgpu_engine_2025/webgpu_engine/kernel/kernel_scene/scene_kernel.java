@@ -422,6 +422,7 @@ public class scene_kernel
 		
 		part_cont.destroy();
 		part_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
+		part_cont.reset_assembly_precision();
 
 		component_cont.do_component_caculator(true,process_bar,"second_do_component_caculator");
 		component_cont.scene_component=component_cont.search_component(scene_par.scene_component_name);
@@ -489,5 +490,4 @@ public class scene_kernel
 	{
 		return scene_par.client_parameter_name.search_change_name(client_parameter_name,null);
 	}
-
 }

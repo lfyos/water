@@ -31,12 +31,11 @@ public class scene_kernel_container_search_tree
 			system_parameter system_par,tree_string_locker_container string_locker_container)
 	{
 		int part_type_id=0;
-		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container;
-		boftal_container=new ArrayList<buffer_object_file_modify_time_and_length_container>();
 		
 		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[] {new permanent_part_id_encoder()};
-		original_render=new render_container();
 		part_container_for_part_search pcps=new part_container_for_part_search(null);
+		
+		original_render=new render_container();
 		original_render.load_shader(
 				system_component_load_source_cont,pcps,system_par.last_modified_time,
 			system_par.data_root_directory_name+system_par.shader_file_name,
@@ -45,11 +44,13 @@ public class scene_kernel_container_search_tree
 		String fast_load_type=request_response.get_fast_load_type();
 		
 		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,system_par,null,
-			boftal_container,string_locker_container,null,null,fast_load_type);
+				new ArrayList<buffer_object_file_modify_time_and_length_container>(),
+				string_locker_container,null,null,fast_load_type);
 		
 		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
 		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,system_par,null,
-			boftal_container,string_locker_container,null,null,fast_load_type);
+				new ArrayList<buffer_object_file_modify_time_and_length_container>(),
+				string_locker_container,null,null,fast_load_type);
 		
 		debug_information.println();
 		debug_information.println("Begin create system_part_package");
@@ -94,14 +95,12 @@ public class scene_kernel_container_search_tree
 		debug_information.print  ("scene_interface scene_component_number:	",	scene_counter.scene_component_number);
 		debug_information.println("/",system_par.max_scene_component_number);
 		
-		scene_kernel_container p;
 		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
-		
 		if((search_tree_node=tree.search(new String[]{scene_name,link_name}))!=null)
 			if(search_tree_node.list.size()>0){
-				p=search_tree_node.list.get(0);
-				p.modify_scene_kernel_link_number(1);
-				return p;
+				scene_kernel_container skc=search_tree_node.list.get(0);
+				skc.modify_scene_kernel_link_number(1);
+				return skc;
 			}
 		if(   (scene_counter.scene_kernel_number   >=system_par.max_scene_kernel_number)
 				||(scene_counter.scene_component_number>=system_par.max_scene_component_number))
@@ -128,37 +127,6 @@ public class scene_kernel_container_search_tree
 		tree.add(new String[]{scene_name,link_name},scene_kernel_cont);
 	
 		return scene_kernel_cont;
-	}
-	private void destroy_scene_kernel_container_routine(
-			String my_scene_name,String my_link_name,create_scene_counter scene_counter)
-	{
-		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
-		for(String key[]={my_scene_name,my_link_name};(search_tree_node=tree.search(key))!=null;) {
-			while(search_tree_node.list.size()>0){
-				scene_kernel_container p=search_tree_node.list.get(0);
-				if(p.modify_scene_kernel_link_number(-1)>0)
-					return;
-				search_tree_node.list.remove(0);
-				
-				if(p.sk!=null)
-					if(p.sk.component_cont!=null)
-						if(p.sk.component_cont.root_component!=null)
-							scene_counter.update_kernel_component_number(-1,
-										-1-p.sk.component_cont.root_component.component_id);
-				p.destroy();
-				
-				debug_information.println(
-						"scene_interface deletes scene,scene_name: ",
-						my_scene_name+",link_name: "+my_link_name);
-				debug_information.println(
-						"scene_interface scene_kernel_number: ",
-						scene_counter.scene_kernel_number);
-				debug_information.println(
-						"scene_interface scene_component_number: ",
-						scene_counter.scene_component_number);
-			}
-			tree.remove(key);
-		}
 	}
 	public scene_kernel_container create_scene_kernel_container(
 			client_request_response request_response,
@@ -188,6 +156,37 @@ public class scene_kernel_container_search_tree
 		my_lock.unlock();
 		
 		return my_scene_kernel_container;
+	}
+	private void destroy_scene_kernel_container_routine(
+			String my_scene_name,String my_link_name,create_scene_counter scene_counter)
+	{
+		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
+		for(String key[]={my_scene_name,my_link_name};(search_tree_node=tree.search(key))!=null;) {
+			while(search_tree_node.list.size()>0){
+				scene_kernel_container skc=search_tree_node.list.get(0);
+				if(skc.modify_scene_kernel_link_number(-1)>0)
+					return;
+				search_tree_node.list.remove(0);
+				
+				if(skc.sk!=null)
+					if(skc.sk.component_cont!=null)
+						if(skc.sk.component_cont.root_component!=null)
+							scene_counter.update_kernel_component_number(-1,
+								-1-skc.sk.component_cont.root_component.component_id);
+				skc.destroy();
+				
+				debug_information.println(
+						"scene_interface deletes scene,scene_name: ",
+						my_scene_name+",link_name: "+my_link_name);
+				debug_information.println(
+						"scene_interface scene_kernel_number: ",
+						scene_counter.scene_kernel_number);
+				debug_information.println(
+						"scene_interface scene_component_number: ",
+						scene_counter.scene_component_number);
+			}
+			tree.remove(key);
+		}
 	}
 	public void destroy_scene_kernel_container(
 			String my_scene_name,String my_link_name,

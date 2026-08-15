@@ -48,10 +48,14 @@ class part_comparator_for_part_search implements Comparator<part>
 }
 public class part_container_for_part_search extends tree_search_container<part,part>
 {
-	public ArrayList<part>get_part_list()
+	public void destroy()
+	{
+		super.destroy();
+	}
+	public void reset_assembly_precision()
 	{
 		ArrayList<part> data_list=tree_get_value_list();
-		
+
 		for(int i=0,j=0,id=0,n=data_list.size();i<n;){
 			part id_part,j_part;
 			for(id=i,j=i;j<n;j++){
@@ -62,15 +66,9 @@ public class part_container_for_part_search extends tree_search_container<part,p
 				if(id_part.part_par.assembly_precision2>j_part.part_par.assembly_precision2)
 					id=j;
 			}
-			id_part=data_list.get(id);
-			for(;i<j;i++)
-				data_list.get(i).part_par.assembly_precision2=id_part.part_par.assembly_precision2;
+			for(double new_precision=data_list.get(id).part_par.assembly_precision2;i<j;i++)
+				data_list.get(i).part_par.assembly_precision2=new_precision;
 		}
-		return data_list;
-	}
-	public void destroy()
-	{
-		super.destroy();
 	}
 	public part_container_for_part_search(ArrayList<part> my_part_list)
 	{
@@ -81,7 +79,7 @@ public class part_container_for_part_search extends tree_search_container<part,p
 	}
 	public ArrayList<part> search_part(String my_part_system_name)
 	{
-		ArrayList<part>data_list=get_part_list();
+		ArrayList<part>data_list=tree_get_value_list();
 		
 		for(int begin_pointer=0,end_pointer=data_list.size()-1;;){
 			if(begin_pointer>end_pointer)

@@ -22,15 +22,14 @@ public class client_interface_search_tree
 	private void process_timeout_client_interface(
 			boolean test_timeout_flag,create_scene_counter scene_counter)
 	{
-		do{
-			tree_search_container_tree_node<String[],client_interface> first_tree_node;
-			if((first_tree_node=tree.get_first_tree_node())==null)
-				break;
-			long 							my_touch_time				=first_tree_node.touch_time;
-			String 							my_client_id_and_user_name[]=first_tree_node.key;
-			ArrayList<client_interface> 	my_client_interface_list	=first_tree_node.list;
+		for(int client_interface_number;(client_interface_number=tree.size())>0;){
+			tree_search_container_tree_node<String[],client_interface>
+				first_tree_node=tree.get_first_tree_node();
+
+			String my_client_id_and_user_name[]=first_tree_node.key;
+			ArrayList<client_interface> my_client_interface_list=first_tree_node.list;
 			
-			int client_interface_number=tree.size();
+			long my_touch_time=first_tree_node.touch_time;
 			long time_length=nanosecond_timer.absolute_nanoseconds()-my_touch_time;
 			
 			if(test_timeout_flag)
@@ -45,16 +44,16 @@ public class client_interface_search_tree
 			debug_information.println("/",system_par.max_client_interface_number);
 			
 			for(int i=my_client_interface_list.size()-1;i>=0;i--) {
-				client_interface p=my_client_interface_list.get(i);
+				client_interface my_client_interface=my_client_interface_list.get(i);
 				if(test_timeout_flag)
-					if(p.operate_client_interface_in_processing_number(0)>0) {
+					if(my_client_interface.operate_client_interface_in_processing_number(0)>0){
 						tree.search(my_client_id_and_user_name);
 						return;
 					}
 				my_client_interface_list.remove(i).destroy();
 			}
 			tree.remove(my_client_id_and_user_name);
-		}while(true);
+		};
 	}
 	public client_interface get_client_interface(
 			client_request_response request_response,
@@ -69,27 +68,29 @@ public class client_interface_search_tree
 		
 		process_timeout_client_interface(true,scene_counter);
 		
-		client_interface my_client_interface;
-		tree_search_container_tree_node<String[],client_interface>my_search_tree_node;
-		my_search_tree_node=tree.search(new String[] {request_response.client_id,request_response.user_name});
+		String client_interface_key[]=new String[]
+			{request_response.client_id,request_response.user_name};
+		tree_search_container_tree_node<String[],client_interface>
+			my_search_tree_node=tree.search(client_interface_key);
 
+		client_interface ret_val;
 		if(my_search_tree_node!=null){
 			if(my_search_tree_node.list.size()>0)
-				my_client_interface=my_search_tree_node.list.get(0);
-			else if((my_client_interface=client_interface.create(request_response,
+				ret_val=my_search_tree_node.list.get(0);
+			else if((ret_val=client_interface.create(request_response,
 					scene_search_tree,string_locker_container,scene_counter,system_par))==null)
 				debug_information.println("Create client_interface fail");
 			else{
 				debug_information.println("Create client_interface success");
-				my_search_tree_node.list.add(my_client_interface);
+				my_search_tree_node.list.add(ret_val);
 			}
 		}else{
-			if((my_client_interface=client_interface.create(request_response,
+			if((ret_val=client_interface.create(request_response,
 					scene_search_tree,string_locker_container,scene_counter,system_par))==null) 
 				debug_information.println("Create client_interface fail");
 			else{
 				debug_information.println("Create client_interface success");
-				tree.add(new String[] {request_response.client_id,request_response.user_name},my_client_interface);
+				tree.add(client_interface_key,ret_val);
 			}
 			
 			debug_information.print  ("Creation request from ",request_response.client_id);
@@ -102,7 +103,7 @@ public class client_interface_search_tree
 		
 		my_lock.unlock();
 		
-		return my_client_interface;
+		return ret_val;
 	}
 	public void destroy(create_scene_counter scene_counter)
 	{

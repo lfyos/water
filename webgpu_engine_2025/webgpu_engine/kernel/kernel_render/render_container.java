@@ -166,7 +166,7 @@ public class render_container
 			client_request_response request_response,permanent_part_id_encoder encoder[],
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		var data_list=pcps.get_part_list();
+		var data_list=pcps.tree_get_value_list();
 		for(int i=0,j,part_number=data_list.size();i<part_number;i=j){
 			part i_part=data_list.get(i);
 			for(j=i;j<part_number;j++)

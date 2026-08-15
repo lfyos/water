@@ -6,7 +6,7 @@ class tree_string_search_container_comparator implements Comparator<String>
 {
 	public int compare(String str1,String str2)
 	{
-		return str1.compareTo(str2);
+		return ((str1!=null)?str1:"").compareTo((str1!=null)?str2:"");
 	}
 };
 public class tree_string_search_container <VALUE_TYPE> extends tree_search_container<String,VALUE_TYPE>
