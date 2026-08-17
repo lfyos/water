@@ -204,7 +204,7 @@ public class render
 				debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
 			}
 			if(my_part.driver!=null)
-				pcps.add(my_part,my_part);
+				pcps.add(my_part,my_part,false);
 			else{
 				delete_last_part();
 				my_part.destroy();

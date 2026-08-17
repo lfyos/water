@@ -104,29 +104,36 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	{
 		return last;
 	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> add(KEY_TYPE my_key,VALUE_TYPE my_value)
+	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> add(
+			KEY_TYPE my_key,VALUE_TYPE my_value,boolean update_linklist_flag)
 	{
-		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> new_tree_node,old_tree_node;
-		new_tree_node=new tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>(my_key);
-		if((old_tree_node=tree.put(my_key,new_tree_node))!=null){
-			dismount_from_list(old_tree_node);
-			new_tree_node.list=old_tree_node.list;
+		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
+		
+		if((tree_node=tree.get(my_key))==null) {
+			tree_node=new tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>(my_key);
+			tree.put(my_key,tree_node);
+			mount_to_last(tree_node);
+		}else if(update_linklist_flag){
+			dismount_from_list(tree_node);
+			mount_to_last(tree_node);
 		}
-		mount_to_last(new_tree_node);
-		new_tree_node.list.add(my_value);
-		new_tree_node.touch_time=nanosecond_timer.absolute_nanoseconds();
+		tree_node.list.add(my_value);
+		tree_node.touch_time=nanosecond_timer.absolute_nanoseconds();
 		
 		tree_node_list		=null;
 		tree_value_list		=null;
 
-		return new_tree_node;
+		return tree_node;
 	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> search(KEY_TYPE my_key)
+	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> search(
+			KEY_TYPE my_key,boolean update_linklist_flag)
 	{
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
 		if((tree_node=tree.get(my_key))!=null){
-			dismount_from_list(tree_node);
-			mount_to_last(tree_node);
+			if(update_linklist_flag) {
+				dismount_from_list(tree_node);
+				mount_to_last(tree_node);
+			}
 			tree_node.touch_time=nanosecond_timer.absolute_nanoseconds();
 		}
 		return tree_node;

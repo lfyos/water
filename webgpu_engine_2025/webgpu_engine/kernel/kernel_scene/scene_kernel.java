@@ -166,14 +166,14 @@ public class scene_kernel
 		if(comp.driver_array.size()>0)
 			return;
 		do{
-			ArrayList<part> part_list;
-			if((part_list=part_search.search_part(comp.part_name))==null)
+			ArrayList<part> my_part_list;
+			if((my_part_list=part_search.search_part(comp.part_name))==null)
 				break;
-			if(part_list.size()<=0)
+			if(my_part_list.size()<=0)
 				break;
-			part p=part_list.get(0);
+			part my_part=my_part_list.get(0);
 			try{
-				component_driver cd=p.driver.create_component_driver(null,false,p,
+				component_driver cd=my_part.driver.create_component_driver(null,false,my_part,
 					scene_component_load_source_cont,this,request_response);
 				if(cd==null)
 					break;
@@ -184,10 +184,10 @@ public class scene_kernel
 				e.printStackTrace();
 				debug_information.println(
 						"create_component_driver fail in mount_top_box_part():	",e.toString());
-				debug_information.println("Part user name:",	p.user_name);
-				debug_information.println("Part system name:",	p.system_name);
-				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
-				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
+				debug_information.println("Part user name:",	my_part.user_name);
+				debug_information.println("Part system name:",	my_part.system_name);
+				debug_information.println("Mesh_file_name:",	my_part.directory_name+my_part.mesh_file_name);
+				debug_information.println("Material_file_name:",my_part.directory_name+my_part.material_file_name);
 			}
 		}while(false);
 		

@@ -1,6 +1,5 @@
 package kernel_information;
 
-import kernel_component.component;
 import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 
@@ -10,10 +9,10 @@ public class component_array_information extends jason_creator
 	private client_information ci;
 	public void print()
 	{
-		component comp[]=sk.component_cont.get_sort_component_array();
-		jason_creator jc[]=new jason_creator[comp.length];
+		var component_list=sk.component_cont.get_sort_component_list();
+		jason_creator jc[]=new jason_creator[component_list.size()];
 		for(int i=0,ni=jc.length;i<ni;i++)
-			jc[i]=new component_information(comp[i],sk,ci);
+			jc[i]=new component_information(component_list.get(i),sk,ci);
 		print("component_number",jc.length);
 		print("component_array",jc);
 	}

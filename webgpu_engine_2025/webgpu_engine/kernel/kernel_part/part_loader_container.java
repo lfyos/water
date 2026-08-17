@@ -101,7 +101,7 @@ public class part_loader_container
 				String search_key=boftal_token_str.substring(pre_length);
 				
 				for(int i=0;i<boftal_number;i++){
-					var my_tree_node=boftal_container.get(i).search(search_key);
+					var my_tree_node=boftal_container.get(i).search(search_key,false);
 					if(my_tree_node!=null)
 						if(my_tree_node.list.size()>0){
 							var my_boftal=my_tree_node.list.get(0);

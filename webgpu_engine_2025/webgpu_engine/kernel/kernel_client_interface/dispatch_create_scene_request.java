@@ -1,5 +1,7 @@
 package kernel_client_interface;
 
+import java.util.ArrayList;
+
 import kernel_part.part;
 import kernel_component.component;
 import kernel_file_manager.file_directory;
@@ -95,15 +97,16 @@ public class dispatch_create_scene_request
 		debug_information.println("Begin component response_init_data");
 	
 		int instance_initialize_number=0;
-		component comp_array[]=sk.component_cont.get_sort_component_array();
-		if(comp_array==null)
-			comp_array=new component[] {};
+		ArrayList<component> my_component_list=sk.component_cont.get_sort_component_list();
+		if(my_component_list==null)
+			my_component_list=new ArrayList<component>();
 		
 		ci.request_response.print("[");
 		component_instance_driver_container	cidc=ci.component_instance_driver_cont;
-		for(int i=0,ni=comp_array.length;i<ni;i++)
-			for(int driver_id=0,driver_number=comp_array[i].driver_array.size();driver_id<driver_number;driver_id++) {
-				component_instance_driver i_d=cidc.get_component_instance_driver(comp_array[i],driver_id);
+		for(int i=0,ni=my_component_list.size();i<ni;i++) {
+			component my_component=my_component_list.get(i);
+			for(int driver_id=0,driver_number=my_component.driver_array.size();driver_id<driver_number;driver_id++) {
+				component_instance_driver i_d=cidc.get_component_instance_driver(my_component,driver_id);
 				if(i_d==null)
 					continue;
 				
@@ -115,19 +118,20 @@ public class dispatch_create_scene_request
 					e.printStackTrace();
 					
 					debug_information.println("response_init_component_data fail:	",e.toString());
-					debug_information.println("component_name:",comp_array[i].component_name);
+					debug_information.println("component_name:",my_component.component_name);
 					debug_information.println("component file:",
-							comp_array[i].component_directory_name+comp_array[i].component_file_name);
+							my_component.component_directory_name+my_component.component_file_name);
 					debug_information.println("component driver id:",driver_id);
 				}
 				if(ci.request_response.output_data_length!=old_length){
-					ci.request_response.print(",",comp_array[i].component_id);
+					ci.request_response.print(",",my_component.component_id);
 					ci.request_response.print(",",driver_id);
 					ci.request_response.print(",");
 					
 					instance_initialize_number++;
 				}
 			}
+		}
 		ci.request_response.print("0]");
 		
 		debug_information.println("End component response_init_data: ",instance_initialize_number);
@@ -156,7 +160,7 @@ public class dispatch_create_scene_request
 		ci.request_response.print("\"").print(initialization_url).print("\"");	//parameter	3
 		ci.request_response.print(",");
 
-		int component_number	=sk.component_cont.get_sort_component_array().length;
+		int component_number	=sk.component_cont.get_sort_component_list().size();
 		int camera_number		=(sk.camera_cont==null)?0:sk.camera_cont.size();
 		int max_loading_number	=sk.system_par.default_max_loading_number;
 		String str;

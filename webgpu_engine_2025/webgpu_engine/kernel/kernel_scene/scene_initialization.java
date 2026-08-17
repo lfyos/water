@@ -170,27 +170,25 @@ public class scene_initialization
 	private void initialize_component_driver(scene_kernel sk,
 			client_request_response request_response,client_process_bar process_bar)
 	{
-		component sort_component_array[]=sk.component_cont.get_sort_component_array();
-		int component_number=sort_component_array.length;
+		ArrayList<component> sort_component_array=sk.component_cont.get_sort_component_list();
+		int component_number=sort_component_array.size();
 		process_bar.set_process_bar(true,"component_driver_initialization","",0, component_number);
 		for(int component_id=0;component_id<component_number;component_id++) {
+			component my_component=sort_component_array.get(component_id);
 			process_bar.set_process_bar(false,"component_driver_initialization",
-					sort_component_array[component_id].component_name,component_id, component_number);
-			int driver_number=sort_component_array[component_id].driver_array.size();
+					my_component.component_name,component_id, component_number);
+			int driver_number=my_component.driver_array.size();
 			for(int driver_id=0;driver_id<driver_number;driver_id++) {
-				component_driver cd=sort_component_array[component_id].driver_array.get(driver_id);
+				component_driver cd=my_component.driver_array.get(driver_id);
 				try{
-					cd.initialize_component_driver(
-						sort_component_array[component_id],driver_id,sk,request_response);
+					cd.initialize_component_driver(my_component,driver_id,sk,request_response);
 				}catch(Exception e) {
 					e.printStackTrace();
 					
 					debug_information.println("Component driver initialize fail:	",e.toString());
-					debug_information.println("Component name:",
-							sort_component_array[component_id].component_name);
+					debug_information.println("Component name:",my_component.component_name);
 					debug_information.println("Component file:",
-							 sort_component_array[component_id].component_directory_name
-							+sort_component_array[component_id].component_file_name);
+							my_component.component_directory_name+my_component.component_file_name);
 					debug_information.println("Component driver id:",driver_id);
 				}
 			}
@@ -233,30 +231,31 @@ public class scene_initialization
 				if(my_program_and_charset[1]==null)
 					continue;
 				File f;
+				String file_name=my_program_and_charset[0];
 				do{
-					if((f=new File(comp.component_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(comp.component_directory_name+file_name)).exists())
 						break;
-					if((f=new File(sk.create_parameter.scene_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.create_parameter.scene_directory_name+file_name)).exists())
 						break;
-					if((f=new File(sk.scene_par.directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.scene_par.directory_name+file_name)).exists())
 						break;
-					if((f=new File(sk.scene_par.extra_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.scene_par.extra_directory_name+file_name)).exists())
 						break;
-					if((f=new File(sk.scene_par.scene_shader_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.scene_par.scene_shader_directory_name+file_name)).exists())
 						break;
 					f=null;
 					for(int k=0,nk=sk.scene_par.type_sub_directory.length;k<nk;k++) {
-						String file_name;
-						file_name=sk.scene_par.type_shader_directory_name;
-						file_name+=sk.scene_par.type_sub_directory[k];
-						file_name+=my_program_and_charset[0];
-						if((f=new File(file_name)).exists())
+						String my_file_name=sk.scene_par.type_shader_directory_name;
+						my_file_name+=sk.scene_par.type_sub_directory[k];
+						my_file_name+=file_name;
+						
+						if((f=new File(my_file_name)).exists())
 							break;
 						f=null;
 					}
 					if(f!=null)
 						break;
-					if((f=new File(sk.system_par.data_root_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.system_par.data_root_directory_name+file_name)).exists())
 						break;
 					f=null;
 				}while(false);
@@ -268,12 +267,17 @@ public class scene_initialization
 					debug_information.println("	file_name:	",my_program_and_charset[0]);
 					comp.initialization.program_and_charset.set(j,null);
 				}else {
-					String file_name=f.getAbsolutePath();
+					file_name=f.getAbsolutePath();
 					file_last_time flt=new file_last_time(file_name);
 					if(last_time<flt.last_time)
 						last_time=flt.last_time;
-					comp.initialization.program_and_charset.set(j,
-							new String[]{file_name,my_program_and_charset[1],my_program_and_charset[2]});
+					comp.initialization.program_and_charset.set(
+							j,
+							new String[]{
+									file_name,
+									my_program_and_charset[1],
+									my_program_and_charset[2]
+							});
 				}
 			}
 		}
@@ -297,33 +301,36 @@ public class scene_initialization
 		return last_time;
 	}
 	private void output_component_initialization_data(
-			file_writer fw,scene_kernel sk,component sort_component_array[],
+			file_writer fw,scene_kernel sk,ArrayList<component> sort_component_list,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		fw.println("[");
 		
-		process_bar.set_process_bar(true,"file_initialization_1","",0, sort_component_array.length);
+		int component_number=sort_component_list.size();
+		process_bar.set_process_bar(true,"file_initialization_1","",0, component_number);
 
-		for(int i=0,ni=sort_component_array.length;i<ni;i++){
-			process_bar.set_process_bar(false,"file_initialization_1",
-					sort_component_array[i].component_name,i,ni);
+		for(int i=0;i<component_number;i++){
+			component my_component=sort_component_list.get(i);
 			
-			fw.print("\t[",jason_string.change_string(sort_component_array[i].component_name));
-			fw.print(",",sort_component_array[i].component_id);
+			process_bar.set_process_bar(false,"file_initialization_1",
+					my_component.component_name,i,component_number);
+			
+			fw.print("\t[",jason_string.change_string(my_component.component_name));
+			fw.print(",",my_component.component_id);
 			
 			fw.print(",[");
-			for(int j=0,nj=sort_component_array[i].children.size();j<nj;j++)
-				fw.print((j<=0)?"":",",sort_component_array[i].children.get(j).component_id);
+			for(int j=0,nj=my_component.children.size();j<nj;j++)
+				fw.print((j<=0)?"":",",my_component.children.get(j).component_id);
 			fw.println("],");
 			
 			fw.println("\t\t[");
-			int driver_number=sort_component_array[i].driver_array.size();
+			int driver_number=my_component.driver_array.size();
 			for(int driver_id=0;driver_id<driver_number;driver_id++) {
-				var comp_driver=sort_component_array[i].driver_array.get(driver_id);
+				var comp_driver=my_component.driver_array.get(driver_id);
 				if(comp_driver!=null) {
 					long output_length=fw.output_data_length;
 					comp_driver.create_component_driver_initialization_data(
-							fw,sort_component_array[i],driver_id,sk,request_response);
+							fw,my_component,driver_id,sk,request_response);
 					if(fw.output_data_length>output_length) {
 						if(driver_id<(driver_number-1))
 							fw.println(",");
@@ -338,11 +345,10 @@ public class scene_initialization
 					fw.print("\t\t\tnull");
 			}
 			fw.println("\t\t]");
-			fw.println("\t",(i<(ni-1))?"],":"]");
+			fw.println("\t",(i<(component_number-1))?"],":"]");
 		}
 		
-		process_bar.set_process_bar(false,"file_initialization_1","",
-				sort_component_array.length, sort_component_array.length);
+		process_bar.set_process_bar(false,"file_initialization_1","",component_number,component_number);
 		
 		fw.println("],").println().println();
 	}
@@ -523,29 +529,32 @@ public class scene_initialization
 		
 		fw.println("}");
 	}
-	private void file_initialize(String destination_file_name,scene_kernel sk,
+	private void file_initialize(scene_kernel sk,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		ArrayList<component> init_comp=new ArrayList<component>();
-		component sort_component_array[]=sk.component_cont.get_sort_component_array();
-		for(int i=0,ni=sort_component_array.length;i<ni;i++) {
-			component_initialization pi;
-			if((pi=sort_component_array[i].initialization)==null)
+		ArrayList<component> sort_component_list=sk.component_cont.get_sort_component_list();
+		for(int i=0,ni=sort_component_list.size();i<ni;i++) {
+			component my_component=sort_component_list.get(i);
+			component_initialization pi=my_component.initialization;
+			if(pi==null)
 				continue;
 			if(pi.program_and_charset!=null)
 				if(pi.program_and_charset.size()>0){
-					init_comp.add(sort_component_array[i]);
+					init_comp.add(my_component);
 					continue;
 				}
 			pi.destroy();
-			sort_component_array[i].initialization=null;
+			my_component.initialization=null;
 		}
+
+		String destination_file_name=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
 		if((new File(destination_file_name)).lastModified()<=initialization_last_time(init_comp,sk,process_bar)){
 			file_writer fw=new file_writer(destination_file_name,sk.system_par.network_data_charset);
 	
 			fw.println("export var initialization_data=[").println();
 			
-			output_component_initialization_data(fw,sk,sort_component_array,request_response,process_bar);
+			output_component_initialization_data(fw,sk,sort_component_list,request_response,process_bar);
 			output_part_and_render_initialization_data(fw,sk,request_response,process_bar);
 			output_component_initialization_program(fw,init_comp,sk,process_bar);
 			output_shader_program(fw,sk,process_bar);
@@ -593,9 +602,7 @@ public class scene_initialization
 		debug_information.println();
 		debug_information.println("Begin create initialization file");
 		
-		file_initialize(
-				sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js",
-				sk,request_response,process_bar);
+		file_initialize(sk,request_response,process_bar);
 		debug_information.println("End create initialization file");
 	}
 }

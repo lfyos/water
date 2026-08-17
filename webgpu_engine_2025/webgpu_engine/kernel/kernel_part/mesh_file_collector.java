@@ -53,7 +53,7 @@ public class mesh_file_collector
 				
 				if(list!=null) {
 					for(var my_mesh_file_collector_item:list)
-						add(my_mesh_file_collector_item,my_mesh_file_collector_item);
+						add(my_mesh_file_collector_item,my_mesh_file_collector_item,false);
 					list=tree_get_value_list();
 				}
 			}

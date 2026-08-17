@@ -67,11 +67,11 @@ public class render_container
 			for(int i=0,ni=renders.size();i<ni;i++) {
 				render my_render;
 				if((my_render=renders.get(i))!=null)
-					tree_renders.add(my_render.render_name,my_render);
+					tree_renders.add(my_render.render_name,my_render,false);
 			}
 		}
 		tree_search_container_tree_node<String,render> my_tree_node;
-		if((my_tree_node=tree_renders.search(my_render_name))!=null)
+		if((my_tree_node=tree_renders.search(my_render_name,false))!=null)
 			if(my_tree_node.list.size()>0)
 					return my_tree_node.list.get(0);
 		return null;
@@ -224,7 +224,7 @@ public class render_container
 				continue;
 			}
 			ren.add_part(add_part,encoder);
-			pcps.add(add_part,add_part);
+			pcps.add(add_part,add_part,false);
 		}
 	}
 	private void load_one_shader(

@@ -96,7 +96,7 @@ public class scene_kernel_container_search_tree
 		debug_information.println("/",system_par.max_scene_component_number);
 		
 		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
-		if((search_tree_node=tree.search(new String[]{scene_name,link_name}))!=null)
+		if((search_tree_node=tree.search(new String[]{scene_name,link_name},true))!=null)
 			if(search_tree_node.list.size()>0){
 				scene_kernel_container skc=search_tree_node.list.get(0);
 				skc.modify_scene_kernel_link_number(1);
@@ -124,7 +124,7 @@ public class scene_kernel_container_search_tree
 		
 		scene_kernel_cont.modify_scene_kernel_link_number(1);
 		
-		tree.add(new String[]{scene_name,link_name},scene_kernel_cont);
+		tree.add(new String[]{scene_name,link_name},scene_kernel_cont,true);
 	
 		return scene_kernel_cont;
 	}
@@ -160,8 +160,10 @@ public class scene_kernel_container_search_tree
 	private void destroy_scene_kernel_container_routine(
 			String my_scene_name,String my_link_name,create_scene_counter scene_counter)
 	{
+		String key[]={my_scene_name,my_link_name};
 		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
-		for(String key[]={my_scene_name,my_link_name};(search_tree_node=tree.search(key))!=null;) {
+		
+		while((search_tree_node=tree.search(key,true))!=null) {
 			while(search_tree_node.list.size()>0){
 				scene_kernel_container skc=search_tree_node.list.get(0);
 				if(skc.modify_scene_kernel_link_number(-1)>0)

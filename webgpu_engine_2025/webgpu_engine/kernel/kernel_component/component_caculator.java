@@ -4,7 +4,12 @@ import kernel_part.part;
 import kernel_part.part_rude;
 import kernel_driver.component_driver;
 import kernel_interface.client_process_bar;
+
+import java.util.ArrayList;
+
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_search_container_tree_node;
+import kernel_common_class.tree_string_search_container;
 
 public class component_caculator 
 {
@@ -14,7 +19,8 @@ public class component_caculator
 	
 	public int component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
-	public component component_pointer[],sort_component_pointer[];
+	public component component_pointer[];
+	public tree_string_search_container<component> tree_component_container;
 	public int top_assemble_component_number,part_component_number,exist_part_component_number;
 	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	
@@ -133,43 +139,10 @@ public class component_caculator
 	
 	private void set_pointer(component comp)
 	{
-		component_pointer[comp.component_id]		=comp;
-		sort_component_pointer[comp.component_id]	=comp;
-		
+		component_pointer[comp.component_id]=comp;
+		tree_component_container.add(comp.component_name,comp,false);
 		for(int i=0,n=comp.children.size();i<n;i++)
 			set_pointer(comp.children.get(i));
-	}
-	
-	private void sort_component(int begin_id,int end_id,component tmp[])
-	{
-		if(begin_id<end_id){
-			int mid_id=(begin_id+end_id)/2;
-			sort_component(begin_id,mid_id,tmp);
-			sort_component(mid_id+1,end_id,tmp);
-			
-			for(int i=begin_id,j=mid_id+1,k=0;;){
-				if(i>mid_id){
-					if(j>end_id){
-						for(i=begin_id,k=0;i<=end_id;i++,k++)
-							sort_component_pointer[i]=tmp[k];
-						return;
-					}
-					tmp[k++]=sort_component_pointer[j++];
-				}else if(j>end_id)
-					tmp[k++]=sort_component_pointer[i++];
-				else {
-					int compare_result;
-
-					if((compare_result=sort_component_pointer[i].component_name.compareTo(sort_component_pointer[j].component_name))==0)
-						compare_result=sort_component_pointer[i].part_name.compareTo(sort_component_pointer[j].part_name);
-					
-					if(compare_result<0)
-						tmp[k++]=sort_component_pointer[i++];
-					else
-						tmp[k++]=sort_component_pointer[j++];
-				}
-			}
-		}
 	}
 	public component_caculator(component root_component,boolean display_flag,
 			client_process_bar process_bar,String process_bar_title)
@@ -184,9 +157,8 @@ public class component_caculator
 		register_componennt_to_part(root_component);
 		
 		component_pointer		=new component[component_number];
-		sort_component_pointer	=new component[component_number];
+		tree_component_container=new tree_string_search_container<component>();
 		set_pointer(root_component);
-		sort_component(0,root_component.component_id,new component[component_number]);
 		
 		for(int i=0,ni=component_pointer.length;i<ni;i++){
 			component comp=component_pointer[i];
@@ -209,33 +181,43 @@ public class component_caculator
 					debug_information.println();
 			}
 		}
+		
 		{
-			process_bar.set_process_bar(true,process_bar_title,"", 0, sort_component_pointer.length);
-			int display_same_number=0,display_same_compoennt_number=0;
-			for(int i=0,j=0,ni=sort_component_pointer.length;i<ni;i=j){
-				process_bar.set_process_bar(false,process_bar_title,sort_component_pointer[i].component_name, i, ni);
-				for(j=i+1;j<ni;j++)
-					if(sort_component_pointer[i].component_name.compareTo(sort_component_pointer[j].component_name)!=0)
-						break;
-				if((j-i)>1) {
-					for(display_same_number++;(i<j)&&(i<ni);i++,display_same_compoennt_number++) {
+			ArrayList<tree_search_container_tree_node<String,component>> sort_component_list;
+			sort_component_list=tree_component_container.tree_get_node_list();
+			int display_same_number=0,display_same_component_number=0;
+			int total_same_component_number=sort_component_list.size();
+			
+			process_bar.set_process_bar(true,process_bar_title,"", 0,total_same_component_number);
+			
+			for(int i=0,ni=total_same_component_number;i<ni;i++){
+				tree_search_container_tree_node <String,component> my_tree_node=sort_component_list.get(i);
+				ArrayList<component> my_component_list=my_tree_node.list;
+				process_bar.set_process_bar(false,process_bar_title,my_tree_node.key,i,ni);
+				int component_list_size;
+				if((component_list_size=my_component_list.size())>1){
+					display_same_number++;
+					for(int j=0;j<component_list_size;j++) {
+						display_same_component_number++;
 						if(display_flag){
+							component my_component=my_component_list.get(j);
 							debug_information.print  (display_same_number);
 							debug_information.print  ("	Find same name component:",j-i);
-							debug_information.print  ("	",sort_component_pointer[i].component_name);
-							debug_information.print  ("	",sort_component_pointer[i].part_name);
-							debug_information.print  ("	",sort_component_pointer[i].component_directory_name);
-							debug_information.println(sort_component_pointer[i].component_file_name);
+							debug_information.print  ("	",my_component.component_name);
+							debug_information.print  ("	",my_component.part_name);
+							debug_information.print  ("	",my_component.component_directory_name);
+							debug_information.println(my_component.component_file_name);
 						}
 					}
 				}
 			}
-			process_bar.set_process_bar(false,process_bar_title,"", sort_component_pointer.length, sort_component_pointer.length);
+			process_bar.set_process_bar(false,process_bar_title,"", 
+					total_same_component_number,total_same_component_number);
 			
-			if(display_same_compoennt_number>0)
+			if(display_same_component_number>0)
 				if(display_flag)
 					debug_information.println("	total same name componment number is ",
-						Integer.toString(display_same_number)+"/"+Integer.toString(display_same_compoennt_number));
+						Integer.toString(display_same_number)+"/"+Integer.toString(display_same_component_number));
 		}
 
 		{

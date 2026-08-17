@@ -1,12 +1,16 @@
 package kernel_component;
 
+import java.util.ArrayList;
+
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
+import kernel_scene.scene_parameter;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_search_container_tree_node;
+import kernel_common_class.tree_string_search_container;
 import kernel_network.client_request_response;
-import kernel_scene.scene_kernel;
-import kernel_scene.scene_parameter;
 
 public class component_container 
 {
@@ -19,7 +23,8 @@ public class component_container
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
 	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	
-	private component component_pointer[],sort_component_pointer[];
+	private component component_pointer[];
+	private tree_string_search_container<component> tree_component_container;
 	
 	public void destroy()
 	{
@@ -34,13 +39,9 @@ public class component_container
 		render_component_id_and_driver_id=null;
 		part_component_id_and_driver_id=null;
 		
-		if(sort_component_pointer!=null) {
-			for(int i=0,ni=sort_component_pointer.length;i<ni;i++)
-				if(sort_component_pointer[i]!=null) {
-					sort_component_pointer[i].destroy();
-					sort_component_pointer[i]=null;
-				}
-			sort_component_pointer=null;
+		if(tree_component_container!=null) {
+			tree_component_container.destroy();
+			tree_component_container=null;
 		}
 		if(component_pointer!=null){
 			for(int i=0,ni=component_pointer.length;i<ni;i++)
@@ -55,30 +56,17 @@ public class component_container
 	{
 		return ((component_id<0)||(component_id>=component_pointer.length))?null:component_pointer[component_id];
 	}
-	public component[] get_component_array()
+	public ArrayList<component> get_sort_component_list()
 	{
-		return component_pointer;
-	}
-	public component[] get_sort_component_array()
-	{
-		return sort_component_pointer;
+		return tree_component_container.tree_get_value_list();
 	}
 	public component search_component(String my_search_component_name)
 	{
-		if(my_search_component_name!=null){
-			String search_component_name=scene_par.change_component_name.
-					search_change_name(my_search_component_name,my_search_component_name);
-			for(int i=0,j=sort_component_pointer.length-1;i<=j;){
-				int mid=(i+j)/2;
-				int result=sort_component_pointer[mid].component_name.compareTo(search_component_name);
-				if(result>0)
-					j=mid-1;
-				else if(result<0)
-					i=mid+1;
-				else
-					return sort_component_pointer[mid];
-			}
-		}
+		tree_search_container_tree_node<String,component> my_tree_node;
+		my_tree_node=tree_component_container.search(my_search_component_name,false);
+		if(my_tree_node!=null)
+			if(my_tree_node.list.size()>0)
+				return my_tree_node.list.get(0);
 		return null;
 	}
 	public component search_component()
@@ -140,7 +128,7 @@ public class component_container
 		part_component_id_and_driver_id		=c_c.part_component_id_and_driver_id;
 	
 		component_pointer					=c_c.component_pointer;
-		sort_component_pointer				=c_c.sort_component_pointer;
+		tree_component_container			=c_c.tree_component_container;
 		
 		component_number					=c_c.component_number;
 		top_assemble_component_number		=c_c.top_assemble_component_number;
@@ -185,7 +173,7 @@ public class component_container
 			part_component_id_and_driver_id		=null;
 			
 			component_pointer					=null;
-			sort_component_pointer				=null;
+			tree_component_container			=null;
 		}
 		{
 			if(scene_f.eof()){

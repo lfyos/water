@@ -28,7 +28,7 @@ public class component_load_source_container
 		ArrayList<component_load_source_item>list=clsc.tree.tree_get_value_list();
 		for(int i=0,ni=list.size();i<ni;i++){
 			component_load_source_item list_item=list.get(i);
-			tree.add(list_item.component_name,new component_load_source_item(list_item));
+			tree.add(list_item.component_name,new component_load_source_item(list_item),false);
 		}
 	}
 	private void set_component_last_time(component my_comp,long my_file_last_modified_time)
@@ -77,7 +77,7 @@ public class component_load_source_container
 					component_file_charset=Charset.defaultCharset().name();
 				tree.add(component_name,
 							new component_load_source_item(component_name,token_string,
-									component_file_name,component_file_charset));
+									component_file_name,component_file_charset),false);
 				return 1;
 			}
 		return 0;
@@ -87,7 +87,7 @@ public class component_load_source_container
 	{
 		if((component_name!=null)&&(token_string!=null)&&(create_component_data!=null)) {
 			tree.add(component_name,new component_load_source_item(
-					component_name,token_string,create_component_data,component_last_time));
+					component_name,token_string,create_component_data,component_last_time),false);
 			return create_component_data.size();
 		}
 		return 0;

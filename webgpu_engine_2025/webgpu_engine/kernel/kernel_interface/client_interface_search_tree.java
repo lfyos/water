@@ -47,7 +47,7 @@ public class client_interface_search_tree
 				client_interface my_client_interface=my_client_interface_list.get(i);
 				if(test_timeout_flag)
 					if(my_client_interface.operate_client_interface_in_processing_number(0)>0){
-						tree.search(my_client_id_and_user_name);
+						tree.search(my_client_id_and_user_name,true);
 						return;
 					}
 				my_client_interface_list.remove(i).destroy();
@@ -71,7 +71,7 @@ public class client_interface_search_tree
 		String client_interface_key[]=new String[]
 			{request_response.client_id,request_response.user_name};
 		tree_search_container_tree_node<String[],client_interface>
-			my_search_tree_node=tree.search(client_interface_key);
+			my_search_tree_node=tree.search(client_interface_key,true);
 
 		client_interface ret_val;
 		if(my_search_tree_node!=null){
@@ -90,7 +90,7 @@ public class client_interface_search_tree
 				debug_information.println("Create client_interface fail");
 			else{
 				debug_information.println("Create client_interface success");
-				tree.add(client_interface_key,ret_val);
+				tree.add(client_interface_key,ret_val,true);
 			}
 			
 			debug_information.print  ("Creation request from ",request_response.client_id);

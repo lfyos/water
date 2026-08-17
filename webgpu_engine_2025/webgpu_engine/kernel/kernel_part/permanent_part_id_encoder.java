@@ -14,8 +14,8 @@ public class permanent_part_id_encoder
 	public int encoder(String part_type_string)
 	{
 		tree_search_container_tree_node<String,Integer> my_tree_node;
-		if((my_tree_node=encoder_tree.search(part_type_string))==null){
-			encoder_tree.add(part_type_string,1);
+		if((my_tree_node=encoder_tree.search(part_type_string,false))==null){
+			encoder_tree.add(part_type_string,1,false);
 			return 0;
 		}else{
 			int ret_val=my_tree_node.list.get(0);

@@ -34,12 +34,10 @@ public class camera_container_creator
 
 			if(component_name==null)
 				break;
-			if(component_name.compareTo("")==0)
+			if((component_name=component_name.trim()).length()<=0)
 				break ;
 			component eye_component;
-			if(component_cont.root_component==null)
-				break;
-			else if((eye_component=component_cont.search_component(component_name))==null)
+			if((eye_component=component_cont.search_component(component_name))==null)
 				debug_information.println("Camera component NOT exist:"+component_name);
 			else{
 				camera_parameter cam_par=new camera_parameter(

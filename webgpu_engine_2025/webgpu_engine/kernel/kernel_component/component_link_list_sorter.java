@@ -160,7 +160,7 @@ public class component_link_list_sorter extends tree_search_container<component_
 		super(new component_link_list_comparator(sort_type,sort_min_distance));
 		
 		for(component_link_list p=cll;p!=null;p=p.next_list_item)
-			add(p,p);
+			add(p,p,false);
 		data_list=tree_get_value_list();
 		for(int i=0,ni=data_list.size()-1;i<ni;i++)
 			data_list.get(i).next_list_item=data_list.get(i+1);
