@@ -92,7 +92,6 @@ public class component_load_source_container
 		}
 		return 0;
 	}
-	
 	public int register_data_component(
 			file_reader part_fr,String mount_component_name,String token_string)
 	{

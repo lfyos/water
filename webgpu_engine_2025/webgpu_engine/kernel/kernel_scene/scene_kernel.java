@@ -93,13 +93,13 @@ public class scene_kernel
 			process_part_sequence=null;
 		}
 		
-		scene_name=null;
-		link_name=null;
+		scene_name		=null;
+		link_name		=null;
 		create_parameter=null;
-		system_par=null;
-		scene_par=null;
-		current_time=null;
-		
+		system_par		=null;
+		scene_par		=null;
+		current_time	=null;
+
 		part_loader_cont=null;
 	}
 	public scene_kernel(
@@ -435,7 +435,7 @@ public class scene_kernel
 		load_camera();
 
 		start_time=new Date().getTime();
-		new scene_initialization(this,string_locker_container,request_response,process_bar);
+		new scene_initialization(this,request_response,process_bar);
 		debug_information.println("Create scene temp data time length:	",new Date().getTime()-start_time);
 		debug_information.println();
 		

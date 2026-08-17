@@ -30,6 +30,7 @@ public class component_core_2 extends component_core_1
 	}
 	private void create_driver(file_reader fr,component_construction_parameter ccp)
 	{
+		part my_part;
 		change_name change_part_name;
 		ArrayList<part> search_parts,effective_parts;
 
@@ -51,7 +52,7 @@ public class component_core_2 extends component_core_1
 		effective_parts=new ArrayList<part>();
 		boolean top_flag=false,bottom_flag=false;
 		for(int i=0,ni=search_parts.size();i<ni;i++){
-			part my_part=search_parts.get(i);
+			my_part=search_parts.get(i);
 			if(my_part.is_bottom_box_part()){
 				if(bottom_flag)
 					continue;
@@ -64,26 +65,29 @@ public class component_core_2 extends component_core_1
 			}
 			effective_parts.add(my_part);
 		}
+		if(effective_parts.size()<=0)
+			return;
 		
 		part_type_string_sorter ptss=ccp.get_part_type_string_sorter();
 		if(((ptss==null)?0:(ptss.tree_get_value_list().size()))>0){
 			search_parts=effective_parts;
 			effective_parts=new ArrayList<part>();
 			for(int i=0,part_number=search_parts.size();i<part_number;i++) {
-				part my_part=search_parts.get(i);
+				my_part=search_parts.get(i);
 				var my_part_type_string=ptss.search(my_part.part_par.part_type_string);
 				if(my_part_type_string!=null)
 					if(my_part_type_string.list.size()>0)
 						effective_parts.add(my_part);
 			}
+			if(effective_parts.size()<=0)
+				return;
 		}
 
 		for(int i=0,ni=effective_parts.size();i<ni;i++){
-			component_driver comp_driver;
-			
 			fr.mark_start();
-			part my_part=effective_parts.get(i);
+			my_part=effective_parts.get(i);
 
+			component_driver comp_driver;
 			try{
 				comp_driver=my_part.driver.create_component_driver(fr,
 						(i<(ni-1))?true:false,my_part,ccp.clsc,ccp.sk,ccp.request_response);

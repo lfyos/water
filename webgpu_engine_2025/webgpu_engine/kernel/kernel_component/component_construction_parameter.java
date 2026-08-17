@@ -10,7 +10,7 @@ import kernel_network.client_request_response;
 public class component_construction_parameter 
 {
 	private ArrayList<change_name> change_part_name_list;
-	
+
 	public change_name get_change_part_name()
 	{
 		int index_id=change_part_name_list.size()-1;
@@ -22,8 +22,8 @@ public class component_construction_parameter
 	}
 	public void pop_change_part_name()
 	{
-		int index_id=change_part_name_list.size()-1;
-		if(index_id>=0)
+		int index_id;
+		if((index_id=change_part_name_list.size()-1)>=0)
 			change_part_name_list.remove(index_id);
 	}
 	
@@ -56,8 +56,8 @@ public class component_construction_parameter
 			scene_kernel my_sk,client_request_response my_request_response,
 			component_load_source_container my_clsc,long my_default_display_bitmap)
 	{
-		sk						=my_sk;
-		request_response		=my_request_response;
+		sk				=my_sk;
+		request_response=my_request_response;
 		
 		change_part_name_list	=new ArrayList<change_name>();
 		if(sk.scene_par.change_part_string!=null)

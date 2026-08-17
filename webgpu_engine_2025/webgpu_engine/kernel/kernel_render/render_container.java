@@ -76,7 +76,6 @@ public class render_container
 					return my_tree_node.list.get(0);
 		return null;
 	}
-	
 	public ArrayList<part> part_array_list(int part_type_id)
 	{
 		ArrayList<part> ret_val=new ArrayList<part>();
@@ -161,7 +160,6 @@ public class render_container
 		
 		return;
 	}
-	
 	public void create_bottom_box_part(part_container_for_part_search pcps,
 			client_request_response request_response,permanent_part_id_encoder encoder[],
 			system_parameter system_par,scene_parameter scene_par)

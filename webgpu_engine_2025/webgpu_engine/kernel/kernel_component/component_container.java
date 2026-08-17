@@ -208,7 +208,6 @@ public class component_container
 				
 				root_component=null;
 				debug_information.println("Create scene from file exception:",scene_f.directory_name+scene_f.file_name);
-				
 			}
 			
 			if(root_component!=null)

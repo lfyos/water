@@ -23,64 +23,71 @@ public class component_core_3 extends component_core_2
 		}
 		children.clear();
 	}
-	private void process_component_operation(
-			String token_string,file_reader fr,component_construction_parameter ccp)
+	private void process_component_operation(String token_string,
+				file_reader fr,component_construction_parameter ccp)
 	{
-		int my_parameter_channel_id,my_child_number;
-		long my_display_bitmap;
-		
-		for(String str;!(fr.eof());) {
-			if((str=fr.get_string())==null)
+		for(String child_number_str;!(fr.eof());) {
+			if((child_number_str=fr.get_string())==null)
 				continue;
-			if((str=str.trim().toLowerCase()).length()<=0)
+			if((child_number_str=child_number_str.trim().toLowerCase()).length()<=0)
 				continue;
-			switch(str){
+			switch(child_number_str){
 			default:
+			{
+				int my_child_number;
 				try{
-					my_child_number=Integer.decode(str);
+					my_child_number=Integer.decode(child_number_str);
 				}catch(Exception e){
 					e.printStackTrace();
-					
-					debug_information.println("Find error child_number:	",str);
+
+					debug_information.println("Find error child_number:	",child_number_str);
 					debug_information.println("File name:	 ",fr.directory_name+fr.file_name);
 					debug_information.println("Error:	",e.toString());
 					
 					my_child_number=0;
 				}
 				for(int i=0;i<my_child_number;i++)
-					children.add(new component(token_string,fr,
-						uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
+					children.add(new component(
+						token_string,fr,uniparameter.part_list_flag,
+						uniparameter.normalize_location_flag,ccp));
 				return;
+			}
 			case "push_file_part_type_string":
 				ccp.push_part_type_string_sorter(
-						new part_type_string_sorter(
+					new part_type_string_sorter(
 							new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
 							ccp.sk.scene_par.part_type_string,fr.get_charset()));
 					break;
 			case "push_file_part_type_string_without_scene_par":
 				ccp.push_part_type_string_sorter(
 					new part_type_string_sorter(
-						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
-						null,fr.get_charset()));
+							new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+							null,fr.get_charset()));
 				break;
 			case "push_string_part_type_string":
-				if((str=fr.get_string())==null)
-					str=ccp.sk.scene_par.part_type_string;
-				else if((str=str.trim()).length()<=0)
-					str=ccp.sk.scene_par.part_type_string;
+			{
+				String type_string;
+				if((type_string=fr.get_string())==null)
+					type_string=ccp.sk.scene_par.part_type_string;
+				else if((type_string=type_string.trim()).length()<=0)
+					type_string=ccp.sk.scene_par.part_type_string;
 				else
-					str=ccp.sk.scene_par.part_type_string+";"+str;
+					type_string=ccp.sk.scene_par.part_type_string+";"+type_string;
 				ccp.push_part_type_string_sorter(
-						new part_type_string_sorter(null,str,fr.get_charset()));
+						new part_type_string_sorter(null,type_string,fr.get_charset()));
 				break;
+			}
 			case "push_string_part_type_string_without_scene_par":
-				if((str=fr.get_string())==null)
-					str="";
-				else if((str=str.trim()).length()<=0)
-					str="";
+			{
+				String type_string;
+				if((type_string=fr.get_string())==null)
+					type_string="";
+				else if((type_string=type_string.trim()).length()<=0)
+					type_string="";
 				ccp.push_part_type_string_sorter(
-						new part_type_string_sorter(null,str,fr.get_charset()));
+						new part_type_string_sorter(null,type_string,fr.get_charset()));
 				break;
+			}
 			case "pop_part_type_string":	
 				ccp.pop_part_type_string_sorter();
 				break;
@@ -97,22 +104,28 @@ public class component_core_3 extends component_core_2
 						null,fr.get_charset()));
 				break;
 			case "push_string_part_change_name":
-				if((str=fr.get_string())==null)
-					str=ccp.sk.scene_par.change_part_string;
-				else if((str=str.trim()).length()<=0)
-					str=ccp.sk.scene_par.change_part_string;
+			{
+				String change_string;
+				if((change_string=fr.get_string())==null)
+					change_string=ccp.sk.scene_par.change_part_string;
+				else if((change_string=change_string.trim()).length()<=0)
+					change_string=ccp.sk.scene_par.change_part_string;
 				else
-					str=ccp.sk.scene_par.change_part_string+";"+str;
+					change_string=ccp.sk.scene_par.change_part_string+";"+change_string;
 				
-				ccp.push_change_part_name(new change_name(null,str,fr.get_charset()));
+				ccp.push_change_part_name(new change_name(null,change_string,fr.get_charset()));
 				break;
+			}
 			case "push_string_part_change_name_without_scene_par":
-				if((str=fr.get_string())==null)
-					str="";
-				else if((str=str.trim()).length()<=0)
-					str="";
-				ccp.push_change_part_name(new change_name(null,str,fr.get_charset()));
+			{
+				String change_string;
+				if((change_string=fr.get_string())==null)
+					change_string="";
+				else if((change_string=change_string.trim()).length()<=0)
+					change_string="";
+				ccp.push_change_part_name(new change_name(null,change_string,fr.get_charset()));
 				break;
+			}
 			case "pop_part_change_name":
 				ccp.pop_change_part_name();
 				break;
@@ -135,14 +148,22 @@ public class component_core_3 extends component_core_2
 				token_string="";
 				break;
 			case "relative_token_string":
-				if((str=fr.get_string())!=null)
-					token_string+=str;
+			{
+				String append_token_string;
+				if((append_token_string=fr.get_string())!=null)
+					token_string+=append_token_string;
 				break;
+			}
 			case "absolute_token_string":
-				if((str=fr.get_string())!=null)
-					token_string=str;
+			{
+				String new_token_string;
+				if((new_token_string=fr.get_string())!=null)
+					token_string=new_token_string;
 				break;
+			}
 			case "clear_display_flag":
+			{
+				int my_parameter_channel_id;
 				if((my_parameter_channel_id=fr.get_int())<0)
 					for(int i=0,ni=multiparameter.length;i<ni;i++)
 						multiparameter[i].display_flag=false;
@@ -152,7 +173,10 @@ public class component_core_3 extends component_core_2
 					debug_information.println("set_display parameter_channel_id error:",
 								component_name+"	"+my_parameter_channel_id);
 				break;
+			}
 			case "set_display_flag":
+			{
+				int my_parameter_channel_id;
 				if((my_parameter_channel_id=fr.get_int())<0)
 					for(int i=0,ni=multiparameter.length;i<ni;i++)
 						multiparameter[i].display_flag=true;
@@ -162,9 +186,11 @@ public class component_core_3 extends component_core_2
 					debug_information.println("set_display parameter_channel_id error:",
 							component_name+"	"+my_parameter_channel_id);
 				break;
-			case "set_display_bitmap":	
-				my_parameter_channel_id=fr.get_int();
-				my_display_bitmap	=fr.get_long();
+			}
+			case "set_display_bitmap":
+			{
+				int my_parameter_channel_id=fr.get_int();
+				long my_display_bitmap	=fr.get_long();
 				if(my_parameter_channel_id<0)
 					for(int i=0,ni=multiparameter.length;i<ni;i++)
 							multiparameter[i].display_bitmap=my_display_bitmap;
@@ -174,7 +200,7 @@ public class component_core_3 extends component_core_2
 					debug_information.println("display_bitmap parameter_channel_id error:",
 							component_name+"	"+my_parameter_channel_id);
 				break;
-				
+			}
 			case "token_program":
 				
 			case "file_program":
@@ -182,7 +208,7 @@ public class component_core_3 extends component_core_2
 			
 			case "multifile_program":
 			case "charset_multifile_program":
-				initialization.create_initialization(fr,str);
+				initialization.create_initialization(fr,child_number_str);
 				break;
 				
 			case "component_mount":
@@ -208,7 +234,7 @@ public class component_core_3 extends component_core_2
 				
 			case "environment_scene_sub_directory_mount":
 			case "environment_scene_sub_directory_charset_mount":
-				file_mount_switch.switch_file_mount(str,component_name,
+				file_mount_switch.switch_file_mount(child_number_str,component_name,
 						driver_array,children,uniparameter,token_string,fr,ccp);
 				break;
 			}

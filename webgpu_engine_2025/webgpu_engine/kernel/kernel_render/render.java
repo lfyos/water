@@ -210,7 +210,8 @@ public class render
 				my_part.destroy();
 			}
 			component_load_source_cont.register_component(part_f,
-				my_part.part_par.part_load_assemble_type,system_par.default_system_mount_component_name);
+				my_part.part_par.part_load_assemble_type,
+				system_par.default_system_mount_component_name);
 		}
 		part_f.close();
 		return;
