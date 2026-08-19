@@ -41,7 +41,7 @@ public class tree_string_locker_container extends tree_string_search_container<l
 		
 		if(modify_number>=0){
 			int last_id;
-			for(search_tree_node=add(locker_name,null,false);(last_id=search_tree_node.list.size()-1)>0;)
+			for(search_tree_node=add(locker_name,null);(last_id=search_tree_node.list.size()-1)>0;)
 				search_tree_node.list.remove(last_id);
 			if((locker_cont=search_tree_node.list.get(0))==null) {
 				locker_cont=new locker_container();
@@ -49,7 +49,7 @@ public class tree_string_locker_container extends tree_string_search_container<l
 			}
 			locker_cont.number+=modify_number;
 		}else{
-			if((search_tree_node=search(locker_name,false))==null)
+			if((search_tree_node=search(locker_name))==null)
 				return null;
 			if(search_tree_node.list.size()<=0) {
 				remove(locker_name);

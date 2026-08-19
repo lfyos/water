@@ -65,7 +65,7 @@ class part_package_collector extends tree_search_container<part,part>
 		
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)
-				add(my_part,my_part,false);
+				add(my_part,my_part);
 		
 		int package_number=0;
 		long my_package_length=0;

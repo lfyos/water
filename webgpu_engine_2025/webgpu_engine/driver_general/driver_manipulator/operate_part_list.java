@@ -59,13 +59,13 @@ public class operate_part_list
 			comp_con.add_component(my_comp);
 			switch(select_type_id){
 			case 1:
-				cs.set_selected_flag(my_comp,sk.component_cont);
+				cs.set_selected_flag(my_comp);
 				break;
 			case 2:
-				cs.clear_selected_flag(my_comp,sk.component_cont);
+				cs.clear_selected_flag(my_comp);
 				break;
 			case 3:
-				cs.switch_selected_flag(my_comp,sk.component_cont);
+				cs.switch_selected_flag(my_comp);
 				break;
 			default:
 				return;
@@ -100,13 +100,13 @@ public class operate_part_list
 						comp_con.add_component(cll.comp);
 						switch(select_type_id){
 						case 1:
-							cs.set_selected_flag(cll.comp,sk.component_cont);
+							cs.set_selected_flag(cll.comp);
 							break;
 						case 2:
-							cs.clear_selected_flag(cll.comp,sk.component_cont);
+							cs.clear_selected_flag(cll.comp);
 							break;
 						case 3:
-							cs.switch_selected_flag(cll.comp,sk.component_cont);
+							cs.switch_selected_flag(cll.comp);
 							break;
 						default:
 							return;

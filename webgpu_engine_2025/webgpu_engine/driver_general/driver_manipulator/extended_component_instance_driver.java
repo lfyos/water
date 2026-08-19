@@ -65,7 +65,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			break;
 		case "last_component":
 			ci.request_response.println(
-				((my_comp=sk.component_cont.search_component())==null)?-1:(my_comp.component_id));
+				((my_comp=sk.component_cont.latest_selected_component())==null)?-1:(my_comp.component_id));
 			break;
 		case "transparency":
 			operate_component_transparent.do_transparency(sk, ci);

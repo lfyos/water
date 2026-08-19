@@ -15,6 +15,6 @@ public class part_container_for_process_sequence extends tree_search_container<p
 				my_box_distance_difference_scale,my_buffer_data_length_difference_scale));
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)
-				add(my_part,my_part,false);
+				add(my_part,my_part);
 	}
 }

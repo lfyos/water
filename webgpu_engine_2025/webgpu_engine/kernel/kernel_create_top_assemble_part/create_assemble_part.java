@@ -64,7 +64,7 @@ public class create_assemble_part
 			if((comp_p=component_heap.get_heap_component(part_number.part_number))==null)
 				break;
 			int my_create_part_number=part_number.part_number[comp_p.component_id];
-			var component_list=part_component_container.search(comp_p.part_name,false); 
+			var component_list=part_component_container.search(comp_p.part_name); 
 			if(component_list!=null) {
 				component_list.list.add(comp_p);
 				create_part_number+=my_create_part_number;
@@ -89,7 +89,7 @@ public class create_assemble_part
 				part_number.all_part_number-=my_create_part_number;
 				continue;
 			}
-			part_component_container.add(comp_p.part_name,comp_p,false);
+			part_component_container.add(comp_p.part_name,comp_p);
 
 			part_parameter part_par=create_part_parameter.create(cpr.select_ref_part,
 				comp_p.uniparameter.file_last_modified_time,
@@ -132,7 +132,7 @@ public class create_assemble_part
 			part_loader_cont.load(add_part,fast_load_type,already_loaded_part,
 				string_locker_container,system_par,scene_par,boftal_container);
 			top_box_part.add(add_part);
-			pcps.add(add_part,add_part,false);
+			pcps.add(add_part,add_part);
 			create_part_number+=my_create_part_number;
 
 			debug_information.println();

@@ -24,7 +24,7 @@ public class component_container
 	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	
 	private component component_pointer[];
-	private tree_string_search_container<component> tree_component_container;
+	private tree_string_search_container<component> search_component_cont;
 	
 	public void destroy()
 	{
@@ -39,9 +39,9 @@ public class component_container
 		render_component_id_and_driver_id=null;
 		part_component_id_and_driver_id=null;
 		
-		if(tree_component_container!=null) {
-			tree_component_container.destroy();
-			tree_component_container=null;
+		if(search_component_cont!=null) {
+			search_component_cont.destroy();
+			search_component_cont=null;
 		}
 		if(component_pointer!=null){
 			for(int i=0,ni=component_pointer.length;i<ni;i++)
@@ -58,18 +58,18 @@ public class component_container
 	}
 	public ArrayList<component> get_sort_component_list()
 	{
-		return tree_component_container.tree_get_value_list();
+		return search_component_cont.tree_get_value_list();
 	}
 	public component search_component(String my_search_component_name)
 	{
 		tree_search_container_tree_node<String,component> my_tree_node;
-		my_tree_node=tree_component_container.search(my_search_component_name,false);
+		my_tree_node=search_component_cont.search(my_search_component_name);
 		if(my_tree_node!=null)
 			if(my_tree_node.list.size()>0)
 				return my_tree_node.list.get(0);
 		return null;
 	}
-	public component search_component()
+	public component latest_selected_component()
 	{
 		component ret_val;
 		if((ret_val=root_component)!=null)
@@ -128,7 +128,7 @@ public class component_container
 		part_component_id_and_driver_id		=c_c.part_component_id_and_driver_id;
 	
 		component_pointer					=c_c.component_pointer;
-		tree_component_container			=c_c.tree_component_container;
+		search_component_cont				=c_c.search_component_cont;
 		
 		component_number					=c_c.component_number;
 		top_assemble_component_number		=c_c.top_assemble_component_number;
@@ -173,7 +173,7 @@ public class component_container
 			part_component_id_and_driver_id		=null;
 			
 			component_pointer					=null;
-			tree_component_container			=null;
+			search_component_cont				=null;
 		}
 		{
 			if(scene_f.eof()){

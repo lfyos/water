@@ -27,7 +27,7 @@ public class travel_through_directory
 			{
 				if(file_name_array!=null)
 					for(int i=0,ni=file_name_array.length;i<ni;i++)
-						add(file_name_array[i],file_name_array[i],false);
+						add(file_name_array[i],file_name_array[i]);
 			}
 		};
 		

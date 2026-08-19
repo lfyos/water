@@ -74,7 +74,7 @@ public class component_core_2 extends component_core_1
 			effective_parts=new ArrayList<part>();
 			for(int i=0,part_number=search_parts.size();i<part_number;i++) {
 				my_part=search_parts.get(i);
-				var my_part_type_string=ptss.search(my_part.part_par.part_type_string,false);
+				var my_part_type_string=ptss.search(my_part.part_par.part_type_string);
 				if(my_part_type_string!=null)
 					if(my_part_type_string.list.size()>0)
 						effective_parts.add(my_part);

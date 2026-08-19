@@ -20,7 +20,7 @@ public class component_caculator
 	public int component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
 	public component component_pointer[];
-	public tree_string_search_container<component> tree_component_container;
+	public tree_string_search_container<component> search_component_cont;
 	public int top_assemble_component_number,part_component_number,exist_part_component_number;
 	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	
@@ -139,10 +139,10 @@ public class component_caculator
 	
 	private void set_pointer(component comp)
 	{
-		component_pointer[comp.component_id]=comp;
-		tree_component_container.add(comp.component_name,comp,false);
 		for(int i=0,n=comp.children.size();i<n;i++)
 			set_pointer(comp.children.get(i));
+		component_pointer[comp.component_id]=comp;
+		search_component_cont.add(comp.component_name,comp);
 	}
 	public component_caculator(component root_component,boolean display_flag,
 			client_process_bar process_bar,String process_bar_title)
@@ -156,8 +156,9 @@ public class component_caculator
 		caculate_component_driver_id(root_component);
 		register_componennt_to_part(root_component);
 		
-		component_pointer		=new component[component_number];
-		tree_component_container=new tree_string_search_container<component>();
+		component_pointer				=new component[component_number];
+		search_component_cont			=new tree_string_search_container<component>();
+		
 		set_pointer(root_component);
 		
 		for(int i=0,ni=component_pointer.length;i<ni;i++){
@@ -184,7 +185,7 @@ public class component_caculator
 		
 		{
 			ArrayList<tree_search_container_tree_node<String,component>> sort_component_list;
-			sort_component_list=tree_component_container.tree_get_node_list();
+			sort_component_list=search_component_cont.tree_get_node_list();
 			int display_same_number=0,display_same_component_number=0;
 			int total_same_component_number=sort_component_list.size();
 			

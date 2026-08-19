@@ -22,7 +22,7 @@ public class buffer_object_file_modify_time_and_length_container
 				break;
 			if(process_bar!=null)
 				process_bar.set_process_bar(false,process_title,my_key,i,number);
-			add(my_key,new buffer_object_file_modify_time_and_length(fr),false);
+			add(my_key,new buffer_object_file_modify_time_and_length(fr));
 		}
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,process_title,"",number,number);

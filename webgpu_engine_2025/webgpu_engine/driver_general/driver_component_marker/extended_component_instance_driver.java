@@ -171,7 +171,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					update_component_parameter_version(0);
 				break;
 			case "swap_select":
-				new component_selection(sk).switch_selected_flag(operate_comp,sk.component_cont);
+				new component_selection(sk).switch_selected_flag(operate_comp);
 				break;
 			case "locate":
 				new locate_camera(sk.camera_cont.get(ci.display_camera_result.target.camera_id)).

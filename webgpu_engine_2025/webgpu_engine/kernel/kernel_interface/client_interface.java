@@ -68,7 +68,7 @@ public class client_interface
 		
 		tree_search_container_tree_node<String,scene_kernel_and_client_information_container>my_tree_node;
 	
-		if((my_tree_node=tree.search(request_response.channel_string,true))==null) {
+		if((my_tree_node=tree.search(request_response.channel_string))==null) {
 			debug_information.print  ("Search client_interface fail,list is null,Client ID is ",request_response.client_id);
 			debug_information.println(",channel_id is ",request_response.channel_string);
 			return null;
@@ -230,11 +230,11 @@ public class client_interface
 					statistics_user.user_scene_kernel_number++;
 					statistics_user.user_scene_component_number
 						+=created_scene_kernel_only.sk.component_cont.component_number;
-					tree.add(created_sk_and_ci.client_information.channel_id,created_sk_and_ci,true);
+					tree.add(created_sk_and_ci.client_information.channel_id,created_sk_and_ci);
 					break;
 				}
 			String my_tree_key="fail_scene";
-			tree.add(my_tree_key,created_sk_and_ci,true);
+			tree.add(my_tree_key,created_sk_and_ci);
 			tree.move_to_first(my_tree_key);
 		}while(false);
 		
@@ -410,7 +410,7 @@ public class client_interface
 				if(		  (skci_cont.update_sk_and_ci_processing_number(0)>0)
 						||(skci_cont.modify_kernel_and_client_information_lock_number(0)>0))
 				{
-					tree.search(my_key,true);
+					tree.search(my_key);
 					return;
 				}
 				if((skci_cont.client_information==null)||(skci_cont.scene_kernel_cont==null)){

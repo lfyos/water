@@ -141,7 +141,7 @@ public class scene_parameter
 				continue;
 			if((parameter_value=parameter_value.trim()).length()<=0)
 				continue;
-			client_parameter_name.add(parameter_name,parameter_value,false);
+			client_parameter_name.add(parameter_name,parameter_value);
 		}
 	}
 	private void caculate_scene_temporary_directory_name(

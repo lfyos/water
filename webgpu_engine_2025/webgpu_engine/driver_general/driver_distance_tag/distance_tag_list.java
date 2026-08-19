@@ -240,7 +240,7 @@ public class distance_tag_list
 				switch(str.trim()) {
 				case "true":
 				case "yes":
-					new component_selection(sk).switch_selected_flag(p0_comp,sk.component_cont);
+					new component_selection(sk).switch_selected_flag(p0_comp);
 					break;
 				}
 		component px_comp=sk.component_cont.get_component(
@@ -250,7 +250,7 @@ public class distance_tag_list
 				switch(str.trim()) {
 				case "true":
 				case "yes":
-					new component_selection(sk).switch_selected_flag(px_comp,sk.component_cont);
+					new component_selection(sk).switch_selected_flag(px_comp);
 					break;
 				}
 		return;

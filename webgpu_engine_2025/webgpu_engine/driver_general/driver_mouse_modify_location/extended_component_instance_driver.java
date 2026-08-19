@@ -157,7 +157,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			if(ci.parameter.comp!=null)
 				select_component_id=ci.parameter.comp.component_id;
 			if(select_component_id<0)
-				if((operate_component=sk.component_cont.search_component())!=null)
+				if((operate_component=sk.component_cont.latest_selected_component())!=null)
 					if(operate_component.component_id!=sk.component_cont.root_component.component_id)
 						if(operate_component.component_id!=camera_component_id) 
 							select_component_id=operate_component.component_id;

@@ -55,12 +55,12 @@ public class render_target_container extends tree_search_container<render_target
 	}
 	public void register_target(render_target new_rt)
 	{
-		var my_tree_node=search(new_rt,false);
+		var my_tree_node=search(new_rt);
 		
 		if(my_tree_node==null){
 			new_rt.target_id=target_array.size();
 			target_array.add(new_rt.target_id,new_rt);
-			add(new_rt,new_rt,false);
+			add(new_rt,new_rt);
 		}else{
 			new_rt.target_id=my_tree_node.list.get(0).target_id;
 			target_array.set(new_rt.target_id,new_rt);

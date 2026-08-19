@@ -122,7 +122,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				if(collector.component_collector[i]!=null)
 					for(int j=0,nj=collector.component_collector[i].length;j<nj;j++)
 						for(component_link_list p=collector.component_collector[i][j];p!=null;p=p.next_list_item)
-							cs.set_selected_flag(p.comp,sk.component_cont);
+							cs.set_selected_flag(p.comp);
 			break;
 		case 2:
 		case 3:
@@ -167,9 +167,9 @@ public class extended_component_instance_driver extends component_instance_drive
 			component_selection cs=new component_selection(sk);
 			
 			if(ci.parameter.comp==null)
-				cs.clear_selected_flag(sk.component_cont);
+				cs.clear_selected_flag();
 			else
-				cs.switch_selected_flag(ci.parameter.comp,sk.component_cont);
+				cs.switch_selected_flag(ci.parameter.comp);
 			break;
 		case 2:
 		case 3:

@@ -35,7 +35,7 @@ public class movement_change_component
 			}
 			if((comp=sk.component_cont.search_component(str))==null)
 				return manager.parameter.current_movement_id;
-		}else if((comp=sk.component_cont.search_component())==null)
+		}else if((comp=sk.component_cont.latest_selected_component())==null)
 			return manager.parameter.current_movement_id;
 		
 		if(comp.component_id==sk.component_cont.root_component.component_id)

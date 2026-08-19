@@ -63,7 +63,7 @@ public class movement_design_base
 			}while(false);
 		
 		if(comp==null)
-			comp=sk.component_cont.search_component();
+			comp=sk.component_cont.latest_selected_component();
 		
 		if(sk.component_cont.root_component.component_id==comp.component_id) {
 			comp=null;

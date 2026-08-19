@@ -184,7 +184,7 @@ public class modifier_container
 				
 				if(modifier_driver_list!=null)
 					for(var my_modifier_driver_holder:modifier_driver_list)
-						add(my_modifier_driver_holder,my_modifier_driver_holder,false);
+						add(my_modifier_driver_holder,my_modifier_driver_holder);
 			}
 		}
 		return new modifier_driver_list_sorter().tree_get_value_list();

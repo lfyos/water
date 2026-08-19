@@ -516,7 +516,7 @@ public class movement_function_switch
 		
 		if(sk.component_cont.root_component==null)
 			return "no_root_component";
-		if((comp=sk.component_cont.search_component())==null)
+		if((comp=sk.component_cont.latest_selected_component())==null)
 			return "no_selected_component";
 		if(!(comp.uniparameter.selected_flag))
 			return "selected_component_not_selected";
@@ -1391,7 +1391,7 @@ public class movement_function_switch
 			break;
 		case "search_jason":
 			new movement_search_jason(manager.config_parameter.component_id,
-					sk.component_cont.search_component(),sk.component_cont,manager.root_movement,ci);
+					sk.component_cont.latest_selected_component(),sk.component_cont,manager.root_movement,ci);
 			break;
 		default:
 			break;

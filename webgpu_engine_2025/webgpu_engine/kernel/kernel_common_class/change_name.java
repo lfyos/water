@@ -8,7 +8,7 @@ public class change_name extends tree_string_search_container<String>
 {
 	public String search_change_name(String my_search_name,String fail_result)
 	{	
-		tree_search_container_tree_node<String,String> search_tree_node=search(my_search_name,false);
+		tree_search_container_tree_node<String,String> search_tree_node=search(my_search_name);
 		return 	(search_tree_node==null)			?fail_result:
 				(search_tree_node.list.size()<=0)	?fail_result:
 				(search_tree_node.list.get(0));
@@ -21,9 +21,9 @@ public class change_name extends tree_string_search_container<String>
 			for(int i=0,ni=(list=my_change_name.tree_get_node_list()).size();i<ni;i++) 
 				for(int j=0,nj=(my_tree_node=list.get(i)).list.size();j<nj;j++)
 					if(do_reversion_flag)
-						add(my_tree_node.list.get(j),	my_tree_node.key,			false);
+						add(my_tree_node.list.get(j),	my_tree_node.key);
 					else
-						add(my_tree_node.key,			my_tree_node.list.get(j),	false);
+						add(my_tree_node.key,			my_tree_node.list.get(j));
 	}
 	private void init(common_reader f_array[],String change_string)
 	{
@@ -37,7 +37,7 @@ public class change_name extends tree_string_search_container<String>
 					if((my_key=my_key.trim()).length()<=0)
 						continue;
 					my_value=my_value.trim();
-					add(my_key,my_value,false);
+					add(my_key,my_value);
 				}
 		if(change_string!=null)
 			while(change_string.length()>0){
@@ -47,7 +47,7 @@ public class change_name extends tree_string_search_container<String>
 				if((index_id=my_str.indexOf(":"))>0){
 					String my_key=my_str.substring(0,index_id).trim();
 					String my_value=my_str.substring(index_id+1).trim();
-					add(my_key,my_value,false);
+					add(my_key,my_value);
 				}
 			}
 	}

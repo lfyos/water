@@ -73,7 +73,7 @@ public class part_container_for_part_search extends tree_search_container<part,p
 		super(new part_comparator_for_part_search());
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)
-				add(my_part,my_part,false);
+				add(my_part,my_part);
 	}
 	public ArrayList<part> search_part(String my_part_system_name)
 	{
