@@ -167,7 +167,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			component_selection cs=new component_selection(sk);
 			
 			if(ci.parameter.comp==null)
-				cs.clear_selected_flag();
+				cs.clear_selected_flag(sk.component_cont.root_component);
 			else
 				cs.switch_selected_flag(ci.parameter.comp);
 			break;

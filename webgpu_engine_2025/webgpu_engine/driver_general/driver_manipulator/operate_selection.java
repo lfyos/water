@@ -60,7 +60,7 @@ public class operate_selection
 				cs.set_collector_selected(sk.collector_stack.get_top_collector());
 			break;
 		case "clear_all":
-			cs.clear_selected_flag();
+			cs.clear_selected_flag(sk.component_cont.root_component);
 			break;
 		case "clear_component":
 		case "swap_component":
