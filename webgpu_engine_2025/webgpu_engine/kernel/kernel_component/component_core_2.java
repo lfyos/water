@@ -2,8 +2,6 @@ package kernel_component;
 
 import java.util.ArrayList;
 
-import kernel_part.part;
-import kernel_driver.component_driver;
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
 import kernel_scene.part_type_string_sorter;
@@ -11,106 +9,244 @@ import kernel_common_class.debug_information;
 
 public class component_core_2 extends component_core_1
 {
-	public ArrayList<component_driver>	driver_array;
+	public ArrayList<component> children;
 	
 	public void destroy()
 	{
 		super.destroy();
-
-		component_driver c_d;
-		for(int i=driver_array.size()-1;i>=0;i--)
-			if((c_d=driver_array.remove(i))!=null)
-				try {
-					c_d.destroy();
-				}catch(Exception e) {
-					e.printStackTrace();
-					debug_information.println("Execute component driver destroy fail:	",e.toString());
-				}
-		driver_array.clear();
+		
+		for(int i=0,ni=children.size();i<ni;i++){
+			component my_child=children.get(i);
+			if(my_child!=null)
+				my_child.destroy();
+			children.set(i,null);
+		}
+		children.clear();
 	}
-	private void create_driver(file_reader fr,component_construction_parameter ccp)
+	private void process_component_operation(String token_string,
+				file_reader fr,component_construction_parameter ccp)
 	{
-		part my_part;
-		change_name change_part_name;
-		ArrayList<part> search_parts,effective_parts;
+		for(String child_number_str;!(fr.eof());) {
+			if((child_number_str=fr.get_string())==null)
+				continue;
+			if((child_number_str=child_number_str.trim().toLowerCase()).length()<=0)
+				continue;
+			switch(child_number_str){
+			default:
+			{
+				int my_child_number;
+				try{
+					my_child_number=Integer.decode(child_number_str);
+				}catch(Exception e){
+					e.printStackTrace();
 
-		driver_array=new ArrayList<component_driver>();
-		
-		if((change_part_name=ccp.get_change_part_name())==null)
-			search_parts=ccp.sk.part_cont.search_part(part_name);
-		else{
-			String search_part_name=change_part_name.search_change_name(part_name,part_name);
-			if((search_parts=ccp.sk.part_cont.search_part(search_part_name))==null){
-				search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
-				search_parts=ccp.sk.part_cont.search_part(search_part_name);
-			}
-		}
-		if(search_parts==null)
-			return;
-		if(search_parts.size()<=0)
-			return;
-		effective_parts=new ArrayList<part>();
-		boolean top_flag=false,bottom_flag=false;
-		for(int i=0,ni=search_parts.size();i<ni;i++){
-			my_part=search_parts.get(i);
-			if(my_part.is_bottom_box_part()){
-				if(bottom_flag)
-					continue;
-				bottom_flag=true;
-			}
-			if(my_part.is_top_box_part()){
-				if(top_flag)
-					continue;
-				top_flag=true;
-			}
-			effective_parts.add(my_part);
-		}
-		if(effective_parts.size()<=0)
-			return;
-		
-		part_type_string_sorter ptss=ccp.get_part_type_string_sorter();
-		if(((ptss==null)?0:(ptss.tree_get_value_list().size()))>0){
-			search_parts=effective_parts;
-			effective_parts=new ArrayList<part>();
-			for(int i=0,part_number=search_parts.size();i<part_number;i++) {
-				my_part=search_parts.get(i);
-				var my_part_type_string=ptss.search(my_part.part_par.part_type_string);
-				if(my_part_type_string!=null)
-					if(my_part_type_string.list.size()>0)
-						effective_parts.add(my_part);
-			}
-			if(effective_parts.size()<=0)
+					debug_information.println("Find error child_number:	",child_number_str);
+					debug_information.println("File name:	 ",fr.directory_name+fr.file_name);
+					debug_information.println("Error:	",e.toString());
+					
+					my_child_number=0;
+				}
+				for(int i=0;i<my_child_number;i++)
+					children.add(new component(
+						token_string,fr,uniparameter.part_list_flag,
+						uniparameter.normalize_location_flag,ccp));
 				return;
-		}
-
-		for(int i=0,ni=effective_parts.size();i<ni;i++){
-			fr.mark_start();
-			my_part=effective_parts.get(i);
-
-			component_driver comp_driver;
-			try{
-				comp_driver=my_part.driver.create_component_driver(fr,
-						(i<(ni-1))?true:false,my_part,ccp.clsc,ccp.sk,ccp.request_response);
-			}catch(Exception e){
-				comp_driver=null;
-				e.printStackTrace();
-				
-				debug_information.println("create_component_driver fail:	",e.toString());
-				debug_information.println("Part user name:",	my_part.user_name);
-				debug_information.println("Part system name:",	my_part.system_name);
-				debug_information.println("Mesh_file_name:",	my_part.directory_name+my_part.mesh_file_name);
-				debug_information.println("Material_file_name:",my_part.directory_name+my_part.material_file_name);
 			}
-			if(comp_driver!=null)
-				driver_array.add(comp_driver);
-			fr.mark_terminate((i<(ni-1))?true:false);
+			case "push_file_part_type_string":
+				ccp.push_part_type_string_sorter(
+					new part_type_string_sorter(
+							new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+							ccp.sk.scene_par.part_type_string,fr.get_charset()));
+					break;
+			case "push_file_part_type_string_without_scene_par":
+				ccp.push_part_type_string_sorter(
+					new part_type_string_sorter(
+							new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+							null,fr.get_charset()));
+				break;
+			case "push_string_part_type_string":
+			{
+				String type_string;
+				if((type_string=fr.get_string())==null)
+					type_string=ccp.sk.scene_par.part_type_string;
+				else if((type_string=type_string.trim()).length()<=0)
+					type_string=ccp.sk.scene_par.part_type_string;
+				else
+					type_string=ccp.sk.scene_par.part_type_string+";"+type_string;
+				ccp.push_part_type_string_sorter(
+						new part_type_string_sorter(null,type_string,fr.get_charset()));
+				break;
+			}
+			case "push_string_part_type_string_without_scene_par":
+			{
+				String type_string;
+				if((type_string=fr.get_string())==null)
+					type_string="";
+				else if((type_string=type_string.trim()).length()<=0)
+					type_string="";
+				ccp.push_part_type_string_sorter(
+						new part_type_string_sorter(null,type_string,fr.get_charset()));
+				break;
+			}
+			case "pop_part_type_string":	
+				ccp.pop_part_type_string_sorter();
+				break;
+			case "push_file_part_change_name":
+				ccp.push_change_part_name(
+					new change_name(
+						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+						ccp.sk.scene_par.change_part_string,fr.get_charset()));
+				break;
+			case "push_file_part_change_name_without_scene_par":
+				ccp.push_change_part_name(
+					new change_name(
+						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+						null,fr.get_charset()));
+				break;
+			case "push_string_part_change_name":
+			{
+				String change_string;
+				if((change_string=fr.get_string())==null)
+					change_string=ccp.sk.scene_par.change_part_string;
+				else if((change_string=change_string.trim()).length()<=0)
+					change_string=ccp.sk.scene_par.change_part_string;
+				else
+					change_string=ccp.sk.scene_par.change_part_string+";"+change_string;
+				
+				ccp.push_change_part_name(new change_name(null,change_string,fr.get_charset()));
+				break;
+			}
+			case "push_string_part_change_name_without_scene_par":
+			{
+				String change_string;
+				if((change_string=fr.get_string())==null)
+					change_string="";
+				else if((change_string=change_string.trim()).length()<=0)
+					change_string="";
+				ccp.push_change_part_name(new change_name(null,change_string,fr.get_charset()));
+				break;
+			}
+			case "pop_part_change_name":
+				ccp.pop_change_part_name();
+				break;
+			case "part_list":
+				uniparameter.part_list_flag=true;
+				break;
+			case "not_part_list":
+				uniparameter.part_list_flag=false;
+				break;
+			case "normalize_location":
+				uniparameter.normalize_location_flag=true;
+				break;
+			case "not_normalize_location":
+				uniparameter.normalize_location_flag=false;
+				break;
+			case "lod_precision_scale":
+				uniparameter.component_driver_lod_precision_scale=fr.get_double();
+				break;
+			case "blank_token_string":
+				token_string="";
+				break;
+			case "relative_token_string":
+			{
+				String append_token_string;
+				if((append_token_string=fr.get_string())!=null)
+					token_string+=append_token_string;
+				break;
+			}
+			case "absolute_token_string":
+			{
+				String new_token_string;
+				if((new_token_string=fr.get_string())!=null)
+					token_string=new_token_string;
+				break;
+			}
+			case "clear_display_flag":
+			{
+				int my_parameter_channel_id;
+				if((my_parameter_channel_id=fr.get_int())<0)
+					for(int i=0,ni=multiparameter.length;i<ni;i++)
+						multiparameter[i].display_flag=false;
+				else if(my_parameter_channel_id<multiparameter.length)
+					multiparameter[my_parameter_channel_id].display_flag=false;
+				else 
+					debug_information.println("set_display parameter_channel_id error:",
+								component_name+"	"+my_parameter_channel_id);
+				break;
+			}
+			case "set_display_flag":
+			{
+				int my_parameter_channel_id;
+				if((my_parameter_channel_id=fr.get_int())<0)
+					for(int i=0,ni=multiparameter.length;i<ni;i++)
+						multiparameter[i].display_flag=true;
+				else if(my_parameter_channel_id<multiparameter.length)
+					multiparameter[my_parameter_channel_id].display_flag=true;
+				else 
+					debug_information.println("set_display parameter_channel_id error:",
+							component_name+"	"+my_parameter_channel_id);
+				break;
+			}
+			case "set_display_bitmap":
+			{
+				int my_parameter_channel_id=fr.get_int();
+				long my_display_bitmap	=fr.get_long();
+				if(my_parameter_channel_id<0)
+					for(int i=0,ni=multiparameter.length;i<ni;i++)
+							multiparameter[i].display_bitmap=my_display_bitmap;
+				else if(my_parameter_channel_id<multiparameter.length)
+					multiparameter[my_parameter_channel_id].display_bitmap=my_display_bitmap;
+				else 
+					debug_information.println("display_bitmap parameter_channel_id error:",
+							component_name+"	"+my_parameter_channel_id);
+				break;
+			}
+			case "token_program":
+				
+			case "file_program":
+			case "charset_file_program":
+			
+			case "multifile_program":
+			case "charset_multifile_program":
+				initialization.create_initialization(fr,child_number_str);
+				break;
+				
+			case "component_mount":
+			case "charset_component_mount":
+				
+			case "absulate_component_mount":
+			case "absulate_charset_component_mount":
+				
+			case "environment_component_mount":
+			case "environment_charset_component_mount":
+				
+			case "part_driver_mount":
+			case "external_part_driver_mount":
+				
+			case "mount":
+			case "charset_mount":
+				
+			case "client_select_mount":
+			case "client_select_charset_mount":
+				
+			case "client_parameter_mount":
+			case "client_parameter_charset_mount":
+				
+			case "environment_scene_sub_directory_mount":
+			case "environment_scene_sub_directory_charset_mount":
+				file_mount_switch.switch_file_mount(child_number_str,component_name,
+						driver_array,children,uniparameter,token_string,fr,ccp);
+				break;
+			}
 		}
-		return;
 	}
-	public component_core_2(String token_string,file_reader fr,boolean part_list_flag,
-				boolean normalize_location_flag,component_construction_parameter ccp)
+	public component_core_2(String token_string,file_reader fr,
+			boolean part_list_flag,boolean normalize_location_flag,
+			component_construction_parameter ccp)
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
-		create_driver(fr,ccp);
+		
+		children=new ArrayList<component>();
+		process_component_operation(token_string,fr,ccp);
 	}
 }

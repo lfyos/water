@@ -152,7 +152,7 @@ public class component_container
 	
 	public component_container(file_reader scene_f,scene_kernel sk,
 			component_load_source_container scene_component_load_source_cont,
-			long default_display_bitmap,client_request_response request_response)
+			client_request_response request_response)
 	{
 		{
 			root_component=null;
@@ -187,7 +187,7 @@ public class component_container
 			debug_information.println("Begin loading scene");
 
 			component_construction_parameter ccp=new component_construction_parameter(
-				sk,request_response,scene_component_load_source_cont,default_display_bitmap);
+					sk,request_response,scene_component_load_source_cont);
 			
 			try{
 				root_component=new component("",scene_f,false,false,ccp);

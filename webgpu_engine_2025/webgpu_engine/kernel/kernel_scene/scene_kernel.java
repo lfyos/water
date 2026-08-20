@@ -385,7 +385,7 @@ public class scene_kernel
 		start_time=current_time;
 		process_bar.set_process_bar(true,"load_component", "",1, 2);
 		component_cont=new component_container(scene_f,this,
-			scene_component_load_source_cont,scene_par.default_display_bitmap,request_response);
+			scene_component_load_source_cont,request_response);
 		
 		scene_f.close();
 		process_bar.set_process_bar(false,"load_component","", 2, 2);

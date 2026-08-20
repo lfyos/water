@@ -1,8 +1,8 @@
 package kernel_transformation;
 
+import kernel_file_manager.file_writer;
 import kernel_common_class.const_value;
 import kernel_common_class.common_reader;
-import kernel_file_manager.file_writer;
 
 public class location
 {
@@ -274,7 +274,6 @@ public class location
 		loca=loca.multiply(location.standard_negative);
 		return loca;
 	}
-	
 	public static location mix_location(location start_location,location terminate_location,double p)
 	{
 		if(p<=0.0)

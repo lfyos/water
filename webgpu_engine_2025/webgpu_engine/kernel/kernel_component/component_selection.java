@@ -106,15 +106,14 @@ public class component_selection
 				break;
 			}
 		}
-		if(my_comp.children.size()<=0){
-			do_set_selected_flag(my_comp);
-			return;
-		}
-		component last_comp=my_comp.children.get(0);
-		for(int i=1,ni=my_comp.children.size();i<ni;i++) {
-			component my_child_comp=my_comp.children.get(i);
-			if(my_child_comp.uniparameter.selected_time>last_comp.uniparameter.selected_time)
-				last_comp=my_child_comp;
+		component last_comp=my_comp;
+		if(my_comp.children.size()>0){
+			last_comp=my_comp.children.get(0);
+			for(int i=1,ni=my_comp.children.size();i<ni;i++) {
+				component my_child_comp=my_comp.children.get(i);
+				if(my_child_comp.uniparameter.selected_time>last_comp.uniparameter.selected_time)
+					last_comp=my_child_comp;
+			}
 		}
 		do_clear_selected_flag(my_comp);
 		do_set_selected_flag(last_comp);

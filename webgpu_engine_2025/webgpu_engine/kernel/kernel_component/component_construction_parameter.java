@@ -50,11 +50,8 @@ public class component_construction_parameter
 	
 	public component_load_source_container clsc;
 	
-	public long default_display_bitmap;
-	
-	public component_construction_parameter(
-			scene_kernel my_sk,client_request_response my_request_response,
-			component_load_source_container my_clsc,long my_default_display_bitmap)
+	public component_construction_parameter(scene_kernel my_sk,
+			client_request_response my_request_response,component_load_source_container my_clsc)
 	{
 		sk				=my_sk;
 		request_response=my_request_response;
@@ -72,6 +69,5 @@ public class component_construction_parameter
 					new part_type_string_sorter(null,sk.scene_par.part_type_string,null));
 
 		clsc					=my_clsc;
-		default_display_bitmap	=my_default_display_bitmap;
 	}
 }

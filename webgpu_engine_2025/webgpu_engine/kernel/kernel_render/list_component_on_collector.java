@@ -126,7 +126,7 @@ public class list_component_on_collector
 			return;
 		
 		if((cam_result.target.parameter.do_discard_lod_flag)||(cam_result.target.parameter.do_selection_lod_flag))
-			if(!(comp.selected_component_family_flag))			
+			if(!(comp.pickup_component_family_flag))			
 				if(do_lod(comp))
 					return;
 		
@@ -179,13 +179,13 @@ public class list_component_on_collector
 	
 		component pickup_comp=ci.parameter.comp;
 		for(component p=pickup_comp;p!=null;p=sk.component_cont.get_component(p.parent_component_id))
-			p.selected_component_family_flag=true;
+			p.pickup_component_family_flag=true;
 		for(int i=0,ni=cam_result.target.comp.length;i<ni;i++)
 			cam_result.target.comp[i].recurse_caculate_location(sk.component_cont);
 		for(int i=0,ni=cam_result.target.comp.length;i<ni;i++)
 			collect(cam_result.target.comp[i],0);
 		for(component p=pickup_comp;p!=null;p=sk.component_cont.get_component(p.parent_component_id))
-			p.selected_component_family_flag=false;
+			p.pickup_component_family_flag=false;
 	}
 }	
 		
