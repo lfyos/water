@@ -44,23 +44,20 @@ public class engine_servlet extends HttpServlet
 	}
 	private String[] read_configure_files(common_reader reader,ServletConfig config)
 	{
-		String str,scene_data_path_name=null,scene_temparatory_path_name=null,scene_environment_path_name=null;
+		String str,scene_data_path_name=null,scene_temparatory_path_name=null;
 		
 		switch(((str=reader.get_string())==null)?"":str.trim().toLowerCase()){
 		case "java_configure_parameter":
 			scene_data_path_name		=((str=reader.get_string())==null)?"":str;
 			scene_temparatory_path_name	=((str=reader.get_string())==null)?"":str;
-			scene_environment_path_name	=((str=reader.get_string())==null)?"":str;
 			break;
 		case "servlet_initialization_parameter":
 			scene_data_path_name		=config.getInitParameter(((str=reader.get_string())==null)?"":str);
 			scene_temparatory_path_name	=config.getInitParameter(((str=reader.get_string())==null)?"":str);
-			scene_environment_path_name	=config.getInitParameter(((str=reader.get_string())==null)?"":str);
 			break;
 		case "environment_variable_parameter":
 			scene_data_path_name		=System.getenv(((str=reader.get_string())==null)?"":str);
 			scene_temparatory_path_name	=System.getenv(((str=reader.get_string())==null)?"":str);
-			scene_environment_path_name	=System.getenv(((str=reader.get_string())==null)?"":str);
 			break;
 		case "webserver_configure_parameter":
 			String configure_path_name=config.getServletContext().getRealPath(((str=reader.get_string())==null)?"":str);
@@ -71,7 +68,6 @@ public class engine_servlet extends HttpServlet
 		    	file_reader fr=new file_reader(configure_path_name,str);
 		    	scene_data_path_name		=fr.get_string();
 				scene_temparatory_path_name	=fr.get_string();
-				scene_environment_path_name	=fr.get_string();
 			    fr.close();
 			    break;
 			}else
@@ -83,19 +79,16 @@ public class engine_servlet extends HttpServlet
 
 		scene_data_path_name		=(scene_data_path_name==null)		?"":scene_data_path_name;
 		scene_temparatory_path_name	=(scene_temparatory_path_name==null)?"":scene_temparatory_path_name;
-		scene_environment_path_name	=(scene_environment_path_name==null)?"":scene_environment_path_name;
 		
 		scene_data_path_name		=file_reader.separator(scene_data_path_name);
 		scene_temparatory_path_name	=file_reader.separator(scene_temparatory_path_name);
-		scene_environment_path_name	=file_reader.separator(scene_environment_path_name);
  
 		debug_information.println();
     	debug_information.println("scene_data_path_name:	",scene_data_path_name);
         debug_information.println("temparatory_path_name:	",scene_temparatory_path_name);
-        debug_information.println("environment_path_name:	",scene_environment_path_name);
         debug_information.println();
         
-		return new String[] {scene_data_path_name,scene_temparatory_path_name,scene_environment_path_name};
+		return new String[] {scene_data_path_name,scene_temparatory_path_name};
 	}
 	private String[] get_engine_configure_files(ServletConfig config)
 	{
@@ -200,7 +193,7 @@ public class engine_servlet extends HttpServlet
 		}
 		String configure_files[];
 		if((configure_files=get_engine_configure_files(config))!=null)
-			scene=new system_scene(configure_files[0],configure_files[1],configure_files[2]);
+			scene=new system_scene(configure_files[0],configure_files[1]);
 	}
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 		throws ServletException,IOException 

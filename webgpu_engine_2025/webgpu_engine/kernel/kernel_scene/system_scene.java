@@ -18,15 +18,9 @@ public class system_scene
 	private create_scene_counter scene_counter;
 	private system_parameter system_par;
 
-	public system_scene(
-			String scene_data_path_name,
-			String scene_temparatory_path_name,
-			String scene_environment_path_name)
+	public system_scene(String scene_data_path_name,String scene_temparatory_path_name)
 	{
-		system_par=new system_parameter(
-				scene_data_path_name,
-				scene_temparatory_path_name,
-				scene_environment_path_name);
+		system_par=new system_parameter(scene_data_path_name,scene_temparatory_path_name);
 		
 		int number=system_par.max_client_container_number;
 		client_interface_search_tree_array=new client_interface_search_tree[number];

@@ -29,25 +29,24 @@ public class change_name extends tree_string_search_container<String>
 	{
 		if(f_array!=null)
 			for(int i=0,ni=f_array.length;i<ni;i++)
-				while(!(f_array[i].eof())){
-					String my_key=f_array[i].get_string();
-					String my_value=f_array[i].get_line();
-					if((my_key==null)||(my_value==null))
-						continue;
-					if((my_key=my_key.trim()).length()<=0)
-						continue;
-					my_value=my_value.trim();
-					add(my_key,my_value);
-				}
+				if(f_array[i]!=null)
+						while(!(f_array[i].eof())){
+							String my_key=f_array[i].get_string();
+							String my_value=f_array[i].get_line();
+							if((my_key!=null)&&(my_value!=null))
+								if((my_key=my_key.trim()).length()>0)
+									add(my_key,my_value.trim());
+						}
 		if(change_string!=null)
 			while(change_string.length()>0){
 				int index_id=change_string.indexOf(";");
 				String my_str=(index_id<0)?change_string:(change_string.substring(0,index_id));
 				change_string=(index_id<0)?"":(change_string.substring(index_id+1));
 				if((index_id=my_str.indexOf(":"))>0){
-					String my_key=my_str.substring(0,index_id).trim();
-					String my_value=my_str.substring(index_id+1).trim();
-					add(my_key,my_value);
+					String my_key=my_str.substring(0,index_id);
+					String my_value=my_str.substring(index_id+1);
+					if((my_key=my_key.trim()).length()>0)
+							add(my_key,my_value.trim());
 				}
 			}
 	}

@@ -1,3 +1,2 @@
 G:\water_all\data\configure.txt
 G:\temp\configure.txt
-G:\water_all\environment.txt

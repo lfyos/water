@@ -1,6 +1,7 @@
 package kernel_transformation;
 
-import kernel_common_class.change_name;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_common_class.const_value;
 import kernel_file_manager.file_reader;
 import kernel_common_class.debug_information;
@@ -10,18 +11,18 @@ public class input_location
 {
 	public static location do_input(file_reader fr,
 			client_request_response request_response,
-			change_name scene_environment)
+			system_parameter system_par,scene_parameter scene_par)
 	{
-		String command,name,sepa,charset;
-		if((command=fr.get_string())==null) {
+		String name,sepa,charset;
+		if((name=fr.get_string())==null) {
 			debug_information.println("input_location fail:	((command=fr.get_string())==null)");
 			debug_information.println("location file:	",fr.directory_name+fr.file_name);
 			return new location();
 		}
 		try {
-			switch(command.trim()){
+			switch(name.trim()){
 			default:
-				fr.push_string(command);
+				fr.push_string(name);
 				return new location(fr);
 			case "identity":
 				return new location();
@@ -38,11 +39,15 @@ public class input_location
 				point p0=new point(fr.get_double(),fr.get_double(),fr.get_double());
 				point px=new point(fr.get_double(),fr.get_double(),fr.get_double());
 				point py=new point(fr.get_double(),fr.get_double(),fr.get_double());
-				point dx=px.sub(p0),dy=py.sub(p0),dz=dx.cross(dy);
+				point dx=px.sub(p0);
+				point dy=py.sub(p0);
+				point dz=dx.cross(dy);
+				
 				if(dz.distance2()<const_value.min_value)
 					return location.move_rotate(p0.x,p0.y,p0.z,0,0,0);
 				if((dy=dz.cross(dx)).distance2()<const_value.min_value)
 					return location.move_rotate(p0.x,p0.y,p0.z,0,0,0);
+				
 				return new location(
 								p0,
 								p0.add(dx.expand(1.0)),
@@ -62,7 +67,7 @@ public class input_location
 				name	=fr.get_string();
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
-					if((name=scene_environment.search_change_name(name.trim(),null))!=null)
+					if((name=scene_par.scene_environment.search_change_name(name.trim(),null))!=null)
 						return new location(name.trim(),sepa.trim());
 				return new location();
 			case "client_environment_location":
@@ -71,7 +76,23 @@ public class input_location
 				if((name!=null)&&(sepa!=null))
 					if((name=request_response.get_parameter(name.trim()))!=null)
 						if((name=name.trim()).length()>0)
-							if((name=scene_environment.search_change_name(name,null))!=null)
+							if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+								return new location(name.trim(),sepa.trim());
+				return new location();
+			case "system_environment_location":
+				name	=fr.get_string();
+				sepa	=fr.get_string();
+				if((name!=null)&&(sepa!=null))
+					if((name=System.getenv(name.trim()))!=null)
+						return new location(name.trim(),sepa.trim());
+				return new location();
+			case "system_client_environment_location":
+				name	=fr.get_string();
+				sepa	=fr.get_string();
+				if((name!=null)&&(sepa!=null))
+					if((name=request_response.get_parameter(name.trim()))!=null)
+						if((name=name.trim()).length()>0)
+							if((name=System.getenv(name))!=null)
 								return new location(name.trim(),sepa.trim());
 				return new location();
 			case "relative_file_location":

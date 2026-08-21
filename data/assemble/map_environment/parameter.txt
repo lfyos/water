@@ -1,7 +1,9 @@
-/*	type_shader_file_name					*/		shaders/type_shaders.txt		relative_directory
-/*	scene_shader_file_name					*/		shaders/scene_shaders.txt		relative_directory
-/*	camera_file_name						*/		orthongraphics/camera.txt
-/*	camera_file_name						*/		perspective/camera.txt
-/*	change_component_file_name				*/		assemble/change_component.txt
-/*	part_type_string_file_name				*/		part_type_string.txt
+/*	environment_file_name		*/		environment.txt
+
+/*	type_shader_file_name		*/		shaders/type_shaders.txt		relative_directory
+/*	scene_shader_file_name		*/		shaders/scene_shaders.txt		relative_directory
+/*	camera_file_name			*/		orthongraphics/camera.txt
+/*	camera_file_name			*/		perspective/camera.txt
+/*	change_component_file_name	*/		assemble/change_component.txt
+/*	part_type_string_file_name	*/		part_type_string.txt
 

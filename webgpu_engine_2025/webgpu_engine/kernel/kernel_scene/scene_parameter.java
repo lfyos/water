@@ -13,6 +13,8 @@ import kernel_network.client_request_response;
 
 public class scene_parameter 
 {
+	public change_name scene_environment;
+	
 	public String change_part_string,part_type_string;
 	
 	public String type_sub_directory[],scene_sub_directory;
@@ -64,6 +66,34 @@ public class scene_parameter
 	
 	public boolean not_do_ancestor_render_flag;
 	
+	private void setup_scene_environment(
+			file_reader parameter_fr,file_reader extra_parameter_fr,system_parameter system_par)
+	{
+		String file_name,path_name;
+		file_reader environment_file_reader[]={null,null,null};
+		
+		path_name=system_par.data_root_directory_name+system_par.environment_file_name;
+		if(new File(path_name).exists())
+			environment_file_reader[0]=new file_reader(path_name,system_par.local_data_charset);
+		else
+			debug_information.println("system scene_environment file NOT exist:	",path_name);
+		
+		file_name=((file_name=parameter_fr.get_string())==null)?"":file_name.trim();
+		path_name=parameter_fr.directory_name+file_name;
+		if(new File(path_name).exists())
+			environment_file_reader[1]=new file_reader(path_name,parameter_fr.get_charset());
+		else
+			debug_information.println("parameter scene_environment file NOT exist:	",path_name);
+		
+		file_name=((file_name=extra_parameter_fr.get_string())==null)?"":file_name.trim();
+		path_name=extra_parameter_fr.directory_name+file_name;
+		if(new File(path_name).exists())
+			environment_file_reader[2]=new file_reader(path_name,extra_parameter_fr.get_charset());
+		else
+			debug_information.println("extra parameter system scene_environment file NOT exist:	",path_name);
+		
+		scene_environment=new change_name(environment_file_reader,null);
+	}
 	private String[] get_directory_name_and_file_name(file_reader fr,system_parameter system_par)
 	{
 		String path_file_name=((path_file_name=fr.get_string())==null)
@@ -84,7 +114,7 @@ public class scene_parameter
 			break;
 		case "environment_directory":
 			if((path_directory_name=fr.get_string())!=null)
-				if((path_directory_name=system_par.scene_environment.search_change_name(path_directory_name,null))!=null)
+				if((path_directory_name=scene_environment.search_change_name(path_directory_name,null))!=null)
 					if((path_directory_name=file_directory.delete_separator(path_directory_name)).length()>0) {
 						path_directory_name+=File.separatorChar;
 						break;
@@ -232,6 +262,8 @@ public class scene_parameter
 		extra_directory_name=extra_parameter_fr.directory_name;
 		extra_parameter_charset=extra_parameter_fr.get_charset();
 		
+		setup_scene_environment(parameter_fr,extra_parameter_fr,system_par);
+		
 		parameter_last_modified_time=system_par.last_modified_time;
 		if(parameter_last_modified_time<parameter_fr.lastModified_time)
 			parameter_last_modified_time=parameter_fr.lastModified_time;
@@ -262,7 +294,7 @@ public class scene_parameter
 			camera_file_name=file_directory.delete_separator(camera_file_name);
 		
 		get_client_parameter_name(parameter_fr,request_response);
-		
+
 		caculate_scene_temporary_directory_name(my_scene_name,
 				request_response,change_component_string,system_par);
 		parameter_fr.close();

@@ -9,7 +9,7 @@ public class location
 	public static final point standard_point[]=new point[]{
 			new point(0,0,0),new point(1,0,0),new point(0,1,0),new point(0,0,1)};
 	public static final location standard_negative=new location(
-			new double[]{-1,1,	0,	0,	-1,	0,	1,	0,	-1,	0,	0,	1,	1,	0,	0,	0});
+			new double[]{-1,1,0,0,-1,0,1,0,-1,0,0,1,1,0,0,0});
 	
 	private double a[][];
 	

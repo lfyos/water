@@ -21,7 +21,7 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String text_class_charset,js_class_charset;
 	
-	public String user_file_name,shader_file_name;
+	public String user_file_name,shader_file_name,environment_file_name;
 	public String parameter_directory,default_system_mount_component_name;
 	
 	public int default_max_loading_number,max_loading_number,max_material_id,max_method_number;
@@ -46,9 +46,10 @@ public class system_parameter
 	public int max_process_component_load_number,max_process_modifier_number;
 	
 	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
-	
+
 	public String link_file_extend_name;
-	public change_name scene_environment,language_change_name;
+	
+	public change_name language_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server		switch_server;
 	public http_date_string 		http_date_str;
@@ -95,6 +96,7 @@ public class system_parameter
 		
 		user_file_name						=new String(sp.user_file_name);
 		shader_file_name					=new String(sp.shader_file_name);
+		environment_file_name				=new String(sp.environment_file_name);
 		parameter_directory					=new String(sp.parameter_directory);
 		default_system_mount_component_name	=new String(sp.default_system_mount_component_name);
 		
@@ -136,7 +138,7 @@ public class system_parameter
 		buffer_data_length_difference_scale	=sp.buffer_data_length_difference_scale;
 		
 		link_file_extend_name				=sp.link_file_extend_name;
-		scene_environment					=new change_name(sp.scene_environment,false);
+		
 		language_change_name				=new change_name(sp.language_change_name,false);
 		content_type_change_name			=new change_name(sp.content_type_change_name,false);
 
@@ -144,18 +146,16 @@ public class system_parameter
 		switch_server						=sp.switch_server;
 		http_date_str						=sp.http_date_str;
 	}
-	public system_parameter(String scene_data_path_name,
-			String scene_temparatory_path_name,String scene_environment_path_name)
+	public system_parameter(String my_scene_data_path_name,String my_scene_temparatory_path_name)
 	{
 		debug_information.println();
-		debug_information.println("data_file_configure_file_name:		",		scene_data_path_name);
-		debug_information.println("temporary_file_configure_file_name:	",		scene_temparatory_path_name);
-		debug_information.println("scene_environment_configure_file_name:	",	scene_environment_path_name);
+		debug_information.println("data_file_configure_file_name:		",		my_scene_data_path_name);
+		debug_information.println("temporary_file_configure_file_name:	",		my_scene_temparatory_path_name);
 
-		file_reader f=new file_reader(scene_data_path_name,Charset.defaultCharset().name());
+		file_reader f=new file_reader(my_scene_data_path_name,Charset.defaultCharset().name());
 		
 		if(f.error_flag()){
-			debug_information.println("Can't not open system_parameter file	",scene_data_path_name);
+			debug_information.println("Can't not open system_parameter file	",my_scene_data_path_name);
 			debug_information.println("do System.exit(0)");
 			System.exit(0);
 			return;
@@ -167,7 +167,7 @@ public class system_parameter
 			local_data_charset=Charset.defaultCharset().name();
 		f.close();
 
-		f=new file_reader(scene_data_path_name,local_data_charset);
+		f=new file_reader(my_scene_data_path_name,local_data_charset);
 		data_root_directory_name=f.directory_name;
 		last_modified_time=f.lastModified_time;
 		
@@ -202,6 +202,11 @@ public class system_parameter
 		else
 			shader_file_name=file_reader.separator(shader_file_name).trim();
 		
+		if((environment_file_name=f.get_string())==null)
+			environment_file_name="";
+		else
+			environment_file_name=file_reader.separator(environment_file_name).trim();
+		
 		if((parameter_directory=f.get_string())==null)
 			parameter_directory="";
 		else {
@@ -214,22 +219,6 @@ public class system_parameter
 		if((default_system_mount_component_name=f.get_string())==null)
 			default_system_mount_component_name="default_system_mount_component";
 
-		if(!(new File(scene_environment_path_name).exists())) {
-			debug_information.println(
-				"scene_environment file NOT exist:	",scene_environment_path_name);
-			scene_environment=new change_name(null,null);
-		}else {
-			file_reader env_f=new file_reader(
-				scene_environment_path_name,Charset.defaultCharset().name());
-			String file_charset=env_f.get_string();
-			env_f.close();
-				
-			env_f=new file_reader(scene_environment_path_name,file_charset);
-			env_f.get_string();
-			scene_environment=new change_name(new file_reader[] {env_f},null);
-			env_f.close();
-		}
-		
 		String language_change_file_name;
 		if((language_change_file_name=f.get_string())==null)
 			language_change_file_name="";
@@ -281,7 +270,7 @@ public class system_parameter
 		
 		f.close();
 		
-		temporary_file_par=new temporary_file_parameter(scene_temparatory_path_name,local_data_charset);
+		temporary_file_par=new temporary_file_parameter(my_scene_temparatory_path_name,local_data_charset);
 		language_change_name=new change_name(
 				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset);

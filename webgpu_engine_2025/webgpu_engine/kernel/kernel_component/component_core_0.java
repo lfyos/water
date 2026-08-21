@@ -67,14 +67,16 @@ public class component_core_0
 		clip		=new component_clip();
 		uniparameter=new component_uniparameter(
 			fr.lastModified_time,normalize_location_flag,part_list_flag);
-		multiparameter=new component_multiparameter[ccp.sk.scene_par.multiparameter_number];
-		for(int i=0,ni=multiparameter.length;i<ni;i++)
-			multiparameter[i]=new component_multiparameter(ccp.sk.scene_par.default_display_bitmap);
+		long display_bitmap=ccp.sk.scene_par.default_display_bitmap;
+		int number=ccp.sk.scene_par.multiparameter_number;
+		multiparameter=new component_multiparameter[number];
+		for(int i=0;i<number;i++)
+			multiparameter[i]		=new component_multiparameter(display_bitmap);
 		initialization				=new component_initialization();
 		location_modification_locker=new component_location_modification_locker();
 		
-		relative_location=input_location.do_input(fr,
-				ccp.request_response,ccp.sk.system_par.scene_environment);
+		relative_location=input_location.do_input(
+			fr,ccp.request_response,ccp.sk.system_par,ccp.sk.scene_par);
 		if(uniparameter.normalize_location_flag)
 			relative_location=relative_location.normalize();
 	}

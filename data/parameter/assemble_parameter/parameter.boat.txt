@@ -1,3 +1,6 @@
+/*	environment_file_name						*/		environment.txt
+
+
 /*	part_lru_in_list_number						*/		10
 
 /*	inserted_component_name						*/		inserted_component_name
