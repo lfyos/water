@@ -58,7 +58,7 @@ public class input_location
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+						if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0)
 								return new location(name,sepa.trim());
 				return new location();
@@ -85,7 +85,7 @@ public class input_location
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+						if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0)
 								if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
 									if((name=name.trim()).length()>0)
@@ -98,7 +98,7 @@ public class input_location
 					if((name=name.trim()).length()>0)
 						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0)
-								if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+								if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 									if((name=name.trim()).length()>0)
 										return new location(name,sepa.trim());
 				return new location();
@@ -107,7 +107,7 @@ public class input_location
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+						if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0)
 								if((name=System.getenv(name))!=null)
 									if((name=name.trim()).length()>0)
@@ -120,7 +120,7 @@ public class input_location
 					if((name=name.trim()).length()>0)
 						if((name=System.getenv(name))!=null)
 							if((name=name.trim()).length()>0)
-								if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+								if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 									if((name=name.trim()).length()>0)
 										return new location(name,sepa.trim());
 				return new location();
@@ -213,7 +213,7 @@ public class input_location
 			case "client_relative_file_location":
 				if((name=fr.get_string())!=null)
 					if((name=name.trim()).length()>0) 
-						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+						if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
 								name=fr.directory_name+file_reader.separator(name);
 								file_reader f=new file_reader(name,fr.get_charset());
@@ -230,7 +230,7 @@ public class input_location
 			case "client_absolute_file_location":
 				if((name=fr.get_string())!=null)
 					if((name=name.trim()).length()>0) 
-						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+						if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
 								name=file_reader.separator(name);
 								file_reader f=new file_reader(name,fr.get_charset());
@@ -249,7 +249,7 @@ public class input_location
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+						if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
 								name=fr.directory_name+file_reader.separator(name);
 								file_reader f=new file_reader(name,charset.trim());
@@ -268,7 +268,7 @@ public class input_location
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+						if((name=scene_par.client_parameter.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
 								name=file_reader.separator(name);
 								file_reader f=new file_reader(name,charset.trim());

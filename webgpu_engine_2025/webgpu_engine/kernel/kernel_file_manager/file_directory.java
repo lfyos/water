@@ -9,10 +9,11 @@ import kernel_common_class.debug_information;
 
 public class file_directory 
 {
-	public static String delete_separator(String directory)
+	public static String delete_begin_end_separator(String directory)
 	{
-		if((directory=file_reader.separator(directory))==null)
+		if(directory==null)
 			return "";
+		directory=file_reader.separator(directory);
 		for(int i=0,ni=(directory=directory.trim()).length();i<ni;i++)
 			if(directory.charAt(i)!=File.separatorChar) {
 				directory=directory.substring(i);

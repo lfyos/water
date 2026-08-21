@@ -488,6 +488,6 @@ public class scene_kernel
 	}
 	public String get_client_parameter(String client_parameter_name)
 	{
-		return scene_par.client_parameter_name.search_change_name(client_parameter_name,null);
+		return scene_par.client_parameter.search_change_name(client_parameter_name,null);
 	}
 }
