@@ -7,46 +7,28 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_driver.modifier_container;
 import kernel_component.component_container;
-import kernel_common_class.string_link_list;
+
+class string_link_list {
+	public String str;
+	public boolean error_flag;
+	public string_link_list next_list;
+	
+	public string_link_list(String my_str,boolean my_error_flag)
+	{
+		str=my_str;
+		next_list=null;
+		error_flag=my_error_flag;
+	}
+	public string_link_list(String my_str,string_link_list my_next_list)
+	{
+		str			=my_str;
+		next_list	=my_next_list;
+		error_flag	=false;
+	}
+}
 
 public class movement_manager
 {
-	public void destroy()
-	{
-		for(;push_pop_stack_link_list!=null;push_pop_stack_link_list=push_pop_stack_link_list.next_list)
-			file_writer.file_delete(push_pop_stack_link_list.str);
-	
-		id_creator		=null;
-		move_channel_id	=null;
-		parameter		=null;
-		directory_name	=null;
-		suspend			=null;
-		
-		if(config_parameter!=null) {
-			config_parameter.destroy();
-			config_parameter=null;
-		}
-		if(root_movement!=null) {
-			root_movement.destroy();
-			root_movement=null;
-		}
-		if(designed_move!=null) {
-			designed_move.destroy();
-			designed_move=null;
-		}
-		if(buffer_movement!=null) {
-			for(int i=0,ni=buffer_movement.length;i<ni;i++)
-				if(buffer_movement[i]!=null) {
-					buffer_movement[i].destroy();
-					buffer_movement[i]=null;
-				}
-			buffer_movement=null;
-		}
-		if(suspend!=null){
-			suspend.destroy();
-			suspend=null;
-		}
-	}
 	public movement_tree_id_creator id_creator;
 	public movement_configuration_parameter config_parameter;
 	public movement_channel_id move_channel_id;
@@ -262,5 +244,41 @@ public class movement_manager
 		init(sk.modifier_cont[config_parameter.camera_modifier_container_id],
 				sk.component_cont,config_parameter.movement_file_name,
 				camera_switch_time_length,config_parameter.movement_file_charset,true);
+	}
+	public void destroy()
+	{
+		for(;push_pop_stack_link_list!=null;push_pop_stack_link_list=push_pop_stack_link_list.next_list)
+			file_writer.file_delete(push_pop_stack_link_list.str);
+	
+		id_creator		=null;
+		move_channel_id	=null;
+		parameter		=null;
+		directory_name	=null;
+		suspend			=null;
+		
+		if(config_parameter!=null) {
+			config_parameter.destroy();
+			config_parameter=null;
+		}
+		if(root_movement!=null) {
+			root_movement.destroy();
+			root_movement=null;
+		}
+		if(designed_move!=null) {
+			designed_move.destroy();
+			designed_move=null;
+		}
+		if(buffer_movement!=null) {
+			for(int i=0,ni=buffer_movement.length;i<ni;i++)
+				if(buffer_movement[i]!=null) {
+					buffer_movement[i].destroy();
+					buffer_movement[i]=null;
+				}
+			buffer_movement=null;
+		}
+		if(suspend!=null){
+			suspend.destroy();
+			suspend=null;
+		}
 	}
 }

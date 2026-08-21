@@ -78,22 +78,36 @@ public class input_location
 				if((name=fr.get_string())!=null)
 					if((name=request_response.get_parameter(name.trim()))!=null)
 						if((name=name.trim()).length()>0) {
-							file_reader f=new file_reader(
-									fr.directory_name+file_reader.separator(name),fr.get_charset());
-							location ret_val=f.eof()?new location():new location(f);
-							f.close();
-							return ret_val;
+							name=fr.directory_name+file_reader.separator(name);
+							file_reader f=new file_reader(name,fr.get_charset());
+							if(f.eof()) {
+								f.close();
+								debug_information.print  ("input_location eof error(relative_file_location),");
+								debug_information.println("location file:	",name);
+								return new location();
+							}else {
+								location ret_val=new location(f);
+								f.close();
+								return ret_val;
+							}
 						}
 				return new location();
 			case "absolute_file_location":
 				if((name=fr.get_string())!=null)
 					if((name=request_response.get_parameter(name.trim()))!=null)
 						if((name=name.trim()).length()>0) {
-							file_reader f=new file_reader(
-									file_reader.separator(name),fr.get_charset());
-							location ret_val=f.eof()?new location():new location(f);
-							f.close();
-							return ret_val;
+							name=file_reader.separator(name);
+							file_reader f=new file_reader(name,fr.get_charset());
+							if(f.eof()) {
+								f.close();
+								debug_information.print  ("input_location eof error(absolute_file_location),");
+								debug_information.println("location file:	",name);
+								return new location();
+							}else {
+								location ret_val=new location(f);
+								f.close();
+								return ret_val;
+							}
 						}
 				return new location();
 			case "charset_relative_file_location":
@@ -102,11 +116,19 @@ public class input_location
 				if((name!=null)&&(charset!=null))
 					if((name=request_response.get_parameter(name.trim()))!=null)
 						if((name=name.trim()).length()>0){
-							file_reader f=new file_reader(
-									fr.directory_name+file_reader.separator(name),charset.trim());
-							location ret_val=f.eof()?new location():new location(f);
-							f.close();
-							return ret_val;
+							name=fr.directory_name+file_reader.separator(name);
+							file_reader f=new file_reader(name,charset.trim());
+							
+							if(f.eof()) {
+								f.close();
+								debug_information.print  ("input_location eof error(charset_relative_file_location),");
+								debug_information.println("location file:	",name);
+								return new location();
+							}else {
+								location ret_val=new location(f);
+								f.close();
+								return ret_val;
+							}
 						}
 				return new location();
 			case "charset_absolute_file_location":
@@ -115,11 +137,18 @@ public class input_location
 				if((name!=null)&&(charset!=null))
 					if((name=request_response.get_parameter(name.trim()))!=null)
 						if((name=name.trim()).length()>0) {
-							file_reader f=new file_reader(
-									file_reader.separator(name),charset.trim());
-							location ret_val=f.eof()?new location():new location(f);
-							f.close();
-							return ret_val;
+							name=file_reader.separator(name);
+							file_reader f=new file_reader(name,charset.trim());
+							if(f.eof()){
+								f.close();
+								debug_information.print  ("input_location eof error(charset_absolute_file_location),");
+								debug_information.println("location file:	",name);
+								return new location();
+							}else {
+								location ret_val=new location(f);
+								f.close();
+								return ret_val;
+							}
 						}
 				return new location();
 			}
