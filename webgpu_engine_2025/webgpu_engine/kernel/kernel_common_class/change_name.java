@@ -8,10 +8,11 @@ public class change_name extends tree_string_search_container<String>
 {
 	public String search_change_name(String my_search_name,String fail_result)
 	{	
-		tree_search_container_tree_node<String,String> search_tree_node=search(my_search_name);
-		return 	(search_tree_node==null)			?fail_result:
-				(search_tree_node.list.size()<=0)	?fail_result:
-				(search_tree_node.list.get(0));
+		tree_search_container_tree_node<String,String>search_tree_node;
+		if((search_tree_node=search(my_search_name))!=null)
+			if(search_tree_node.list.size()>0)
+				return search_tree_node.list.get(0);
+		return fail_result;
 	}
 	public void append(change_name my_change_name,boolean do_reversion_flag)
 	{

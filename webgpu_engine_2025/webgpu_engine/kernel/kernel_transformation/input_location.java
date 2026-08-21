@@ -5,12 +5,10 @@ import kernel_scene.system_parameter;
 import kernel_common_class.const_value;
 import kernel_file_manager.file_reader;
 import kernel_common_class.debug_information;
-import kernel_network.client_request_response;
 
 public class input_location 
 {
 	public static location do_input(file_reader fr,
-			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		String name,sepa,charset;
@@ -59,119 +57,375 @@ public class input_location
 				name	=fr.get_string();
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
-					if((name=request_response.get_parameter(name.trim()))!=null)
-						if((name=name.trim()).length()>0)
-							return new location(name,sepa.trim());
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0)
+								return new location(name,sepa.trim());
 				return new location();
 			case "environment_location":
 				name	=fr.get_string();
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
-					if((name=scene_par.scene_environment.search_change_name(name.trim(),null))!=null)
-						return new location(name.trim(),sepa.trim());
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0)
+								return new location(name,sepa.trim());
+				return new location();
+			case "system_location":
+				name	=fr.get_string();
+				sepa	=fr.get_string();
+				if((name!=null)&&(sepa!=null))
+					if((name=name.trim()).length()>0)
+						if((name=System.getenv(name))!=null)
+							if((name=name.trim()).length()>0)
+								return new location(name,sepa.trim());
 				return new location();
 			case "client_environment_location":
 				name	=fr.get_string();
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
-					if((name=request_response.get_parameter(name.trim()))!=null)
-						if((name=name.trim()).length()>0)
-							if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
-								return new location(name.trim(),sepa.trim());
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0)
+								if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+									if((name=name.trim()).length()>0)
+										return new location(name,sepa.trim());
+				return new location();
+			case "environment_client_location":
+				name	=fr.get_string();
+				sepa	=fr.get_string();
+				if((name!=null)&&(sepa!=null))
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0)
+								if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+									if((name=name.trim()).length()>0)
+										return new location(name,sepa.trim());
+				return new location();
+			case "client_system_location":
+				name	=fr.get_string();
+				sepa	=fr.get_string();
+				if((name!=null)&&(sepa!=null))
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0)
+								if((name=System.getenv(name))!=null)
+									if((name=name.trim()).length()>0)
+										return new location(name,sepa.trim());
+				return new location();
+			case "system_client_location":
+				name	=fr.get_string();
+				sepa	=fr.get_string();
+				if((name!=null)&&(sepa!=null))
+					if((name=name.trim()).length()>0)
+						if((name=System.getenv(name))!=null)
+							if((name=name.trim()).length()>0)
+								if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+									if((name=name.trim()).length()>0)
+										return new location(name,sepa.trim());
+				return new location();
+			case "environment_system_location":
+				name	=fr.get_string();
+				sepa	=fr.get_string();
+				if((name!=null)&&(sepa!=null))
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0)
+								if((name=System.getenv(name))!=null)
+									if((name=name.trim()).length()>0)
+										return new location(name,sepa.trim());
 				return new location();
 			case "system_environment_location":
 				name	=fr.get_string();
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
-					if((name=System.getenv(name.trim()))!=null)
-						return new location(name.trim(),sepa.trim());
-				return new location();
-			case "system_client_environment_location":
-				name	=fr.get_string();
-				sepa	=fr.get_string();
-				if((name!=null)&&(sepa!=null))
-					if((name=request_response.get_parameter(name.trim()))!=null)
-						if((name=name.trim()).length()>0)
-							if((name=System.getenv(name))!=null)
-								return new location(name.trim(),sepa.trim());
+					if((name=name.trim()).length()>0)
+						if((name=System.getenv(name))!=null)
+							if((name=name.trim()).length()>0)
+								if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+									if((name=name.trim()).length()>0)
+										return new location(name,sepa.trim());
 				return new location();
 			case "relative_file_location":
 				if((name=fr.get_string())!=null)
-					if((name=request_response.get_parameter(name.trim()))!=null)
-						if((name=name.trim()).length()>0) {
-							name=fr.directory_name+file_reader.separator(name);
-							file_reader f=new file_reader(name,fr.get_charset());
-							if(f.eof()) {
-								f.close();
-								debug_information.print  ("input_location eof error(relative_file_location),");
-								debug_information.println("location file:	",name);
-								return new location();
-							}else {
-								location ret_val=new location(f);
-								f.close();
-								return ret_val;
-							}
+					if((name=name.trim()).length()>0) {
+						name=fr.directory_name+file_reader.separator(name);
+						file_reader f=new file_reader(name,fr.get_charset());
+						if(!(f.eof())) {
+							location ret_val=new location(f);
+							f.close();
+							return ret_val;
 						}
+						f.close();
+						debug_information.print  ("input_location error(relative_file_location),");
+						debug_information.println("location file:	",name);
+					}		
 				return new location();
 			case "absolute_file_location":
 				if((name=fr.get_string())!=null)
-					if((name=request_response.get_parameter(name.trim()))!=null)
-						if((name=name.trim()).length()>0) {
-							name=file_reader.separator(name);
-							file_reader f=new file_reader(name,fr.get_charset());
-							if(f.eof()) {
-								f.close();
-								debug_information.print  ("input_location eof error(absolute_file_location),");
-								debug_information.println("location file:	",name);
-								return new location();
-							}else {
-								location ret_val=new location(f);
-								f.close();
-								return ret_val;
-							}
+					if((name=name.trim()).length()>0) {
+						name=file_reader.separator(name);
+						file_reader f=new file_reader(name,fr.get_charset());
+						if(!(f.eof())){
+							location ret_val=new location(f);
+							f.close();
+							return ret_val;
 						}
+						f.close();
+						debug_information.print  ("input_location error(absolute_file_location),");
+						debug_information.println("location file:	",name);
+					}
 				return new location();
 			case "charset_relative_file_location":
 				name	=fr.get_string();
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
-					if((name=request_response.get_parameter(name.trim()))!=null)
-						if((name=name.trim()).length()>0){
-							name=fr.directory_name+file_reader.separator(name);
-							file_reader f=new file_reader(name,charset.trim());
-							
-							if(f.eof()) {
-								f.close();
-								debug_information.print  ("input_location eof error(charset_relative_file_location),");
-								debug_information.println("location file:	",name);
-								return new location();
-							}else {
-								location ret_val=new location(f);
-								f.close();
-								return ret_val;
-							}
+					if((name=name.trim()).length()>0){
+						name=fr.directory_name+file_reader.separator(name);
+						file_reader f=new file_reader(name,charset.trim());
+						if(!(f.eof())) {
+							location ret_val=new location(f);
+							f.close();
+							return ret_val;
 						}
+						f.close();
+						debug_information.print  ("input_location error(charset_relative_file_location),");
+						debug_information.println("location file:	",name);	
+					}	
 				return new location();
 			case "charset_absolute_file_location":
 				name	=fr.get_string();
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
-					if((name=request_response.get_parameter(name.trim()))!=null)
-						if((name=name.trim()).length()>0) {
-							name=file_reader.separator(name);
-							file_reader f=new file_reader(name,charset.trim());
-							if(f.eof()){
-								f.close();
-								debug_information.print  ("input_location eof error(charset_absolute_file_location),");
-								debug_information.println("location file:	",name);
-								return new location();
-							}else {
-								location ret_val=new location(f);
-								f.close();
-								return ret_val;
-							}
+					if((name=name.trim()).length()>0){
+						name=file_reader.separator(name);
+						file_reader f=new file_reader(name,charset.trim());
+						if(!(f.eof())){
+							location ret_val=new location(f);
+							f.close();
+							return ret_val;
 						}
+						f.close();
+						debug_information.print  ("input_location error(charset_absolute_file_location),");
+						debug_information.println("location file:	",name);
+					}
 				return new location();
+			case "client_relative_file_location":
+				if((name=fr.get_string())!=null)
+					if((name=name.trim()).length()>0) 
+						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=fr.directory_name+file_reader.separator(name);
+								file_reader f=new file_reader(name,fr.get_charset());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(client_relative_file_location),");
+								debug_information.println("location file:	",name);
+							}		
+				return new location();
+			case "client_absolute_file_location":
+				if((name=fr.get_string())!=null)
+					if((name=name.trim()).length()>0) 
+						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=file_reader.separator(name);
+								file_reader f=new file_reader(name,fr.get_charset());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(client_absolute_file_location),");
+								debug_information.println("location file:	",name);
+							}		
+				return new location();
+			case "client_charset_relative_file_location":
+				name	=fr.get_string();
+				charset	=fr.get_string();
+				if((name!=null)&&(charset!=null))
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=fr.directory_name+file_reader.separator(name);
+								file_reader f=new file_reader(name,charset.trim());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(client_charset_relative_file_location),");
+								debug_information.println("location file:	",name);	
+							}	
+				return new location();
+			case "client_charset_absolute_file_location":
+				name	=fr.get_string();
+				charset	=fr.get_string();
+				if((name!=null)&&(charset!=null))
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.client_parameter_name.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=file_reader.separator(name);
+								file_reader f=new file_reader(name,charset.trim());
+								if(!(f.eof())){
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(client_charset_absolute_file_location),");
+								debug_information.println("location file:	",name);
+							}
+				return new location();
+			case "system_relative_file_location":
+				if((name=fr.get_string())!=null)
+					if((name=name.trim()).length()>0) 
+						if((name=System.getenv(name))!=null)
+							if((name=name.trim()).length()>0){
+								name=fr.directory_name+file_reader.separator(name);
+								file_reader f=new file_reader(name,fr.get_charset());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(system_relative_file_location),");
+								debug_information.println("location file:	",name);
+							}		
+				return new location();
+			case "system_absolute_file_location":
+				if((name=fr.get_string())!=null)
+					if((name=name.trim()).length()>0) 
+						if((name=System.getenv(name))!=null)
+							if((name=name.trim()).length()>0){
+								name=file_reader.separator(name);
+								file_reader f=new file_reader(name,fr.get_charset());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(system_absolute_file_location),");
+								debug_information.println("location file:	",name);
+							}		
+				return new location();
+			case "system_charset_relative_file_location":
+				name	=fr.get_string();
+				charset	=fr.get_string();
+				if((name!=null)&&(charset!=null))
+					if((name=name.trim()).length()>0)
+						if((name=System.getenv(name))!=null)
+							if((name=name.trim()).length()>0){
+								name=fr.directory_name+file_reader.separator(name);
+								file_reader f=new file_reader(name,charset.trim());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(system_charset_relative_file_location),");
+								debug_information.println("location file:	",name);	
+							}	
+				return new location();
+			case "system_charset_absolute_file_location":
+				name	=fr.get_string();
+				charset	=fr.get_string();
+				if((name!=null)&&(charset!=null))
+					if((name=name.trim()).length()>0)
+						if((name=System.getenv(name))!=null)
+							if((name=name.trim()).length()>0){
+								name=file_reader.separator(name);
+								file_reader f=new file_reader(name,charset.trim());
+								if(!(f.eof())){
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(system_charset_absolute_file_location),");
+								debug_information.println("location file:	",name);
+							}
+				return new location();	
+			case "environment_relative_file_location":
+				if((name=fr.get_string())!=null)
+					if((name=name.trim()).length()>0) 
+						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=fr.directory_name+file_reader.separator(name);
+								file_reader f=new file_reader(name,fr.get_charset());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(environment_relative_file_location),");
+								debug_information.println("location file:	",name);
+							}		
+				return new location();
+			case "environment_absolute_file_location":
+				if((name=fr.get_string())!=null)
+					if((name=name.trim()).length()>0) 
+						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=file_reader.separator(name);
+								file_reader f=new file_reader(name,fr.get_charset());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(environment_absolute_file_location),");
+								debug_information.println("location file:	",name);
+							}		
+				return new location();
+			case "environment_charset_relative_file_location":
+				name	=fr.get_string();
+				charset	=fr.get_string();
+				if((name!=null)&&(charset!=null))
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=fr.directory_name+file_reader.separator(name);
+								file_reader f=new file_reader(name,charset.trim());
+								if(!(f.eof())) {
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(environment_charset_relative_file_location),");
+								debug_information.println("location file:	",name);	
+							}	
+				return new location();
+			case "environment_charset_absolute_file_location":
+				name	=fr.get_string();
+				charset	=fr.get_string();
+				if((name!=null)&&(charset!=null))
+					if((name=name.trim()).length()>0)
+						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+							if((name=name.trim()).length()>0){
+								name=file_reader.separator(name);
+								file_reader f=new file_reader(name,charset.trim());
+								if(!(f.eof())){
+									location ret_val=new location(f);
+									f.close();
+									return ret_val;
+								}
+								f.close();
+								debug_information.print  ("input_location error(environment_charset_absolute_file_location),");
+								debug_information.println("location file:	",name);
+							}
+				return new location();					
 			}
 		}catch(Exception e){
 			e.printStackTrace();

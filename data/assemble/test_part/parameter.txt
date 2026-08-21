@@ -4,4 +4,8 @@
 /*	scene_shader_file_name		*/	scene_shaders.txt				environment_directory	lfy_user_dir
 /*	change_component_file_name	*/	change_component.txt			environment_directory	lfy_user_dir
 /*	camera_file_name			*/	orthongraphics/camera.txt		//	perspective/camera.txt
-/*	client_parameter_name		*/	client_sub_directory
+
+/*	client_parameter_name		*/	
+
+			client_sub_directory
+			coordinate

@@ -75,8 +75,7 @@ public class component_core_0
 		initialization				=new component_initialization();
 		location_modification_locker=new component_location_modification_locker();
 		
-		relative_location=input_location.do_input(
-			fr,ccp.request_response,ccp.sk.system_par,ccp.sk.scene_par);
+		relative_location=input_location.do_input(fr,ccp.sk.system_par,ccp.sk.scene_par);
 		if(uniparameter.normalize_location_flag)
 			relative_location=relative_location.normalize();
 	}

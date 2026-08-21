@@ -2,6 +2,7 @@ package kernel_transformation;
 
 import kernel_file_manager.file_writer;
 import kernel_common_class.const_value;
+import kernel_common_class.debug_information;
 import kernel_common_class.common_reader;
 
 public class location
@@ -61,15 +62,27 @@ public class location
 		if((str==null)||(ch==null))
 			return;
 		int index_id,ch_length;
-		if((ch_length=ch.length())<=0)
+		if((ch_length=ch.length())<=0){
+			debug_information.println(
+				"construct location from string error(separate string is empty):	",str);
 			return;
+		}
 		for(int i=0;i<4;i++)
 			for(int j=0;j<4;j++)
 				if((index_id=str.indexOf(ch))>=0) {
-					a[j][i]=Double.parseDouble(str.substring(0,index_id));
+					String double_str=str.substring(0,index_id);
 					str=str.substring(index_id+ch_length);
-				}else {
-					a[j][i]=Double.parseDouble(str);
+					try{
+						a[j][i]=Double.parseDouble(double_str);
+					}catch(Exception e) {
+						debug_information.println("construct location from string exception:	",double_str);
+					}
+				}else{
+					try {
+						a[j][i]=Double.parseDouble(str);
+					}catch(Exception e) {
+						debug_information.println("construct location from string exception:	",str);
+					}
 					return;
 				}
 	}
