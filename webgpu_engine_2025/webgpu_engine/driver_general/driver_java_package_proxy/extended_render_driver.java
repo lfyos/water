@@ -8,6 +8,7 @@ import kernel_render.render;
 import kernel_driver.render_driver;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
@@ -71,7 +72,7 @@ public class extended_render_driver extends render_driver
 				system_par.parameter_directory	+sub_jar_file_directory
 			};
 		String jar_file_name,jar_class_name;
-		jar_file_name	=file_reader.separator(shader_fr.get_string());
+		jar_file_name	=file_directory.replace_special_char(shader_fr.get_string());
 		jar_class_name	=shader_fr.get_string();
 
 		for(int i=0,ni=jar_file_directory.length;i<ni;i++)

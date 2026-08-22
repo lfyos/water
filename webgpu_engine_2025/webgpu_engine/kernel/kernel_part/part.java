@@ -163,7 +163,7 @@ public class part
 					return false;
 				part_mesh.destroy();
 			}
-			String my_file_path=file_reader.separator(directory_name+mesh_file_name);
+			String my_file_path=file_directory.replace_special_char(directory_name+mesh_file_name);
 			file_reader fr=new file_reader(my_file_path,file_charset);
 			part_mesh=new part_rude(fr);
 			fr.close();

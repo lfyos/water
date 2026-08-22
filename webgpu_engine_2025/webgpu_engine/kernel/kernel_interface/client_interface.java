@@ -9,6 +9,7 @@ import kernel_scene.scene_kernel;
 import kernel_security.delay_manager;
 import kernel_scene.system_parameter;
 import kernel_scene.scene_call_result;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_common_class.jason_string;
 import kernel_scene.create_scene_counter;
@@ -597,11 +598,11 @@ public class client_interface
 			if(request_response.pass_word.compareTo(pass_word)!=0)
 				continue;
 
-			scene_file_name=f.directory_name+file_reader.separator(scene_file_name);
+			scene_file_name=f.directory_name+file_directory.replace_special_char(scene_file_name);
 			if(!(new File(scene_file_name).exists()))
 				continue;
 			
-			parameter_file_name	=file_reader.separator(parameter_file_name);
+			parameter_file_name	=file_directory.replace_special_char(parameter_file_name);
 			String parameter_file_name_1=f.directory_name+parameter_file_name;
 			String parameter_file_name_2=system_par.parameter_directory
 					+"user_parameter"+File.separator+parameter_file_name;

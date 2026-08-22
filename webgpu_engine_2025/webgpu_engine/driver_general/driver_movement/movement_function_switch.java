@@ -12,6 +12,7 @@ import kernel_driver.component_driver;
 import kernel_camera.camera_parameter;
 import kernel_common_class.change_name;
 import kernel_common_class.const_value;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_scene.client_information;
@@ -361,7 +362,7 @@ public class movement_function_switch
 					str=java.net.URLDecoder.decode(str,request_charset);
 					str=str.replace(" ","").replace("\t","").replace("\n","").
 							replace("\r","").replace( "\"","").replace("\\","/");
-					searcher.search_link_list.tree_node.sound_file_name=file_reader.separator(str);
+					searcher.search_link_list.tree_node.sound_file_name=file_directory.replace_special_char(str);
 					if(recursive_flag)
 						do_update_children(searcher.search_link_list.tree_node,true,false);
 				}catch(Exception e){
@@ -793,7 +794,7 @@ public class movement_function_switch
 			return collector.list_id;
 		collector.title=searcher.search_link_list.tree_node.node_name;
 		collector.description=searcher.search_link_list.tree_node.description;
-		collector.audio_file_name=file_reader.separator(
+		collector.audio_file_name=file_directory.replace_special_char(
 				manager.directory_name+searcher.search_link_list.tree_node.sound_file_name);
 		if(acd!=null)
 			acd.set_audio(collector.audio_file_name,false);
@@ -1082,7 +1083,7 @@ public class movement_function_switch
 			if(searcher.search_link_list==null)
 				return null;
 			String directory_name=manager.directory_name+manager.config_parameter.sound_pre_string;
-			String file_name=file_reader.separator(
+			String file_name=file_directory.replace_special_char(
 					directory_name+searcher.search_link_list.tree_node.sound_file_name);
 			return new String[] {file_name,null};
 		}
@@ -1100,7 +1101,7 @@ public class movement_function_switch
 				return null;
 			}
 			String directory_name=manager.directory_name+manager.config_parameter.sound_pre_string;
-			String file_name=file_reader.separator(
+			String file_name=file_directory.replace_special_char(
 					directory_name+searcher.search_link_list.tree_node.sound_file_name);
 			long write_length=0;
 			try{

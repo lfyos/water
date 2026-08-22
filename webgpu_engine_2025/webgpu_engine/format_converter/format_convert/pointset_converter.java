@@ -4,6 +4,7 @@ import java.io.File;
 
 import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_transformation.point;
@@ -1640,7 +1641,7 @@ public class pointset_converter
 				vertex_cont,triangle_cont);
 		new compress_vertex_and_triangle(vertex_cont,triangle_cont);
 		
-		target_directory_name=file_reader.separator(target_directory_name.trim());
+		target_directory_name=file_directory.replace_special_char(target_directory_name.trim());
 		if(target_directory_name.length()<=0)
 			target_directory_name=".";
 		if(target_directory_name.charAt(target_directory_name.length()-1)!=File.separatorChar)

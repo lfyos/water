@@ -31,7 +31,7 @@ public class part_instance_driver
 			}catch(Exception e) {
 				;
 			}
-			file_name=file_reader.separator(file_name);
+			file_name=file_directory.replace_special_char(file_name);
 		};
 		file_name=file_directory.part_file_directory(p,sk.system_par,sk.scene_par)+file_name;
 		

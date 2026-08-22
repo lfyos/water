@@ -4,6 +4,7 @@ import java.io.File;
 
 import kernel_scene.system_parameter;
 import kernel_scene.scene_call_result;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_common_class.common_reader;
 import kernel_common_class.class_file_reader;
@@ -40,13 +41,13 @@ public class javascript_program
 		
 		default_fetch_parameter_filename =system_par.parameter_directory;
 		default_fetch_parameter_filename+="network_parameter/fetch_parameter.txt";
-		default_fetch_parameter_filename =file_reader.separator(default_fetch_parameter_filename);
+		default_fetch_parameter_filename =file_directory.replace_special_char(default_fetch_parameter_filename);
 		
 		long t1=new File(default_fetch_parameter_filename).lastModified();
 		
 		default_draw_process_bar_filename =system_par.parameter_directory;
 		default_draw_process_bar_filename+="javascript_program/draw_process_bar.txt";
-		default_draw_process_bar_filename =file_reader.separator(default_draw_process_bar_filename);
+		default_draw_process_bar_filename =file_directory.replace_special_char(default_draw_process_bar_filename);
 		
 		long t2=new File(default_draw_process_bar_filename).lastModified();
 		

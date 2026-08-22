@@ -9,6 +9,7 @@ import kernel_transformation.point;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
 import kernel_driver.component_driver;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_driver.part_instance_driver;
@@ -53,7 +54,7 @@ public class extended_part_driver extends part_driver
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
 		file_reader.get_text(part_head_fw,
-			p.directory_name+file_reader.separator(p.material_file_name),p.file_charset);
+			p.directory_name+file_directory.replace_special_char(p.material_file_name),p.file_charset);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,
@@ -74,7 +75,7 @@ public class extended_part_driver extends part_driver
 	{
 		return new extended_component_driver(my_component_part,	fr.get_boolean(),
 				fr.get_double()*depth_step,fr.get_double(),fr.get_double(),
-				fr.directory_name,file_reader.separator(fr.get_string()),fr.get_charset(),
+				fr.directory_name,file_directory.replace_special_char(fr.get_string()),fr.get_charset(),
 				always_show_flag);
 	}
 	public part_instance_driver create_part_instance_driver(part p,

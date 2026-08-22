@@ -6,6 +6,7 @@ import kernel_part.part;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_driver.component_driver;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.debug_information;
@@ -62,7 +63,7 @@ public class extended_component_driver  extends component_driver
 			update_component_parameter_version();
 			return true;
 		}
-		new_audio_file_name=file_reader.separator(new_audio_file_name);
+		new_audio_file_name=file_directory.replace_special_char(new_audio_file_name);
 		if(audio_file_name==null){
 			if(file_reader.is_exist(audio_file_name=new_audio_file_name)){
 				terminate_flag=false;

@@ -3,7 +3,7 @@ package driver_audio_player;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
 import kernel_scene.client_information;
 import kernel_driver.component_instance_driver;
 
@@ -44,7 +44,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		switch(str){
 		case "audio":
 			if((str=acd.get_audio_file_name())!=null)
-				return new String[] {file_reader.separator(str),null};
+				return new String[] {file_directory.replace_special_char(str),null};
 			break;
 		case "ended":
 			acd.mark_terminate_flag();

@@ -2,9 +2,9 @@ package kernel_component;
 
 import java.io.File;
 
-import kernel_common_class.cut_string;
-import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
+import kernel_common_class.debug_information;
 
 public class file_mount_file_name_and_charset 
 {
@@ -19,7 +19,7 @@ public class file_mount_file_name_and_charset
 			return false;
 		}
 		if(((my_directory=my_directory.trim()).length()<=0)
-				||((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0)) 
+			||((my_file_name=file_directory.replace_special_char(my_file_name)).length()<=0)) 
 		{
 			debug_information.println("client_parameter_mount:	",
 					"(((my_directory=my_directory).length()<=0)||((my_file_name=my_file_name).length()<=0))");
@@ -30,7 +30,7 @@ public class file_mount_file_name_and_charset
 					"((my_directory=ccp.sk.get_client_parameter(my_directory))==null)");
 			return false;
 		}
-		if((my_directory=cut_string.do_cut(file_reader.separator(my_directory.trim()))).length()<0) {
+		if((my_directory=file_directory.delete_begin_end_separator(my_directory)).length()<0) {
 			debug_information.println("client_parameter_mount:	",
 					"((my_directory=cut_string.do_cut(file_reader.separator(my_directory.trim()))).length()<0)");
 			return false;
@@ -49,9 +49,9 @@ public class file_mount_file_name_and_charset
 				"((my_select_token==null)||(my_select_file_name==null)||(my_assemble_file_name==null))");
 			return false;
 		}
-		my_select_token		 =cut_string.do_cut(my_select_token);
-		my_select_file_name	 =cut_string.do_cut(file_reader.separator(my_select_file_name));
-		my_assemble_file_name=cut_string.do_cut(file_reader.separator(my_assemble_file_name));
+		my_select_token		 =file_directory.replace_special_char(my_select_token);
+		my_select_file_name	 =file_directory.delete_begin_end_separator(my_select_file_name);
+		my_assemble_file_name=file_directory.delete_begin_end_separator(my_assemble_file_name);
 
 		if((my_select_token.length()<=0)||(my_select_file_name.length()<=0)||(my_assemble_file_name.length()<=0)){
 			debug_information.println("client_select_mount:",
@@ -74,8 +74,8 @@ public class file_mount_file_name_and_charset
 			String f_select_directory_name	=f_select.get_string();
 			if((f_select_token==null)||(f_select_directory_name==null))
 				continue;
-			f_select_token			=cut_string.do_cut(f_select_token);
-			f_select_directory_name	=cut_string.do_cut(file_reader.separator(f_select_directory_name));
+			f_select_token			=file_directory.replace_special_char(f_select_token);
+			f_select_directory_name	=file_directory.delete_begin_end_separator(f_select_directory_name);
 			if((f_select_token.length()<=0)||(f_select_directory_name.length()<=0))
 				continue;
 			if(my_select_token.compareTo(f_select_token)!=0)
@@ -101,12 +101,12 @@ public class file_mount_file_name_and_charset
 					"((my_directory_name=get_environment(my_directory_name.trim()))==null)");
 			return false;
 		}
-		if((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name.trim()))).length()<=0) {
+		if((my_directory_name=file_directory.delete_begin_end_separator(my_directory_name.trim())).length()<=0) {
 			debug_information.println("environment_scene_sub_directory_mount:",
 					"((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name.trim()))).length()<=0)");
 			return false;
 		}
-		if((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name.trim()))).length()<=0) {
+		if((my_file_name=file_directory.delete_begin_end_separator(my_file_name.trim())).length()<=0) {
 			debug_information.println("environment_scene_sub_directory_mount:",
 					"((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name.trim()))).length()<=0)");
 			return false;
@@ -132,12 +132,12 @@ public class file_mount_file_name_and_charset
 					"((my_directory_name=ccp.sk.get_client_parameter(my_directory_name.trim()))==null)");
 			return false;
 		}
-		if((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name)))==null) {
+		if((my_directory_name=file_directory.delete_begin_end_separator(my_directory_name))==null) {
 			debug_information.println("client_parameter_charset_mount error",
 					"((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name)))==null)");
 			return false;
 		}
-		if((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0){
+		if((my_file_name=file_directory.delete_begin_end_separator(my_file_name)).length()<=0){
 			debug_information.println("client_parameter_charset_mount error",
 					"((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0)");
 			return false;
@@ -161,12 +161,12 @@ public class file_mount_file_name_and_charset
 			return false;
 		}
 
-		select_token				=cut_string.do_cut(select_token);
-		select_file_name			=cut_string.do_cut(select_file_name);
-		select_file_name			=cut_string.do_cut(file_reader.separator(select_file_name));
-		select_assemble_file_name	=cut_string.do_cut(select_assemble_file_name);
-		select_assemble_file_name	=cut_string.do_cut(file_reader.separator(select_assemble_file_name));
-		select_file_charset			=cut_string.do_cut(select_file_charset);
+		select_token				=file_directory.replace_special_char(select_token);
+		select_file_name			=file_directory.delete_begin_end_separator(select_file_name);
+		select_file_name			=file_directory.delete_begin_end_separator(select_file_name);
+		select_assemble_file_name	=file_directory.delete_begin_end_separator(select_assemble_file_name);
+		select_assemble_file_name	=file_directory.delete_begin_end_separator(select_assemble_file_name);
+		select_file_charset			=file_directory.replace_special_char(select_file_charset);
 
 		if((select_token.length()<=0)||(select_file_name.length()<=0)
 			||(select_assemble_file_name.length()<=0)||(select_file_charset.length()<=0)) 
@@ -189,8 +189,8 @@ public class file_mount_file_name_and_charset
 			if((my_select_token==null)||(my_select_directory_name==null))
 				continue;
 			
-			my_select_token			=cut_string.do_cut(my_select_token);
-			my_select_directory_name=cut_string.do_cut(file_reader.separator(my_select_directory_name));
+			my_select_token			=file_directory.replace_special_char(my_select_token);
+			my_select_directory_name=file_directory.delete_begin_end_separator(my_select_directory_name);
 			if((my_select_token.length()<=0)||(my_select_directory_name.length()<=0))
 				continue;
 			if(select_token.compareTo(my_select_token)!=0)
@@ -217,7 +217,7 @@ public class file_mount_file_name_and_charset
 					"((my_directory_name==null)||(my_file_name==null)||(my_file_charset==null))");
 			return false;
 		}
-		if((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0){
+		if((my_file_name=file_directory.delete_begin_end_separator(my_file_name)).length()<=0){
 			debug_information.println("environment_scene_sub_directory_charset_mount:",
 					"((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0)");
 			return false;
@@ -227,7 +227,7 @@ public class file_mount_file_name_and_charset
 					"((my_directory_name=get_environment(my_directory_name.trim()))==null)");
 			return false;
 		}
-		if((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name.trim()))).length()<=0){
+		if((my_directory_name=file_directory.delete_begin_end_separator(my_directory_name.trim())).length()<=0){
 			debug_information.println("environment_scene_sub_directory_charset_mount:",
 					"((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name.trim()))).length()<=0)");
 			return false;

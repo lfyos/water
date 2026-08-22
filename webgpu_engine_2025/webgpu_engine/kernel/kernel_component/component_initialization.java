@@ -2,6 +2,7 @@ package kernel_component;
 
 import java.util.ArrayList;
 
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 
 public class component_initialization 
@@ -31,7 +32,7 @@ public class component_initialization
 		case "file_program":
 			not_multifile_flag="false";
 		case "multifile_program":
-			if((my_initialization_program=file_reader.separator(fr.get_string()))!=null)
+			if((my_initialization_program=file_directory.replace_special_char(fr.get_string()))!=null)
 				if((my_initialization_program=my_initialization_program.trim()).length()>0)
 					if((my_initialization_program_charset=fr.get_charset())!=null)
 						if((my_initialization_program_charset=my_initialization_program_charset.trim()).length()>0)
@@ -40,7 +41,7 @@ public class component_initialization
 		case "charset_file_program":
 			not_multifile_flag="false";
 		case "charset_multifile_program":
-			if((my_initialization_program=file_reader.separator(fr.get_string()))!=null)
+			if((my_initialization_program=file_directory.replace_special_char(fr.get_string()))!=null)
 				if((my_initialization_program=my_initialization_program.trim()).length()>0)
 					if((my_initialization_program_charset=fr.get_string())!=null)
 						if((my_initialization_program_charset=my_initialization_program_charset.trim()).length()>0)

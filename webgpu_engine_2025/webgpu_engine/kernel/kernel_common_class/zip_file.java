@@ -6,8 +6,8 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_file_manager.file_directory;
 
 public class zip_file 
 {
@@ -24,7 +24,7 @@ public class zip_file
 			Enumeration<? extends ZipEntry> entries = f.entries(); 
 			while (entries.hasMoreElements()) { 
 				ZipEntry entry = entries.nextElement(); 
-				target_file_name=file_reader.separator(entry.getName());
+				target_file_name=file_directory.replace_special_char(entry.getName());
 				debug_information.println(target_file_name);
 				target_file_name=target_directory_name+target_file_name;
 
@@ -75,7 +75,7 @@ public class zip_file
 	{
 		int index_id;
 
-		source_file_name=file_reader.separator(source_file_name);
+		source_file_name=file_directory.replace_special_char(source_file_name);
 		if((index_id=source_file_name.lastIndexOf('.'))<0)
 			return source_file_name;
 		if(source_file_name.substring(index_id).toLowerCase().compareTo(".zip")!=0)
@@ -99,7 +99,7 @@ public class zip_file
 	}
 	public static String unzip_directory(String directory_name,String msg)
 	{
-		directory_name=file_reader.separator(directory_name);
+		directory_name=file_directory.replace_special_char(directory_name);
 		for(int i=directory_name.length()-1;i>=0;i--)
 			if(directory_name.charAt(i)!=File.separatorChar){
 				directory_name=directory_name.substring(0,i+1);

@@ -6,6 +6,7 @@ import kernel_scene.scene_kernel;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
 import kernel_part.part_parameter;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
@@ -40,7 +41,7 @@ public class render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String render_list_file_name=file_reader.separator(shader_fr.get_string());
+		String render_list_file_name=file_directory.replace_special_char(shader_fr.get_string());
 		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
 	}
 	public String[] get_part_list(
@@ -49,7 +50,7 @@ public class render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String par_list_file_name=file_reader.separator(render_fr.get_string());
+		String par_list_file_name=file_directory.replace_special_char(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public String[][] shader_file_name_array()

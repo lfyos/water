@@ -8,6 +8,7 @@ import kernel_part.part_parameter;
 import kernel_driver.render_driver;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
@@ -157,10 +158,10 @@ public class render
 			if(audio_file_name.compareTo("")==0)
 				continue;
 
-			mesh_file_name		 =file_reader.separator(mesh_file_name);
-			material_file_name	 =file_reader.separator(material_file_name);
-			description_file_name=file_reader.separator(description_file_name);
-			audio_file_name		 =file_reader.separator(audio_file_name);
+			mesh_file_name		 =file_directory.replace_special_char(mesh_file_name);
+			material_file_name	 =file_directory.replace_special_char(material_file_name);
+			description_file_name=file_directory.replace_special_char(description_file_name);
+			audio_file_name		 =file_directory.replace_special_char(audio_file_name);
 
 			part_parameter my_part_par=part_par.clone();
 			

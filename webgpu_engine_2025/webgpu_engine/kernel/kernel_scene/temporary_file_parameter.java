@@ -2,6 +2,7 @@ package kernel_scene;
 
 import java.io.File;
 
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 
@@ -27,8 +28,8 @@ public class temporary_file_parameter
 		file_reader f=new file_reader(temporary_file_configure_file_name,temporary_file_configure_file_charset);
 
 		root_directory_name					=f.directory_name;
-		temporary_root_directory_name		=f.directory_name+file_reader.separator(f.get_string());
-		temporary_proxy_directory_name		=f.directory_name+file_reader.separator(f.get_string());
+		temporary_root_directory_name		=f.directory_name+file_directory.replace_special_char(f.get_string());
+		temporary_proxy_directory_name		=f.directory_name+file_directory.replace_special_char(f.get_string());
 		
 		if(root_directory_name.charAt(root_directory_name.length()-1)!=File.separatorChar)
 			root_directory_name+=File.separator;

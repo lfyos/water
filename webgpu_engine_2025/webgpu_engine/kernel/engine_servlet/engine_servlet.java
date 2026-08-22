@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import kernel_scene.system_scene;
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
 import kernel_network.network_implementation;
@@ -80,8 +81,8 @@ public class engine_servlet extends HttpServlet
 		scene_data_path_name		=(scene_data_path_name==null)		?"":scene_data_path_name;
 		scene_temparatory_path_name	=(scene_temparatory_path_name==null)?"":scene_temparatory_path_name;
 		
-		scene_data_path_name		=file_reader.separator(scene_data_path_name);
-		scene_temparatory_path_name	=file_reader.separator(scene_temparatory_path_name);
+		scene_data_path_name		=file_directory.replace_special_char(scene_data_path_name);
+		scene_temparatory_path_name	=file_directory.replace_special_char(scene_temparatory_path_name);
  
 		debug_information.println();
     	debug_information.println("scene_data_path_name:	",scene_data_path_name);
@@ -129,13 +130,13 @@ public class engine_servlet extends HttpServlet
 			debug_information.println(
 				"get_engine_configure_files() get jar path name is null: ",scene_configure_class_name);
 		else{
-			configure_path_name=file_reader.separator(configure_path_name);
+			configure_path_name=file_directory.replace_special_char(configure_path_name);
 			int index_id=configure_path_name.lastIndexOf(File.separatorChar);
 			if(index_id>=0)
 				configure_path_name=configure_path_name.substring(0,index_id+1);
 			else
 				configure_path_name="";
-			configure_path_name+=file_reader.separator(scene_configure_file_name);
+			configure_path_name+=file_directory.replace_special_char(scene_configure_file_name);
 			
 			if(!(new File(configure_path_name).exists()))
 				debug_information.println(

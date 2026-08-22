@@ -207,7 +207,7 @@ public class scene_initialization
 				continue;
 			for(int i=0,ni=shader_file_name.length;i<ni;i++)
 				for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
-					String my_file_name=file_reader.separator(shader_file_name[i][j]);
+					String my_file_name=file_directory.replace_special_char(shader_file_name[i][j]);
 					my_last_time=class_file_reader.get_last_time(my_file_name,
 							r.driver.getClass(),sk.system_par.text_class_charset);
 					if(last_time<my_last_time)
@@ -470,7 +470,7 @@ public class scene_initialization
 				}				
 				for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
 					String class_charset=sk.system_par.text_class_charset;
-					String my_file_name=file_reader.separator(shader_file_name[i][j]);
+					String my_file_name=file_directory.replace_special_char(shader_file_name[i][j]);
 					int index_id=shader_file_name[i][j].lastIndexOf('.');
 					if(index_id>=0)
 						if(my_file_name.substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0)

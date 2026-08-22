@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
 import kernel_common_class.change_name;
 import kernel_interface.switch_scene_server;
 import kernel_common_class.http_date_string;
@@ -195,22 +196,22 @@ public class system_parameter
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
 		else
-			user_file_name=file_reader.separator(user_file_name).trim();
+			user_file_name=file_directory.replace_special_char(user_file_name).trim();
 		
 		if((shader_file_name=f.get_string())==null)
 			shader_file_name="";
 		else
-			shader_file_name=file_reader.separator(shader_file_name).trim();
+			shader_file_name=file_directory.replace_special_char(shader_file_name).trim();
 		
 		if((environment_file_name=f.get_string())==null)
 			environment_file_name="";
 		else
-			environment_file_name=file_reader.separator(environment_file_name).trim();
+			environment_file_name=file_directory.replace_special_char(environment_file_name).trim();
 		
 		if((parameter_directory=f.get_string())==null)
 			parameter_directory="";
 		else {
-			parameter_directory=file_reader.separator(parameter_directory.trim());
+			parameter_directory=file_directory.replace_special_char(parameter_directory.trim());
 			int str_length=parameter_directory.length();
 			if(parameter_directory.charAt(str_length-1)!=File.separatorChar)
 				parameter_directory+=File.separatorChar;
@@ -223,13 +224,13 @@ public class system_parameter
 		if((language_change_file_name=f.get_string())==null)
 			language_change_file_name="";
 		else
-			language_change_file_name=file_reader.separator(language_change_file_name);	
+			language_change_file_name=file_directory.replace_special_char(language_change_file_name);	
 
 		String switch_server_url_file_name;
 		if((switch_server_url_file_name=f.get_string())==null)
 			switch_server_url_file_name="";
 		else
-			switch_server_url_file_name=file_reader.separator(switch_server_url_file_name);	
+			switch_server_url_file_name=file_directory.replace_special_char(switch_server_url_file_name);	
 
 		default_max_loading_number				=f.get_int();
 		max_loading_number						=f.get_int();

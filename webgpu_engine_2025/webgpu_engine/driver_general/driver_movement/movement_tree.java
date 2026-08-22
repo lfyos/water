@@ -4,7 +4,7 @@ import kernel_transformation.box;
 import kernel_component.component;
 import kernel_transformation.location;
 import kernel_file_manager.file_writer;
-import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
 import kernel_common_class.const_value;
 import kernel_driver.modifier_container;
 import kernel_common_class.common_reader;
@@ -150,8 +150,8 @@ public class movement_tree {
 				start_time-camera_switch_time,swcm,my_scale_value,
 				my_direction,my_start_location,my_terminate_location,node_name,description,
 				mbfm.buffer_file_manager(
-					file_reader.separator(directory_name+sound_pre_string),
-					file_reader.separator(sound_file_name)));
+						file_directory.replace_special_char(directory_name+sound_pre_string),
+						file_directory.replace_special_char(sound_file_name)));
 		modifier_cont.add_modifier(fm);
 		return;
 	}
@@ -457,9 +457,9 @@ public class movement_tree {
 			description="no_description";
 		
 		f.set_pace(space_number);
-		f.print("/*	name				*/	");		f.println(node_name);
-		f.print("/*	audio				*/	");		f.println(file_reader.separator(sound_file_name));
-		f.print("/*	description			*/	");		f.println(description);
+		f.print("/*	name				*/	");	f.println(node_name);
+		f.print("/*	audio				*/	");	f.println(file_directory.replace_special_char(sound_file_name));
+		f.print("/*	description			*/	");	f.println(description);
 		
 		f.print("/*	sequence/parallel	*/	");	f.println(((children==null)||sequence_flag)?"sequence":"parallel");
 		
@@ -515,7 +515,7 @@ public class movement_tree {
 		if((sound_file_name=reader.get_string())==null)
 			sound_file_name="";
 		else
-			sound_file_name=file_reader.separator(sound_file_name);
+			sound_file_name=file_directory.replace_special_char(sound_file_name);
 	
 		if((description=reader.get_string())==null)
 			description="";

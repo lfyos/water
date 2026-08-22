@@ -3,6 +3,8 @@ package kernel_component;
 import java.io.File;
 import java.util.ArrayList;
 import java.nio.charset.Charset;
+
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_common_class.tree_string_search_container;
 import kernel_common_class.tree_search_container_tree_node;
@@ -122,7 +124,7 @@ public class component_load_source_container
 				continue;
 			if(terminated_token_string.compareTo(str)==0)
 				break;
-			mount_component_file_name=part_fr.directory_name+file_reader.separator(str);
+			mount_component_file_name=part_fr.directory_name+file_directory.replace_special_char(str);
 			if(new File(mount_component_file_name).exists())
 				ret_val+=file_add_source_item(mount_component_name,token_string,
 						mount_component_file_name,part_fr.get_charset());

@@ -3,6 +3,7 @@ package driver_movement;
 import java.io.File;
 
 import kernel_scene.scene_kernel;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_driver.modifier_container;
@@ -134,7 +135,7 @@ public class movement_manager
 			reset(-1,modifier_cont,component_cont,camera_switch_time_length);
 			
 			if(set_directory_name_flag) {
-				directory_name=file_reader.separator(my_move_file_name);
+				directory_name=file_directory.replace_special_char(my_move_file_name);
 				for(int i=directory_name.length()-1;i>=0;i--)
 					if(directory_name.charAt(i)==File.separatorChar) {
 						directory_name=directory_name.substring(0,i+1);
