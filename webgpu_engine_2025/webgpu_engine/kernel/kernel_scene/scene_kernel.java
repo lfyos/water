@@ -486,8 +486,8 @@ public class scene_kernel
 			component_cont.root_component.reset_component(component_cont,null);
 		}
 	}
-	public String get_client_parameter(String client_parameter_name)
+	public String get_scene_environment_parameter(String parameter_name)
 	{
-		return scene_par.client_parameter.search_change_name(client_parameter_name,null);
+		return scene_par.scene_environment.search_change_name(parameter_name,null);
 	}
 }

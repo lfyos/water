@@ -14,7 +14,7 @@
 		
 		/*	2:name			*/	applicaion_mount_component		
 		/*	2:type			*/	undefined_part
-		/*	2:location		*/	client_relative_file_location	coordinate
+		/*	2:location		*/	environment_relative_file_location		coordinate
 		
 				part_list
 				mount													SLDASM.assemble

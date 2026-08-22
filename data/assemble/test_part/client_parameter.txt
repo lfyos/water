@@ -1,5 +1,0 @@
-/*	client_parameter_name		*/	
-
-			client_sub_directory
-			coordinate
-			

@@ -1,3 +1,0 @@
-/*	following are environment	variable	*/
-
-	lfy_user_dir		E:\project_data

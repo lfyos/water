@@ -25,7 +25,7 @@ public class file_mount_file_name_and_charset
 					"(((my_directory=my_directory).length()<=0)||((my_file_name=my_file_name).length()<=0))");
 			return false;
 		}
-		if((my_directory=ccp.sk.get_client_parameter(my_directory))==null) {
+		if((my_directory=ccp.sk.get_scene_environment_parameter(my_directory))==null) {
 			debug_information.println("client_parameter_mount:	",
 					"((my_directory=ccp.sk.get_client_parameter(my_directory))==null)");
 			return false;
@@ -58,7 +58,7 @@ public class file_mount_file_name_and_charset
 					"((my_select_token.length()<=0)||(my_select_file_name.length()<=0)||(my_assemble_file_name.length()<=0))");
 			return false;
 		}
-		if((my_select_token=ccp.sk.get_client_parameter(my_select_token))==null) {
+		if((my_select_token=ccp.sk.get_scene_environment_parameter(my_select_token))==null) {
 			debug_information.println("client_select_mount:",
 					"((my_select_token=ccp.sk.get_client_parameter(my_select_token))==null)");
 			return false;
@@ -127,7 +127,7 @@ public class file_mount_file_name_and_charset
 					"((my_directory_name==null)||(my_file_name==null)||(my_file_charset==null))");
 			return false;
 		}
-		if((my_directory_name=ccp.sk.get_client_parameter(my_directory_name.trim()))==null) {
+		if((my_directory_name=ccp.sk.get_scene_environment_parameter(my_directory_name.trim()))==null) {
 			debug_information.println("client_parameter_charset_mount error",
 					"((my_directory_name=ccp.sk.get_client_parameter(my_directory_name.trim()))==null)");
 			return false;
@@ -176,7 +176,7 @@ public class file_mount_file_name_and_charset
 			return false;
 		}
 		
-		if((select_token=ccp.sk.get_client_parameter(select_token))==null){
+		if((select_token=ccp.sk.get_scene_environment_parameter(select_token))==null){
 			debug_information.println("client_select_charset_mount:",
 					"((select_token=ccp.sk.get_client_parameter(select_token))==null)");
 			return false;

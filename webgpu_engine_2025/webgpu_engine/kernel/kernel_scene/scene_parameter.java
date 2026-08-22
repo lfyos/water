@@ -13,7 +13,7 @@ import kernel_network.client_request_response;
 
 public class scene_parameter 
 {
-	public change_name scene_environment,client_parameter;
+	public change_name scene_environment;
 	
 	public String change_part_string,part_type_string;
 	
@@ -67,7 +67,8 @@ public class scene_parameter
 	public boolean not_do_ancestor_render_flag;
 	
 	private void setup_scene_environment(
-			file_reader parameter_fr,file_reader extra_parameter_fr,system_parameter system_par)
+			file_reader parameter_fr,file_reader extra_parameter_fr,
+			client_request_response request_response,system_parameter system_par)
 	{
 		String file_name,path_name;
 		file_reader environment_file_reader[]={null,null,null};
@@ -78,21 +79,46 @@ public class scene_parameter
 		else
 			debug_information.println("system scene_environment file NOT exist:	",path_name);
 		
-		file_name=((file_name=parameter_fr.get_string())==null)?"":file_name.trim();
-		path_name=parameter_fr.directory_name+file_name;
+		file_name=parameter_fr.get_string();
+		file_name=(file_name==null)?"":file_name.trim();
+		path_name=parameter_fr.directory_name+file_reader.separator(file_name);
 		if(new File(path_name).exists())
 			environment_file_reader[1]=new file_reader(path_name,parameter_fr.get_charset());
 		else
 			debug_information.println("parameter scene_environment file NOT exist:	",path_name);
 		
-		file_name=((file_name=extra_parameter_fr.get_string())==null)?"":file_name.trim();
-		path_name=extra_parameter_fr.directory_name+file_name;
+		file_name=extra_parameter_fr.get_string();
+		file_name=(file_name==null)?"":file_name.trim();
+		path_name=extra_parameter_fr.directory_name+file_reader.separator(file_name);
 		if(new File(path_name).exists())
 			environment_file_reader[2]=new file_reader(path_name,extra_parameter_fr.get_charset());
 		else
 			debug_information.println("extra parameter system scene_environment file NOT exist:	",path_name);
 		
-		scene_environment=new change_name(environment_file_reader,null);
+		scene_environment=new change_name();
+		
+		for(int i=0,ni=environment_file_reader.length;i<ni;i++)
+			if(environment_file_reader[i]!=null) {
+				while(!(environment_file_reader[i].eof())) {
+					String	parameter_name	=environment_file_reader[i].get_string();
+					String	parameter_value	=environment_file_reader[i].get_string();
+					boolean	parameter_flag	=environment_file_reader[i].get_boolean();
+					if((parameter_name==null)||(parameter_value==null))
+						continue;
+					if((parameter_name=parameter_name.trim()).length()<=0)
+						continue;
+					if((parameter_value=parameter_value.trim()).length()<=0)
+						continue;
+					if(parameter_flag) {
+						if((parameter_value=request_response.get_parameter(parameter_value))==null)
+							continue;
+						if((parameter_value=parameter_value.trim()).length()<=0)
+							continue;
+					}
+					scene_environment.add(parameter_name,parameter_value);
+				}
+				environment_file_reader[i].close();	
+			}
 	}
 	private String[] get_directory_name_and_file_name(file_reader fr,system_parameter system_par)
 	{
@@ -160,23 +186,16 @@ public class scene_parameter
 		}
 		type_sub_directory=list.toArray(new String[list.size()]);
 	}
-	private void get_client_parameter_name(
-		String path_name,String charset,client_request_response request_response)
+	private String replace_special_char(String str)
 	{
-		file_reader fr=new file_reader(path_name,charset);
-		client_parameter=new change_name();
-		for(String parameter_name,parameter_value;!(fr.eof());) {
-			if((parameter_name=fr.get_string())==null)
-				continue;
-			if((parameter_name=parameter_name.trim()).length()<=0)
-				continue;
-			if((parameter_value=request_response.get_parameter(parameter_name))==null)
-				continue;
-			if((parameter_value=parameter_value.trim()).length()<=0)
-				continue;
-			client_parameter.add(parameter_name,parameter_value);
-		}
-		fr.close();
+		return str.	replace(':',	File.separatorChar).
+					replace(';',	File.separatorChar).
+					replace('/',	File.separatorChar).
+					replace('\\',	File.separatorChar).
+					replace(' ', 	'_').
+					replace('\t',	'_').
+					replace('\r',	'_').
+					replace('\n',	'_');
 	}
 	private void caculate_scene_temporary_directory_name(
 			String scene_name,client_request_response request_response,
@@ -207,22 +226,24 @@ public class scene_parameter
 		String str_array[]={change_part_string,change_component_string,part_type_string};
 		for(int i=0,ni=str_array.length;i<ni;i++)
 			if(str_array[i]!=null){
-				str_array[i]=new String(str_array[i]).replace(':','/').replace(';','/').
-						replace('/',File.separatorChar).replace('\\',File.separatorChar).
-						replace(" ", "").replace("\t","").replace("\r","").replace("\n","");
-				if((str_array[i]=file_directory.delete_begin_end_separator(str_array[i])).length()>0)
+				str_array[i]=replace_special_char(str_array[i]);
+				str_array[i]=file_directory.delete_begin_end_separator(str_array[i]);
+				if(str_array[i].length()>0)
 					my_temporary_directory_name+=str_array[i]+File.separatorChar;
 			}
 		
 		ArrayList<tree_search_container_tree_node<String,String>>my_client_parameter_name_list;
-		my_client_parameter_name_list=client_parameter.tree_get_node_list();
+		my_client_parameter_name_list=scene_environment.tree_get_node_list();
 		for(int i=0,ni=my_client_parameter_name_list.size();i<ni;i++) {
 			tree_search_container_tree_node<String,String> my_node=my_client_parameter_name_list.get(i);
-			if((str=file_directory.delete_begin_end_separator(my_node.key)).length()>0)
+			str=replace_special_char(my_node.key);
+			if((str=file_directory.delete_begin_end_separator(str)).length()>0)
 				my_temporary_directory_name+=str+File.separatorChar;
-			for(int j=0,nj=my_node.list.size();j<nj;j++)
-				if((str=file_directory.delete_begin_end_separator(my_node.list.get(j))).length()>0)
+			for(int j=0,nj=my_node.list.size();j<nj;j++) {
+				str=replace_special_char(my_node.list.get(j));
+				if((str=file_directory.delete_begin_end_separator(str)).length()>0)
 					my_temporary_directory_name+=str+File.separatorChar;
+			}
 		}
 		if(my_temporary_directory_name.length()<=0)
 			my_temporary_directory_name="no_parameter_directory"+File.separatorChar;
@@ -276,16 +297,9 @@ public class scene_parameter
 		
 		scene_last_modified_time=parameter_last_modified_time;
 		
-		setup_scene_environment(parameter_fr,extra_parameter_fr,system_par);
+		setup_scene_environment(parameter_fr,extra_parameter_fr,request_response,system_par);
 
 		String gdnafa[];
-		
-		gdnafa=get_directory_name_and_file_name(parameter_fr,system_par);
-		String client_parameter_directory_name	=gdnafa[0];
-		String client_parameter_file_name		=gdnafa[1];
-		get_client_parameter_name(
-				client_parameter_directory_name+client_parameter_file_name,
-				parameter_fr.get_charset(),request_response);
 		
 		gdnafa=get_directory_name_and_file_name(parameter_fr,system_par);
 		type_shader_directory_name	=gdnafa[0];

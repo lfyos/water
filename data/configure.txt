@@ -5,7 +5,7 @@
 
 /*	user_file_name											*/		users/users.txt
 /*	shader_file_name										*/		shaders/shaders.txt
-/*	environment_file_name									*/		environment.txt
+/*	environment_file_name									*/		system_environment.txt
 /*	default_parameter_directory								*/		parameter
 /*	default_system_mount_component_name						*/		system_mount_component
 /*	language_change_file_name								*/		language_change.txt
