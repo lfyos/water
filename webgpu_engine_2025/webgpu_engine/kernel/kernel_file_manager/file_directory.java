@@ -9,9 +9,12 @@ import kernel_common_class.debug_information;
 
 public class file_directory 
 {
-	public static String replace_special_char(String str)
+	public static String replace_directory_special_char(String str)
 	{
-		return str.trim().
+		final String single_separator_string=""+File.separatorChar;
+		final String double_separator_string=""+File.separatorChar+File.separatorChar;
+		
+		String new_str=str.trim().
 //				replace(':',	File.separatorChar).
 				replace(';',	File.separatorChar).
 				replace('/',	File.separatorChar).
@@ -20,13 +23,20 @@ public class file_directory
 				replace('\t',	'_').
 				replace('\r',	'_').
 				replace('\n',	'_');
+		
+		for(int old_length=-1,new_length=new_str.length();old_length!=new_length;){
+			new_str=new_str.replace(double_separator_string,single_separator_string);
+			old_length=new_length;
+			new_length=new_str.length();
+		};
+		return new_str;
 	}
 	public static String delete_begin_end_separator(String directory)
 	{
 		if(directory==null)
 			return "";
-		directory=file_directory.replace_special_char(directory);
-		for(int i=0,ni=(directory=directory.trim()).length();i<ni;i++)
+		directory=replace_directory_special_char(directory).trim();
+		for(int i=0,ni=directory.length();i<ni;i++)
 			if(directory.charAt(i)!=File.separatorChar){
 				directory=directory.substring(i);
 				break;
@@ -36,7 +46,7 @@ public class file_directory
 				directory=directory.substring(0,i+1);
 				break;
 			}
-		return replace_special_char(directory);
+		return directory;
 	}
 	public static String part_file_directory(part p,
 			system_parameter system_par,scene_parameter scene_par)
@@ -63,7 +73,7 @@ public class file_directory
 			}
 			break;
 		}
-		part_directory+=file_directory.replace_special_char(p.part_par.part_type_string);
+		part_directory+=replace_directory_special_char(p.part_par.part_type_string);
 		if(part_directory.charAt(part_directory.length()-1)!=File.separatorChar)
 			part_directory+=File.separatorChar;
 		

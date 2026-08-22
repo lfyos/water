@@ -33,7 +33,7 @@ public class movement_jason
 		cw.println(child_space+"\"node_name\"		:	",		jason_string.change_string(t.node_name)			+",");
 		cw.println(child_space+"\"description\"		:	",		jason_string.change_string(t.description)		+",");
 		cw.println(child_space+"\"sound_file_name\"	:	",
-			jason_string.change_string(file_directory.replace_special_char(t.sound_file_name))	+",");
+			jason_string.change_string(file_directory.replace_directory_special_char(t.sound_file_name))		+",");
 		cw.println(child_space+"\"sequence_flag\"		:	",	t.sequence_flag?"true,":"false,");
 		cw.println(child_space+"\"current_movement_flag\" :	",	t.current_movement_flag?"true,":"false,");
 

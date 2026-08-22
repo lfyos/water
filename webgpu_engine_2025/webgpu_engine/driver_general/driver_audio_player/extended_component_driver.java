@@ -63,7 +63,8 @@ public class extended_component_driver  extends component_driver
 			update_component_parameter_version();
 			return true;
 		}
-		new_audio_file_name=file_directory.replace_special_char(new_audio_file_name);
+		new_audio_file_name=file_directory.
+				replace_directory_special_char(new_audio_file_name);
 		if(audio_file_name==null){
 			if(file_reader.is_exist(audio_file_name=new_audio_file_name)){
 				terminate_flag=false;

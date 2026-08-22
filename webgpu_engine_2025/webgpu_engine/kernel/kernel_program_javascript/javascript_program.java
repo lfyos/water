@@ -41,13 +41,15 @@ public class javascript_program
 		
 		default_fetch_parameter_filename =system_par.parameter_directory;
 		default_fetch_parameter_filename+="network_parameter/fetch_parameter.txt";
-		default_fetch_parameter_filename =file_directory.replace_special_char(default_fetch_parameter_filename);
+		default_fetch_parameter_filename =file_directory.
+				replace_directory_special_char(default_fetch_parameter_filename);
 		
 		long t1=new File(default_fetch_parameter_filename).lastModified();
 		
 		default_draw_process_bar_filename =system_par.parameter_directory;
 		default_draw_process_bar_filename+="javascript_program/draw_process_bar.txt";
-		default_draw_process_bar_filename =file_directory.replace_special_char(default_draw_process_bar_filename);
+		default_draw_process_bar_filename =file_directory.
+				replace_directory_special_char(default_draw_process_bar_filename);
 		
 		long t2=new File(default_draw_process_bar_filename).lastModified();
 		

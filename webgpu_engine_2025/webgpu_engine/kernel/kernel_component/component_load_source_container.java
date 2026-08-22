@@ -124,7 +124,8 @@ public class component_load_source_container
 				continue;
 			if(terminated_token_string.compareTo(str)==0)
 				break;
-			mount_component_file_name=part_fr.directory_name+file_directory.replace_special_char(str);
+			mount_component_file_name=file_directory.replace_directory_special_char(str);
+			mount_component_file_name=part_fr.directory_name+mount_component_file_name;
 			if(new File(mount_component_file_name).exists())
 				ret_val+=file_add_source_item(mount_component_name,token_string,
 						mount_component_file_name,part_fr.get_charset());

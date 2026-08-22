@@ -40,7 +40,8 @@ public class scene_kernel_create_parameter
 				break;
 			if(my_mount_file_name.compareTo("")==0)
 				break;
-			my_mount_file_name=file_directory.replace_special_char(my_mount_file_name);
+			my_mount_file_name=file_directory.
+					replace_directory_special_char(my_mount_file_name);
 			file_reader f_name=new file_reader(
 					f_type.directory_name+my_mount_file_name,f_type.get_charset());
 			while(!(f_name.eof())){
@@ -60,9 +61,9 @@ public class scene_kernel_create_parameter
 					if(my_scene_name.compareTo(my_scene_search_name)!=0)
 						continue;
 				
-				scene_file_name				=file_directory.replace_special_char(scene_file_name);
-				parameter_file_name			=file_directory.replace_special_char(parameter_file_name);
-				extra_parameter_file_name	=file_directory.replace_special_char(extra_parameter_file_name);
+				scene_file_name				=file_directory.replace_directory_special_char(scene_file_name);
+				parameter_file_name			=file_directory.replace_directory_special_char(parameter_file_name);
+				extra_parameter_file_name	=file_directory.replace_directory_special_char(extra_parameter_file_name);
 				
 				if(!(file_reader.is_exist(f_name.directory_name+scene_file_name))) {
 					debug_information.println("Find unexist scene_assembly_file_name:",

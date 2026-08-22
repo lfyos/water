@@ -35,7 +35,7 @@ public class extended_part_instance_driver extends part_instance_driver
 		}catch(Exception e){
 			return null;
 		}
-		file_name=file_directory.replace_special_char(file_name);
+		file_name=file_directory.replace_directory_special_char(file_name);
 		String temp_path_name=file_directory.part_file_directory(p,sk.system_par, sk.scene_par)+file_name;
 		
 		File f=new File(p.directory_name+p.material_file_name);

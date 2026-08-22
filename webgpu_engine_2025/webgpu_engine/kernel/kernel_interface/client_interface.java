@@ -598,11 +598,12 @@ public class client_interface
 			if(request_response.pass_word.compareTo(pass_word)!=0)
 				continue;
 
-			scene_file_name=f.directory_name+file_directory.replace_special_char(scene_file_name);
+			scene_file_name=file_directory.replace_directory_special_char(scene_file_name);
+			scene_file_name=f.directory_name+scene_file_name;
 			if(!(new File(scene_file_name).exists()))
 				continue;
 			
-			parameter_file_name	=file_directory.replace_special_char(parameter_file_name);
+			parameter_file_name	=file_directory.replace_directory_special_char(parameter_file_name);
 			String parameter_file_name_1=f.directory_name+parameter_file_name;
 			String parameter_file_name_2=system_par.parameter_directory
 					+"user_parameter"+File.separator+parameter_file_name;

@@ -56,13 +56,13 @@ public class component_core_2 extends component_core_1
 			case "push_file_part_type_string":
 				ccp.push_part_type_string_sorter(
 					new part_type_string_sorter(
-							new String[] {fr.directory_name+file_directory.replace_special_char(fr.get_string())},
+							new String[] {fr.directory_name+file_directory.replace_directory_special_char(fr.get_string())},
 							ccp.sk.scene_par.part_type_string,fr.get_charset()));
 					break;
 			case "push_file_part_type_string_without_scene_par":
 				ccp.push_part_type_string_sorter(
 					new part_type_string_sorter(
-							new String[] {fr.directory_name+file_directory.replace_special_char(fr.get_string())},
+							new String[] {fr.directory_name+file_directory.replace_directory_special_char(fr.get_string())},
 							null,fr.get_charset()));
 				break;
 			case "push_string_part_type_string":
@@ -95,13 +95,13 @@ public class component_core_2 extends component_core_1
 			case "push_file_part_change_name":
 				ccp.push_change_part_name(
 					new change_name(
-						new String[] {fr.directory_name+file_directory.replace_special_char(fr.get_string())},
+						new String[] {fr.directory_name+file_directory.replace_directory_special_char(fr.get_string())},
 						ccp.sk.scene_par.change_part_string,fr.get_charset()));
 				break;
 			case "push_file_part_change_name_without_scene_par":
 				ccp.push_change_part_name(
 					new change_name(
-						new String[] {fr.directory_name+file_directory.replace_special_char(fr.get_string())},
+						new String[] {fr.directory_name+file_directory.replace_directory_special_char(fr.get_string())},
 						null,fr.get_charset()));
 				break;
 			case "push_string_part_change_name":

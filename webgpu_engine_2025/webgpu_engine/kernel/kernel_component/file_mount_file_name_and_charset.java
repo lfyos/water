@@ -19,7 +19,7 @@ public class file_mount_file_name_and_charset
 			return false;
 		}
 		if(((my_directory=my_directory.trim()).length()<=0)
-			||((my_file_name=file_directory.replace_special_char(my_file_name)).length()<=0)) 
+			||((my_file_name=file_directory.replace_directory_special_char(my_file_name)).length()<=0)) 
 		{
 			debug_information.println("client_parameter_mount:	",
 					"(((my_directory=my_directory).length()<=0)||((my_file_name=my_file_name).length()<=0))");
@@ -49,7 +49,7 @@ public class file_mount_file_name_and_charset
 				"((my_select_token==null)||(my_select_file_name==null)||(my_assemble_file_name==null))");
 			return false;
 		}
-		my_select_token		 =file_directory.replace_special_char(my_select_token);
+		my_select_token		 =file_directory.replace_directory_special_char(my_select_token);
 		my_select_file_name	 =file_directory.delete_begin_end_separator(my_select_file_name);
 		my_assemble_file_name=file_directory.delete_begin_end_separator(my_assemble_file_name);
 
@@ -74,7 +74,7 @@ public class file_mount_file_name_and_charset
 			String f_select_directory_name	=f_select.get_string();
 			if((f_select_token==null)||(f_select_directory_name==null))
 				continue;
-			f_select_token			=file_directory.replace_special_char(f_select_token);
+			f_select_token			=file_directory.replace_directory_special_char(f_select_token);
 			f_select_directory_name	=file_directory.delete_begin_end_separator(f_select_directory_name);
 			if((f_select_token.length()<=0)||(f_select_directory_name.length()<=0))
 				continue;
@@ -161,12 +161,12 @@ public class file_mount_file_name_and_charset
 			return false;
 		}
 
-		select_token				=file_directory.replace_special_char(select_token);
+		select_token				=file_directory.replace_directory_special_char(select_token);
 		select_file_name			=file_directory.delete_begin_end_separator(select_file_name);
 		select_file_name			=file_directory.delete_begin_end_separator(select_file_name);
 		select_assemble_file_name	=file_directory.delete_begin_end_separator(select_assemble_file_name);
 		select_assemble_file_name	=file_directory.delete_begin_end_separator(select_assemble_file_name);
-		select_file_charset			=file_directory.replace_special_char(select_file_charset);
+		select_file_charset			=file_directory.replace_directory_special_char(select_file_charset);
 
 		if((select_token.length()<=0)||(select_file_name.length()<=0)
 			||(select_assemble_file_name.length()<=0)||(select_file_charset.length()<=0)) 
@@ -189,7 +189,7 @@ public class file_mount_file_name_and_charset
 			if((my_select_token==null)||(my_select_directory_name==null))
 				continue;
 			
-			my_select_token			=file_directory.replace_special_char(my_select_token);
+			my_select_token			=file_directory.replace_directory_special_char(my_select_token);
 			my_select_directory_name=file_directory.delete_begin_end_separator(my_select_directory_name);
 			if((my_select_token.length()<=0)||(my_select_directory_name.length()<=0))
 				continue;

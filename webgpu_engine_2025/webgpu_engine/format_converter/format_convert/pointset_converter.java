@@ -1641,7 +1641,8 @@ public class pointset_converter
 				vertex_cont,triangle_cont);
 		new compress_vertex_and_triangle(vertex_cont,triangle_cont);
 		
-		target_directory_name=file_directory.replace_special_char(target_directory_name.trim());
+		target_directory_name=file_directory.
+				replace_directory_special_char(target_directory_name.trim());
 		if(target_directory_name.length()<=0)
 			target_directory_name=".";
 		if(target_directory_name.charAt(target_directory_name.length()-1)!=File.separatorChar)

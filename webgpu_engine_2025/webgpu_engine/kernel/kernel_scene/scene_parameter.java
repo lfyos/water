@@ -80,7 +80,8 @@ public class scene_parameter
 		
 		file_name=parameter_fr.get_string();
 		file_name=(file_name==null)?"":file_name.trim();
-		path_name=parameter_fr.directory_name+file_directory.replace_special_char(file_name);
+		path_name=parameter_fr.directory_name+file_directory.
+				replace_directory_special_char(file_name);
 		if(new File(path_name).exists())
 			environment_file_reader[1]=new file_reader(path_name,parameter_fr.get_charset());
 		else
@@ -88,7 +89,8 @@ public class scene_parameter
 		
 		file_name=extra_parameter_fr.get_string();
 		file_name=(file_name==null)?"":file_name.trim();
-		path_name=extra_parameter_fr.directory_name+file_directory.replace_special_char(file_name);
+		path_name=extra_parameter_fr.directory_name+file_directory
+				.replace_directory_special_char(file_name);
 		if(new File(path_name).exists())
 			environment_file_reader[2]=new file_reader(path_name,extra_parameter_fr.get_charset());
 		else

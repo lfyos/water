@@ -110,7 +110,7 @@ public class file_download_manager
 			return f.exists()?new scene_call_result(f,system_par):null;
 		}
 		String directory_name=system_par.temporary_file_par.temporary_proxy_directory_name;
-		directory_name+=file_directory.replace_special_char(proxy_server);
+		directory_name+=file_directory.replace_directory_special_char(proxy_server);
 		if(directory_name.charAt(directory_name.length()-1)!=File.separatorChar)
 			directory_name+=File.separatorChar;
 		
@@ -127,7 +127,7 @@ public class file_download_manager
 		}
 		proxy_url+=undecode_file_name+"&proxy_info="+info_str;
 		
-		String my_file_name=directory_name+file_directory.replace_special_char(file_name);
+		String my_file_name=directory_name+file_directory.replace_directory_special_char(file_name);
 		if(link_token.compareTo("true")==0){
 			int index_id;
 			if((index_id=my_file_name.lastIndexOf('.'))<0)

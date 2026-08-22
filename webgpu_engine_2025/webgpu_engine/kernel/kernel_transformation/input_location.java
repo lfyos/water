@@ -97,7 +97,7 @@ public class input_location
 			case "relative_file_location":
 				if((name=fr.get_string())!=null)
 					if((name=name.trim()).length()>0) {
-						name=fr.directory_name+file_directory.replace_special_char(name);
+						name=fr.directory_name+file_directory.replace_directory_special_char(name);
 						file_reader f=new file_reader(name,fr.get_charset());
 						if(!(f.eof())) {
 							location ret_val=new location(f);
@@ -112,7 +112,7 @@ public class input_location
 			case "absolute_file_location":
 				if((name=fr.get_string())!=null)
 					if((name=name.trim()).length()>0) {
-						name=file_directory.replace_special_char(name);
+						name=file_directory.replace_directory_special_char(name);
 						file_reader f=new file_reader(name,fr.get_charset());
 						if(!(f.eof())){
 							location ret_val=new location(f);
@@ -129,7 +129,7 @@ public class input_location
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
 					if((name=name.trim()).length()>0){
-						name=fr.directory_name+file_directory.replace_special_char(name);
+						name=fr.directory_name+file_directory.replace_directory_special_char(name);
 						file_reader f=new file_reader(name,charset.trim());
 						if(!(f.eof())) {
 							location ret_val=new location(f);
@@ -146,7 +146,7 @@ public class input_location
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
 					if((name=name.trim()).length()>0){
-						name=file_directory.replace_special_char(name);
+						name=file_directory.replace_directory_special_char(name);
 						file_reader f=new file_reader(name,charset.trim());
 						if(!(f.eof())){
 							location ret_val=new location(f);
@@ -163,7 +163,7 @@ public class input_location
 					if((name=name.trim()).length()>0) 
 						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
-								name=fr.directory_name+file_directory.replace_special_char(name);
+								name=fr.directory_name+file_directory.replace_directory_special_char(name);
 								file_reader f=new file_reader(name,fr.get_charset());
 								if(!(f.eof())) {
 									location ret_val=new location(f);
@@ -180,7 +180,7 @@ public class input_location
 					if((name=name.trim()).length()>0) 
 						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
-								name=file_directory.replace_special_char(name);
+								name=file_directory.replace_directory_special_char(name);
 								file_reader f=new file_reader(name,fr.get_charset());
 								if(!(f.eof())) {
 									location ret_val=new location(f);
@@ -199,7 +199,8 @@ public class input_location
 					if((name=name.trim()).length()>0)
 						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
-								name=fr.directory_name+file_directory.replace_special_char(name);
+								name=fr.directory_name+file_directory.
+											replace_directory_special_char(name);
 								file_reader f=new file_reader(name,charset.trim());
 								if(!(f.eof())) {
 									location ret_val=new location(f);
@@ -218,7 +219,7 @@ public class input_location
 					if((name=name.trim()).length()>0)
 						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
 							if((name=name.trim()).length()>0){
-								name=file_directory.replace_special_char(name);
+								name=file_directory.replace_directory_special_char(name);
 								file_reader f=new file_reader(name,charset.trim());
 								if(!(f.eof())){
 									location ret_val=new location(f);
@@ -235,7 +236,7 @@ public class input_location
 					if((name=name.trim()).length()>0) 
 						if((name=System.getenv(name))!=null)
 							if((name=name.trim()).length()>0){
-								name=fr.directory_name+file_directory.replace_special_char(name);
+								name=fr.directory_name+file_directory.replace_directory_special_char(name);
 								file_reader f=new file_reader(name,fr.get_charset());
 								if(!(f.eof())) {
 									location ret_val=new location(f);
@@ -252,7 +253,7 @@ public class input_location
 					if((name=name.trim()).length()>0) 
 						if((name=System.getenv(name))!=null)
 							if((name=name.trim()).length()>0){
-								name=file_directory.replace_special_char(name);
+								name=file_directory.replace_directory_special_char(name);
 								file_reader f=new file_reader(name,fr.get_charset());
 								if(!(f.eof())) {
 									location ret_val=new location(f);
@@ -271,7 +272,7 @@ public class input_location
 					if((name=name.trim()).length()>0)
 						if((name=System.getenv(name))!=null)
 							if((name=name.trim()).length()>0){
-								name=fr.directory_name+file_directory.replace_special_char(name);
+								name=fr.directory_name+file_directory.replace_directory_special_char(name);
 								file_reader f=new file_reader(name,charset.trim());
 								if(!(f.eof())) {
 									location ret_val=new location(f);
@@ -290,7 +291,7 @@ public class input_location
 					if((name=name.trim()).length()>0)
 						if((name=System.getenv(name))!=null)
 							if((name=name.trim()).length()>0){
-								name=file_directory.replace_special_char(name);
+								name=file_directory.replace_directory_special_char(name);
 								file_reader f=new file_reader(name,charset.trim());
 								if(!(f.eof())){
 									location ret_val=new location(f);

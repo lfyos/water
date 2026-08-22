@@ -30,7 +30,7 @@ public class file_writer extends common_writer
 		file_length=0;
 		lastModified_time=0;
 		
-		my_file_name=file_directory.replace_special_char(my_file_name);
+		my_file_name=file_directory.replace_directory_special_char(my_file_name);
 		make_directory(my_file_name);
 		
 		File f=new File(my_file_name);
@@ -64,7 +64,7 @@ public class file_writer extends common_writer
 	public static void make_directory(String directory_name)
 	{
 		File f;
-		directory_name=file_directory.replace_special_char(directory_name);
+		directory_name=file_directory.replace_directory_special_char(directory_name);
 		for(int pointer=0,length=directory_name.length();pointer<length;pointer++)
 			if(directory_name.charAt(pointer)==File.separatorChar)
 				if(!((f=new File(directory_name.substring(0,pointer))).exists()))
@@ -96,7 +96,7 @@ public class file_writer extends common_writer
 	{
 		long total_length=0;
 		
-		File s_file=new File(file_directory.replace_special_char(source_file_name));
+		File s_file=new File(file_directory.replace_directory_special_char(source_file_name));
 		
 		if(s_file.isDirectory()){
 			String file_list[];
@@ -112,8 +112,8 @@ public class file_writer extends common_writer
 	{
 		String source_file_name[]=new String[my_source_file_name.length];
 		for(int i=0,ni=source_file_name.length;i<ni;i++)
-			source_file_name[i]=file_directory.replace_special_char(my_source_file_name[i]);
-		destination_file_name=file_directory.replace_special_char(destination_file_name);
+			source_file_name[i]=file_directory.replace_directory_special_char(my_source_file_name[i]);
+		destination_file_name=file_directory.replace_directory_special_char(destination_file_name);
 
 		long total_length=0;
 		File d_file=new File(destination_file_name);
@@ -138,8 +138,8 @@ public class file_writer extends common_writer
 	}
 	static private long file_copy_routine(String source_file_name,String destination_file_name)
 	{
-		source_file_name=file_directory.replace_special_char(source_file_name);	
-		destination_file_name=file_directory.replace_special_char(destination_file_name);
+		source_file_name=file_directory.replace_directory_special_char(source_file_name);	
+		destination_file_name=file_directory.replace_directory_special_char(destination_file_name);
 		
 		long total_length=0;
 		
@@ -176,7 +176,7 @@ public class file_writer extends common_writer
 	}
 	static private void create_file_directory(String file_name)
 	{
-		file_name=file_directory.replace_special_char(file_name);
+		file_name=file_directory.replace_directory_special_char(file_name);
 		
 		for(int i=0,n=file_name.length();i<n;i++)
 			if(file_name.charAt(i)==File.separatorChar)
@@ -189,8 +189,8 @@ public class file_writer extends common_writer
 	}
 	static public long file_copy_with_brother(String source_file_name,String destination_file_directory)
 	{
-		source_file_name=file_directory.replace_special_char(source_file_name);
-		destination_file_directory=file_directory.replace_special_char(destination_file_directory);
+		source_file_name=file_directory.replace_directory_special_char(source_file_name);
+		destination_file_directory=file_directory.replace_directory_special_char(destination_file_directory);
 		
 		file_reader f;
 		f=new file_reader(source_file_name,null);
@@ -201,8 +201,8 @@ public class file_writer extends common_writer
 			String source_file_name,String source_charset,
 			String destination_file_name,String destination_charset)
 	{
-		source_file_name=file_directory.replace_special_char(source_file_name);
-		destination_file_name=file_directory.replace_special_char(destination_file_name);
+		source_file_name=file_directory.replace_directory_special_char(source_file_name);
+		destination_file_name=file_directory.replace_directory_special_char(destination_file_name);
 		
 		File f=new File(destination_file_name);
 		f.delete();
@@ -270,8 +270,8 @@ public class file_writer extends common_writer
 	}
 	static public void file_rename(String old_file_name,String new_file_name)
 	{
-		old_file_name=file_directory.replace_special_char(old_file_name);
-		new_file_name=file_directory.replace_special_char(new_file_name);
+		old_file_name=file_directory.replace_directory_special_char(old_file_name);
+		new_file_name=file_directory.replace_directory_special_char(new_file_name);
 		
 		(new File(new_file_name)).delete();
 		(new File(old_file_name)).renameTo(new File(new_file_name));
@@ -360,7 +360,7 @@ public class file_writer extends common_writer
 	};
 	public static boolean file_touch(String file_name,long touch_t,boolean create_flag)
 	{
-		File f=new File(file_directory.replace_special_char(file_name));
+		File f=new File(file_directory.replace_directory_special_char(file_name));
 		if(f.exists()) {
 			if(f.lastModified()<touch_t)
 				f.setLastModified(touch_t);
@@ -412,10 +412,10 @@ public class file_writer extends common_writer
 	{
 		String my_path_name=directory_name+file_name;
 		String my_temp_path_name=file_directory.component_temparatory_directory(component_id,driver_id,scene_par)
-				+file_directory.replace_special_char(file_name+"."+system_par.link_file_extend_name);
+				+file_directory.replace_directory_special_char(file_name+"."+system_par.link_file_extend_name);
 		if(new File(my_temp_path_name).lastModified()<new File(my_path_name).lastModified())
 			new file_writer(my_temp_path_name,system_par.local_data_charset).
-					println(file_directory.replace_special_char(my_path_name)).close();
+					println(file_directory.replace_directory_special_char(my_path_name)).close();
 		return my_temp_path_name;
 	}
 }

@@ -72,7 +72,7 @@ public class extended_render_driver extends render_driver
 				system_par.parameter_directory	+sub_jar_file_directory
 			};
 		String jar_file_name,jar_class_name;
-		jar_file_name	=file_directory.replace_special_char(shader_fr.get_string());
+		jar_file_name	=file_directory.replace_directory_special_char(shader_fr.get_string());
 		jar_class_name	=shader_fr.get_string();
 
 		for(int i=0,ni=jar_file_directory.length;i<ni;i++)
