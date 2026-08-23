@@ -1,12 +1,11 @@
 package kernel_component;
 
+import java.util.Collection;
+
 import kernel_part.part;
 import kernel_part.part_rude;
 import kernel_driver.component_driver;
 import kernel_interface.client_process_bar;
-
-import java.util.ArrayList;
-
 import kernel_common_class.debug_information;
 import kernel_common_class.tree_search_container_tree_node;
 import kernel_common_class.tree_string_search_container;
@@ -184,31 +183,29 @@ public class component_caculator
 		}
 		
 		{
-			ArrayList<tree_search_container_tree_node<String,component>> sort_component_list;
-			sort_component_list=search_component_cont.tree_get_node_list();
+			Collection<tree_search_container_tree_node<String,component>> sort_component_list;
+			sort_component_list=search_component_cont.tree_get_node_collection();
 			int display_same_number=0,display_same_component_number=0;
-			int total_same_component_number=sort_component_list.size();
+			int i=0,total_same_component_number=sort_component_list.size();
 			
 			process_bar.set_process_bar(true,process_bar_title,"", 0,total_same_component_number);
 			
-			for(int i=0,ni=total_same_component_number;i<ni;i++){
-				tree_search_container_tree_node <String,component> my_tree_node=sort_component_list.get(i);
-				ArrayList<component> my_component_list=my_tree_node.list;
-				process_bar.set_process_bar(false,process_bar_title,my_tree_node.key,i,ni);
-				int component_list_size;
-				if((component_list_size=my_component_list.size())>1){
-					display_same_number++;
-					for(int j=0;j<component_list_size;j++) {
-						display_same_component_number++;
-						if(display_flag){
-							component my_component=my_component_list.get(j);
-							debug_information.print  (display_same_number);
-							debug_information.print  ("	Find same name component:",j-i);
-							debug_information.print  ("	",my_component.component_name);
-							debug_information.print  ("	",my_component.part_name);
-							debug_information.print  ("	",my_component.component_directory_name);
-							debug_information.println(my_component.component_file_name);
-						}
+			for(tree_search_container_tree_node <String,component> my_tree_node:sort_component_list){
+				process_bar.set_process_bar(false,process_bar_title,my_tree_node.key,i++,total_same_component_number);
+				if(my_tree_node.list.size()<=1)
+					continue;
+				display_same_number++;
+				int j=0,item_number=my_tree_node.list.size();
+				for(component my_component:my_tree_node.list){
+					j++;
+					display_same_component_number++;
+					if(display_flag){
+						debug_information.print  (display_same_number);
+						debug_information.print  ("	Find same name component:",j+"/"+item_number);
+						debug_information.print  ("	",my_component.component_name);
+						debug_information.print  ("	",my_component.part_name);
+						debug_information.print  ("	",my_component.component_directory_name);
+						debug_information.println(my_component.component_file_name);
 					}
 				}
 			}

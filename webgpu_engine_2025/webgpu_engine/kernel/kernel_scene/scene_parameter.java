@@ -1,7 +1,6 @@
 package kernel_scene;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
@@ -9,7 +8,6 @@ import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_common_class.name_exist_tester;
 import kernel_network.client_request_response;
-import kernel_common_class.tree_search_container_tree_node;
 
 public class scene_parameter 
 {
@@ -233,19 +231,16 @@ public class scene_parameter
 						str+=File.separatorChar;
 					scene_temporary_directory_name+=str;
 				}
-		
-		ArrayList<tree_search_container_tree_node<String,String>>my_client_parameter_name_list;
-		my_client_parameter_name_list=scene_environment.tree_get_node_list();
-		for(int i=0,ni=my_client_parameter_name_list.size();i<ni;i++) {
-			tree_search_container_tree_node<String,String> my_node=my_client_parameter_name_list.get(i);
+
+		for(var my_node:scene_environment.tree_get_node_collection()) {
 			if((str=file_directory.replace_special_char(my_node.key)).length()>0){
 				str=str.replace(':',File.separatorChar);
 				if(str.charAt(str.length()-1)!=File.separatorChar)
 					str+=File.separatorChar;
 				scene_temporary_directory_name+=str;
 			}
-			for(int j=0,nj=my_node.list.size();j<nj;j++)
-				if((str=file_directory.replace_special_char(my_node.list.get(j))).length()>0){
+			for(var my_list_item:my_node.list)
+				if((str=file_directory.replace_special_char(my_list_item)).length()>0){
 					str=str.replace(':',File.separatorChar);
 					if(str.charAt(str.length()-1)!=File.separatorChar)
 						str+=File.separatorChar;

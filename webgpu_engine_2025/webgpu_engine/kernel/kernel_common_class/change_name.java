@@ -1,7 +1,5 @@
 package kernel_common_class;
 
-import java.util.ArrayList;
-
 import kernel_file_manager.file_reader;
 
 public class change_name extends tree_string_search_container<String>
@@ -16,15 +14,16 @@ public class change_name extends tree_string_search_container<String>
 	}
 	public void append(change_name my_change_name,boolean do_reversion_flag)
 	{
-		tree_search_container_tree_node<String,String> my_tree_node;
-		ArrayList<tree_search_container_tree_node<String,String>>list;
-		if(my_change_name!=null)
-			for(int i=0,ni=(list=my_change_name.tree_get_node_list()).size();i<ni;i++) 
-				for(int j=0,nj=(my_tree_node=list.get(i)).list.size();j<nj;j++)
-					if(do_reversion_flag)
-						add(my_tree_node.list.get(j),	my_tree_node.key);
-					else
-						add(my_tree_node.key,			my_tree_node.list.get(j));
+		if(my_change_name==null)
+			return;
+		if(do_reversion_flag)
+			for(var my_tree_node:my_change_name.tree_get_node_collection())
+				for(var my_list_item:my_tree_node.list)
+					add(my_list_item,my_tree_node.key);
+		else
+			for(var my_tree_node:my_change_name.tree_get_node_collection())
+				for(var my_list_item:my_tree_node.list)
+					add(my_tree_node.key,my_list_item);
 	}
 	private void init(common_reader f_array[],String change_string)
 	{
