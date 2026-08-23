@@ -3,6 +3,7 @@ package kernel_common_class;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Collection;
 
 public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 {
@@ -150,6 +151,10 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			tree_node.touch_time=0;
 		}
 		return tree_node;
+	}
+	public Collection<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>tree_get_node_collection()
+	{
+		return tree.values();
 	}
 	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>tree_get_node_list()
 	{

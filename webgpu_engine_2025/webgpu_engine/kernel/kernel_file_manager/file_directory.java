@@ -29,6 +29,7 @@ public class file_directory
 			
 		return new_str;
 	}
+/*	
 	public static String delete_begin_end_separator(String directory)
 	{
 		if(directory==null)
@@ -46,6 +47,7 @@ public class file_directory
 			}
 		return directory;
 	}
+*/	
 	public static String part_temporary_directory(part p,
 			system_parameter system_par,scene_parameter scene_par)
 	{
@@ -71,7 +73,9 @@ public class file_directory
 			}
 			break;
 		}
-		part_directory+=delete_begin_end_separator(p.part_par.part_type_string)+File.separatorChar;
+		part_directory+=replace_special_char(p.part_par.part_type_string);
+		if(part_directory.charAt(part_directory.length()-1)!=File.separatorChar)
+			part_directory+=File.separatorChar;
 		
 		if(p.is_normal_part())
 			part_directory	+="part_";

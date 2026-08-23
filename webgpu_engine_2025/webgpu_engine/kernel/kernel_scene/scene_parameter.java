@@ -7,8 +7,9 @@ import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
-import kernel_common_class.tree_search_container_tree_node;
+import kernel_common_class.name_exist_tester;
 import kernel_network.client_request_response;
+import kernel_common_class.tree_search_container_tree_node;
 
 public class scene_parameter 
 {
@@ -122,7 +123,7 @@ public class scene_parameter
 	private String[] get_directory_name_and_file_name(file_reader fr,system_parameter system_par)
 	{
 		String path_file_name=((path_file_name=fr.get_string())==null)
-				?"":file_directory.delete_begin_end_separator(path_file_name);
+				?"":file_directory.replace_special_char(path_file_name);
 		String path_directory_name=((path_directory_name=fr.get_string())==null)
 				?"relative_directory":path_directory_name.trim();
 		
@@ -140,9 +141,10 @@ public class scene_parameter
 		case "environment_directory":
 			if((path_directory_name=fr.get_string())!=null)
 				if((path_directory_name=scene_environment.search_change_name(path_directory_name,null))!=null) {
-					path_directory_name=file_directory.delete_begin_end_separator(path_directory_name);
+					path_directory_name=file_directory.replace_special_char(path_directory_name);
 					if(path_directory_name.length()>0) {
-						path_directory_name+=File.separatorChar;
+						if(path_directory_name.charAt(path_directory_name.length()-1)!=File.separatorChar)
+							path_directory_name+=File.separatorChar;
 						break;
 					}
 				}
@@ -158,7 +160,7 @@ public class scene_parameter
 			type_sub_directory=new String[] {};
 			return;
 		}
-		ArrayList<String> list=new ArrayList<String>();
+		name_exist_tester tester=new name_exist_tester();
 		for(int index_id;str.length()>0;){
 			if((index_id=str.indexOf(';'))==0){
 				str=str.substring(1);
@@ -171,19 +173,15 @@ public class scene_parameter
 				my_str=str.substring(0,index_id);
 				str=str.substring(index_id+1);
 			}
-			my_str=file_directory.delete_begin_end_separator(my_str);
+			my_str=file_directory.replace_special_char(my_str);
 			if(my_str.length()<=0)
 				continue;
-			my_str+=File.separator;
-			for(int j=0,nj=list.size();j<nj;j++)
-				if(list.get(j).compareTo(my_str)==0) {
-					my_str=null;
-					break;
-				}
-			if(my_str!=null)
-				list.add(my_str);
+			if(my_str.charAt(my_str.length()-1)!=File.separatorChar)
+				my_str+=File.separatorChar;
+			
+			tester.add(my_str);
 		}
-		type_sub_directory=list.toArray(new String[list.size()]);
+		type_sub_directory=tester.name_array();
 	}
 	
 	private void caculate_scene_temporary_directory_name(
@@ -196,41 +194,63 @@ public class scene_parameter
 		scene_temporary_directory_name+="scene_directory"+File.separator;
 		
 		if((str=request_response.get_parameter("scene_tmp_directory"))!=null)
-			if((str=file_directory.delete_begin_end_separator(str)).length()>0){
-				scene_temporary_directory_name+=str.replace(':',File.separatorChar)+File.separator;
+			if((str=file_directory.replace_special_char(str)).length()>0){
+				str=str.replace(':',File.separatorChar);
+				if(str.charAt(str.length()-1)!=File.separatorChar)
+					str+=File.separatorChar;
+				scene_temporary_directory_name+=str;
 				return;
 			}
 
-		if((str=file_directory.delete_begin_end_separator(scene_name)).length()>0)
-			scene_temporary_directory_name+=str.replace(':',File.separatorChar)+File.separator;
-		
+		if((str=file_directory.replace_special_char(scene_name)).length()>0) {
+			str=str.replace(':',File.separatorChar);
+			if(str.charAt(str.length()-1)!=File.separatorChar)
+				str+=File.separatorChar;
+			scene_temporary_directory_name+=str;
+		}
 		String my_temporary_directory_name="";
 		
 		for(int i=0,ni=type_sub_directory.length;i<ni;i++) 
-			if((str=file_directory.delete_begin_end_separator(type_sub_directory[i])).length()>0)
-				my_temporary_directory_name+=str.replace(':',File.separatorChar)+File.separatorChar;
-
-		
-		if((str=file_directory.delete_begin_end_separator(scene_sub_directory)).length()>0)
-			my_temporary_directory_name+=str.replace(':',File.separatorChar)+File.separatorChar;
+			if((str=file_directory.replace_special_char(type_sub_directory[i])).length()>0){
+				str=str.replace(':',File.separatorChar);
+				if(str.charAt(str.length()-1)!=File.separatorChar)
+					str+=File.separatorChar;
+				scene_temporary_directory_name+=str;
+			}
+		if((str=file_directory.replace_special_char(scene_sub_directory)).length()>0){
+			str=str.replace(':',File.separatorChar);
+			if(str.charAt(str.length()-1)!=File.separatorChar)
+				str+=File.separatorChar;
+			scene_temporary_directory_name+=str;
+		}
 		
 		String str_array[]={change_part_string,change_component_string,part_type_string};
 		for(int i=0,ni=str_array.length;i<ni;i++)
-			if(str_array[i]!=null){
-				str_array[i]=file_directory.delete_begin_end_separator(str_array[i]);
-				if(str_array[i].length()>0)
-					my_temporary_directory_name+=str_array[i].replace(':',File.separatorChar)+File.separatorChar;
-			}
+			if((str=str_array[i])!=null)
+				if((str=file_directory.replace_special_char(str)).length()>0) {
+					str=str.replace(':',File.separatorChar);
+					if(str.charAt(str.length()-1)!=File.separatorChar)
+						str+=File.separatorChar;
+					scene_temporary_directory_name+=str;
+				}
 		
 		ArrayList<tree_search_container_tree_node<String,String>>my_client_parameter_name_list;
 		my_client_parameter_name_list=scene_environment.tree_get_node_list();
 		for(int i=0,ni=my_client_parameter_name_list.size();i<ni;i++) {
 			tree_search_container_tree_node<String,String> my_node=my_client_parameter_name_list.get(i);
-			if((str=file_directory.delete_begin_end_separator(my_node.key)).length()>0)
-				my_temporary_directory_name+=str.replace(':',File.separatorChar)+File.separatorChar;
+			if((str=file_directory.replace_special_char(my_node.key)).length()>0){
+				str=str.replace(':',File.separatorChar);
+				if(str.charAt(str.length()-1)!=File.separatorChar)
+					str+=File.separatorChar;
+				scene_temporary_directory_name+=str;
+			}
 			for(int j=0,nj=my_node.list.size();j<nj;j++)
-				if((str=file_directory.delete_begin_end_separator(my_node.list.get(j))).length()>0)
-					my_temporary_directory_name+=str.replace(':',File.separatorChar)+File.separatorChar;
+				if((str=file_directory.replace_special_char(my_node.list.get(j))).length()>0){
+					str=str.replace(':',File.separatorChar);
+					if(str.charAt(str.length()-1)!=File.separatorChar)
+						str+=File.separatorChar;
+					scene_temporary_directory_name+=str;
+				}
 		}
 		
 		if(my_temporary_directory_name.length()<=0)
@@ -257,9 +277,9 @@ public class scene_parameter
 
 		if((scene_sub_directory=request_response.get_parameter("scene_sub_directory"))==null)
 			scene_sub_directory="";
-		else if((scene_sub_directory=file_directory.delete_begin_end_separator(scene_sub_directory)).length()<=0)
+		else if((scene_sub_directory=file_directory.replace_special_char(scene_sub_directory)).length()<=0)
 			scene_sub_directory="";
-		else
+		else if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
 			scene_sub_directory+=File.separator;
 
 		file_reader parameter_fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
@@ -305,7 +325,7 @@ public class scene_parameter
 		if((camera_file_name=parameter_fr.get_string())==null)
 			camera_file_name="";
 		else
-			camera_file_name=file_directory.delete_begin_end_separator(camera_file_name);
+			camera_file_name=file_directory.replace_special_char(camera_file_name);
 
 		caculate_scene_temporary_directory_name(my_scene_name,
 				request_response,change_component_string,system_par);
@@ -332,7 +352,7 @@ public class scene_parameter
 			component_collector_stack_file_name="";
 		else
 			component_collector_stack_file_name=file_directory.
-				delete_begin_end_separator(component_collector_stack_file_name);
+				replace_special_char(component_collector_stack_file_name);
 		
 		component_collector_parameter_channel_id=new int[extra_parameter_fr.get_int()];
 		for(int i=0,ni=component_collector_parameter_channel_id.length;i<ni;i++)

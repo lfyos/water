@@ -6,7 +6,7 @@ import kernel_part.part;
 import kernel_driver.component_driver;
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
-import kernel_scene.part_type_string_sorter;
+import kernel_common_class.name_exist_tester;
 import kernel_common_class.debug_information;
 
 public class component_core_1 extends component_core_0
@@ -68,20 +68,19 @@ public class component_core_1 extends component_core_0
 		if(effective_parts.size()<=0)
 			return;
 		
-		part_type_string_sorter ptss=ccp.get_part_type_string_sorter();
-		if(((ptss==null)?0:(ptss.tree_get_value_list().size()))>0){
-			search_parts=effective_parts;
-			effective_parts=new ArrayList<part>();
-			for(int i=0,part_number=search_parts.size();i<part_number;i++) {
-				my_part=search_parts.get(i);
-				var my_part_type_string=ptss.search(my_part.part_par.part_type_string);
-				if(my_part_type_string!=null)
-					if(my_part_type_string.list.size()>0)
+		name_exist_tester tester;
+		if((tester=ccp.get_part_type_string_tester())!=null)
+			if(tester.size()>0){
+				search_parts=effective_parts;
+				effective_parts=new ArrayList<part>();
+				for(int i=0,part_number=search_parts.size();i<part_number;i++) {
+					my_part=search_parts.get(i);
+					if(tester.test_exist(my_part.part_par.part_type_string))
 						effective_parts.add(my_part);
+				}
+				if(effective_parts.size()<=0)
+					return;
 			}
-			if(effective_parts.size()<=0)
-				return;
-		}
 
 		for(int i=0,ni=effective_parts.size();i<ni;i++){
 			fr.mark_start();

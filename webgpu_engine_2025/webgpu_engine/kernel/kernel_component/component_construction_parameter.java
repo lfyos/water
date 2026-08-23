@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import kernel_scene.scene_kernel;
 import kernel_common_class.change_name;
-import kernel_scene.part_type_string_sorter;
+import kernel_common_class.name_exist_tester;
 import kernel_network.client_request_response;
 
 public class component_construction_parameter 
@@ -27,22 +27,22 @@ public class component_construction_parameter
 			change_part_name_list.remove(index_id);
 	}
 	
-	private ArrayList<part_type_string_sorter> type_string_sorter_list;
+	private ArrayList<name_exist_tester> part_type_string_tester_list;
 	
-	public part_type_string_sorter get_part_type_string_sorter()
+	public name_exist_tester get_part_type_string_tester()
 	{
-		int index_id=type_string_sorter_list.size()-1;
-		return (index_id<0)?null:type_string_sorter_list.get(index_id);
+		int index_id=part_type_string_tester_list.size()-1;
+		return (index_id<0)?null:part_type_string_tester_list.get(index_id);
 	}
-	public void push_part_type_string_sorter(part_type_string_sorter ptss)
+	public void push_part_type_string_tester(name_exist_tester tester)
 	{
-		type_string_sorter_list.add(ptss);
+		part_type_string_tester_list.add(tester);
 	}
-	public void pop_part_type_string_sorter()
+	public void pop_part_type_string_tester()
 	{
 		int index_id;
-		if((index_id=type_string_sorter_list.size()-1)>=0)
-			type_string_sorter_list.remove(index_id);
+		if((index_id=part_type_string_tester_list.size()-1)>=0)
+			part_type_string_tester_list.remove(index_id);
 	}
 	
 	public scene_kernel sk;
@@ -55,6 +55,7 @@ public class component_construction_parameter
 	{
 		sk				=my_sk;
 		request_response=my_request_response;
+		clsc			=my_clsc;
 		
 		change_part_name_list	=new ArrayList<change_name>();
 		if(sk.scene_par.change_part_string!=null)
@@ -62,12 +63,10 @@ public class component_construction_parameter
 				change_part_name_list.add(
 					new change_name(new String[]{},sk.scene_par.change_part_string,null));
 		
-		type_string_sorter_list	=new ArrayList<part_type_string_sorter>();
+		part_type_string_tester_list	=new ArrayList<name_exist_tester>();
 		if(sk.scene_par.part_type_string!=null)
 			if(sk.scene_par.part_type_string.length()>0)
-				type_string_sorter_list.add(
-					new part_type_string_sorter(null,sk.scene_par.part_type_string,null));
-
-		clsc					=my_clsc;
+				part_type_string_tester_list.add(
+					new name_exist_tester(null,sk.scene_par.part_type_string,null));
 	}
 }

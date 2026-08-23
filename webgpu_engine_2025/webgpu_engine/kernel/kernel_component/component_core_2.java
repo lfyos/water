@@ -3,9 +3,9 @@ package kernel_component;
 import java.util.ArrayList;
 
 import kernel_common_class.change_name;
-import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
-import kernel_scene.part_type_string_sorter;
+import kernel_file_manager.file_directory;
+import kernel_common_class.name_exist_tester;
 import kernel_common_class.debug_information;
 
 public class component_core_2 extends component_core_1
@@ -54,14 +54,14 @@ public class component_core_2 extends component_core_1
 				return;
 			}
 			case "push_file_part_type_string":
-				ccp.push_part_type_string_sorter(
-					new part_type_string_sorter(
+				ccp.push_part_type_string_tester(
+					new name_exist_tester(
 							new String[] {fr.directory_name+file_directory.replace_special_char(fr.get_string())},
 							ccp.sk.scene_par.part_type_string,fr.get_charset()));
 					break;
-			case "push_file_part_type_string_without_scene_par":
-				ccp.push_part_type_string_sorter(
-					new part_type_string_sorter(
+			case "push_file_part_type_string_without_scene_parameter":
+				ccp.push_part_type_string_tester(
+					new name_exist_tester(
 							new String[] {fr.directory_name+file_directory.replace_special_char(fr.get_string())},
 							null,fr.get_charset()));
 				break;
@@ -74,23 +74,23 @@ public class component_core_2 extends component_core_1
 					type_string=ccp.sk.scene_par.part_type_string;
 				else
 					type_string=ccp.sk.scene_par.part_type_string+";"+type_string;
-				ccp.push_part_type_string_sorter(
-						new part_type_string_sorter(null,type_string,fr.get_charset()));
+				ccp.push_part_type_string_tester(
+						new name_exist_tester(null,type_string,fr.get_charset()));
 				break;
 			}
-			case "push_string_part_type_string_without_scene_par":
+			case "push_string_part_type_string_without_scene_parameter":
 			{
 				String type_string;
 				if((type_string=fr.get_string())==null)
 					type_string="";
 				else if((type_string=type_string.trim()).length()<=0)
 					type_string="";
-				ccp.push_part_type_string_sorter(
-						new part_type_string_sorter(null,type_string,fr.get_charset()));
+				ccp.push_part_type_string_tester(
+						new name_exist_tester(null,type_string,fr.get_charset()));
 				break;
 			}
 			case "pop_part_type_string":	
-				ccp.pop_part_type_string_sorter();
+				ccp.pop_part_type_string_tester();
 				break;
 			case "push_file_part_change_name":
 				ccp.push_change_part_name(
