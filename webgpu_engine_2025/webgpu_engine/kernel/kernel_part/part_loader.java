@@ -46,7 +46,7 @@ public class part_loader extends Thread
 	}
 	public void run()
 	{
-		String part_temporary_file_directory=file_directory.part_file_directory(
+		String part_temporary_file_directory=file_directory.part_temporary_directory(
 				loaded_part,system_par,scene_par);
 		String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 		

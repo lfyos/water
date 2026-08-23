@@ -123,7 +123,7 @@ public class create_assemble_part
 				debug_information.println("Material_file_name:",
 						add_part.directory_name+add_part.material_file_name);
 				debug_information.println("Temp directory:",	
-						file_directory.part_file_directory(add_part,system_par,scene_par));
+						file_directory.part_temporary_directory(add_part,system_par,scene_par));
 				
 				render_cont.renders.get(cpr.select_ref_part.render_id).delete_last_part();
 				part_component_container.remove(comp_p.part_name);

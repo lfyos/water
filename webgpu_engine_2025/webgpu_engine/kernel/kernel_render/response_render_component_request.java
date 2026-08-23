@@ -123,7 +123,7 @@ public class response_render_component_request
 	}
 	private static int response_buffer_object_request(part p,scene_kernel sk,client_information ci)
 	{
-		String directory_name=file_directory.part_file_directory(p,sk.system_par,sk.scene_par)+"mesh.";
+		String directory_name=file_directory.part_temporary_directory(p,sk.system_par,sk.scene_par)+"mesh.";
 		String url_directory=ci.request_url_header+"&command=buffer&method=buffer_data"
 								+"&render="+(p.render_id)+"&part="+(p.part_id)+"&data_file=";
 		

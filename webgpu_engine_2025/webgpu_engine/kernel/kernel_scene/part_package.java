@@ -150,8 +150,8 @@ public class part_package
 		
 		for(int i=0;i<part_number;i++) {
 			part boftal_part=my_part_array_list.get(i);
-			String part_temporary_file_directory=file_directory.
-					part_file_directory(boftal_part,system_par,scene_par);
+			String part_temporary_file_directory=file_directory.part_temporary_directory(
+					boftal_part,system_par,scene_par);
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 			fw.println(part_temporary_file_directory.substring(cut_directory_length));
 
@@ -249,7 +249,7 @@ public class part_package
 			ArrayList<part> my_part_list=ppc.part_package.get(i).list;
 			for(int j=0,nj=my_part_list.size();j<nj;j++){
 				part my_part=my_part_list.get(j);
-				String my_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
+				String my_directory=file_directory.part_temporary_directory(my_part,system_par,scene_par);
 				compress_file_data.do_uncompress(
 					new File(my_tmp_file_name),
 					new File(my_directory+"mesh.head.gzip_text"),

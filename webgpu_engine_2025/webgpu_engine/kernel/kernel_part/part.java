@@ -164,7 +164,7 @@ public class part
 				part_mesh.destroy();
 			}
 			String my_file_path=directory_name+mesh_file_name;
-			my_file_path=file_directory.replace_directory_special_char(my_file_path);
+			my_file_path=file_directory.replace_special_char(my_file_path);
 			file_reader fr=new file_reader(my_file_path,file_charset);
 			part_mesh=new part_rude(fr);
 			fr.close();
@@ -328,7 +328,7 @@ public class part
 		str+="\n\tdescription file name:\t"		+description_file_name;
 		str+="\n\taudio_file_name:\t\t"			+audio_file_name;
 
-		String part_temporary_file_directory=file_directory.part_file_directory(this,system_par,scene_par);
+		String part_temporary_file_directory=file_directory.part_temporary_directory(this,system_par,scene_par);
 		
 		if(new File(part_temporary_file_directory).exists())
 			file_writer.file_delete(part_temporary_file_directory);

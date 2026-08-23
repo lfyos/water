@@ -79,7 +79,7 @@ public class dispatch_buffer_request
 				"No data_file in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
-		str=file_directory.part_file_directory(p,sk.system_par,sk.scene_par)+"mesh."+str+".gzip_text";
+		str=file_directory.part_temporary_directory(p,sk.system_par,sk.scene_par)+"mesh."+str+".gzip_text";
 		
 		return str;
 	}

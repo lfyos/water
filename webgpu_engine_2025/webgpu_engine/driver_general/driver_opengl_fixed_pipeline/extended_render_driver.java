@@ -59,8 +59,7 @@ public class extended_render_driver extends render_driver
 	{
 		String ret_val[]=super.get_render_list(shader_fr,ren,
 				component_load_source_cont,request_response,system_par,scene_par);
-		light_file_name	=shader_fr.directory_name+file_directory.
-				replace_directory_special_char(shader_fr.get_string());
+		light_file_name	=shader_fr.directory_name+file_directory.replace_special_char(shader_fr.get_string());
 		file_charset	=shader_fr.get_charset();
 		return ret_val;
 	}

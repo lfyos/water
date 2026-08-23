@@ -41,7 +41,7 @@ public class render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String render_list_file_name=file_directory.replace_directory_special_char(shader_fr.get_string());
+		String render_list_file_name=file_directory.replace_special_char(shader_fr.get_string());
 		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
 	}
 	public String[] get_part_list(
@@ -50,7 +50,7 @@ public class render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String par_list_file_name=file_directory.replace_directory_special_char(render_fr.get_string());
+		String par_list_file_name=file_directory.replace_special_char(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public String[][] shader_file_name_array()

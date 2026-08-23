@@ -44,7 +44,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		switch(str){
 		case "audio":
 			if((str=acd.get_audio_file_name())!=null)
-				return new String[] {file_directory.replace_directory_special_char(str),null};
+				return new String[] {file_directory.replace_special_char(str),null};
 			break;
 		case "ended":
 			acd.mark_terminate_flag();

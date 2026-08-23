@@ -239,7 +239,7 @@ public class render_container
 			String part_type_string			=f_render_list.get_string();
 			String assemble_part_name		=f_render_list.get_string();
 			String part_parameter_file_name	=(str=f_render_list.get_string())==null?"":str;
-			part_parameter_file_name=file_directory.replace_directory_special_char(part_parameter_file_name);
+			part_parameter_file_name=file_directory.replace_special_char(part_parameter_file_name);
 			if(part_parameter_file_name.length()<=0)
 				continue;
 			if(file_reader.is_exist(f_render_list.directory_name+part_parameter_file_name))
@@ -373,7 +373,7 @@ public class render_container
 					debug_information.print  ("render_list_file_name[0]==null	",	driver_name);
 					continue;
 				}
-				render_list_file_name[i]=file_directory.replace_directory_special_char(render_list_file_name[i]);
+				render_list_file_name[i]=file_directory.replace_special_char(render_list_file_name[i]);
 				if(!((f=new File(render_list_file_name[i])).exists())) {
 					debug_information.println(render_list_file_name[0],"		not exist");
 					continue;

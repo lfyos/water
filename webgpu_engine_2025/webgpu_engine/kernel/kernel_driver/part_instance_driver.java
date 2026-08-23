@@ -31,9 +31,9 @@ public class part_instance_driver
 			}catch(Exception e) {
 				;
 			}
-			file_name=file_directory.replace_directory_special_char(file_name);
+			file_name=file_directory.replace_special_char(file_name);
 		};
-		file_name=file_directory.part_file_directory(p,sk.system_par,sk.scene_par)+file_name;
+		file_name=file_directory.part_temporary_directory(p,sk.system_par,sk.scene_par)+file_name;
 		
 		if(file_reader.is_exist(file_name))
 			return new String[] {file_name,sk.system_par.local_data_charset};

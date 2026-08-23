@@ -161,7 +161,7 @@ public class scene_initialization
 					debug_information.println("Part material_file_name:",
 							my_part.directory_name+my_part.material_file_name);
 					debug_information.println("part_file_directory:",
-							file_directory.part_file_directory(my_part,sk.system_par,sk.scene_par));
+							file_directory.part_temporary_directory(my_part,sk.system_par,sk.scene_par));
 					
 				}
 		}
@@ -207,8 +207,7 @@ public class scene_initialization
 				continue;
 			for(int i=0,ni=shader_file_name.length;i<ni;i++)
 				for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
-					String my_file_name=file_directory.
-							replace_directory_special_char(shader_file_name[i][j]);
+					String my_file_name=file_directory.replace_special_char(shader_file_name[i][j]);
 					my_last_time=class_file_reader.get_last_time(my_file_name,
 							r.driver.getClass(),sk.system_par.text_class_charset);
 					if(last_time<my_last_time)
@@ -471,8 +470,7 @@ public class scene_initialization
 				}				
 				for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
 					String class_charset=sk.system_par.text_class_charset;
-					String my_file_name=file_directory.
-							replace_directory_special_char(shader_file_name[i][j]);
+					String my_file_name=file_directory.replace_special_char(shader_file_name[i][j]);
 					int index_id=shader_file_name[i][j].lastIndexOf('.');
 					if(index_id>=0)
 						if(my_file_name.substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0)

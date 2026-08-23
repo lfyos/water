@@ -19,24 +19,24 @@ public class file_mount_switch
 			return;
 		case "component_mount":
 			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
-					fr.directory_name+file_directory.replace_directory_special_char(fr.get_string()),fr.get_charset());
+					fr.directory_name+file_directory.replace_special_char(fr.get_string()),fr.get_charset());
 			return;
 		case "charset_component_mount":
 			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
-					fr.directory_name+file_directory.replace_directory_special_char(fr.get_string()),fr.get_string());
+					fr.directory_name+file_directory.replace_special_char(fr.get_string()),fr.get_string());
 			return;
 		case "absulate_component_mount":
 			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
-					file_directory.replace_directory_special_char(fr.get_string()),fr.get_charset());
+					file_directory.replace_special_char(fr.get_string()),fr.get_charset());
 			return;
 		case "absulate_charset_component_mount":
 			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
-					file_directory.replace_directory_special_char(fr.get_string()),fr.get_string());
+					file_directory.replace_special_char(fr.get_string()),fr.get_string());
 			return;
 		case "environment_component_mount":	
 		{
 			String add_component_name=fr.get_string();
-			String add_file_name=file_directory.replace_directory_special_char(
+			String add_file_name=file_directory.replace_special_char(
 					ccp.sk.scene_par.scene_environment.search_change_name(fr.get_string(),null));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
@@ -47,7 +47,7 @@ public class file_mount_switch
 		case "environment_charset_component_mount":	
 		{
 			String add_component_name=fr.get_string();
-			String add_file_name=file_directory.replace_directory_special_char(
+			String add_file_name=file_directory.replace_special_char(
 					ccp.sk.scene_par.scene_environment.search_change_name(fr.get_string(),null));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;

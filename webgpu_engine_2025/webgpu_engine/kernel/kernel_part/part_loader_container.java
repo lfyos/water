@@ -39,7 +39,7 @@ public class part_loader_container
 			debug_information.println("Error:\twait_for_completion:\t"+pl.loaded_part.system_name);
 			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name);
 			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
-			debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
+			debug_information.println("		",file_directory.part_temporary_directory(pl.loaded_part,system_par, scene_par));
 		}
 	}
 	public static void wait_for_completion(
@@ -96,7 +96,7 @@ public class part_loader_container
 		switch(fast_load_type){
 		case "fast":
 			if((boftal_number=boftal_container.size())>0){
-				String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par);
+				String boftal_token_str=file_directory.part_temporary_directory(my_part,system_par,scene_par);
 				int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
 				String search_key=boftal_token_str.substring(pre_length);
 				

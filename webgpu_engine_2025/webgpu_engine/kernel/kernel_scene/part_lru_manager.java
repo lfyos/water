@@ -63,7 +63,7 @@ public class part_lru_manager
 				debug_information.println("	mesh file:		",
 					touch_part.directory_name+touch_part.mesh_file_name);
 				debug_information.println("	temp_directory:	",
-					file_directory.part_file_directory(touch_part,system_par,scene_par));
+					file_directory.part_temporary_directory(touch_part,system_par,scene_par));
 				debug_information.println();
 			}
 		}
@@ -104,7 +104,7 @@ public class part_lru_manager
 			debug_information.println("	mesh file:		",
 				free_part.directory_name+free_part.mesh_file_name);
 			debug_information.println("	temp_directory:	",	
-				file_directory.part_file_directory(free_part,system_par,scene_par));
+				file_directory.part_temporary_directory(free_part,system_par,scene_par));
 			debug_information.println();
 		}
 		return;

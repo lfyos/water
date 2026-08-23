@@ -78,7 +78,7 @@ public class dispatch_create_scene_request
 					debug_information.println("Part mesh_file_name:",	my_p.directory_name+my_p.mesh_file_name);
 					debug_information.println("Part material_file_name:",my_p.directory_name+my_p.material_file_name);
 					debug_information.println("part_file_directory:",
-							file_directory.part_file_directory(my_p,sk.system_par,sk.scene_par));
+							file_directory.part_temporary_directory(my_p,sk.system_par,sk.scene_par));
 				}
 				if(ci.request_response.output_data_length!=old_length){
 					ci.request_response.print(",",render_id);

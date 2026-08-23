@@ -14,7 +14,7 @@ public class file_reader extends common_reader
 	
 	private static InputStream create_input_stream_reader(String my_user_file_name)
 	{
-		File f=new File(my_user_file_name=file_directory.replace_directory_special_char(my_user_file_name));
+		File f=new File(my_user_file_name=file_directory.replace_special_char(my_user_file_name));
 		if(!(f.exists()))
 			return null;
 		try{
@@ -35,7 +35,7 @@ public class file_reader extends common_reader
 				?my_file_system_charset:Charset.defaultCharset().name());
 
 		directory_name="";
-		file_name=file_directory.replace_directory_special_char(my_user_file_name);
+		file_name=file_directory.replace_special_char(my_user_file_name);
 
 		if(error_flag()) {
 			lastModified_time=0;
@@ -58,7 +58,7 @@ public class file_reader extends common_reader
 	{
 		if(file_name==null)
 			return false;
-		return (new File(file_directory.replace_directory_special_char(file_name))).exists(); 
+		return (new File(file_directory.replace_special_char(file_name))).exists(); 
 	}
 	public static boolean is_not_exist(String file_name)
 	{
@@ -66,8 +66,8 @@ public class file_reader extends common_reader
 	}
 	public static int modify_time_compare(String s_file_name,String d_file_name)
 	{
-		File s_f=new File(file_directory.replace_directory_special_char(s_file_name));
-		File d_f=new File(file_directory.replace_directory_special_char(d_file_name));
+		File s_f=new File(file_directory.replace_special_char(s_file_name));
+		File d_f=new File(file_directory.replace_special_char(d_file_name));
 		long s_lastModified_time=s_f.lastModified(),d_lastModified_time=d_f.lastModified();
 		if(s_lastModified_time<d_lastModified_time)
 			return -1;

@@ -37,7 +37,7 @@ public class part_information extends jason_creator
 		print("description_file_name",		p.description_file_name);
 		print("audio_file_name",			p.audio_file_name);
 		print("temp_directory_name",		
-				file_directory.part_file_directory(p, part_system_par, part_scene_par));
+				file_directory.part_temporary_directory(p, part_system_par, part_scene_par));
 		
 		print("total_face_primitive_number",	p.part_mesh.total_face_primitive_number);
 		print("total_edge_primitive_number",	p.part_mesh.total_edge_primitive_number);

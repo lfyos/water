@@ -158,10 +158,10 @@ public class render
 			if(audio_file_name.compareTo("")==0)
 				continue;
 
-			mesh_file_name		 =file_directory.replace_directory_special_char(mesh_file_name);
-			material_file_name	 =file_directory.replace_directory_special_char(material_file_name);
-			description_file_name=file_directory.replace_directory_special_char(description_file_name);
-			audio_file_name		 =file_directory.replace_directory_special_char(audio_file_name);
+			mesh_file_name		 =file_directory.replace_special_char(mesh_file_name);
+			material_file_name	 =file_directory.replace_special_char(material_file_name);
+			description_file_name=file_directory.replace_special_char(description_file_name);
+			audio_file_name		 =file_directory.replace_special_char(audio_file_name);
 
 			part_parameter my_part_par=part_par.clone();
 			

@@ -360,7 +360,7 @@ public class movement_function_switch
 				try{
 					str=java.net.URLDecoder.decode(str,request_charset);
 					str=java.net.URLDecoder.decode(str,request_charset);
-					str=file_directory.replace_directory_special_char(str);
+					str=file_directory.replace_special_char(str);
 					searcher.search_link_list.tree_node.sound_file_name=str;
 					if(recursive_flag)
 						do_update_children(searcher.search_link_list.tree_node,true,false);
@@ -793,7 +793,7 @@ public class movement_function_switch
 			return collector.list_id;
 		collector.title=searcher.search_link_list.tree_node.node_name;
 		collector.description=searcher.search_link_list.tree_node.description;
-		collector.audio_file_name=file_directory.replace_directory_special_char(
+		collector.audio_file_name=file_directory.replace_special_char(
 				manager.directory_name+searcher.search_link_list.tree_node.sound_file_name);
 		if(acd!=null)
 			acd.set_audio(collector.audio_file_name,false);
@@ -1082,7 +1082,7 @@ public class movement_function_switch
 			if(searcher.search_link_list==null)
 				return null;
 			String directory_name=manager.directory_name+manager.config_parameter.sound_pre_string;
-			String file_name=file_directory.replace_directory_special_char(
+			String file_name=file_directory.replace_special_char(
 					directory_name+searcher.search_link_list.tree_node.sound_file_name);
 			return new String[] {file_name,null};
 		}
@@ -1100,7 +1100,7 @@ public class movement_function_switch
 				return null;
 			}
 			String directory_name=manager.directory_name+manager.config_parameter.sound_pre_string;
-			String file_name=file_directory.replace_directory_special_char(
+			String file_name=file_directory.replace_special_char(
 					directory_name+searcher.search_link_list.tree_node.sound_file_name);
 			long write_length=0;
 			try{

@@ -28,7 +28,7 @@ public class file_mount_component
 			public assemble_file_collector(String my_assemble_file_name)
 			{
 				file_name_list=new ArrayList<String>();
-				do_travel(file_directory.replace_directory_special_char(my_assemble_file_name),true);
+				do_travel(file_directory.replace_special_char(my_assemble_file_name),true);
 			}
 		};
 		if((my_assemble_file_name==null)||(my_assemble_file_charset==null))
@@ -74,7 +74,7 @@ public class file_mount_component
 				"component_name:	"+component_name);
 			return;
 		}
-		my_file_name=file_directory.replace_directory_special_char(my_file_name);
+		my_file_name=file_directory.replace_special_char(my_file_name);
 		
 		String my_directory_name_array[],my_charset_name_array[];
 		if(absulate_path_flag){
@@ -134,7 +134,7 @@ public class file_mount_component
 				"component_name:	"+component_name);
 			return;
 		}
-		my_file_name=file_directory.replace_directory_special_char(my_file_name);
+		my_file_name=file_directory.replace_special_char(my_file_name);
 		
 		String my_directory_name_array[];
 		if(absulate_path_flag)

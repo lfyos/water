@@ -9,13 +9,12 @@ import kernel_common_class.debug_information;
 
 public class file_directory 
 {
-	public static String replace_directory_special_char(String str)
+	public static String replace_special_char(String str)
 	{
 		final String single_separator_string=""+File.separatorChar;
 		final String double_separator_string=""+File.separatorChar+File.separatorChar;
 		
 		String new_str=str.trim().
-//				replace(':',	File.separatorChar).
 				replace(';',	File.separatorChar).
 				replace('/',	File.separatorChar).
 				replace('\\',	File.separatorChar).
@@ -24,18 +23,17 @@ public class file_directory
 				replace('\r',	'_').
 				replace('\n',	'_');
 		
-		for(int old_length=-1,new_length=new_str.length();old_length!=new_length;){
+		for(int old_length=-1,new_length=new_str.length();old_length!=new_length;
+				old_length=new_length,new_length=new_str.length())
 			new_str=new_str.replace(double_separator_string,single_separator_string);
-			old_length=new_length;
-			new_length=new_str.length();
-		};
+			
 		return new_str;
 	}
 	public static String delete_begin_end_separator(String directory)
 	{
 		if(directory==null)
 			return "";
-		directory=replace_directory_special_char(directory).trim();
+		directory=replace_special_char(directory).trim();
 		for(int i=0,ni=directory.length();i<ni;i++)
 			if(directory.charAt(i)!=File.separatorChar){
 				directory=directory.substring(i);
@@ -48,11 +46,11 @@ public class file_directory
 			}
 		return directory;
 	}
-	public static String part_file_directory(part p,
+	public static String part_temporary_directory(part p,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		String part_directory=system_par.temporary_file_par.temporary_root_directory_name;
-		
+
 		switch(p.part_type_id){
 		case 0:
 			part_directory+="system_part_directory"+File.separatorChar;
@@ -73,9 +71,7 @@ public class file_directory
 			}
 			break;
 		}
-		part_directory+=replace_directory_special_char(p.part_par.part_type_string);
-		if(part_directory.charAt(part_directory.length()-1)!=File.separatorChar)
-			part_directory+=File.separatorChar;
+		part_directory+=delete_begin_end_separator(p.part_par.part_type_string)+File.separatorChar;
 		
 		if(p.is_normal_part())
 			part_directory	+="part_";
@@ -86,7 +82,9 @@ public class file_directory
 		else
 			part_directory	+="part_unknown_";
 		
-		return part_directory+p.permanent_part_id+File.separator;
+		part_directory+=p.permanent_part_id+File.separator;
+		
+		return part_directory;
 	}
 	public static String package_file_directory(int part_type_id,
 			system_parameter system_par,scene_parameter scene_par)

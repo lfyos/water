@@ -77,7 +77,7 @@ public class component_collector_stack
 						for(component_link_list cll=push_collector.component_collector[render_id][part_id];(exit_flag>0)&&(cll!=null);cll=cll.next_list_item)
 							for(int i=0,ni=cll.comp.driver_array.size();(exit_flag>0)&&(i<ni);i++)
 								if((p=cll.comp.driver_array.get(i).component_part)!=null){
-									String root_directory=file_directory.part_file_directory(p,system_par,scene_par);
+									String root_directory=file_directory.part_temporary_directory(p,system_par,scene_par);
 									
 									if(cll.comp.uniparameter.display_part_name_or_component_name_flag)
 										push_collector.title=p.user_name;

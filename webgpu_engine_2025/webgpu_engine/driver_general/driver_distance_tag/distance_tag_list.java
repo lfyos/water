@@ -31,8 +31,7 @@ public class distance_tag_list
 			int my_display_precision,double my_min_view_distance,int my_modifier_container_id)
 	{
 		directory_component_name=my_directory_component_name;
-		distance_tag_file_name=file_directory.
-				replace_directory_special_char(my_distance_tag_file_name);
+		distance_tag_file_name=file_directory.replace_special_char(my_distance_tag_file_name);
 		min_view_distance=my_min_view_distance;
 
 		distance_tag_list=new ArrayList<distance_tag_item>();
