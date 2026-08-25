@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import kernel_part.part;
 import kernel_driver.component_driver;
+import kernel_driver.part_driver;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_common_class.change_name;
@@ -13,7 +14,7 @@ import kernel_file_manager.travel_through_directory;
 
 public class file_mount_component
 {
-	static private void load_component_array_list(
+	static private void load_component_from_file_list(
 			String my_assemble_file_name,String my_assemble_file_charset,
 			String token_string,boolean part_list_flag,boolean normalize_location_flag,
 			ArrayList<component>child_component_list,component_construction_parameter ccp)
@@ -31,18 +32,19 @@ public class file_mount_component
 				do_travel(file_directory.replace_special_char(my_assemble_file_name),true);
 			}
 		};
-		if((my_assemble_file_name==null)||(my_assemble_file_charset==null))
+		if((my_assemble_file_name==null)||(my_assemble_file_charset==null)) {
+			debug_information.println(
+				"load_component_array_list error,(my_assemble_file_name==null)||(my_assemble_file_charset==null)");
 			return;
+		}
 		
-		ArrayList<String> file_name_list=new assemble_file_collector(my_assemble_file_name).file_name_list;
-
-		for(int j=0,nj=file_name_list.size();j<nj;j++) {
-			String my_file_name=file_name_list.get(j);
+		ArrayList<String> file_name_list=(new assemble_file_collector(my_assemble_file_name)).file_name_list;
+		for(String my_file_name:file_name_list){
 			file_reader mount_fr=new file_reader(my_file_name,my_assemble_file_charset);
-			if(mount_fr.error_flag()) 
+			if(mount_fr.error_flag()) {
 				debug_information.println(
-					"load_component_array_list assemble file does not exist:	",my_file_name);
-			else {
+					"load_component_array_list (mount_fr.error_flag()):	",my_file_name);
+			}else {
 				debug_information.println("assemble_file_name:	",		my_file_name);
 				debug_information.println("assemble_file_charset:	",	my_assemble_file_charset);
 				try{
@@ -50,79 +52,19 @@ public class file_mount_component
 							mount_fr,part_list_flag,normalize_location_flag,ccp));
 				}catch(Exception e) {
 					e.printStackTrace();
-					debug_information.println("Create scene from ",my_file_name+" fail");
-					debug_information.println("			",my_file_name);
+					debug_information.println("Create scene fail: ",my_file_name+" fail");
 				}
 			}
 			mount_fr.close();
 		}
-	}
-	static public void file_mount(String component_name,file_reader fr,boolean absulate_path_flag,
-			String token_string,boolean part_list_flag,boolean normalize_location_flag,
-			ArrayList<component>child_component_list,component_construction_parameter ccp)
-	{
-		String my_file_name;
-		if((my_file_name=fr.get_string())==null) {
-			debug_information.println(
-				"file_mount_array error((my_file_name=fr.get_string())==null):	",
-				"component_name:	"+component_name);
-			return;
-		}
-		if(my_file_name.length()<=0){
-			debug_information.println(
-				"file_mount_array error(my_file_name.length()<=0):	",
-				"component_name:	"+component_name);
-			return;
-		}
-		my_file_name=file_directory.replace_special_char(my_file_name);
-		
-		String my_directory_name_array[],my_charset_name_array[];
-		if(absulate_path_flag){
-			my_directory_name_array		=new String[]{""};
-			my_charset_name_array		=new String[]{fr.get_charset()};
-		}else{
-			my_directory_name_array		=new String[ccp.sk.scene_par.type_sub_directory.length+6];
-			my_charset_name_array		=new String[ccp.sk.scene_par.type_sub_directory.length+6];
-
-			my_directory_name_array	[0]	=fr.directory_name;
-			my_directory_name_array	[1]	=ccp.sk.create_parameter.scene_directory_name	+"assemble_default"+File.separatorChar;
-			my_directory_name_array	[2]	=ccp.sk.scene_par.directory_name				+"assemble_default"+File.separatorChar;
-			my_directory_name_array	[3]	=ccp.sk.scene_par.extra_directory_name			+"assemble_default"+File.separatorChar;
-			my_directory_name_array	[4]	=ccp.sk.scene_par.scene_shader_directory_name	+"assemble_default"+File.separatorChar;
-			
-			my_charset_name_array	[0]	=fr.get_charset();
-			my_charset_name_array	[1]	=ccp.sk.create_parameter.scene_charset;
-			my_charset_name_array	[2]	=ccp.sk.scene_par.parameter_charset;
-			my_charset_name_array	[3]	=ccp.sk.scene_par.extra_parameter_charset;
-			my_charset_name_array	[4]	=ccp.sk.scene_par.parameter_charset;
-		
-			for(int i=0,ni=ccp.sk.scene_par.type_sub_directory.length;i<ni;i++){
-				my_directory_name_array	[i+5] =ccp.sk.scene_par.type_shader_directory_name;
-				my_directory_name_array	[i+5]+=ccp.sk.scene_par.type_sub_directory[i];
-				my_directory_name_array	[i+5]+="assemble_default"+File.separatorChar;
-				my_charset_name_array	[i+5] =ccp.sk.scene_par.parameter_charset;
-			}
-
-			my_directory_name_array[my_directory_name_array.length-1]
-				=ccp.sk.system_par.parameter_directory+"assemble_default"+File.separatorChar;
-			my_charset_name_array[my_charset_name_array.length-1]=ccp.sk.system_par.local_data_charset;
-		}
-		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
-			if(new File(my_directory_name_array[i]+my_file_name).exists()) {
-				load_component_array_list(my_directory_name_array[i]+my_file_name,my_charset_name_array[i],
-							token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
-				return;
-			}
-		debug_information.println("file mount file NOT exits:	",
-				"my_file_name:	"+my_file_name+"		component_name:	"+component_name);
 		return;
 	}
 	static public void charset_file_mount(
+			String my_file_name,String my_file_charset,
 			String component_name,file_reader fr,boolean absulate_path_flag,
 			String token_string,boolean part_list_flag,boolean normalize_location_flag,
 			ArrayList<component>child_component_list,component_construction_parameter ccp)
 	{
-		String my_file_name=fr.get_string(),my_file_charset=fr.get_string();
 		if((my_file_name==null)||(my_file_charset==null)) {
 			debug_information.println(
 				"file_mount_array error,file_name==null or file_charset==null,component_name:"+component_name);
@@ -159,12 +101,15 @@ public class file_mount_component
 		}
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) {
-				load_component_array_list(my_directory_name_array[i]+my_file_name,my_file_charset,
+				load_component_from_file_list(my_directory_name_array[i]+my_file_name,my_file_charset,
 						token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
 				return;
 			}
 		debug_information.println("charset_file_mount file NOT exits:	",
-				"my_file_name:	"+my_file_name+"component_name:	"+component_name);
+				"my_file_name:	"+my_file_name+"	component_name:	"+component_name);
+		debug_information.println("my_directory_name_array.length:	",my_directory_name_array.length);
+		for(int i=0,ni=my_directory_name_array.length;i<ni;i++) 
+			debug_information.println(i+":		",my_directory_name_array[i]+my_file_name);
 		return;
 	}
 	static public void part_driver_mount(
@@ -172,55 +117,54 @@ public class file_mount_component
 			file_reader fr,String token_string,boolean part_list_flag,boolean normalize_location_flag,
 			ArrayList<component>child_component_list,component_construction_parameter ccp)
 	{
-		int my_driver_number;
-		if((my_driver_number=driver_array.size())<=0)  {
-			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error((my_driver_number=driver_number())<=0):	",
-				"component_name:	"+component_name);
-			return;
-		}
-		for(int my_driver_id=0;my_driver_id<my_driver_number;my_driver_id++) {
-			component_driver c_d=driver_array.get(my_driver_id);
-			if(c_d.component_part==null) {
+		int my_driver_id=-1;
+		for(component_driver my_driver:driver_array){
+			my_driver_id++;
+			if(my_driver.component_part==null) {
 				debug_information.println(
-					"Part_driver driver assemble_file_name_and_file_charset error(driver_array[i].component_part==null):	",
+					"part_driver_mount error(driver_array[i].component_part==null):	",
 					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
 				continue;
 			}
-			if(c_d.component_part.driver==null) {
+			part_driver my_part_driver;
+			if((my_part_driver=my_driver.component_part.driver)==null) {
 				debug_information.println(
-					"Part_driver driver assemble_file_name_and_file_charset error(driver_array[i].component_part.driver==null):	",
-					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
+					"part_driver_mount error(driver_array[i].component_part.driver==null):",
+					"	component_name:	"	+component_name+"		driver_id:"+my_driver_id);
+				debug_information.println("part system_name:	",	my_driver.component_part.system_name);
+				debug_information.println("part user_name:	",		my_driver.component_part.user_name);
 				continue;
 			}
-			String file_name_and_charset[];
-			if((file_name_and_charset=c_d.component_part.driver.assemble_file_name_and_file_charset(
-				fr,c_d.component_part,ccp.sk,ccp.request_response))==null)
-			{
+			
+			String file_name_and_charset[]=my_part_driver.assemble_file_name_and_file_charset(
+					fr,my_driver.component_part,ccp.sk,ccp.request_response);
+			if(file_name_and_charset==null){
 				debug_information.println(
-					"Part_driver driver assemble_file_name_and_file_charset error(file_name_and_charset==null):	",
-					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
+					"part_driver_mount error(file_name_and_charset==null):	",
+					"	component_name:	"	+component_name+"		driver_id:"+my_driver_id);
+				debug_information.println("part system_name:	",	my_driver.component_part.system_name);
+				debug_information.println("part user_name:	",		my_driver.component_part.user_name);
 				continue;
 			}
-			if(file_name_and_charset.length<=1){
-				debug_information.println(
-					"Part_driver driver assemble_file_name_and_file_charset error(file_name_and_charset.length<=1):	",
-					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
-				continue;
-			}
-			if((file_name_and_charset[0]==null)||(file_name_and_charset[1]==null)){
-				debug_information.println(
-					"Part_driver driver assemble_file_name_and_file_charset error(file_name_and_charset[0,1]=null):	",
-					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
-				continue;
-			}
-			load_component_array_list(file_name_and_charset[0],file_name_and_charset[1],
+			
+			for(int i=1,ni=file_name_and_charset.length;i<ni;i+=2){
+				if((file_name_and_charset[i-1]==null)||(file_name_and_charset[i]==null)){
+					debug_information.println(
+						"part_driver_mount error(file_name_and_charset[0 or 1]==null):	",
+						"component_name:	"+component_name+"		driver_id:"+my_driver_id
+						+"		index_id:"+i);
+					debug_information.println("part system_name:	",	my_driver.component_part.system_name);
+					debug_information.println("part user_name:	",		my_driver.component_part.user_name);
+					continue;
+				}
+				load_component_from_file_list(file_name_and_charset[i-1],file_name_and_charset[i],
 					token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
+			}
 			return;
 		}
 		debug_information.println(
-			"Part_driver driver assemble_file_name_and_file_charset error(NO assemble_file_name exist):	",
-			"component_name:	"+component_name+"		driver_number:"+my_driver_number);
+			"part_driver_mount error(NO assemble_file_name exist):	",
+			"component_name:	"+component_name+"		driver_number:"+driver_array.size());
 		return;
 	}
 	
@@ -228,70 +172,80 @@ public class file_mount_component
 			String token_string,boolean part_list_flag,boolean normalize_location_flag,
 			ArrayList<component>child_component_list,component_construction_parameter ccp)
 	{
-		String file_name_and_charset[],external_part_name;
+		String external_part_name;
 		if((external_part_name=fr.get_string())==null) {
 			debug_information.println(
-				"external_part_driver driver assemble_file_name_and_file_charset error(external_part_name==null):	",
-				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+				"external_part_driver_mount error(external_part_name==null):	",
+				"component_name:	"+component_name);
 			return;
 		}
-		ArrayList<part> par;
+		ArrayList<part> part_list;
+		change_name part_name_change;
 		String search_part_name=external_part_name;
-		change_name change_part_name;
-		if((change_part_name=ccp.get_change_part_name())==null)
-			par=ccp.sk.part_cont.search_part(search_part_name);
+		
+		if((part_name_change=ccp.get_change_part_name())==null)
+			part_list=ccp.sk.part_cont.search_part(search_part_name);
 		else{
-			search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
-			if((par=ccp.sk.part_cont.search_part(search_part_name))==null){
-				search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
-				par=ccp.sk.part_cont.search_part(search_part_name);
+			search_part_name=part_name_change.search_change_name(search_part_name,search_part_name);
+			if((part_list=ccp.sk.part_cont.search_part(search_part_name))==null){
+				search_part_name=part_name_change.search_change_name(search_part_name,search_part_name);
+				part_list=ccp.sk.part_cont.search_part(search_part_name);
 			}
 		}
-		if(par==null) {
+		if(part_list==null) {
 			debug_information.println(
-				"external_part_driver driver assemble_file_name_and_file_charset error(par==null):	",
+				"external_part_driver_mount error(part_list==null):	",
 				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
 			return;
 		}
-		if(par.size()<1) {
-			debug_information.println(
-				"external_part_driver driver assemble_file_name_and_file_charset error(par.length<1):	",
-				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+		for(part my_part:part_list) {
+			if(my_part.driver==null) {
+				debug_information.println(
+					"external_part_driver_mount error(my_part.driver==null):",
+					"	component_name:	"		+component_name+
+					"	external_part_name:	"	+external_part_name+
+					"	part_name:	"			+my_part.system_name+"		"+my_part.user_name);
+				continue;
+			}
+			String file_name_and_charset[];
+			try {
+				file_name_and_charset=my_part.driver.assemble_file_name_and_file_charset(
+						fr,my_part,ccp.sk,ccp.request_response);
+			}catch(Exception e) {
+				e.printStackTrace();
+				debug_information.println(
+					"external_part_driver_mount execption:	"+e.toString(),
+					"	component_name:	"		+component_name+
+					"	external_part_name:	"	+external_part_name+
+					"	part_name:	"			+my_part.system_name+"		"+my_part.user_name);
+				continue;
+			}
+			if(file_name_and_charset==null) {
+				debug_information.println(
+						"external_part_driver_mount error(file_name_and_charset==null):",
+						"	component_name:	"		+component_name+
+						"	external_part_name:	"	+external_part_name+
+						"	part_name:	"			+my_part.system_name+"		"+my_part.user_name);
+				continue;
+			}
+			for(int i=1,ni=file_name_and_charset.length;i<ni;i+=2) {
+				if((file_name_and_charset[i-1]==null)||(file_name_and_charset[i]==null)){
+					debug_information.println(
+						"external_part_driver driver error(file_name_and_charset[0 or 1]==null):	",
+						"	component_name:	"		+component_name+
+						"	external_part_name:	"	+external_part_name+
+						"	part_name:	"			+my_part.system_name+"		"+my_part.user_name);
+					continue;
+				}
+				load_component_from_file_list(file_name_and_charset[i-1],file_name_and_charset[i],
+						token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
+			}
 			return;
 		}
-		part p=par.get(0);
-		
-		if(p.driver==null) {
-			debug_information.println(
-				"external_part_driver driver assemble_file_name_and_file_charset error(par[0].driver==null):	",
-				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
-			return;
-		}
-		try {
-			file_name_and_charset=p.driver.assemble_file_name_and_file_charset(fr,p,ccp.sk,ccp.request_response);
-		}catch(Exception e) {
-			e.printStackTrace();
-			
-			debug_information.println(
-				"external_part_driver driver assemble_file_name_and_file_charset execption:	",
-				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
-			
-			return;
-		}
-		if(file_name_and_charset==null) {
-			debug_information.println(
-					"external_part_driver driver assemble_file_name_and_file_charset error(ret_val==null):	",
-					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
-			return;
-		}
-		if(file_name_and_charset.length<=1) {
-			debug_information.println(
-					"external_part_driver driver assemble_file_name_and_file_charset error(ret_val.length<=1):	",
-					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
-			return;
-		}
-		load_component_array_list(file_name_and_charset[0],file_name_and_charset[1],
-				token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
+		debug_information.println(
+				"external_part_driver_mount error(No part found):	",
+				"	component_name:	"		+component_name+
+				"	external_part_name:	"	+external_part_name);
 		return;
 	}
 }
