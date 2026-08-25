@@ -1,5 +1,5 @@
 /*	environment_file_name		*/	parameter_environment.txt
-/*	type_shader_file_name		*/	type_shaders.txt				environment_directory	lfy_user_dir
-/*	scene_shader_file_name		*/	scene_shaders.txt				environment_directory	lfy_user_dir
-/*	change_component_file_name	*/	change_component.txt			environment_directory	lfy_user_dir
+/*	type_shader_file_name		*/	type_shaders.txt				environment_directory	system_data_directory
+/*	scene_shader_file_name		*/	scene_shaders.txt				environment_directory	system_data_directory
+/*	change_component_file_name	*/	change_component.txt			environment_directory	system_data_directory
 /*	camera_file_name			*/	orthongraphics/camera.txt		//	perspective/camera.txt

@@ -48,7 +48,7 @@ public class file_writer extends common_writer
 			directory_name=".";
 		else if(directory_name.compareTo("")==0)
 			directory_name=".";
-		directory_name+=File.separator;
+		directory_name+=File.separatorChar;
 		
 		try{
 			fos=new FileOutputStream(f);
@@ -102,7 +102,7 @@ public class file_writer extends common_writer
 			String file_list[];
 			if((file_list=s_file.list())!=null)
 				for(int i=0,ni=file_list.length;i<ni;i++)
-					total_length+=merge_file(s_file.getAbsolutePath()+File.separator+file_list[i],d_buf);
+					total_length+=merge_file((s_file.getAbsolutePath()+File.separatorChar)+file_list[i],d_buf);
 		}else
 			total_length+=copy_file_data(s_file,d_buf);
 		
@@ -152,8 +152,8 @@ public class file_writer extends common_writer
 			if(file_list!=null)
 				for(int i=0,ni=file_list.length;i<ni;i++)
 					total_length+=file_copy_routine(
-							s_file.getAbsolutePath()+File.separator+file_list[i],
-							d_file.getAbsolutePath()+File.separator+file_list[i]);
+							s_file.getAbsolutePath()+File.separatorChar+file_list[i],
+							d_file.getAbsolutePath()+File.separatorChar+file_list[i]);
 		}else if(s_file.getAbsolutePath().compareTo(d_file.getAbsolutePath())!=0){
 			d_file.delete();
 			try{

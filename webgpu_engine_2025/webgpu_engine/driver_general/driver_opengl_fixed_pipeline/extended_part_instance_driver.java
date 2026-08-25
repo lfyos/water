@@ -39,7 +39,7 @@ public class extended_part_instance_driver extends part_instance_driver
 		String temp_path_name=file_directory.part_temporary_directory(p,sk.system_par, sk.scene_par)+file_name;
 		
 		File f=new File(p.directory_name+p.material_file_name);
-		String path_name_0=f.getParent()+File.separator+file_name;
+		String path_name_0=f.getParent()+File.separatorChar+file_name;
 		if((f=new File(path_name_0)).exists()){
 			if(new File(temp_path_name).lastModified()<f.lastModified())
 				file_writer.file_copy(path_name_0,temp_path_name);

@@ -246,7 +246,7 @@ public class render_container
 				part_parameter_file_name=f_render_list.directory_name+part_parameter_file_name;
 			else
 				part_parameter_file_name=system_par.parameter_directory
-						+"part_parameter"+File.separator+part_parameter_file_name;
+						+"part_parameter"+File.separatorChar+part_parameter_file_name;
 			
 			if(!(new File(part_parameter_file_name).exists())) {
 				debug_information.println("part parameter file:	",part_parameter_file_name+"	not exist");

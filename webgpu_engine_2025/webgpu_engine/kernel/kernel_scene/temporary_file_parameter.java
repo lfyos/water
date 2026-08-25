@@ -32,15 +32,15 @@ public class temporary_file_parameter
 		temporary_proxy_directory_name		=f.directory_name+file_directory.replace_special_char(f.get_string());
 		
 		if(root_directory_name.charAt(root_directory_name.length()-1)!=File.separatorChar)
-			root_directory_name+=File.separator;
+			root_directory_name+=File.separatorChar;
 		
 		if(temporary_root_directory_name.charAt(temporary_root_directory_name.length()-1)!=File.separatorChar)
-			temporary_root_directory_name+=File.separator;
+			temporary_root_directory_name+=File.separatorChar;
 		if(!(new File(temporary_root_directory_name).exists()))
 			file_writer.make_directory(temporary_root_directory_name);
 		
 		if(temporary_proxy_directory_name.charAt(temporary_proxy_directory_name.length()-1)!=File.separatorChar)
-			temporary_proxy_directory_name+=File.separator;
+			temporary_proxy_directory_name+=File.separatorChar;
 		if(!(new File(temporary_proxy_directory_name).exists()))
 			file_writer.make_directory(temporary_proxy_directory_name);
 	

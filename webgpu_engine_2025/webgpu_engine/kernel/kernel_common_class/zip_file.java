@@ -85,7 +85,7 @@ public class zip_file
 		if((index_id=file_name_only.lastIndexOf(File.separatorChar))>=0)
 			file_name_only=file_name_only.substring(index_id+1);
 		
-		String target_directory_name=source_file_name+".unzip"+File.separator;
+		String target_directory_name=source_file_name+".unzip"+File.separatorChar;
 		File f=new File(target_directory_name);
 		
 		f.mkdir();
@@ -110,7 +110,7 @@ public class zip_file
 		if(f.exists()){
 			try{
 				if(f.exists()){
-					directory_name+=File.separator;
+					directory_name+=File.separatorChar;
 					file_writer.file_delete(directory_name);
 					if(zip_file.unzip(zip_file_name,directory_name))
 						new File(zip_file_name).delete();

@@ -189,7 +189,7 @@ public class scene_parameter
 		String str;
 		
 		scene_temporary_directory_name =system_par.temporary_file_par.temporary_root_directory_name;
-		scene_temporary_directory_name+="scene_directory"+File.separator;
+		scene_temporary_directory_name+="scene_directory"+File.separatorChar;
 		
 		if((str=request_response.get_parameter("scene_tmp_directory"))!=null)
 			if((str=file_directory.replace_special_char(str)).length()>0){
@@ -213,12 +213,14 @@ public class scene_parameter
 				str=str.replace(':',File.separatorChar);
 				if(str.charAt(str.length()-1)!=File.separatorChar)
 					str+=File.separatorChar;
+				type_sub_directory[i]=str;
 				scene_temporary_directory_name+=str;
 			}
 		if((str=file_directory.replace_special_char(scene_sub_directory)).length()>0){
 			str=str.replace(':',File.separatorChar);
 			if(str.charAt(str.length()-1)!=File.separatorChar)
 				str+=File.separatorChar;
+			scene_sub_directory=str;
 			scene_temporary_directory_name+=str;
 		}
 		
@@ -229,6 +231,7 @@ public class scene_parameter
 					str=str.replace(':',File.separatorChar);
 					if(str.charAt(str.length()-1)!=File.separatorChar)
 						str+=File.separatorChar;
+					str_array[i]=str;
 					scene_temporary_directory_name+=str;
 				}
 
@@ -275,7 +278,7 @@ public class scene_parameter
 		else if((scene_sub_directory=file_directory.replace_special_char(scene_sub_directory)).length()<=0)
 			scene_sub_directory="";
 		else if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
-			scene_sub_directory+=File.separator;
+			scene_sub_directory+=File.separatorChar;
 
 		file_reader parameter_fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		
@@ -311,7 +314,7 @@ public class scene_parameter
 		gdnafa=get_directory_name_and_file_name(parameter_fr,system_par);
 		scene_shader_directory_name	=gdnafa[0];
 		scene_shader_file_name		=scene_sub_directory+gdnafa[1];
-		
+
 		gdnafa=get_directory_name_and_file_name(parameter_fr,system_par);
 		change_component_name=new change_name(
 			new String[]{gdnafa[0]+scene_sub_directory+gdnafa[1]},

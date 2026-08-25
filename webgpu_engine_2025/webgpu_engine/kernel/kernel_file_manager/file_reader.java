@@ -52,7 +52,7 @@ public class file_reader extends common_reader
 			directory_name=".";
 		else if(directory_name.compareTo("")==0)
 			directory_name=".";
-		directory_name+=File.separator;
+		directory_name+=File.separatorChar;
 	}
 	public static boolean is_exist(String file_name)
 	{

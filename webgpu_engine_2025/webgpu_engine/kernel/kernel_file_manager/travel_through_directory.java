@@ -63,7 +63,7 @@ public class travel_through_directory
 			if(!continue_flag)
 				return;
 			for(int i=0,ni=file_list.length;(i<ni)&&continue_flag;i++)
-				do_travel(path_name+File.separator+file_list[i],sort_file_name_flag);
+				do_travel(path_name+File.separatorChar+file_list[i],sort_file_name_flag);
 			operate_directory_terminate(path_name);
 			if(!continue_flag)
 				return;

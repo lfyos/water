@@ -606,7 +606,7 @@ public class client_interface
 			parameter_file_name	=file_directory.replace_special_char(parameter_file_name);
 			String parameter_file_name_1=f.directory_name+parameter_file_name;
 			String parameter_file_name_2=system_par.parameter_directory
-					+"user_parameter"+File.separator+parameter_file_name;
+					+"user_parameter"+File.separatorChar+parameter_file_name;
 			
 			if(new File(parameter_file_name_1).exists())
 				parameter_file_name=parameter_file_name_1;

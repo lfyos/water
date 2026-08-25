@@ -7,6 +7,8 @@ import kernel_file_manager.travel_through_directory;
 public class test_1 extends travel_through_directory
 {
 	private static final String mode_string[]= {
+			"lfy_user_dir"
+/*			
 			"environment_select_mount",
 			"environment_select_charset_mount",
 			"environment_parameter_mount",
@@ -36,6 +38,7 @@ public class test_1 extends travel_through_directory
 			"absulate_environment_scene_sub_directory_charset_mount" ,
 			"part_driver_mount" ,
 			"external_part_driver_mount"
+*/
 	};
 	public void operate_file(String file_name)
 	{

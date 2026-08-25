@@ -19,7 +19,7 @@ public class extended_part_instance_driver extends part_instance_driver
 	{
 	}
 	public String[] response_part_event(part p,scene_kernel sk,client_information ci)
-	{			
+	{
 		return super.response_part_event(p,sk,ci);
 	}
 }

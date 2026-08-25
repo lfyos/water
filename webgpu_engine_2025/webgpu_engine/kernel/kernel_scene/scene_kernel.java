@@ -143,7 +143,7 @@ public class scene_kernel
 		if(!(new File(camera_file_name=scene_par.directory_name+scene_par.camera_file_name).exists()))
 			if(!(new File(camera_file_name=scene_par.extra_directory_name+scene_par.camera_file_name).exists()))
 				camera_file_name=system_par.parameter_directory
-						+"camera_parameter"+File.separator+scene_par.camera_file_name;
+						+"camera_parameter"+File.separatorChar+scene_par.camera_file_name;
 
 		file_reader f_camera=new file_reader(camera_file_name,scene_par.parameter_charset);
 		if(f_camera.error_flag()){

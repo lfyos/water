@@ -11,8 +11,8 @@ public class file_directory
 {
 	public static String replace_special_char(String str)
 	{
-		final String single_separator_string=""+File.separatorChar;
-		final String double_separator_string=""+File.separatorChar+File.separatorChar;
+		final String single_separator_string=(""+File.separatorChar);
+		final String double_separator_string=(""+File.separatorChar)+File.separatorChar;
 		
 		String new_str=str.trim().
 				replace(';',	File.separatorChar).
@@ -68,8 +68,8 @@ public class file_directory
 			else{
 				debug_information.println(
 						"Find error part_type_id in part_file_directory	:	",p.part_type_id);
-				part_directory+="error_directory_"+p.part_type_id
-						+"_"+scene_par.type_sub_directory.length+File.separatorChar;
+				part_directory+=("error_directory_"+p.part_type_id)
+						+("_"+scene_par.type_sub_directory.length)+File.separatorChar;
 			}
 			break;
 		}
@@ -86,9 +86,9 @@ public class file_directory
 		else
 			part_directory	+="part_unknown_";
 		
-		part_directory+=p.permanent_part_id+File.separator;
+		part_directory+=p.permanent_part_id;
 		
-		return part_directory;
+		return part_directory+File.separatorChar;
 	}
 	public static String package_file_directory(int part_type_id,
 			system_parameter system_par,scene_parameter scene_par)
