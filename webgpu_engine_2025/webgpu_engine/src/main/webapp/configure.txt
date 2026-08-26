@@ -1,2 +1,4 @@
-G:\water_all\data\configure.txt
-G:\temp\configure.txt
+G:/water_all/data/configure.txt
+G:/temp/configure.txt
+G:/water_all/user_environment.txt
+GBK

@@ -1,6 +1,1 @@
-/*	following are environment	variable	*/
-
-
-			client_sub_directory		client_sub_directory		true
-			coordinate					coordinate					true
-			
+/*	following are parameter environment variable	*/

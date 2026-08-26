@@ -69,19 +69,25 @@ public class scene_parameter
 			client_request_response request_response,system_parameter system_par)
 	{
 		String file_name,path_name;
-		file_reader environment_file_reader[]={null,null,null};
-		
-		path_name=system_par.data_root_directory_name+system_par.environment_file_name;
+		file_reader environment_file_reader[]={null,null,null,null};
+
+		path_name=system_par.user_environment_path_name;
 		if(new File(path_name).exists())
 			environment_file_reader[0]=new file_reader(path_name,system_par.local_data_charset);
 		else
-			debug_information.println("system scene_environment file NOT exist:	",path_name);
+			debug_information.println("user scene environment file NOT exist:	",path_name);
+		
+		path_name=system_par.system_environment_path_name;
+		if(new File(path_name).exists())
+			environment_file_reader[1]=new file_reader(path_name,system_par.local_data_charset);
+		else
+			debug_information.println("system scene environment file NOT exist:	",path_name);
 		
 		file_name=parameter_fr.get_string();
 		file_name=(file_name==null)?"":file_name.trim();
 		path_name=parameter_fr.directory_name+file_directory.replace_special_char(file_name);
 		if(new File(path_name).exists())
-			environment_file_reader[1]=new file_reader(path_name,parameter_fr.get_charset());
+			environment_file_reader[2]=new file_reader(path_name,parameter_fr.get_charset());
 		else
 			debug_information.println("parameter scene_environment file NOT exist:	",path_name);
 		
@@ -89,34 +95,37 @@ public class scene_parameter
 		file_name=(file_name==null)?"":file_name.trim();
 		path_name=extra_parameter_fr.directory_name+file_directory.replace_special_char(file_name);
 		if(new File(path_name).exists())
-			environment_file_reader[2]=new file_reader(path_name,extra_parameter_fr.get_charset());
+			environment_file_reader[3]=new file_reader(path_name,extra_parameter_fr.get_charset());
 		else
 			debug_information.println("extra parameter system scene_environment file NOT exist:	",path_name);
 		
 		scene_environment=new change_name();
 		
-		for(int i=0,ni=environment_file_reader.length;i<ni;i++)
-			if(environment_file_reader[i]!=null) {
-				while(!(environment_file_reader[i].eof())) {
-					String	parameter_name	=environment_file_reader[i].get_string();
-					String	parameter_value	=environment_file_reader[i].get_string();
-					boolean	parameter_flag	=environment_file_reader[i].get_boolean();
-					if((parameter_name==null)||(parameter_value==null))
-						continue;
-					if((parameter_name=parameter_name.trim()).length()<=0)
+		for(var my_reader:environment_file_reader) {
+			if(my_reader==null)
+				continue;
+			debug_information.println("environment_file:	",
+					my_reader.directory_name+my_reader.file_name);
+			while(!(my_reader.eof())) {
+				String	parameter_name	=my_reader.get_string();
+				String	parameter_value	=my_reader.get_string();
+				boolean	parameter_flag	=my_reader.get_boolean();
+				if((parameter_name==null)||(parameter_value==null))
+					continue;
+				if((parameter_name=parameter_name.trim()).length()<=0)
+					continue;
+				if((parameter_value=parameter_value.trim()).length()<=0)
+					continue;
+				if(parameter_flag) {
+					if((parameter_value=request_response.get_parameter(parameter_value))==null)
 						continue;
 					if((parameter_value=parameter_value.trim()).length()<=0)
 						continue;
-					if(parameter_flag) {
-						if((parameter_value=request_response.get_parameter(parameter_value))==null)
-							continue;
-						if((parameter_value=parameter_value.trim()).length()<=0)
-							continue;
-					}
-					scene_environment.add(parameter_name,parameter_value);
 				}
-				environment_file_reader[i].close();	
+				scene_environment.add(parameter_name,parameter_value);
 			}
+			my_reader.close();	
+		}
 	}
 	private String[] get_directory_name_and_file_name(file_reader fr,system_parameter system_par)
 	{

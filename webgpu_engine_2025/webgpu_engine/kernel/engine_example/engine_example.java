@@ -11,6 +11,14 @@ import engine_servlet.engine_servlet;
 		@jakarta.servlet.annotation.WebInitParam(
 			name	=	"lfy_temparatory_configure_file",
 			value	=	"G:/temp/configure.txt"
+		),
+		@jakarta.servlet.annotation.WebInitParam(
+			name	=	"lfy_user_environment_file",
+			value	=	"G:/water_all/user_environment.txt"
+		),
+		@jakarta.servlet.annotation.WebInitParam(
+			name	=	"lfy_data_charset",
+			value	=	"GBK"
 		)
 	},
 	asyncSupported = true,

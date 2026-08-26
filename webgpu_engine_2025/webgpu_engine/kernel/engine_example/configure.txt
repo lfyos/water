@@ -1,25 +1,25 @@
-/*
-java_configure_parameter
-G:/water_all/data/configure.txt
-G:/temp/configure.txt
-*/
+//	java_configure_parameter
+//	G:/water_all/data/configure.txt
+//	G:/temp/configure.txt
+//	G:/water_all/user_environment.txt
+//	GBK
 
 
-servlet_initialization_parameter
-lfy_data_configure_file
-lfy_temparatory_configure_file
+
+//	servlet_initialization_parameter
+//	lfy_data_configure_file
+//	lfy_temparatory_configure_file
+//	lfy_user_environment_file
+//	lfy_data_charset
 
 
-/*
-environment_variable_parameter
-lfy_data_configure_file
-lfy_temparatory_configure_file
-*/
+//	environment_variable_parameter
+//	lfy_data_configure_file
+//	lfy_temparatory_configure_file
+//	lfy_user_environment_file
+//	lfy_data_charset
 
 
-/*
-webserver_configure_parameter
-configure.txt
-UTF-8
-*/
-
+	webserver_configure_parameter
+	configure.txt
+	UTF-8

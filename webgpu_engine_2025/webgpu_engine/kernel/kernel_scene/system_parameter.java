@@ -20,7 +20,8 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String text_class_charset,js_class_charset;
 	
-	public String user_file_name,shader_file_name,environment_file_name;
+	public String user_file_name,shader_file_name;
+	public String user_environment_path_name,system_environment_path_name;
 	public String parameter_directory,default_system_mount_component_name;
 	
 	public int default_max_loading_number,max_loading_number,max_material_id,max_method_number;
@@ -95,7 +96,8 @@ public class system_parameter
 		
 		user_file_name						=new String(sp.user_file_name);
 		shader_file_name					=new String(sp.shader_file_name);
-		environment_file_name				=new String(sp.environment_file_name);
+		user_environment_path_name			=new String(sp.user_environment_path_name);
+		system_environment_path_name		=new String(sp.system_environment_path_name);
 		parameter_directory					=new String(sp.parameter_directory);
 		default_system_mount_component_name	=new String(sp.default_system_mount_component_name);
 		
@@ -145,13 +147,20 @@ public class system_parameter
 		switch_server						=sp.switch_server;
 		http_date_str						=sp.http_date_str;
 	}
-	public system_parameter(String my_scene_data_path_name,String my_scene_temparatory_path_name)
+	public system_parameter(
+			String my_scene_data_path_name,String my_scene_temparatory_path_name,
+			String my_user_environment_path_name,String my_local_data_charset)
 	{
 		debug_information.println();
-		debug_information.println("data_file_configure_file_name:		",		my_scene_data_path_name);
-		debug_information.println("temporary_file_configure_file_name:	",		my_scene_temparatory_path_name);
-
-		file_reader f=new file_reader(my_scene_data_path_name,Charset.defaultCharset().name());
+		debug_information.println("scene_data_path_name:		",	my_scene_data_path_name);
+		debug_information.println("scene_temparatory_path_name:	",	my_scene_temparatory_path_name);
+		debug_information.println("user_environment_path_name:	",	my_user_environment_path_name);
+		
+		String my_default_charset=Charset.defaultCharset().name();
+		file_reader f=new file_reader(my_scene_data_path_name,
+				(my_local_data_charset==null)?my_default_charset:
+				(my_local_data_charset.compareTo("default_charset")==0)?my_default_charset:
+				my_local_data_charset);
 		
 		if(f.error_flag()){
 			debug_information.println("Can't not open system_parameter file	",my_scene_data_path_name);
@@ -160,36 +169,29 @@ public class system_parameter
 			return;
 		}
 		
-		if((local_data_charset=f.get_string())==null)
-			local_data_charset=Charset.defaultCharset().name();
-		else if(local_data_charset.compareTo("default_charset")==0)
-			local_data_charset=Charset.defaultCharset().name();
-		f.close();
-
-		f=new file_reader(my_scene_data_path_name,local_data_charset);
 		data_root_directory_name=f.directory_name;
 		last_modified_time=f.lastModified_time;
 		
-		if((local_data_charset=f.get_string())==null)
-			local_data_charset=Charset.defaultCharset().name();
+		if((local_data_charset=f.get_charset())==null)
+			local_data_charset=my_default_charset;
 		else if(local_data_charset.compareTo("default_charset")==0)
-			local_data_charset=Charset.defaultCharset().name();
+			local_data_charset=my_default_charset;
 		
 		if((network_data_charset=f.get_string())==null)
-			network_data_charset=Charset.defaultCharset().name();
+			network_data_charset=my_default_charset;
 		if(network_data_charset.compareTo("default_charset")==0)
-			network_data_charset=Charset.defaultCharset().name();
+			network_data_charset=my_default_charset;
 		network_implementation_default_parameter.network_request_charset=network_data_charset;
 		
 		if((text_class_charset=f.get_string())==null)
-			text_class_charset=Charset.defaultCharset().name();
+			text_class_charset=my_default_charset;
 		if(text_class_charset.compareTo("default_charset")==0)
-			text_class_charset=Charset.defaultCharset().name();
+			text_class_charset=my_default_charset;
 		
 		if((js_class_charset=f.get_string())==null)
-			js_class_charset=Charset.defaultCharset().name();
+			js_class_charset=my_default_charset;
 		if(js_class_charset.compareTo("default_charset")==0)
-			js_class_charset=Charset.defaultCharset().name();
+			js_class_charset=my_default_charset;
 
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
@@ -201,11 +203,18 @@ public class system_parameter
 		else
 			shader_file_name=file_directory.replace_special_char(shader_file_name).trim();
 		
-		if((environment_file_name=f.get_string())==null)
-			environment_file_name="";
+		if((user_environment_path_name=my_user_environment_path_name)==null)
+			user_environment_path_name="";
 		else
-			environment_file_name=file_directory.replace_special_char(environment_file_name).trim();
+			user_environment_path_name=file_directory.replace_special_char(user_environment_path_name).trim();
 		
+		if((system_environment_path_name=f.get_string())==null)
+			system_environment_path_name="";
+		else{
+			system_environment_path_name=file_directory.replace_special_char(system_environment_path_name);
+			system_environment_path_name=data_root_directory_name+system_environment_path_name.trim();
+		}
+
 		if((parameter_directory=f.get_string())==null)
 			parameter_directory="";
 		else {

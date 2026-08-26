@@ -1,3 +1,1 @@
-/*	following are environment	variable	*/
-
-	system_data_directory		E:\project_data			false
+/*	following are system environment variable	*/
