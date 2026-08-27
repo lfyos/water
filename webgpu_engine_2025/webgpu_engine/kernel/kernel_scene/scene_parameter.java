@@ -31,7 +31,7 @@ public class scene_parameter
 	public int part_lru_in_list_number;
 	
 	public String inserted_component_name,inserted_part_name;
-	public int inserted_component_and_part_id,max_child_number;
+	public int max_child_number;
 	
 	public int multiparameter_number;
 	public long default_display_bitmap;
@@ -344,7 +344,6 @@ public class scene_parameter
 			inserted_component_name="";
 		if((inserted_part_name=extra_parameter_fr.get_string())==null)
 			inserted_part_name="";
-		inserted_component_and_part_id=0;
 		max_child_number=extra_parameter_fr.get_int();
 		
 		if((multiparameter_number=extra_parameter_fr.get_int())<1)

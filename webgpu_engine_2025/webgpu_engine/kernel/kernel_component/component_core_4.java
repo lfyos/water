@@ -5,11 +5,13 @@ import kernel_file_manager.file_reader;
 
 public class component_core_4 extends component_core_3
 {
-	private long		location_version,absolute_location_version;
+	private long		move_location_version,absolute_location_version;
 	private boolean		children_location_modify_flag;
 	private boolean		should_caculate_absolute_location_flag;
 	private boolean		move_location_is_not_identity_matrix_flag;
 	private location	negative_absolute_location,negative_parent_and_relative_location;
+
+	public location 	move_location,parent_and_relative_location,absolute_location;
 	
 	public void destroy()
 	{
@@ -22,9 +24,9 @@ public class component_core_4 extends component_core_3
 		negative_parent_and_relative_location=null;
 	}
 	
-	public long get_location_version()
+	public long get_move_location_version()
 	{
-		return location_version;
+		return move_location_version;
 	}
 	public long get_absolute_location_version()
 	{
@@ -38,10 +40,7 @@ public class component_core_4 extends component_core_3
 	{
 		return should_caculate_absolute_location_flag;
 	}
-	
-	public location move_location,parent_and_relative_location,absolute_location;
-	
-	
+
 	public location caculate_negative_absolute_location()
 	{
 		if(negative_absolute_location==null)
@@ -73,8 +72,8 @@ public class component_core_4 extends component_core_3
 			negative_parent_and_relative_location	=null;
 			
 			var p=this;
-			for(int i=0,ni=children.size();i<ni;i++){
-				p=children.get(i);
+			for(var my_child:children){
+				p=my_child;
 				p.should_caculate_absolute_location_flag=true;
 			}
 		}
@@ -88,22 +87,22 @@ public class component_core_4 extends component_core_3
 	}
 	public boolean caculate_children_location_modify_flag()
 	{
-		var p=this;
 		boolean old_children_location_modify_flag=children_location_modify_flag;
-		for(int i=0,ni=children.size();i<ni;i++) {
-			p=children.get(i);
+		children_location_modify_flag=false;
+		var p=this;
+		for(var my_child:children){
+			p=my_child;
 			if(p.children_location_modify_flag||p.move_location_is_not_identity_matrix_flag){
 				children_location_modify_flag=true;
-				return !old_children_location_modify_flag;
+				break;
 			}
 		}
-		children_location_modify_flag=false;
-		return old_children_location_modify_flag;
+		return (old_children_location_modify_flag^children_location_modify_flag)?false:true;
 	}
 	public void set_component_move_location(
 		location new_move_location,component_container component_cont)
 	{
-		location_version++;
+		move_location_version++;
 		move_location=new location(new_move_location);
 		caculate_location(component_cont,true);
 		
@@ -121,7 +120,7 @@ public class component_core_4 extends component_core_3
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 
-		location_version							=1;
+		move_location_version						=1;
 		absolute_location_version					=1;
 		children_location_modify_flag				=false;
 		should_caculate_absolute_location_flag		=true;

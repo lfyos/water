@@ -30,7 +30,6 @@ public class scene_parameter_information extends jason_creator
 		
 		print("inserted_component_name",					sp.inserted_component_name);
 		print("inserted_part_name",							sp.inserted_part_name);
-		print("inserted_component_and_part_id",				sp.inserted_component_and_part_id);
 		print("max_child_number",							sp.max_child_number);
 		
 		print("multiparameter_number",						sp.multiparameter_number);

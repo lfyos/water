@@ -45,29 +45,32 @@ public class component_load_source_container
 		boolean part_list_flag,boolean normalize_location_flag,
 		component_construction_parameter ccp)
 	{
-		int ret_val=0;
-		component_load_source_item clsi;
 		tree_search_container_tree_node<String,component_load_source_item> my_tree_node;
 		
-		if((my_tree_node=tree.remove(component_name))!=null)
-			for(int i=0,ni=my_tree_node.list.size();i<ni;i++)
-				if((clsi=my_tree_node.list.get(i))!=null){
-					if(clsi.create_component_data!=null) {
-						component_fr.push_string(clsi.create_component_data);
-						component my_comp=new component(clsi.token_string,component_fr,
-								part_list_flag,normalize_location_flag,ccp);
-						set_component_last_time(my_comp,clsi.component_last_time);
-						child_component_list.add(my_comp);
-						ret_val++;
-					}
-					if(clsi.component_file_name!=null) {
-						file_reader fr=new file_reader(clsi.component_file_name,clsi.component_file_charset);
-						child_component_list.add(new component(
-								clsi.token_string,fr,part_list_flag,normalize_location_flag,ccp));
-						fr.close();
-						ret_val++;
-					}
-				}
+		if(tree.size()<=0)
+			return 0;
+		if((my_tree_node=tree.remove(component_name))==null)
+			return 0;
+		if(my_tree_node.list==null)
+			return 0;
+		int ret_val=0;
+		for(component_load_source_item clsi:my_tree_node.list){
+			if(clsi.create_component_data!=null) {
+				component_fr.push_string(clsi.create_component_data);
+				component my_comp=new component(clsi.token_string,component_fr,
+						part_list_flag,normalize_location_flag,ccp);
+				set_component_last_time(my_comp,clsi.component_last_time);
+				child_component_list.add(my_comp);
+				ret_val++;
+			}
+			if(clsi.component_file_name!=null) {
+				file_reader fr=new file_reader(clsi.component_file_name,clsi.component_file_charset);
+				child_component_list.add(new component(
+						clsi.token_string,fr,part_list_flag,normalize_location_flag,ccp));
+				fr.close();
+				ret_val++;
+			}
+		}
 		return ret_val;
 	}
 	public int file_add_source_item(String component_name,String token_string,
@@ -155,9 +158,5 @@ public class component_load_source_container
 		default:
 			return 0;
 		}
-	}
-	public int get_source_item_number()
-	{
-		return tree.size();
 	}
 }

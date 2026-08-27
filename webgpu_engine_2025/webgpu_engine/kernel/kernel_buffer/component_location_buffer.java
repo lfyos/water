@@ -17,7 +17,7 @@ public class component_location_buffer
 	private boolean component_not_in_list_flag[];
 	private boolean has_not_response_relative_location_flag[];
 	
-	private long component_location_version[],touch_time[];
+	private long move_location_version[],touch_time[];
 	
 	public void destroy()
 	{
@@ -29,14 +29,14 @@ public class component_location_buffer
 		component_not_in_list_flag				=null;
 		has_not_response_relative_location_flag	=null;
 		
-		component_location_version				=null;
+		move_location_version					=null;
 		touch_time								=null;
 	}
 	
 	public component_location_buffer(scene_kernel sk)
 	{
 		int number=sk.component_cont.component_number;
-		component_location_version				=new long	[number];
+		move_location_version					=new long	[number];
 		touch_time								=new long	[number];
 		component_not_in_list_flag				=new boolean[number];
 		has_not_response_relative_location_flag	=new boolean[number];
@@ -44,7 +44,7 @@ public class component_location_buffer
 		for(int i=0;i<number;i++){
 			component_not_in_list_flag[i]				=true;
 			has_not_response_relative_location_flag[i]	=true;
-			component_location_version[i]				=-1;
+			move_location_version[i]				=-1;
 			touch_time[i]								=0;
 		}
 		
@@ -79,7 +79,7 @@ public class component_location_buffer
 			long my_touch_time=response_component.uniparameter.touch_time;
 			for(component comp=response_component;comp!=null;comp=sk.component_cont.get_component(comp.parent_component_id))
 				if((comp.uniparameter.do_response_location_flag)||(has_not_response_relative_location_flag[comp.component_id]))
-					if(comp.get_location_version()!=component_location_version[comp.component_id])
+					if(comp.get_move_location_version()!=move_location_version[comp.component_id])
 						if(component_not_in_list_flag[comp.component_id])
 							if(location_collector.register_component(comp,0,render_id,part_id)>0){
 								component_not_in_list_flag[comp.component_id]=false;
@@ -125,7 +125,7 @@ public class component_location_buffer
 					if((my_current_time-touch_time[p.comp.component_id])>sk.scene_par.touch_time_length)
 						continue;
 			
-				component_location_version[p.comp.component_id]=p.comp.get_location_version();
+				move_location_version[p.comp.component_id]=p.comp.get_move_location_version();
 				
 				ci.request_response.print(((response_number++)<=0)?"[":",[",p.comp.component_id);
 				ci.request_response.print(",",p.comp.uniparameter.caculate_location_flag?"1,":"-1,");
@@ -151,7 +151,7 @@ public class component_location_buffer
 		int render_id		=render_part_id[0];
 		int part_id			=render_part_id[1];
 		
-		component_location_version	[comp.component_id]=update_flag?-1:comp.get_location_version();
+		move_location_version[comp.component_id]=update_flag?-1:comp.get_move_location_version();
 		
 		if(component_not_in_list_flag[comp.component_id])
 			return;

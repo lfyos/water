@@ -17,8 +17,8 @@ public class location
 	public boolean is_not_identity_matrix()
 	{
 		double difference2=0;
-		for(int i=0,n=standard_point.length;i<n;i++)
-			difference2+=multiply(standard_point[i]).sub(standard_point[i]).distance2();
+		for(var my_point:standard_point)
+			difference2+=multiply(my_point).sub(my_point).distance2();
 		return (difference2>=const_value.min_value2)?true:false;
 	}
 	public static boolean is_not_same_location(location s,location d)
