@@ -6,15 +6,11 @@ public class name_exist_tester extends tree_string_search_container<String>
 {
 	public boolean test_exist(String name)
 	{
-		tree_search_container_tree_node <String,String> tree_node;
-		if((tree_node=search(name))!=null)
-			if(tree_node.list.size()>0)
-				return true;
-		return false;
+		return (search(name)!=null);
 	}
 	public void add(String name)
 	{
-		super.add(name,null);
+		add_none(name);
 	}
 	public String[] name_array()
 	{
@@ -39,7 +35,7 @@ public class name_exist_tester extends tree_string_search_container<String>
 						break;
 					}
 					str=f.get_string();
-					add(str,null);
+					add_none(str);
 				}
 		if(type_string!=null)
 			for(int index_id;type_string.length()>0;)
@@ -47,10 +43,10 @@ public class name_exist_tester extends tree_string_search_container<String>
 					type_string=type_string.substring(1);
 				else if(index_id>0) {
 					str=type_string.substring(0,index_id);
-					add(str,null);
+					add_none(str);
 					type_string=type_string.substring(index_id+1);
 				}else{
-					add(type_string,null);
+					add_none(type_string);
 					break;
 				}
 	}
