@@ -9,6 +9,7 @@ public class component_core_4 extends component_core_3
 	private boolean		children_location_modify_flag;
 	private boolean		should_caculate_absolute_location_flag;
 	private boolean		move_location_is_not_identity_matrix_flag;
+	
 	private location	negative_absolute_location,negative_parent_and_relative_location;
 
 	public location 	move_location,parent_and_relative_location,absolute_location;
@@ -104,13 +105,14 @@ public class component_core_4 extends component_core_3
 	{
 		move_location_version++;
 		move_location=new location(new_move_location);
+		
 		caculate_location(component_cont,true);
 		
 		move_location_is_not_identity_matrix_flag=move_location.is_not_identity_matrix();
-		
+
 		var p=this;
-		p=component_cont.get_component(p.parent_component_id);
-		for(;p!=null;p=component_cont.get_component(p.parent_component_id))
+		for(	p=component_cont.get_component(p.parent_component_id);p!=null;
+				p=component_cont.get_component(p.parent_component_id))
 			if(p.caculate_children_location_modify_flag())
 				break;
 	}
@@ -125,7 +127,6 @@ public class component_core_4 extends component_core_3
 		children_location_modify_flag				=false;
 		should_caculate_absolute_location_flag		=true;
 		move_location_is_not_identity_matrix_flag	=false;
-		
 		
 		negative_absolute_location					=null;
 		negative_parent_and_relative_location		=null;

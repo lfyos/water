@@ -2,7 +2,7 @@ package kernel_component;
 
 import kernel_file_manager.file_reader;
 
-public class component extends component_core_7
+public class component extends component_core_8
 {
 	public void destroy()
 	{

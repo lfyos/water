@@ -7,7 +7,6 @@ import kernel_transformation.box;
 public class component_core_5 extends component_core_4
 {
 	private box component_box,model_box;
-
 	private long box_absolute_location_version;
 
 	public void destroy()
@@ -16,20 +15,6 @@ public class component_core_5 extends component_core_4
 		
 		component_box	=null;
 		model_box		=null;
-	}
-	private void caculate_box_by_driver()
-	{
-		for(int i=0,ni=driver_array.size();i<ni;i++){
-			part p=driver_array.get(i).component_part;
-			model_box=p.secure_caculate_part_box((component)this,i);
-			if(model_box!=null){
-				component_box=absolute_location.multiply(model_box);
-				return;
-			}
-		}
-		model_box		=null;
-		component_box	=null;
-		return;
 	}
 	public box get_model_box()
 	{
@@ -55,7 +40,7 @@ public class component_core_5 extends component_core_4
 				return;
 			box_absolute_location_version=new_absolute_location_version;
 		}
-		
+
 		var p=this;
 		if((p=component_cont.get_component(parent_component_id))!=null)
 			p.box_absolute_location_version=0;
@@ -63,25 +48,38 @@ public class component_core_5 extends component_core_4
 		component_box	=null;
 		model_box		=null;
 		
-		int child_number;
-		if((child_number=children.size())>0)
-			for(int i=0;i<child_number;i++){
-				p=children.get(i);
+		if(children.size()>0) {
+			for(var my_child_component:children){
+				p=my_child_component;
 				if(p.component_box==null){
 					component_box	=null;
 					model_box		=null;
 					break;
 				}
+				box child_component_box	=p.component_box;
+				box child_model_box		=p.relative_location.multiply(p.model_box);
 				if(component_box==null) {
-					component_box=p.component_box;
-					model_box=p.relative_location.multiply(p.model_box);
-				}else {
-					component_box=p.component_box.add(component_box);
-					model_box=p.relative_location.multiply(p.model_box).add(model_box);
+					component_box	=child_component_box;
+					model_box		=child_model_box;
+				}else{
+					component_box	=component_box.add(child_component_box);
+					model_box		=model_box.add(child_model_box);
 				}
 			}
-		if(component_box==null)
-			caculate_box_by_driver();
+			if(component_box!=null)
+				return;
+		}
+		for(int i=0,ni=driver_array.size();i<ni;i++){
+			part my_part=driver_array.get(i).component_part;
+			model_box=my_part.secure_caculate_part_box((component)this,i);
+			if(model_box!=null){
+				component_box=absolute_location.multiply(model_box);
+				return;
+			}
+		}
+		model_box		=null;
+		component_box	=null;
+		return;
 	}
 	public component_core_5(String token_string,file_reader fr,
 			boolean part_list_flag,boolean normalize_location_flag,
