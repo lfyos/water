@@ -1,8 +1,8 @@
 package kernel_component;
 
-import kernel_transformation.location;
+import java.util.ArrayList;
+
 import kernel_file_manager.file_reader;
-import kernel_transformation.input_location;
 
 public class component_core_0 
 {
@@ -12,10 +12,8 @@ public class component_core_0
 	public String	component_directory_name,component_file_name,component_charset;
 	
 	public component_uniparameter	uniparameter;
-	public component_multiparameter	multiparameter[];
-	public component_initialization	initialization;
 	
-	public location relative_location;
+	public ArrayList<component> 	children;
 
 	public void destroy()
 	{
@@ -26,14 +24,13 @@ public class component_core_0
 		component_charset		=null;
 
 		uniparameter			=null;
-		multiparameter			=null;
 		
-		if(initialization!=null){
-			initialization.destroy();
-			initialization=null;
+		if(children!=null){
+			for(component my_child:children)
+				if(my_child!=null)
+					my_child.destroy();
+			children.clear();
 		}
-		
-		relative_location=null;
 	}
 	public component_core_0(String token_string,file_reader fr,
 			boolean part_list_flag,boolean normalize_location_flag,
@@ -56,15 +53,7 @@ public class component_core_0
 
 		uniparameter=new component_uniparameter(
 			fr.lastModified_time,normalize_location_flag,part_list_flag);
-		long display_bitmap=ccp.sk.scene_par.default_display_bitmap;
-		int number=ccp.sk.scene_par.multiparameter_number;
-		multiparameter=new component_multiparameter[number];
-		for(int i=0;i<number;i++)
-			multiparameter[i]		=new component_multiparameter(display_bitmap);
-		initialization				=new component_initialization();
-		
-		relative_location=input_location.do_input(fr,ccp.sk.system_par,ccp.sk.scene_par);
-		if(uniparameter.normalize_location_flag)
-			relative_location=relative_location.normalize();
+
+		children					=new ArrayList<component>();
 	}
 }

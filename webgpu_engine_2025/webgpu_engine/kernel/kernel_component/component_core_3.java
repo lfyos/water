@@ -1,78 +1,85 @@
 package kernel_component;
 
-import java.util.ArrayList;
-
-import kernel_part.part;
 import kernel_file_manager.file_reader;
+import kernel_part.part;
+import kernel_transformation.box;
 
 public class component_core_3 extends component_core_2
 {
+	private box component_box,model_box;
+	private long box_absolute_location_version;
+
 	public void destroy()
 	{
 		super.destroy();
+		
+		component_box	=null;
+		model_box		=null;
 	}
-	private void decrease_children_number(file_reader fr,component_construction_parameter ccp)
+	public box get_model_box()
 	{
-		int child_number,max_child_number;
-
-		if((max_child_number=ccp.sk.scene_par.max_child_number)<=2)
-			return;
-		if((child_number=children.size())<=max_child_number)
-			return;
-		
-		int new_child_number;
-		if((new_child_number=(int)Math.sqrt(child_number))>max_child_number)
-			new_child_number=max_child_number;
-		if(new_child_number<2)
-			new_child_number=2;
-		
-		ArrayList<component> bak_children=children;
-		children=new ArrayList<component>();
-		
-		for(int i=0,collect_number=0;i<new_child_number;i++){
-			String my_component_name,my_part_name;
-			for(int j=0;;j++){
-				String id_str		="_"+component_name+"_"+i+"_"+j;
-				my_component_name	=ccp.sk.scene_par.inserted_component_name	+id_str;
-				my_part_name		=ccp.sk.scene_par.inserted_part_name		+id_str;
-				ArrayList<part>my_part_list=ccp.sk.part_cont.search_part(my_part_name);
-				if(my_part_list==null)
-					break;
-				if(my_part_list.size()<=0)
-					break;
-			};
-			fr.push_string(new String[]
-			{
-				my_component_name,
-				my_part_name,
-				"identity",
-				"0"
-			});
-			component my_comp=new component("",fr,
-				uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
-			my_comp.uniparameter.file_last_modified_time=uniparameter.file_last_modified_time;
-			my_comp.children=new ArrayList<component>();
-			int my_child_number=(bak_children.size()-collect_number)/(new_child_number-i);
-			for(int j=0;j<my_child_number;j++)
-				my_comp.children.add(bak_children.get(collect_number++));
-			
-			children.add(my_comp);
+		return model_box;
+	}
+	public box get_component_box(boolean mandatory_flag)
+	{
+		if(mandatory_flag)
+			return component_box;
+		if(get_absolute_location_version()!=box_absolute_location_version)
+			return null;
+		if(get_should_caculate_absolute_location_flag())
+			return null;
+		return component_box;
+	}
+	public void caculate_box(component_container component_cont)
+	{
+		if(get_should_caculate_absolute_location_flag())
+			box_absolute_location_version=0;
+		else{
+			long new_absolute_location_version=get_absolute_location_version();
+			if(box_absolute_location_version==new_absolute_location_version)
+				return;
+			box_absolute_location_version=new_absolute_location_version;
 		}
 
-		var my_component=this;
-		for(component my_child:children){
-			my_component=my_child;
-			my_component.decrease_children_number(fr,ccp);
+		var p=this;
+		if((p=component_cont.get_component(parent_component_id))!=null)
+			p.box_absolute_location_version=0;
+		
+		component_box	=null;
+		model_box		=null;
+		
+		if(children.size()>0) {
+			for(var my_child_component:children){
+				p=my_child_component;
+				if(p.component_box==null){
+					component_box	=null;
+					model_box		=null;
+					break;
+				}
+				box child_component_box	=p.component_box;
+				box child_model_box		=p.relative_location.multiply(p.model_box);
+				if(component_box==null) {
+					component_box	=child_component_box;
+					model_box		=child_model_box;
+				}else{
+					component_box	=component_box.add(child_component_box);
+					model_box		=model_box.add(child_model_box);
+				}
+			}
+			if(component_box!=null)
+				return;
 		}
-	}
-	public int append_component(file_reader fr,component_construction_parameter ccp)
-	{
-		int ret_val=ccp.clsc.add_component(fr,component_name,children,
-			uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
-		decrease_children_number(fr,ccp);
-		for(int i=0,ni=children.size();i<ni;i++)
-			ret_val+=children.get(i).append_component(fr,ccp);
-		return ret_val;
+		for(int i=0,ni=driver_array.size();i<ni;i++){
+			part my_part=driver_array.get(i).component_part;
+			model_box=my_part.secure_caculate_part_box((component)this,i);
+			if(model_box!=null){
+				component_box=absolute_location.multiply(model_box);
+				return;
+			}
+		}
+		model_box		=null;
+		component_box	=null;
+		return;
 	}
 	public component_core_3(String token_string,file_reader fr,
 			boolean part_list_flag,boolean normalize_location_flag,
@@ -80,8 +87,8 @@ public class component_core_3 extends component_core_2
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
-		ccp.clsc.add_component(fr,component_name,children,
-			uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
-		decrease_children_number(fr,ccp);
+		component_box					=null;
+		model_box						=null;
+		box_absolute_location_version	=0;
 	}
 }

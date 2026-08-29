@@ -1,116 +1,147 @@
 package kernel_component;
 
-import java.util.ArrayList;
-
-import kernel_part.part;
-import kernel_driver.component_driver;
-import kernel_common_class.change_name;
+import kernel_transformation.input_location;
+import kernel_transformation.location;
 import kernel_file_manager.file_reader;
-import kernel_common_class.name_exist_tester;
-import kernel_common_class.debug_information;
 
 public class component_core_1 extends component_core_0
 {
-	public ArrayList<component_driver>	driver_array;
+	private long		move_location_version,absolute_location_version;
+	private boolean		children_location_modify_flag;
+	private boolean		should_caculate_absolute_location_flag;
+	private boolean		move_location_is_not_identity_matrix_flag;
+	
+	private location	negative_absolute_location,negative_parent_and_relative_location;
+
+	public location		relative_location;
+	public location 	move_location,parent_and_relative_location,absolute_location;
 	
 	public void destroy()
 	{
 		super.destroy();
+		
 
-		component_driver c_d;
-		for(int i=driver_array.size()-1;i>=0;i--)
-			if((c_d=driver_array.remove(i))!=null)
-				try {
-					c_d.destroy();
-				}catch(Exception e) {
-					e.printStackTrace();
-					debug_information.println("Execute component driver destroy fail:	",e.toString());
-				}
-		driver_array.clear();
+		relative_location						=null;
+		
+		move_location							=null;
+		parent_and_relative_location			=null;
+		absolute_location						=null;
+		negative_absolute_location				=null;
+		negative_parent_and_relative_location	=null;
 	}
-	private void create_driver(file_reader fr,component_construction_parameter ccp)
+	
+	public long get_move_location_version()
 	{
-		part my_part;
-		change_name change_part_name;
-		ArrayList<part> search_parts,effective_parts;
+		return move_location_version;
+	}
+	public long get_absolute_location_version()
+	{
+		return absolute_location_version;
+	}
+	public boolean get_children_location_modify_flag()
+	{
+		return children_location_modify_flag;
+	}
+	public boolean get_should_caculate_absolute_location_flag()
+	{
+		return should_caculate_absolute_location_flag;
+	}
 
-		driver_array=new ArrayList<component_driver>();
+	public location caculate_negative_absolute_location()
+	{
+		if(negative_absolute_location==null)
+			negative_absolute_location=absolute_location.negative();
+		return negative_absolute_location;
+	}
+	public location caculate_negative_parent_and_relative_location()
+	{
+		if(negative_parent_and_relative_location==null)
+			negative_parent_and_relative_location=parent_and_relative_location.negative();
+		return negative_parent_and_relative_location;
+	}
+	public void caculate_location(component_container component_cont,boolean force_cacuate_flag)
+	{
+		if(should_caculate_absolute_location_flag||force_cacuate_flag){
+			should_caculate_absolute_location_flag=false;
+			absolute_location_version++;
+			
+			parent_and_relative_location=relative_location;
+			component parent=component_cont.get_component(parent_component_id);
+			if(parent!=null)
+				parent_and_relative_location=parent.absolute_location.multiply(parent_and_relative_location);	
+			if(uniparameter.caculate_location_flag)
+				absolute_location=move_location;
+			else
+				absolute_location=parent_and_relative_location.multiply(move_location);
+			
+			negative_absolute_location				=null;
+			negative_parent_and_relative_location	=null;
+			
+			var p=this;
+			for(var my_child:children){
+				p=my_child;
+				p.should_caculate_absolute_location_flag=true;
+			}
+		}
+	}
+	public void recurse_caculate_location(component_container component_cont)
+	{
+		component parent;
+		if((parent=component_cont.get_component(parent_component_id))!=null)
+			parent.recurse_caculate_location(component_cont);
+		caculate_location(component_cont,false);
+	}
+	public boolean caculate_children_location_modify_flag()
+	{
+		boolean old_children_location_modify_flag=children_location_modify_flag;
+		children_location_modify_flag=false;
+		var p=this;
+		for(var my_child:children){
+			p=my_child;
+			if(p.children_location_modify_flag||p.move_location_is_not_identity_matrix_flag){
+				children_location_modify_flag=true;
+				break;
+			}
+		}
+		return (old_children_location_modify_flag^children_location_modify_flag)?false:true;
+	}
+	public void set_component_move_location(
+		location new_move_location,component_container component_cont)
+	{
+		move_location_version++;
+		move_location=new location(new_move_location);
 		
-		if((change_part_name=ccp.get_change_part_name())==null)
-			search_parts=ccp.sk.part_cont.search_part(part_name);
-		else{
-			String search_part_name=change_part_name.search_change_name(part_name,part_name);
-			if((search_parts=ccp.sk.part_cont.search_part(search_part_name))==null){
-				search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
-				search_parts=ccp.sk.part_cont.search_part(search_part_name);
-			}
-		}
-		if(search_parts==null)
-			return;
-		if(search_parts.size()<=0)
-			return;
-		effective_parts=new ArrayList<part>();
-		boolean top_flag=false,bottom_flag=false;
-		for(int i=0,ni=search_parts.size();i<ni;i++){
-			my_part=search_parts.get(i);
-			if(my_part.is_bottom_box_part()){
-				if(bottom_flag)
-					continue;
-				bottom_flag=true;
-			}
-			if(my_part.is_top_box_part()){
-				if(top_flag)
-					continue;
-				top_flag=true;
-			}
-			effective_parts.add(my_part);
-		}
-		if(effective_parts.size()<=0)
-			return;
+		caculate_location(component_cont,true);
 		
-		name_exist_tester tester;
-		if((tester=ccp.get_part_type_string_tester())!=null)
-			if(tester.size()>0){
-				search_parts=effective_parts;
-				effective_parts=new ArrayList<part>();
-				for(int i=0,part_number=search_parts.size();i<part_number;i++) {
-					my_part=search_parts.get(i);
-					if(tester.test_exist(my_part.part_par.part_type_string))
-						effective_parts.add(my_part);
-				}
-				if(effective_parts.size()<=0)
-					return;
-			}
+		move_location_is_not_identity_matrix_flag=move_location.is_not_identity_matrix();
 
-		for(int i=0,ni=effective_parts.size();i<ni;i++){
-			fr.mark_start();
-			my_part=effective_parts.get(i);
-
-			component_driver comp_driver;
-			try{
-				comp_driver=my_part.driver.create_component_driver(fr,
-						(i<(ni-1))?true:false,my_part,ccp.clsc,ccp.sk,ccp.request_response);
-			}catch(Exception e){
-				comp_driver=null;
-				e.printStackTrace();
-				
-				debug_information.println("create_component_driver fail:	",e.toString());
-				debug_information.println("Part user name:",	my_part.user_name);
-				debug_information.println("Part system name:",	my_part.system_name);
-				debug_information.println("Mesh_file_name:",	my_part.directory_name+my_part.mesh_file_name);
-				debug_information.println("Material_file_name:",my_part.directory_name+my_part.material_file_name);
-			}
-			if(comp_driver!=null)
-				driver_array.add(comp_driver);
-			fr.mark_terminate((i<(ni-1))?true:false);
-		}
-		return;
+		var p=this;
+		for(	p=component_cont.get_component(p.parent_component_id);p!=null;
+				p=component_cont.get_component(p.parent_component_id))
+			if(p.caculate_children_location_modify_flag())
+				break;
 	}
 	public component_core_1(String token_string,file_reader fr,
 			boolean part_list_flag,boolean normalize_location_flag,
 			component_construction_parameter ccp)
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
-		create_driver(fr,ccp);
+		
+		relative_location=input_location.do_input(fr,ccp.sk.system_par,ccp.sk.scene_par);
+		if(uniparameter.normalize_location_flag)
+			relative_location=relative_location.normalize();
+		
+		move_location_version						=1;
+		absolute_location_version					=1;
+		children_location_modify_flag				=false;
+		should_caculate_absolute_location_flag		=true;
+		move_location_is_not_identity_matrix_flag	=false;
+		
+		negative_absolute_location					=null;
+		negative_parent_and_relative_location		=null;
+		
+		move_location								=new location();
+		parent_and_relative_location				=new location();
+		absolute_location							=new location();
 	}
 }

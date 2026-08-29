@@ -163,8 +163,7 @@ public class list_component_on_collector
 		
 		collect_routine(comp,clipper_test_depth);
 		
-		comp.caculate_effective_display_flag(cam_result.target.parameter_channel_id);
-		comp.caculate_assembly_flag(cam_result.target.parameter_channel_id);
+		comp.caculate_component_flag(cam_result.target.parameter_channel_id);
 		comp.caculate_box(sk.component_cont);
 	}
 	public list_component_on_collector(scene_kernel my_sk,client_information my_ci,camera_result my_cam_result)

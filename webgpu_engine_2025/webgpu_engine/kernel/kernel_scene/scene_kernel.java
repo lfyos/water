@@ -393,7 +393,7 @@ public class scene_kernel
 		debug_information.println();
 
 		component_cont.do_component_caculator(false,process_bar,"first_do_component_caculator");
-		component_cont.root_component.reset_component(component_cont,null);
+		component_cont.root_component.recurse_caculate_component_flag(component_cont,null);
 		
 		start_time=new Date().getTime();
 		load_create_assemble_part(fast_load_type,request_response,
@@ -483,7 +483,7 @@ public class scene_kernel
 	{
 		if(reset_flag){
 			reset_flag=false;
-			component_cont.root_component.reset_component(component_cont,null);
+			component_cont.root_component.recurse_caculate_component_flag(component_cont,null);
 		}
 	}
 	public String get_scene_environment_parameter(String parameter_name)
