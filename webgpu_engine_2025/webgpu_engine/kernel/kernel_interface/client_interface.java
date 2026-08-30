@@ -3,6 +3,7 @@ package kernel_interface;
 import java.io.File;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_scene.scene_kernel;
@@ -67,19 +68,15 @@ public class client_interface
 			return null;
 		}
 		
-		tree_search_container_tree_node<String,scene_kernel_and_client_information_container>my_tree_node;
+		ArrayList<scene_kernel_and_client_information_container>my_list;
 	
-		if((my_tree_node=tree.search(request_response.channel_string))==null) {
-			debug_information.print  ("Search client_interface fail,list is null,Client ID is ",request_response.client_id);
-			debug_information.println(",channel_id is ",request_response.channel_string);
-			return null;
-		};
-		if(my_tree_node.list.size()<=0) {
+		if((my_list=tree.search_value_list(request_response.channel_string))==null) {
 			debug_information.print  ("Search client_interface fail,size less than 1,Client ID is ",request_response.client_id);
 			debug_information.println(",channel_id is ",request_response.channel_string);
 			return null;
 		};
-		scene_kernel_and_client_information_container p=my_tree_node.list.get(0);
+		scene_kernel_and_client_information_container p=my_list.get(0);
+		
 		if(p.client_information==null){
 			tree.move_to_first(request_response.channel_string);
 			debug_information.println("my_value.client_information==null,Client ID is ",request_response.client_id);
@@ -411,7 +408,7 @@ public class client_interface
 				if(		  (skci_cont.update_sk_and_ci_processing_number(0)>0)
 						||(skci_cont.modify_kernel_and_client_information_lock_number(0)>0))
 				{
-					tree.search(my_key);
+					tree.search_tree_node(my_key);
 					return;
 				}
 				if((skci_cont.client_information==null)||(skci_cont.scene_kernel_cont==null)){
@@ -549,7 +546,7 @@ public class client_interface
 	{
 		client_interface_in_processing_number=0;
 		
-		tree=new tree_string_search_container<scene_kernel_and_client_information_container>();
+		tree=new tree_string_search_container<scene_kernel_and_client_information_container>(null);
 		scene_kernel_search_tree=my_scene_kernel_search_tree;
 		string_locker_container=my_string_locker_container;
 		scene_counter=my_scene_counter;

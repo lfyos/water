@@ -95,13 +95,12 @@ public class scene_kernel_container_search_tree
 		debug_information.print  ("scene_interface scene_component_number:	",	scene_counter.scene_component_number);
 		debug_information.println("/",system_par.max_scene_component_number);
 		
-		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
-		if((search_tree_node=tree.search(new String[]{scene_name,link_name}))!=null)
-			if(search_tree_node.list.size()>0){
-				scene_kernel_container skc=search_tree_node.list.get(0);
-				skc.modify_scene_kernel_link_number(1);
-				return skc;
-			}
+		ArrayList<scene_kernel_container>search_list;
+		if((search_list=tree.search_value_list(new String[]{scene_name,link_name}))!=null){
+			scene_kernel_container skc=search_list.get(0);
+			skc.modify_scene_kernel_link_number(1);
+			return skc;
+		}
 		if(   (scene_counter.scene_kernel_number   >=system_par.max_scene_kernel_number)
 				||(scene_counter.scene_component_number>=system_par.max_scene_component_number))
 		{
@@ -161,14 +160,14 @@ public class scene_kernel_container_search_tree
 			String my_scene_name,String my_link_name,create_scene_counter scene_counter)
 	{
 		String key[]={my_scene_name,my_link_name};
-		tree_search_container_tree_node<String[],scene_kernel_container>search_tree_node;
+		ArrayList<scene_kernel_container>search_list;
 		
-		while((search_tree_node=tree.search(key))!=null) {
-			while(search_tree_node.list.size()>0){
-				scene_kernel_container skc=search_tree_node.list.get(0);
+		if((search_list=tree.search_value_list(key))!=null)
+			while(search_list.size()>0){
+				scene_kernel_container skc=search_list.get(0);
 				if(skc.modify_scene_kernel_link_number(-1)>0)
 					return;
-				search_tree_node.list.remove(0);
+				search_list.remove(0);
 				
 				if(skc.sk!=null)
 					if(skc.sk.component_cont!=null)
@@ -186,9 +185,8 @@ public class scene_kernel_container_search_tree
 				debug_information.println(
 						"scene_interface scene_component_number: ",
 						scene_counter.scene_component_number);
-			}
-			tree.remove(key);
-		}
+			}	
+		tree.remove(key);
 	}
 	public void destroy_scene_kernel_container(
 			String my_scene_name,String my_link_name,
@@ -236,7 +234,7 @@ public class scene_kernel_container_search_tree
 	}
 	public scene_kernel_container_search_tree()
 	{
-		tree=new tree_string_array_search_container<scene_kernel_container>();
+		tree=new tree_string_array_search_container<scene_kernel_container>(null);
 		
 		system_component_load_source_cont		=new component_load_source_container();
 		

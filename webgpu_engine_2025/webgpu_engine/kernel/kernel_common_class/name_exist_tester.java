@@ -6,11 +6,11 @@ public class name_exist_tester extends tree_string_search_container<String>
 {
 	public boolean test_exist(String name)
 	{
-		return (search(name)!=null);
+		return (search_tree_node(name)!=null);
 	}
 	public void add(String name)
 	{
-		add_none(name);
+		add(name,name);
 	}
 	public String[] name_array()
 	{
@@ -23,9 +23,12 @@ public class name_exist_tester extends tree_string_search_container<String>
 	}
 	public name_exist_tester()
 	{
+		super(null);
 	}
 	public name_exist_tester(String file_name[],String type_string,String file_system_charset)
 	{
+		super(null);
+		
 		String str;
 		if(file_name!=null)
 			for(int i=0,ni=file_name.length;i<ni;i++)
@@ -35,7 +38,7 @@ public class name_exist_tester extends tree_string_search_container<String>
 						break;
 					}
 					str=f.get_string();
-					add_none(str);
+					add(str,str);
 				}
 		if(type_string!=null)
 			for(int index_id;type_string.length()>0;)
@@ -43,10 +46,10 @@ public class name_exist_tester extends tree_string_search_container<String>
 					type_string=type_string.substring(1);
 				else if(index_id>0) {
 					str=type_string.substring(0,index_id);
-					add_none(str);
+					add(str,str);
 					type_string=type_string.substring(index_id+1);
 				}else{
-					add_none(type_string);
+					add(type_string,type_string);
 					break;
 				}
 	}

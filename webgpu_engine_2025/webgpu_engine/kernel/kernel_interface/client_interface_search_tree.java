@@ -47,7 +47,7 @@ public class client_interface_search_tree
 				client_interface my_client_interface=my_client_interface_list.get(i);
 				if(test_timeout_flag)
 					if(my_client_interface.operate_client_interface_in_processing_number(0)>0){
-						tree.search(my_client_id_and_user_name);
+						tree.search_tree_node(my_client_id_and_user_name);
 						return;
 					}
 				my_client_interface_list.remove(i).destroy();
@@ -69,22 +69,13 @@ public class client_interface_search_tree
 		process_timeout_client_interface(true,scene_counter);
 		
 		String client_interface_key[]=new String[]
-			{request_response.client_id,request_response.user_name};
-		tree_search_container_tree_node<String[],client_interface>
-			my_search_tree_node=tree.search(client_interface_key);
-
+				{request_response.client_id,request_response.user_name};
+		ArrayList<client_interface>	search_list;
 		client_interface ret_val;
-		if(my_search_tree_node!=null){
-			if(my_search_tree_node.list.size()>0)
-				ret_val=my_search_tree_node.list.get(0);
-			else if((ret_val=client_interface.create(request_response,
-					scene_search_tree,string_locker_container,scene_counter,system_par))==null)
-				debug_information.println("Create client_interface fail");
-			else{
-				debug_information.println("Create client_interface success");
-				my_search_tree_node.list.add(ret_val);
-			}
-		}else{
+		
+		if((search_list=tree.search_value_list(client_interface_key))!=null)
+			ret_val=search_list.get(0);
+		else{
 			if((ret_val=client_interface.create(request_response,
 					scene_search_tree,string_locker_container,scene_counter,system_par))==null) 
 				debug_information.println("Create client_interface fail");
@@ -123,7 +114,7 @@ public class client_interface_search_tree
 	public client_interface_search_tree(system_parameter my_system_par)
 	{
 		system_par=new system_parameter(my_system_par);
-		tree=new tree_string_array_search_container<client_interface>();
+		tree=new tree_string_array_search_container<client_interface>(null);
 		client_interface_search_tree_lock=new ReentrantLock();
 	}
 }

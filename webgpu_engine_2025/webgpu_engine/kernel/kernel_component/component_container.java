@@ -10,7 +10,6 @@ import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_common_class.tree_string_search_container;
-import kernel_common_class.tree_search_container_tree_node;
 
 public class component_container 
 {
@@ -62,12 +61,8 @@ public class component_container
 	}
 	public component search_component(String my_search_component_name)
 	{
-		tree_search_container_tree_node<String,component> my_tree_node;
-		my_tree_node=search_component_cont.search(my_search_component_name);
-		if(my_tree_node!=null)
-			if(my_tree_node.list.size()>0)
-				return my_tree_node.list.get(0);
-		return null;
+		var my_list=search_component_cont.search_value_list(my_search_component_name);
+		return (my_list==null)?null:my_list.get(0);
 	}
 	public component latest_selected_component()
 	{

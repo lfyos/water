@@ -35,7 +35,7 @@ public class component_core_7 extends component_core_6
 				String id_str		="_"+component_name+"_"+i+"_"+j;
 				my_component_name	=ccp.sk.scene_par.inserted_component_name	+id_str;
 				my_part_name		=ccp.sk.scene_par.inserted_part_name		+id_str;
-				ArrayList<part>my_part_list=ccp.sk.part_cont.search_part(my_part_name);
+				ArrayList<part>my_part_list=ccp.sk.part_search_cont.search_part(my_part_name);
 				if(my_part_list==null)
 					break;
 				if(my_part_list.size()<=0)

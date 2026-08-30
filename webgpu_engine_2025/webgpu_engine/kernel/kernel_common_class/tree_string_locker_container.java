@@ -16,6 +16,10 @@ class locker_container
 };
 public class tree_string_locker_container extends tree_string_search_container<locker_container>
 {
+	public tree_string_locker_container()
+	{
+		super(null);
+	}
 	synchronized private ReentrantReadWriteLock operate_locker_routine(
 			boolean do_destroy_flag,String locker_name,int modify_number)
 	{
@@ -49,9 +53,9 @@ public class tree_string_locker_container extends tree_string_search_container<l
 			}
 			locker_cont.number+=modify_number;
 		}else{
-			if((search_tree_node=search(locker_name))==null)
+			if((search_tree_node=search_tree_node(locker_name))==null)
 				return null;
-			if(search_tree_node.list.size()<=0) {
+			if(search_tree_node.list.size()<=0){
 				remove(locker_name);
 				return null;
 			}

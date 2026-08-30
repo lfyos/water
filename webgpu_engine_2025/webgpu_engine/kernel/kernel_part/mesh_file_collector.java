@@ -49,7 +49,7 @@ public class mesh_file_collector
 		{
 			public mesh_file_collector_item_sorter()
 			{
-				super(new mesh_file_collector_item_comparator());
+				super(new mesh_file_collector_item_comparator(),null);
 				
 				if(list!=null) {
 					for(var my_mesh_file_collector_item:list)

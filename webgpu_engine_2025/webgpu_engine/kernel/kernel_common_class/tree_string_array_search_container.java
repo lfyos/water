@@ -19,8 +19,8 @@ class tree_string_array_search_container_comparator implements Comparator<String
 }
 public class tree_string_array_search_container <VALUE_TYPE> extends tree_search_container<String[],VALUE_TYPE>
 {
-	public tree_string_array_search_container()
+	public tree_string_array_search_container(Comparator<VALUE_TYPE>my_value_comparator)
 	{
-		super(new tree_string_array_search_container_comparator());
+		super(new tree_string_array_search_container_comparator(),my_value_comparator);
 	}
 }

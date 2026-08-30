@@ -40,7 +40,7 @@ public class render_target_container extends tree_search_container<render_target
 	}
 	public render_target_container()
 	{
-		super(new render_target_comparator());
+		super(new render_target_comparator(),null);
 		target_array=new ArrayList<render_target>();
 	}
 	public render_target[]get_render_target()
@@ -55,7 +55,7 @@ public class render_target_container extends tree_search_container<render_target
 	}
 	public void register_target(render_target new_rt)
 	{
-		var my_tree_node=search(new_rt);
+		var my_tree_node=search_tree_node(new_rt);
 		
 		if(my_tree_node==null){
 			new_rt.target_id=target_array.size();

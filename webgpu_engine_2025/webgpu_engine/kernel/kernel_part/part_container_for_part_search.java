@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import kernel_common_class.const_value;
-import kernel_common_class.tree_search_container;
+import kernel_common_class.tree_string_search_container;
 
-class part_comparator_for_part_search implements Comparator<part>
+class part_value_comparator_for_part_search implements Comparator<part>
 {
 	public int compare(part pi,part pj)
 	{
-		int compare_result;
-		double diff;
+		int name_compare_value=pi.system_name.compareTo(pj.system_name);
 		
-		if((compare_result=pi.system_name.compareTo(pj.system_name))<0)
-			return -6;
-		if(compare_result>0)
-			return 6;
+		if(name_compare_value!=0)
+			return name_compare_value;
+		
+		double diff;
 		
 		diff=pi.part_par.discard_precision2-pj.part_par.discard_precision2;
 		if(Math.abs(diff)>const_value.min_value)
@@ -46,7 +45,8 @@ class part_comparator_for_part_search implements Comparator<part>
 		return 0;
 	}
 }
-public class part_container_for_part_search extends tree_search_container<part,part>
+
+public class part_container_for_part_search extends tree_string_search_container<part>
 {
 	public void destroy()
 	{
@@ -70,52 +70,15 @@ public class part_container_for_part_search extends tree_search_container<part,p
 	}
 	public part_container_for_part_search(ArrayList<part> my_part_list)
 	{
-		super(new part_comparator_for_part_search());
+		super(new part_value_comparator_for_part_search());
+		
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)
-				add(my_part,my_part);
+				add(my_part.system_name,my_part);
 	}
 	public ArrayList<part> search_part(String my_part_system_name)
 	{
-		ArrayList<part> search_part_list=tree_get_value_list();
-		
-		for(int begin_pointer=0,end_pointer=search_part_list.size()-1;;){
-			if(begin_pointer>end_pointer)
-				return new ArrayList<part>();
-
-			int search_id=(begin_pointer+end_pointer)/2;
-			int result=search_part_list.get(search_id).system_name.compareTo(my_part_system_name);
-			if(result<0) {
-				begin_pointer=search_id+1;
-				continue;
-			}
-			if(result>0) {
-				end_pointer=search_id-1;
-				continue;
-			}
-			for(begin_pointer=search_id;;) {
-				if(search_part_list.get(begin_pointer).system_name.compareTo(my_part_system_name)!=0) {
-					begin_pointer++;
-					break;
-				}else if(begin_pointer>0)
-					begin_pointer--;
-				else
-					break;
-			}
-			int last_pointer=search_part_list.size()-1;
-			for(end_pointer=search_id;;) {
-				if(search_part_list.get(end_pointer).system_name.compareTo(my_part_system_name)!=0) {
-					end_pointer--;
-					break;
-				}else if(end_pointer<last_pointer)
-					end_pointer++;
-				else
-					break;
-			}
-			ArrayList<part> return_part_list=new ArrayList<part>();
-			for(int i=begin_pointer,ni=end_pointer;i<=ni;i++)
-				return_part_list.add(search_part_list.get(i));
-			return return_part_list;
-		}
+		ArrayList<part> my_list=search_value_list(my_part_system_name);
+		return (my_list!=null)?my_list:new ArrayList<part>();
 	}
 }

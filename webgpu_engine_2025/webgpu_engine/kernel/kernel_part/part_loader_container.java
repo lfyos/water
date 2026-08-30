@@ -100,22 +100,20 @@ public class part_loader_container
 				int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
 				String search_key=boftal_token_str.substring(pre_length);
 				
-				for(int i=0;i<boftal_number;i++){
-					var my_tree_node=boftal_container.get(i).search(search_key);
-					if(my_tree_node!=null)
-						if(my_tree_node.list.size()>0){
-							var my_boftal=my_tree_node.list.get(0);
-							long last_time=my_boftal.buffer_object_head_last_modify_time;
-							if(my_part.part_par.last_modified_time<=last_time){
-								my_part.boftal=my_boftal;
-								if(my_part.part_mesh==null)
-									my_part.part_mesh=my_part.boftal.simple_part_mesh;
-								else if(my_part.part_mesh!=null)
-									my_part.part_mesh.free_memory();
-								return;
-							}
+				ArrayList<buffer_object_file_modify_time_and_length>my_list;
+				for(int i=0;i<boftal_number;i++)
+					if((my_list=boftal_container.get(i).search_value_list(search_key))!=null){
+						buffer_object_file_modify_time_and_length my_boftal=my_list.get(0);
+						long last_time=my_boftal.buffer_object_head_last_modify_time;
+						if(my_part.part_par.last_modified_time<=last_time){
+							my_part.boftal=my_boftal;
+							if(my_part.part_mesh==null)
+								my_part.part_mesh=my_part.boftal.simple_part_mesh;
+							else if(my_part.part_mesh!=null)
+								my_part.part_mesh.free_memory();
+							return;
 						}
-				}
+					}
 			}
 			break;
 		}

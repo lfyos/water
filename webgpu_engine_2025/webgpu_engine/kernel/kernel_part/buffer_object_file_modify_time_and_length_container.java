@@ -7,6 +7,10 @@ import kernel_common_class.tree_string_search_container;
 public class buffer_object_file_modify_time_and_length_container 
 	extends tree_string_search_container<buffer_object_file_modify_time_and_length>
 {
+	public buffer_object_file_modify_time_and_length_container()
+	{
+		super(null);
+	}
 	public void load(client_process_bar process_bar,String process_title,
 			String my_boftal_file_name,String boftal_file_charset)
 	{

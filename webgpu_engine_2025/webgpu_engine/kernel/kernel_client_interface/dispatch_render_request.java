@@ -86,7 +86,7 @@ public class dispatch_render_request
 					return null;
 				}
 				ArrayList<part> parts;
-				if((parts=sk.part_cont.search_part(str))!=null)
+				if((parts=sk.part_search_cont.search_part(str))!=null)
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 						for(int i=0,ni=parts.size();i<ni;i++)
 							if((p=parts.get(i))!=null)

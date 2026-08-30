@@ -22,11 +22,11 @@ public class component_load_source_container
 	}
 	public component_load_source_container()
 	{
-		tree=new tree_string_search_container<component_load_source_item>();
+		tree=new tree_string_search_container<component_load_source_item>(null);
 	}
 	public component_load_source_container(component_load_source_container clsc)
 	{
-		tree=new tree_string_search_container<component_load_source_item>();
+		tree=new tree_string_search_container<component_load_source_item>(null);
 		ArrayList<component_load_source_item>list=clsc.tree.tree_get_value_list();
 		for(int i=0,ni=list.size();i<ni;i++){
 			component_load_source_item list_item=list.get(i);

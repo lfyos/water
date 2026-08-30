@@ -138,8 +138,8 @@ public class component_caculator
 	
 	private void set_pointer(component comp)
 	{
-		for(int i=0,n=comp.children.size();i<n;i++)
-			set_pointer(comp.children.get(i));
+		for(component my_child_comp:comp.children)
+			set_pointer(my_child_comp);
 		component_pointer[comp.component_id]=comp;
 		search_component_cont.add(comp.component_name,comp);
 	}
@@ -156,7 +156,7 @@ public class component_caculator
 		register_componennt_to_part(root_component);
 		
 		component_pointer				=new component[component_number];
-		search_component_cont			=new tree_string_search_container<component>();
+		search_component_cont			=new tree_string_search_container<component>(null);
 		
 		set_pointer(root_component);
 		

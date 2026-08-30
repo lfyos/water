@@ -10,7 +10,7 @@ public class sort_part_information extends jason_creator
 	
 	public void print()
 	{
-		var data_list=sk.part_cont.tree_get_value_list();
+		var data_list=sk.part_search_cont.tree_get_value_list();
 		jason_creator jc[]=new jason_creator[data_list.size()];
 		for(int i=0,ni=jc.length;i<ni;i++)
 			jc[i]=new part_with_component_information(data_list.get(i),sk,ci);

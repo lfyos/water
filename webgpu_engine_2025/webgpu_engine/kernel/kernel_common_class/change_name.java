@@ -1,16 +1,15 @@
 package kernel_common_class;
 
+import java.util.ArrayList;
+
 import kernel_file_manager.file_reader;
 
 public class change_name extends tree_string_search_container<String>
 {
 	public String search_change_name(String my_search_name,String fail_result)
 	{	
-		tree_search_container_tree_node<String,String>search_tree_node;
-		if((search_tree_node=search(my_search_name))!=null)
-			if(search_tree_node.list.size()>0)
-				return search_tree_node.list.get(0);
-		return fail_result;
+		ArrayList<String> name_list=search_value_list(my_search_name);
+		return (name_list!=null)?name_list.get(0):fail_result;
 	}
 	public void append(change_name my_change_name,boolean do_reversion_flag)
 	{
@@ -52,13 +51,18 @@ public class change_name extends tree_string_search_container<String>
 	}
 	public change_name()
 	{
+		super(null);
 	}
 	public change_name(common_reader f_array[],String change_string)
 	{
+		super(null);
+		
 		init(f_array,change_string);
 	}
 	public change_name(String change_file_name[],String change_string,String file_system_charset)
 	{
+		super(null);
+		
 		file_reader f_array[]=null;
 		if(change_file_name!=null) {
 			f_array=new file_reader[change_file_name.length];
@@ -72,6 +76,7 @@ public class change_name extends tree_string_search_container<String>
 	}
 	public change_name(change_name my_change_name,boolean do_reversion_flag)
 	{
+		super(null);
 		append(my_change_name,do_reversion_flag);
 	}
 }

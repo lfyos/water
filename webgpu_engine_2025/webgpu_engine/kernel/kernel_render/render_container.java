@@ -17,7 +17,6 @@ import kernel_file_manager.file_reader;
 import kernel_part.part_loader_container;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
-import kernel_common_class.tree_search_container_tree_node;
 import kernel_part.permanent_part_id_encoder;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
@@ -64,18 +63,15 @@ public class render_container
 	public render search_render(String my_render_name)
 	{
 		if(tree_renders==null){
-			tree_renders=new tree_string_search_container<render>();
+			tree_renders=new tree_string_search_container<render>(null);
 			for(int i=0,ni=renders.size();i<ni;i++) {
 				render my_render;
 				if((my_render=renders.get(i))!=null)
 					tree_renders.add(my_render.render_name,my_render);
 			}
 		}
-		tree_search_container_tree_node<String,render> my_tree_node;
-		if((my_tree_node=tree_renders.search(my_render_name))!=null)
-			if(my_tree_node.list.size()>0)
-					return my_tree_node.list.get(0);
-		return null;
+		ArrayList<render> my_render_list=tree_renders.search_value_list(my_render_name);
+		return (my_render_list==null)?null:my_render_list.get(0);
 	}
 	public ArrayList<part> part_array_list(int part_type_id)
 	{
@@ -225,7 +221,7 @@ public class render_container
 				continue;
 			}
 			ren.add_part(add_part,encoder);
-			pcps.add(add_part,add_part);
+			pcps.add(add_part.system_name,add_part);
 		}
 	}
 	private void load_one_shader(

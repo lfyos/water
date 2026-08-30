@@ -9,6 +9,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 {
 	private TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>> tree;
 	private tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> first,last;
+	private Comparator<VALUE_TYPE> value_comparator;
 	
 	private ArrayList<VALUE_TYPE>tree_value_list;
 
@@ -70,14 +71,17 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		}
 		return p;
 	}
-	public tree_search_container(Comparator<KEY_TYPE> my_comparator)
+	public tree_search_container(
+			Comparator<KEY_TYPE>my_key_comparator,
+			Comparator<VALUE_TYPE>my_value_comparator)
 	{
-		if(my_comparator==null)
+		if(my_key_comparator==null)
 			tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>();
 		else
-			tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>(my_comparator);
+			tree=new TreeMap<KEY_TYPE,tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>>(my_key_comparator);
 		first=null;
 		last=null;
+		value_comparator=my_value_comparator;
 		
 		tree_value_list	=null;
 	}
@@ -85,9 +89,12 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	{
 		while(first!=null) 
 			dismount_from_list(first).destroy();
+		
 		tree.clear();
 		first=null;
 		last=null;
+		value_comparator=null;
+		
 		tree_value_list=null;
 	}
 	
@@ -103,7 +110,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	{
 		return last;
 	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> search(KEY_TYPE my_key)
+	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> search_tree_node(KEY_TYPE my_key)
 	{
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
 		if((tree_node=tree.get(my_key))!=null){
@@ -113,57 +120,52 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		}
 		return tree_node;
 	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> get_add_tree_node(KEY_TYPE my_key)
+	public ArrayList<VALUE_TYPE>search_value_list(KEY_TYPE my_key)
 	{
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
-		if((tree_node=search(my_key))==null){
+		if((tree_node=search_tree_node(my_key))!=null)
+			if(tree_node.list!=null)
+				if(tree_node.list.size()>0)
+					return tree_node.list;
+		return null;
+	}
+	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> add(KEY_TYPE my_key,VALUE_TYPE my_value)
+	{
+		tree_value_list	=null;
+		
+		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
+		if((tree_node=search_tree_node(my_key))==null){
 			tree_node=new tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>(my_key);
 			tree.put(my_key,tree_node);
 			mount_to_last(tree_node);
 			tree_node.touch_time=nanosecond_timer.absolute_nanoseconds();
+			tree_node.list.add(my_value);
+			return tree_node;
+		}
+		if(value_comparator==null)
+			tree_node.list.add(tree_node.list.size(),my_value);
+		else {
+			ArrayList<VALUE_TYPE> my_value_list=tree_node.list;
+			for(int begin_pointer=0,end_pointer=my_value_list.size()-1;;) {
+				int middle_pointer=(begin_pointer+end_pointer)/2;
+				var middle_value=my_value_list.get(middle_pointer);
+				int compare_result=value_comparator.compare(my_value,middle_value);
+				if(compare_result<0){
+					if((end_pointer=middle_pointer-1)<begin_pointer) {
+						my_value_list.add(middle_pointer+0,my_value);
+						break;
+					};
+				}else{
+					if((begin_pointer=middle_pointer+1)>end_pointer) {
+						my_value_list.add(middle_pointer+1,my_value);
+						break;
+					};
+				}
+			}
 		}
 		return tree_node;
 	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> add_none(KEY_TYPE my_key)
-	{
-		tree_value_list	=null;
-		
-		var tree_node=get_add_tree_node(my_key);
-		tree_node.list.clear();
-		return tree_node;
-	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> add_onlyone(KEY_TYPE my_key,VALUE_TYPE my_value)
-	{
-		tree_value_list	=null;
-		
-		var tree_node=get_add_tree_node(my_key);
-		var list=tree_node.list;
-		list.clear();
-		list.add(my_value);
-		return tree_node;
-	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> add_at_head(KEY_TYPE my_key,VALUE_TYPE my_value)
-	{
-		tree_value_list	=null;
-		
-		var tree_node=get_add_tree_node(my_key);
-		var list=tree_node.list;
-		list.add(0,my_value);
-		return tree_node;
-	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> add_at_tail(KEY_TYPE my_key,VALUE_TYPE my_value)
-	{
-		tree_value_list	=null;
-		
-		var tree_node=get_add_tree_node(my_key);
-		var list=tree_node.list;
-		list.add(list.size(),my_value);
-		return tree_node;
-	}
-	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>add(KEY_TYPE my_key,VALUE_TYPE my_value)
-	{
-		return add_at_tail(my_key,my_value);
-	}
+	
 	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> remove(KEY_TYPE my_key)
 	{
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
