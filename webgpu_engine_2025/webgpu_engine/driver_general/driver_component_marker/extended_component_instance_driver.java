@@ -22,8 +22,11 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super.destroy();
 		
-		if(cmc!=null)
+		if(cmc!=null){
+			if(!(cmc.global_private_flag))
+				cmc.destroy();
 			cmc=null;
+		}
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
 			component_marker_container my_cmc,int my_modifier_container_id)

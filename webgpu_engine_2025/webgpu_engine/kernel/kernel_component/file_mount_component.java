@@ -184,12 +184,12 @@ public class file_mount_component
 		String search_part_name=external_part_name;
 		
 		if((part_name_change=ccp.get_change_part_name())==null)
-			part_list=ccp.sk.part_search_cont.search_part(search_part_name);
+			part_list=ccp.sk.part_search_cont.search_value_list(search_part_name);
 		else{
 			search_part_name=part_name_change.search_change_name(search_part_name,search_part_name);
-			if((part_list=ccp.sk.part_search_cont.search_part(search_part_name))==null){
+			if((part_list=ccp.sk.part_search_cont.search_value_list(search_part_name))==null){
 				search_part_name=part_name_change.search_change_name(search_part_name,search_part_name);
-				part_list=ccp.sk.part_search_cont.search_part(search_part_name);
+				part_list=ccp.sk.part_search_cont.search_value_list(search_part_name);
 			}
 		}
 		if(part_list==null) {

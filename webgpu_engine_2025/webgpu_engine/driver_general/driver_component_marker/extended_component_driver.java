@@ -48,8 +48,9 @@ public class extended_component_driver  extends component_driver
 //		String parameter_directory_name			=sk.scene_par.directory_name;
 //		String extra_parameter_directory_name	=sk.scene_par.extra_directory_name;
 		
-		cmc=new component_marker_container(directory_comp_name,file_name,sk.component_cont);
-		
+		if(global_private_flag)
+			cmc=new component_marker_container(
+					directory_comp_name,file_name,sk.component_cont);
 		return;
 	}
 	public void create_component_driver_initialization_data(

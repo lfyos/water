@@ -152,6 +152,6 @@ public class component_selection
 	{
 		current_time	=sk.current_time;
 		component_cont	=sk.component_cont;
-		sk.mark_reset_flag();
+		sk.mark_caculate_component_flag();
 	}
 }

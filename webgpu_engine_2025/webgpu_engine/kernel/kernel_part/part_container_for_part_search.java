@@ -76,9 +76,4 @@ public class part_container_for_part_search extends tree_string_search_container
 			for(var my_part:my_part_list)
 				add(my_part.system_name,my_part);
 	}
-	public ArrayList<part> search_part(String my_part_system_name)
-	{
-		ArrayList<part> my_list=search_value_list(my_part_system_name);
-		return (my_list!=null)?my_list:new ArrayList<part>();
-	}
 }

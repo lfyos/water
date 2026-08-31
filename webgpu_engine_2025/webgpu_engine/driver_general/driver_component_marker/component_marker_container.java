@@ -117,11 +117,14 @@ public class component_marker_container
 		pickup_flag=false;
 		component_marker_list=new ArrayList<component_marker>();
 		
-		if((directory_comp=component_cont.search_component(my_directory_comp_name))==null) {
-			file_name=null;
-			file_charset=null;
+		file_name=null;
+		file_charset=null;
+		
+		if(my_directory_comp_name==null)
 			return;
-		}
+		if((directory_comp=component_cont.search_component(my_directory_comp_name))==null)
+			return;
+		
 		file_name=directory_comp.component_directory_name+my_file_name;
 		file_charset=directory_comp.component_charset;
 		

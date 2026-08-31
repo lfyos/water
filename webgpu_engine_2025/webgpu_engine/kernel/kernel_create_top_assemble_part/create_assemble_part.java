@@ -32,7 +32,7 @@ public class create_assemble_part
 	
 	public create_assemble_part(String fast_load_type,
 			component_container component_cont,render_container render_cont,
-			client_request_response request_response,permanent_part_id_encoder encoder[],
+			client_request_response request_response,permanent_part_id_encoder part_id_encoder,
 			part_loader_container part_loader_cont,part_container_for_part_search pcps,
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
 			long last_modified_time,tree_string_locker_container string_locker_container,
@@ -72,7 +72,7 @@ public class create_assemble_part
 			}
 
 			part part_par_assemble_part=null;
-			ArrayList<part> assemble_part_array=pcps.search_part(
+			ArrayList<part> assemble_part_array=pcps.search_value_list(
 				can_create_assemble_part_name[comp_p.component_id]);
 			if(assemble_part_array!=null)
 				for(int i=0,ni=assemble_part_array.size();i<ni;i++)
@@ -105,7 +105,7 @@ public class create_assemble_part
 					cpr.select_ref_part.material_file_name,null,null);
 			add_part.part_mesh=cpr.topbox_part_rude;
 				
-			render_cont.renders.get(cpr.select_ref_part.render_id).add_part(add_part,encoder);
+			render_cont.renders.get(cpr.select_ref_part.render_id).add_part(add_part,part_id_encoder);
 			add_part.part_from_id			=cpr.select_ref_part.part_id;
 			add_part.permanent_part_from_id	=cpr.select_ref_part.permanent_part_id;
 

@@ -118,7 +118,7 @@ public class render
 		if((part_number=parts.size())>0)
 			parts.remove(part_number-1).destroy();
 	}
-	public void add_part(part p,permanent_part_id_encoder encoder[])
+	public void add_part(part p,permanent_part_id_encoder part_id_encoder)
 	{
 		if(p==null)
 			return;
@@ -129,20 +129,21 @@ public class render
 		p.part_id				=part_number;
 		p.part_from_id			=-1;
 		
-		p.permanent_part_id		=encoder[p.part_type_id].encoder(p.part_par.part_type_string);
+		p.permanent_part_id		=part_id_encoder.encoder(
+				p.part_par.part_type_string,p.part_type_id);
 		p.permanent_part_from_id=-1;
 	}
 	
 	public void add_part(part_container_for_part_search pcps,render ren,
 			component_load_source_container component_load_source_cont,
 			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
-			String file_name,String file_charset,String pre_buffer_object_file_name,
-			permanent_part_id_encoder encoder[],client_request_response request_response)
+			String path_name,String file_charset,String pre_buffer_object_file_name,
+			permanent_part_id_encoder part_id_encoder,client_request_response request_response)
 	{
-		file_reader part_f=new file_reader(file_name,file_charset);
+		file_reader part_f=new file_reader(path_name,file_charset);
 		if(part_f.error_flag()) {
 			part_f.close();
-			debug_information.println("Execute add_part fail,part list file NOT exits:	",file_name);
+			debug_information.println("Execute add_part fail,part list file NOT exits:	",path_name);
 			return;
 		}
 		while(!(part_f.eof())){
@@ -189,7 +190,7 @@ public class render
 					part_f.directory_name,part_f.get_charset(),user_name,system_name,
 					mesh_file_name,material_file_name,description_file_name,audio_file_name);
 			
-			add_part(my_part,encoder);
+			add_part(my_part,part_id_encoder);
 			
 			try{
 				my_part.driver=ren.driver.create_part_driver(part_f,my_part,ren,

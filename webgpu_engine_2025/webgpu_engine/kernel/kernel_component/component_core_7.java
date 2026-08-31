@@ -32,11 +32,11 @@ public class component_core_7 extends component_core_6
 		for(int i=0,collect_number=0;i<new_child_number;i++){
 			String my_component_name,my_part_name;
 			for(int j=0;;j++){
+				ArrayList<part>my_part_list;
 				String id_str		="_"+component_name+"_"+i+"_"+j;
 				my_component_name	=ccp.sk.scene_par.inserted_component_name	+id_str;
 				my_part_name		=ccp.sk.scene_par.inserted_part_name		+id_str;
-				ArrayList<part>my_part_list=ccp.sk.part_search_cont.search_part(my_part_name);
-				if(my_part_list==null)
+				if((my_part_list=ccp.sk.part_search_cont.search_value_list(my_part_name))==null)
 					break;
 				if(my_part_list.size()<=0)
 					break;

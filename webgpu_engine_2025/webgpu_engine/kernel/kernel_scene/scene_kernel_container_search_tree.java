@@ -32,7 +32,7 @@ public class scene_kernel_container_search_tree
 	{
 		int part_type_id=0;
 		
-		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[] {new permanent_part_id_encoder()};
+		permanent_part_id_encoder encoder=new permanent_part_id_encoder();
 		part_container_for_part_search pcps=new part_container_for_part_search(null);
 		
 		original_render=new render_container();

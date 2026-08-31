@@ -8,7 +8,7 @@ import kernel_file_manager.file_reader;
 
 public class scene_kernel_create_parameter 
 {
-	public boolean success_load_parameter_flag;
+	public boolean	success_load_parameter_flag;
 	
 	public double	create_top_part_expand_ratio;
 	public double	create_top_part_left_ratio;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import kernel_scene.scene_kernel;
 import kernel_transformation.box;
-import kernel_scene.scene_parameter;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
@@ -14,7 +13,6 @@ import kernel_common_class.tree_string_search_container;
 public class component_container 
 {
 	public component root_component,scene_component;
-	public scene_parameter	scene_par;
 	
 	public int component_number;
 	
@@ -152,8 +150,6 @@ public class component_container
 		{
 			root_component=null;
 			scene_component=null;
-			
-			scene_par							=sk.scene_par;
 			
 			original_part_number				=0;
 			

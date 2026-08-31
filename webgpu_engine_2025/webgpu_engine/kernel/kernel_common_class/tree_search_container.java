@@ -94,7 +94,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		first=null;
 		last=null;
 		value_comparator=null;
-		
 		tree_value_list=null;
 	}
 	
@@ -113,6 +112,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> search_tree_node(KEY_TYPE my_key)
 	{
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
+		
 		if((tree_node=tree.get(my_key))!=null){
 			dismount_from_list(tree_node);
 			mount_to_last(tree_node);
@@ -123,6 +123,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	public ArrayList<VALUE_TYPE>search_value_list(KEY_TYPE my_key)
 	{
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
+		
 		if((tree_node=search_tree_node(my_key))!=null)
 			if(tree_node.list!=null)
 				if(tree_node.list.size()>0)
@@ -142,28 +143,25 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			tree_node.list.add(my_value);
 			return tree_node;
 		}
-		if(value_comparator==null)
+		if(value_comparator==null) {
 			tree_node.list.add(tree_node.list.size(),my_value);
-		else {
-			ArrayList<VALUE_TYPE> my_value_list=tree_node.list;
-			for(int begin_pointer=0,end_pointer=my_value_list.size()-1;;) {
-				int middle_pointer=(begin_pointer+end_pointer)/2;
-				var middle_value=my_value_list.get(middle_pointer);
-				int compare_result=value_comparator.compare(my_value,middle_value);
-				if(compare_result<0){
-					if((end_pointer=middle_pointer-1)<begin_pointer) {
-						my_value_list.add(middle_pointer+0,my_value);
-						break;
-					};
-				}else{
-					if((begin_pointer=middle_pointer+1)>end_pointer) {
-						my_value_list.add(middle_pointer+1,my_value);
-						break;
-					};
+			return tree_node;
+		}
+		ArrayList<VALUE_TYPE> my_value_list=tree_node.list;
+		for(int begin_pointer=0,end_pointer=my_value_list.size()-1;;) {
+			int middle_pointer=(begin_pointer+end_pointer)/2;
+			if(value_comparator.compare(my_value,my_value_list.get(middle_pointer))<0){
+				if((end_pointer=middle_pointer-1)<begin_pointer) {
+					my_value_list.add(middle_pointer,my_value);
+					return tree_node;
+				}
+			}else{
+				if((begin_pointer=middle_pointer+1)>end_pointer){
+					my_value_list.add(begin_pointer,my_value);
+					return tree_node;
 				}
 			}
 		}
-		return tree_node;
 	}
 	
 	public tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> remove(KEY_TYPE my_key)

@@ -157,8 +157,10 @@ public class render_container
 		
 		return;
 	}
-	public void create_bottom_box_part(part_container_for_part_search pcps,
-			client_request_response request_response,permanent_part_id_encoder encoder[],
+	public void create_bottom_box_part(
+			part_container_for_part_search pcps,
+			client_request_response request_response,
+			permanent_part_id_encoder part_id_encoder,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		var data_list=pcps.tree_get_value_list();
@@ -220,7 +222,7 @@ public class render_container
 				
 				continue;
 			}
-			ren.add_part(add_part,encoder);
+			ren.add_part(add_part,part_id_encoder);
 			pcps.add(add_part.system_name,add_part);
 		}
 	}
@@ -228,7 +230,7 @@ public class render_container
 			component_load_source_container component_load_source_cont,part_container_for_part_search pcps,
 			String driver_name,file_reader f_render_list,String shader_file_name,
 			system_parameter system_par,scene_parameter scene_par,render ren,
-			permanent_part_id_encoder encoder[],client_request_response request_response)
+			permanent_part_id_encoder part_id_encoder,client_request_response request_response)
 	{
 		while(!(f_render_list.eof())){
 			String str;
@@ -299,16 +301,12 @@ public class render_container
 				debug_information.println("Begin load part list file:	",	get_part_list_result[i]);
 				debug_information.println("part parameter file:		",		part_parameter_file_name);
 	
-				String part_file_system_charset=get_part_list_result[i+1];
-				if(part_file_system_charset==null)
-					part_file_system_charset=f_render_list.get_charset();
-
 				int render_id=(renders==null)?0:renders.size();
 				ren.add_part(pcps,ren,component_load_source_cont,
-					part_par,system_par,scene_par,get_part_list_result[i],part_file_system_charset,
-					"part_mesh_"+Integer.toString(render_id)+"_",encoder,request_response);
+					part_par,system_par,scene_par,get_part_list_result[i],get_part_list_result[i+1],
+					"part_mesh_"+Integer.toString(render_id)+"_",part_id_encoder,request_response);
 
-				debug_information.println("End load part list file:	",	part_file_system_charset);
+				debug_information.println("End load part list file:	",	get_part_list_result[i]);
 				debug_information.println("part parameter file:		",	part_parameter_file_name);
 				debug_information.println();
 			}
@@ -319,23 +317,23 @@ public class render_container
 	public void load_shader(
 		component_load_source_container component_load_source_cont,
 		part_container_for_part_search pcps,long last_modify_time,
-		String shader_file_name,String shader_file_charset,
+		String shader_path_name,String shader_file_charset,
 		int part_type_id,system_parameter system_par,scene_parameter scene_par,
-		permanent_part_id_encoder encoder[],client_request_response request_response)
+		permanent_part_id_encoder part_id_encoder,client_request_response request_response)
 	{
 		File f;
-		if((f=new File(shader_file_name)).lastModified()<last_modify_time)
+		if((f=new File(shader_path_name)).lastModified()<last_modify_time)
 			f.setLastModified(last_modify_time);
 		
-		file_reader f_shader=new file_reader(shader_file_name,shader_file_charset);
+		file_reader f_shader=new file_reader(shader_path_name,shader_file_charset);
 		if(f_shader.error_flag()){
 			debug_information.println();
-			debug_information.println("shader configure file error,file name is ",shader_file_name);
+			debug_information.println("shader configure file error,file name is ",shader_path_name);
 			f_shader.close();
 			return;
 		}
 		debug_information.println();
-		debug_information.println("Begin shader and part initialization,file name is ",shader_file_name);
+		debug_information.println("Begin shader and part initialization,file name is ",shader_path_name);
 
 		for(long my_shader_last_time=f_shader.lastModified_time;!(f_shader.eof());){
 			String render_name,driver_name;
@@ -364,28 +362,25 @@ public class render_container
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
 			}
-			for(int i=0,ni=render_list_file_name.length-1;i<ni;i++,i++){
+			for(int i=0,ni=render_list_file_name.length-1;i<ni;i+=2){
 				if(render_list_file_name[i]==null){
-					debug_information.print  ("render_list_file_name[0]==null	",	driver_name);
+					debug_information.print  ("render_list_file_name[i]==null	",	driver_name);
 					continue;
 				}
 				render_list_file_name[i]=file_directory.replace_special_char(render_list_file_name[i]);
 				if(!((f=new File(render_list_file_name[i])).exists())) {
-					debug_information.println(render_list_file_name[0],"		not exist");
+					debug_information.println(render_list_file_name[i],"		not exist");
 					continue;
 				}
 				
 				if(f.lastModified()<my_shader_last_time)
 					f.setLastModified(my_shader_last_time);
-	
-				String file_system_charset=render_list_file_name[i+1];
-				if(file_system_charset==null)
-					file_system_charset=f_shader.get_charset();
 				
-				file_reader f_render_list=new file_reader(render_list_file_name[i],file_system_charset);
+				file_reader f_render_list=new file_reader(
+						render_list_file_name[i],render_list_file_name[i+1]);
 				load_one_shader(component_load_source_cont,pcps,driver_name,
 					f_render_list,f_shader.directory_name+f_shader.file_name,
-					system_par,scene_par,ren,encoder,request_response);
+					system_par,scene_par,ren,part_id_encoder,request_response);
 				f_render_list.close();
 			}
 			
