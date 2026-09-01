@@ -2,14 +2,10 @@ package kernel_scene;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import kernel_client_interface.dispatch_request_main;
-import kernel_common_class.debug_information;
-import kernel_common_class.tree_string_locker_container;
-import kernel_component.component_load_source_container;
-import kernel_interface.client_process_bar;
 import kernel_interface.user_statistics;
-import kernel_network.client_request_response;
-import kernel_part.buffer_object_file_modify_time_and_length_container;
+import kernel_common_class.debug_information;
+import kernel_client_interface.dispatch_request_main;
+import kernel_component.component_load_source_container;
 
 public class scene_kernel_and_client_information_container
 {
@@ -37,12 +33,9 @@ public class scene_kernel_and_client_information_container
 		kernel_and_client_information_lock_number+=modify_number;
 		return kernel_and_client_information_lock_number;
 	}
-	private scene_call_result get_scene_result_routine(client_process_bar process_bar,
-			component_load_source_container system_component_load_source_cont,
-			buffer_object_file_modify_time_and_length_container system_boftal_container,
-			client_request_response my_request_response,long delay_time_length,
-			user_statistics statistics_user,create_scene_counter scene_counter,
-			tree_string_locker_container string_locker_container)
+	private scene_call_result get_scene_result_routine(long delay_time_length,
+			create_scene_counter scene_counter,user_statistics statistics_user,
+			scene_load_call_parameter load_par)
 	{
 		if(scene_kernel_cont.sk==null){
 			debug_information.println("(sk==null) in function get_scene_result_routine() of scene_kernel_and_client_information_container");
@@ -51,12 +44,9 @@ public class scene_kernel_and_client_information_container
 		if(scene_kernel_cont.initilization_flag){
 			scene_kernel_cont.initilization_flag=false;
 			if(scene_kernel_cont.sk.component_cont==null){
-				component_load_source_container scene_component_load_source_cont=
-							new component_load_source_container(system_component_load_source_cont);
-				boolean load_scene_fail_flag=scene_kernel_cont.sk.load(
-							scene_component_load_source_cont,my_request_response,
-							process_bar,system_boftal_container,string_locker_container);
-				scene_component_load_source_cont.destroy();
+				load_par.scene_component_load_source_cont=new component_load_source_container(
+							load_par.scene_component_load_source_cont);
+				boolean load_scene_fail_flag=scene_kernel_cont.sk.load(load_par);
 				
 				if(load_scene_fail_flag) {
 					scene_kernel_cont.sk.destroy();
@@ -90,20 +80,17 @@ public class scene_kernel_and_client_information_container
 					"(sk.component_cont.root_component==null) in function get_scene_result() of scene_kernel_and_client_information_container");
 				return null;
 			}
-			client_information=new client_information(my_request_response,
-					process_bar,scene_kernel_cont.sk,statistics_user,scene_counter);
+			client_information=new client_information(load_par.request_response,
+					load_par.process_bar,scene_kernel_cont.sk,statistics_user,scene_counter);
 		}
-		client_information.request_response=my_request_response;
+		client_information.request_response=load_par.request_response;
 
 		return dispatch_request_main.get_scene_result(delay_time_length,
-				scene_kernel_cont.sk,client_information,string_locker_container);
+				scene_kernel_cont.sk,client_information,load_par.string_locker_cont);
 	}
-	public scene_call_result get_scene_result(client_process_bar process_bar,
-			buffer_object_file_modify_time_and_length_container system_boftal_container,
-			component_load_source_container system_component_load_source_cont,
-			client_request_response my_request_response,long delay_time_length,
-			user_statistics statistics_user,create_scene_counter scene_counter,
-			tree_string_locker_container string_locker_container)
+	public scene_call_result get_scene_result(
+			long delay_time_length,user_statistics statistics_user,
+			create_scene_counter scene_counter,scene_load_call_parameter load_par)
 	{
 		scene_call_result ret_val=null;
 		ReentrantLock my_lock;
@@ -113,9 +100,7 @@ public class scene_kernel_and_client_information_container
 			update_sk_and_ci_processing_number(1);
 			try{
 				ret_val=get_scene_result_routine(
-						process_bar,system_component_load_source_cont,
-						system_boftal_container,my_request_response,delay_time_length,
-						statistics_user,scene_counter,string_locker_container);
+						delay_time_length,scene_counter,statistics_user,load_par);
 			}catch(Exception e){
 				e.printStackTrace();
 				debug_information.println(

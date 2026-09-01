@@ -21,8 +21,10 @@ public class scene_kernel_container_search_tree
 	private tree_string_array_search_container<scene_kernel_container> tree;
 	
 	private render_container original_render;
+	
 	public component_load_source_container system_component_load_source_cont;
 	public buffer_object_file_modify_time_and_length_container system_boftal_container;
+	
 	private part_loader_container part_loader_cont;
 	
 	private volatile ReentrantLock scene_kernel_container_search_tree_lock;

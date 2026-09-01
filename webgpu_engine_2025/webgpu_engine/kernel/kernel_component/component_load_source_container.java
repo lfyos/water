@@ -27,11 +27,8 @@ public class component_load_source_container
 	public component_load_source_container(component_load_source_container clsc)
 	{
 		tree=new tree_string_search_container<component_load_source_item>(null);
-		ArrayList<component_load_source_item>list=clsc.tree.tree_get_value_list();
-		for(int i=0,ni=list.size();i<ni;i++){
-			component_load_source_item list_item=list.get(i);
+		for(component_load_source_item list_item:clsc.tree.tree_get_value_list())
 			tree.add(list_item.component_name,new component_load_source_item(list_item));
-		}
 	}
 	private void set_component_last_time(component my_comp,long my_file_last_modified_time)
 	{
