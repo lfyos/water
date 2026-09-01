@@ -171,6 +171,11 @@ public class client_interface
 		}
 		client_process_bar process_bar=get_process_bar_routine(request_response);
 		
+		scene_load_call_parameter load_par=new scene_load_call_parameter(
+				process_bar,request_response,string_locker_container,
+				scene_kernel_search_tree.system_boftal_container,
+				scene_kernel_search_tree.system_component_load_source_cont);
+
 		process_bar.set_process_bar(true,"start_create_kernel","",0,2);
 
 		scene_kernel_container created_scene_kernel_only=null;
@@ -178,8 +183,8 @@ public class client_interface
 		my_lock.unlock();
 		
 		try{
-			created_scene_kernel_only=scene_kernel_search_tree.create_scene_kernel_container(request_response,
-				string_locker_container,client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
+			created_scene_kernel_only=scene_kernel_search_tree.create_scene_kernel_container(
+				client_scene_file_name,client_scene_file_charset,scene_counter,system_par,load_par);
 		}catch(Exception e) {
 			e.printStackTrace();
 
@@ -212,10 +217,8 @@ public class client_interface
 		
 		my_lock.unlock();
 		try{
-			ecr=created_sk_and_ci.get_scene_result(delay_time_length,statistics_user,scene_counter,
-				new scene_load_call_parameter(process_bar,request_response,string_locker_container,
-						scene_kernel_search_tree.system_boftal_container,
-						scene_kernel_search_tree.system_component_load_source_cont));
+			ecr=created_sk_and_ci.get_scene_result(
+					delay_time_length,statistics_user,scene_counter,load_par);
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;

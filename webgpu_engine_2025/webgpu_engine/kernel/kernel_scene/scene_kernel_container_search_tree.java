@@ -39,10 +39,11 @@ public class scene_kernel_container_search_tree
 		
 		original_render=new render_container();
 		original_render.load_shader(
-				system_component_load_source_cont,pcps,system_par.last_modified_time,
-			system_par.data_root_directory_name+system_par.shader_file_name,
-			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
-		
+				system_par.data_root_directory_name+system_par.shader_file_name,
+				system_par.local_data_charset,system_par.last_modified_time,part_type_id,
+				new kernel_render.load_shader_parameter(request_response,
+						pcps,encoder,system_component_load_source_cont,system_par,null));
+
 		String fast_load_type=request_response.get_fast_load_type();
 		
 		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,system_par,null,
@@ -75,9 +76,9 @@ public class scene_kernel_container_search_tree
 		debug_information.println();
 	}
 	private scene_kernel_container create_scene_kernel_container_routine(
-			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
-			create_scene_counter scene_counter,system_parameter system_par)
+			client_request_response request_response,create_scene_counter scene_counter,
+			system_parameter system_par)
 	{
 		String scene_name,link_name;
 		if((scene_name=request_response.get_parameter("scene_name"))==null)
@@ -130,10 +131,9 @@ public class scene_kernel_container_search_tree
 		return scene_kernel_cont;
 	}
 	public scene_kernel_container create_scene_kernel_container(
-			client_request_response request_response,
-			tree_string_locker_container string_locker_container,
 			String client_scene_file_name,String client_scene_file_charset,
-			create_scene_counter scene_counter,system_parameter system_par)
+			create_scene_counter scene_counter,system_parameter system_par,
+			scene_load_call_parameter load_par)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=scene_kernel_container_search_tree_lock)==null)
@@ -141,12 +141,13 @@ public class scene_kernel_container_search_tree
 		my_lock.lock();
 
 		if(original_render==null)
-			load_render_container(request_response,system_par,string_locker_container);
+			load_render_container(load_par.request_response,system_par,load_par.string_locker_cont);
 		
 		scene_kernel_container my_scene_kernel_container=null;
 		try {
-			my_scene_kernel_container=create_scene_kernel_container_routine(request_response,
-				client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
+			my_scene_kernel_container=create_scene_kernel_container_routine(
+				client_scene_file_name,client_scene_file_charset,
+				load_par.request_response,scene_counter,system_par);
 		}catch(Exception e) {
 			e.printStackTrace();
 			

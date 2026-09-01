@@ -21,7 +21,6 @@ import kernel_part.permanent_part_id_encoder;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
 import kernel_common_class.tree_string_locker_container;
-import kernel_component.component_load_source_container;
 import kernel_common_class.tree_string_search_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
@@ -64,37 +63,28 @@ public class render_container
 	{
 		if(tree_renders==null){
 			tree_renders=new tree_string_search_container<render>(null);
-			for(int i=0,ni=renders.size();i<ni;i++) {
-				render my_render;
-				if((my_render=renders.get(i))!=null)
+			for(render my_render:renders) 
+				if(my_render!=null)
 					tree_renders.add(my_render.render_name,my_render);
-			}
 		}
 		ArrayList<render> my_render_list=tree_renders.search_value_list(my_render_name);
-		return (my_render_list==null)?null:my_render_list.get(0);
+		return (my_render_list==null)?null:(my_render_list.size()<=0)?null:my_render_list.get(0);
 	}
 	public ArrayList<part> part_array_list(int part_type_id)
 	{
 		ArrayList<part> ret_val=new ArrayList<part>();
 		
-		if(renders==null)
-			return ret_val;
-		for(int i=0,ni=renders.size();i<ni;i++) {
-			render r=renders.get(i);
-			if(r==null)
-				continue;
-			if(r.parts==null)
-				continue;
-			for(int j=0,nj=r.parts.size();j<nj;j++){
-				part p=r.parts.get(j);
-				if(p==null)
-					continue;
-				if(part_type_id>=0)
-					if(p.part_type_id!=part_type_id)
-						continue;
-				ret_val.add(p);
-			}
-		}
+		if(renders!=null)
+			for(render my_render:renders)
+				if(my_render!=null)
+					if(my_render.parts!=null)
+						for(part my_part:my_render.parts)
+							if(my_part!=null) {
+								if(part_type_id>=0)
+									if(my_part.part_type_id!=part_type_id)
+										continue;
+								ret_val.add(my_part);
+							}
 		return ret_val;
 	}
 	public void load_part(long part_type_code,int part_normal_bottom_box_top_box_flag,
@@ -227,10 +217,8 @@ public class render_container
 		}
 	}
 	private void load_one_shader(
-			component_load_source_container component_load_source_cont,part_container_for_part_search pcps,
-			String driver_name,file_reader f_render_list,String shader_file_name,
-			system_parameter system_par,scene_parameter scene_par,render ren,
-			permanent_part_id_encoder part_id_encoder,client_request_response request_response)
+			String shader_file_name,file_reader f_render_list,
+			String driver_name,render ren,load_shader_parameter load_par)
 	{
 		while(!(f_render_list.eof())){
 			String str;
@@ -243,7 +231,7 @@ public class render_container
 			if(file_reader.is_exist(f_render_list.directory_name+part_parameter_file_name))
 				part_parameter_file_name=f_render_list.directory_name+part_parameter_file_name;
 			else
-				part_parameter_file_name=system_par.parameter_directory
+				part_parameter_file_name=load_par.system_par.parameter_directory
 						+"part_parameter"+File.separatorChar+part_parameter_file_name;
 			
 			if(!(new File(part_parameter_file_name).exists())) {
@@ -257,7 +245,8 @@ public class render_container
 			String get_part_list_result[];
 			try{
 				get_part_list_result=ren.driver.get_part_list(ren,f_render_list,part_par,
-					component_load_source_cont,request_response,system_par,scene_par);
+						load_par.component_load_source_cont,load_par.request_response,
+						load_par.system_par,load_par.scene_par);
 			}catch(Exception e){
 				e.printStackTrace();
 				
@@ -302,24 +291,21 @@ public class render_container
 				debug_information.println("part parameter file:		",		part_parameter_file_name);
 	
 				int render_id=(renders==null)?0:renders.size();
-				ren.add_part(pcps,ren,component_load_source_cont,
-					part_par,system_par,scene_par,get_part_list_result[i],get_part_list_result[i+1],
-					"part_mesh_"+Integer.toString(render_id)+"_",part_id_encoder,request_response);
+				
+				ren.add_part(get_part_list_result[i],get_part_list_result[i+1],
+						"part_mesh_"+Integer.toString(render_id)+"_",ren,part_par,load_par);
 
 				debug_information.println("End load part list file:	",	get_part_list_result[i]);
 				debug_information.println("part parameter file:		",	part_parameter_file_name);
 				debug_information.println();
 			}
-			component_load_source_cont.register_component(f_render_list,
-				part_par.render_load_assemble_type,system_par.default_system_mount_component_name);
+			load_par.component_load_source_cont.register_component(
+				f_render_list,part_par.render_load_assemble_type,
+				load_par.system_par.default_system_mount_component_name);
 		}
 	}
-	public void load_shader(
-		component_load_source_container component_load_source_cont,
-		part_container_for_part_search pcps,long last_modify_time,
-		String shader_path_name,String shader_file_charset,
-		int part_type_id,system_parameter system_par,scene_parameter scene_par,
-		permanent_part_id_encoder part_id_encoder,client_request_response request_response)
+	public void load_shader(String shader_path_name,String shader_file_charset,
+			long last_modify_time,int part_type_id,load_shader_parameter load_par)
 	{
 		File f;
 		if((f=new File(shader_path_name)).lastModified()<last_modify_time)
@@ -351,13 +337,14 @@ public class render_container
 			
 			int render_id=(renders==null)?0:(renders.size());
 			render ren=new render(render_id,part_type_id,render_name,driver_name,
-							f_shader,request_response,system_par,scene_par);
+							f_shader,load_par.request_response,load_par.system_par,load_par.scene_par);
 			if(ren.driver==null) {
 				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;
 			}
-			String render_list_file_name[]=ren.driver.get_render_list(f_shader,ren,
-					component_load_source_cont,request_response,system_par,scene_par);
+			String render_list_file_name[]=ren.driver.get_render_list(
+					f_shader,ren,load_par.component_load_source_cont,
+					load_par.request_response,load_par.system_par,load_par.scene_par);
 			if(render_list_file_name==null){
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
@@ -378,9 +365,11 @@ public class render_container
 				
 				file_reader f_render_list=new file_reader(
 						render_list_file_name[i],render_list_file_name[i+1]);
-				load_one_shader(component_load_source_cont,pcps,driver_name,
-					f_render_list,f_shader.directory_name+f_shader.file_name,
-					system_par,scene_par,ren,part_id_encoder,request_response);
+
+				load_one_shader(
+						f_shader.directory_name+f_shader.file_name,
+						f_render_list,driver_name,ren,load_par);
+						
 				f_render_list.close();
 			}
 			
@@ -412,8 +401,7 @@ public class render_container
 		renders=new ArrayList<render>();
 		if(ren_con.renders!=null)
 			for(int i=0,ni=ren_con.renders.size();i<ni;i++)
-				renders.add(i,new render(ren_con.renders.get(i),
-						request_response,system_par,scene_par));
+				renders.add(i,new render(ren_con.renders.get(i),request_response,system_par,scene_par));
 		system_part_package	=new part_package(ren_con.system_part_package);
 		type_part_package	=new part_package[ren_con.type_part_package.length];
 		for(int i=0,ni=ren_con.type_part_package.length;i<ni;i++)

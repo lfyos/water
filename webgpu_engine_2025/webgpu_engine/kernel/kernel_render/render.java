@@ -13,8 +13,6 @@ import kernel_file_manager.file_reader;
 import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
-import kernel_part.part_container_for_part_search;
-import kernel_component.component_load_source_container;
 
 public class render
 {
@@ -133,12 +131,10 @@ public class render
 				p.part_par.part_type_string,p.part_type_id);
 		p.permanent_part_from_id=-1;
 	}
-	
-	public void add_part(part_container_for_part_search pcps,render ren,
-			component_load_source_container component_load_source_cont,
-			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
+
+	public void add_part(
 			String path_name,String file_charset,String pre_buffer_object_file_name,
-			permanent_part_id_encoder part_id_encoder,client_request_response request_response)
+			render ren,part_parameter part_par,load_shader_parameter load_shader_par)
 	{
 		file_reader part_f=new file_reader(path_name,file_charset);
 		if(part_f.error_flag()) {
@@ -190,11 +186,12 @@ public class render
 					part_f.directory_name,part_f.get_charset(),user_name,system_name,
 					mesh_file_name,material_file_name,description_file_name,audio_file_name);
 			
-			add_part(my_part,part_id_encoder);
+			add_part(my_part,load_shader_par.part_id_encoder);
 			
 			try{
 				my_part.driver=ren.driver.create_part_driver(part_f,my_part,ren,
-						component_load_source_cont,request_response,system_par,scene_par);
+						load_shader_par.component_load_source_cont,load_shader_par.request_response,
+						load_shader_par.system_par,load_shader_par.scene_par);
 			}catch(Exception e){
 				e.printStackTrace();
 				
@@ -206,14 +203,14 @@ public class render
 				debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
 			}
 			if(my_part.driver!=null)
-				pcps.add(my_part.system_name,my_part);
+				load_shader_par.pcps.add(my_part.system_name,my_part);
 			else{
 				delete_last_part();
 				my_part.destroy();
 			}
-			component_load_source_cont.register_component(part_f,
+			load_shader_par.component_load_source_cont.register_component(part_f,
 				my_part.part_par.part_load_assemble_type,
-				system_par.default_system_mount_component_name);
+				load_shader_par.system_par.default_system_mount_component_name);
 		}
 		part_f.close();
 		return;

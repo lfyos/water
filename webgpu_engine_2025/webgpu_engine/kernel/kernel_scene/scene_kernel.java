@@ -59,11 +59,9 @@ public class scene_kernel
 			part_lru=null;
 		}
 		if(modifier_cont!=null) {
-			for(int i=0,ni=modifier_cont.length;i<ni;i++)
-				if(modifier_cont[i]!=null){
-					modifier_cont[i].destroy();
-					modifier_cont[i]=null;
-				}
+			for(var my_modifier:modifier_cont)
+				if(my_modifier!=null)
+					my_modifier.destroy();
 			modifier_cont=null;
 		}
 		if(component_cont!=null){
@@ -79,8 +77,8 @@ public class scene_kernel
 			collector_stack=null;
 		}
 		if(camera_cont!=null) {
-			for(int i=0,ni=camera_cont.size();i<ni;i++)
-				camera_cont.get(i).destroy();
+			for(var my_camera:camera_cont)
+				my_camera.destroy();
 			camera_cont.clear();
 			camera_cont=null;
 		}
@@ -292,21 +290,20 @@ public class scene_kernel
 		render_cont	=new render_container(render_cont,load_par.request_response,system_par,scene_par);
 		part_search_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
 		
-		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
-			String path_name=scene_par.type_shader_directory_name
-				+scene_par.type_sub_directory[i]+scene_par.type_shader_file_name;
-			render_cont.load_shader(load_par.scene_component_load_source_cont,
-				part_search_cont,scene_par.parameter_last_modified_time,path_name,
-				scene_par.parameter_charset,i+2,system_par,scene_par,
-				part_id_encoder,load_par.request_response);
-		}
-		{
-			String path_name=scene_par.scene_shader_directory_name
-					+scene_par.scene_shader_file_name;
-			render_cont.load_shader(load_par.scene_component_load_source_cont,part_search_cont,
-				scene_par.scene_last_modified_time,path_name,create_parameter.scene_charset,
-				1,system_par,scene_par,part_id_encoder,load_par.request_response);
-		}
+		var load_shader_par=new kernel_render.load_shader_parameter(
+				load_par.request_response,part_search_cont,part_id_encoder,
+				load_par.scene_component_load_source_cont,system_par,scene_par);
+		
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++)
+			render_cont.load_shader(
+				scene_par.type_shader_directory_name
+						+scene_par.type_sub_directory[i]+scene_par.type_shader_file_name,
+				scene_par.parameter_charset,scene_par.parameter_last_modified_time,i+2,load_shader_par);
+		
+		render_cont.load_shader(
+				scene_par.scene_shader_directory_name+scene_par.scene_shader_file_name,
+				create_parameter.scene_charset,scene_par.scene_last_modified_time,1,load_shader_par);
+		
 		debug_information.println("Load shaders time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -419,13 +416,6 @@ public class scene_kernel
 		}
 		return fast_load_type;
 	}
-	private long create_part_type_code()
-	{
-		long part_type_code=0;
-		for(int i=0,ni=scene_par.type_sub_directory.length;i<=ni;i++)
-			part_type_code|=((long)1)<<(1+i);
-		return part_type_code;
-	}
 	private void scene_kernel_load_last_process(
 			client_request_response request_response,client_process_bar process_bar)
 	{
@@ -472,26 +462,22 @@ public class scene_kernel
 		debug_information.println("scene_par.scene_shader_directory_name    :	",	scene_par.scene_shader_directory_name);	
 		debug_information.println("scene_par.scene_shader_file_name         :	",	scene_par.scene_shader_file_name);	
 		
-		try{
-			long part_type_code=create_part_type_code();
-			String fast_load_type=get_fast_load_type(load_par.request_response,load_par.process_bar);		
-			permanent_part_id_encoder part_id_encoder=new permanent_part_id_encoder();
-			
-			scene_kernel_load_part(fast_load_type,part_type_code,part_id_encoder,load_par);
-			
-			if(scene_kernel_load_component(load_par))
-				return true;
-			
-			scene_kernel_create_component_assemble(fast_load_type,part_id_encoder,part_type_code,load_par);
-			
-			scene_kernel_load_last_process(load_par.request_response,load_par.process_bar);
-
-			return false;
-		}catch(Exception e){
-			e.printStackTrace();
-			debug_information.println("Scene load exception:	",e.toString());
+		long part_type_code=0;
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<=ni;i++)
+			part_type_code|=((long)1)<<(1+i);
+		permanent_part_id_encoder part_id_encoder=new permanent_part_id_encoder();
+		String fast_load_type=get_fast_load_type(load_par.request_response,load_par.process_bar);	
+		
+		scene_kernel_load_part(fast_load_type,part_type_code,part_id_encoder,load_par);
+		
+		if(scene_kernel_load_component(load_par))
 			return true;
-		}
+		
+		scene_kernel_create_component_assemble(fast_load_type,part_id_encoder,part_type_code,load_par);
+		
+		scene_kernel_load_last_process(load_par.request_response,load_par.process_bar);
+
+		return false;
 	}
 	
 	private boolean caculate_component_flag;
