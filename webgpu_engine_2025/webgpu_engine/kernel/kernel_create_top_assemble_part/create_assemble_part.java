@@ -14,13 +14,12 @@ import kernel_file_manager.file_directory;
 import kernel_component.component_container;
 import kernel_common_class.debug_information;
 import kernel_part.permanent_part_id_encoder;
+import kernel_scene.scene_load_call_parameter;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
 import kernel_scene.scene_kernel_create_parameter;
 import kernel_content_type.create_assemble_part_name;
-import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.tree_string_search_container;
-import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class create_assemble_part 
 {
@@ -33,10 +32,9 @@ public class create_assemble_part
 	public create_assemble_part(String fast_load_type,
 			component_container component_cont,render_container render_cont,
 			client_request_response request_response,permanent_part_id_encoder part_id_encoder,
-			part_loader_container part_loader_cont,part_container_for_part_search pcps,
-			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
-			long last_modified_time,tree_string_locker_container string_locker_container,
-			scene_kernel_create_parameter create_par,system_parameter system_par,scene_parameter scene_par)
+			part_container_for_part_search pcps,long last_modified_time,
+			scene_kernel_create_parameter create_par,system_parameter system_par,scene_parameter scene_par,
+			scene_load_call_parameter load_par)
 	{
 		debug_information.println("Begin creating top box");
 		
@@ -129,8 +127,8 @@ public class create_assemble_part
 				part_component_container.remove(comp_p.part_name);
 				continue;
 			}
-			part_loader_cont.load(add_part,fast_load_type,already_loaded_part,
-				string_locker_container,system_par,scene_par,boftal_container);
+			load_par.part_loader_cont.load(add_part,fast_load_type,already_loaded_part,
+					load_par.string_locker_cont,system_par,scene_par,load_par.boftal_cont);
 			top_box_part.add(add_part);
 			pcps.add(add_part.system_name,add_part);
 			create_part_number+=my_create_part_number;

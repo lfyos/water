@@ -12,16 +12,14 @@ import kernel_part.part_parameter;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
 import kernel_transformation.location;
-import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_part.part_loader_container;
-import kernel_interface.client_process_bar;
+import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_part.permanent_part_id_encoder;
+import kernel_scene.scene_load_call_parameter;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
-import kernel_common_class.tree_string_locker_container;
-import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class render_container
 {
@@ -70,10 +68,8 @@ public class render_container
 		return ret_val;
 	}
 	public void load_part(long part_type_code,int part_normal_bottom_box_top_box_flag,
-		part_loader_container part_loader_cont,system_parameter system_par,scene_parameter scene_par,
-		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
-		tree_string_locker_container string_locker_container,
-		client_process_bar process_bar,String process_bar_title,String fast_load_type)
+		system_parameter system_par,scene_parameter scene_par,String process_bar_title,
+		String fast_load_type,scene_load_call_parameter load_par)
 	{
 		if(renders==null)
 			return;
@@ -105,11 +101,11 @@ public class render_container
 					if(pass_id==0)
 						all_number++;
 					else{
-						part_loader_cont.load(p,fast_load_type,already_loaded_part,
-							string_locker_container,system_par,scene_par,boftal_container);
+						load_par.part_loader_cont.load(p,fast_load_type,already_loaded_part,
+								load_par.string_locker_cont,system_par,scene_par,load_par.boftal_cont);
 						load_number++;
-						if(process_bar!=null)
-							process_bar.set_process_bar(false,
+						if(load_par.process_bar!=null)
+							load_par.process_bar.set_process_bar(false,
 								process_bar_title,p.user_name,load_number,all_number);
 					}
 				}
@@ -120,8 +116,8 @@ public class render_container
 		
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		
-		if(process_bar!=null)
-			process_bar.set_process_bar(false,process_bar_title,"",all_number,all_number);
+		if(load_par.process_bar!=null)
+			load_par.process_bar.set_process_bar(false,process_bar_title,"",all_number,all_number);
 		
 		debug_information.println();
 		debug_information.println("End loading part meshes:\t",all_number);
@@ -198,8 +194,7 @@ public class render_container
 			pcps.add(add_part.system_name,add_part);
 		}
 	}
-	private void load_one_shader(
-			String shader_file_name,file_reader f_render_list,
+	private void load_one_shader(file_reader f_render_list,
 			String driver_name,render ren,load_shader_parameter load_par)
 	{
 		while(!(f_render_list.eof())){
@@ -234,7 +229,6 @@ public class render_container
 				
 				debug_information.println("Execute get_part_list fail:		",e.toString());
 				debug_information.println("Driver name:		",	driver_name);
-				debug_information.println("Shader file:		",	shader_file_name);
 				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 
 				continue;
@@ -243,7 +237,6 @@ public class render_container
 			if(get_part_list_result==null) {
 				debug_information.println("part list file is NULL");
 				debug_information.println("Driver name:		",	driver_name);
-				debug_information.println("Shader file:		",	shader_file_name);
 				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 				continue;
 			}
@@ -252,7 +245,6 @@ public class render_container
 				if(get_part_list_result[i]==null) {
 					debug_information.println("get_part_list_result[i]==null");
 					debug_information.println("Driver name:		",	driver_name);
-					debug_information.println("Shader file:		",	shader_file_name);
 					debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 					continue;
 				}
@@ -261,7 +253,6 @@ public class render_container
 				if(!((par_list_f=new File(get_part_list_result[i])).exists())) {
 					debug_information.println("part list file:	",get_part_list_result[i]+"	not exist");
 					debug_information.println("Driver name:		",	driver_name);
-					debug_information.println("Shader file:		",	shader_file_name);
 					debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 					continue;
 				}
@@ -348,9 +339,7 @@ public class render_container
 					new File(render_list_file_name[i]).setLastModified(my_shader_last_time);
 					f_render_list.lastModified_time=my_shader_last_time;
 				}
-				load_one_shader(
-						f_shader.directory_name+f_shader.file_name,
-						f_render_list,driver_name,ren,load_par);
+				load_one_shader(f_render_list,driver_name,ren,load_par);
 						
 				f_render_list.close();
 			}

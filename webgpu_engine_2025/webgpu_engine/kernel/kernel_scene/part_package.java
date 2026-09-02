@@ -12,7 +12,6 @@ import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
 import kernel_common_class.compress_file_data;
 import kernel_common_class.tree_search_container;
-import kernel_common_class.tree_string_locker_container;
 import kernel_part.comparator_for_part_container_for_process_sequence;
 
 class part_arraylist
@@ -182,10 +181,9 @@ public class part_package
 		
 		return;
 	}
-	public part_package(String fast_load_type,
-		client_process_bar process_bar,tree_string_locker_container string_locker_container,
-		String package_process_bar_title,String boftal_process_bar_title,render_container rc,
-		int part_type_id,system_parameter system_par,scene_parameter scene_par)
+	public part_package(String fast_load_type,String package_process_bar_title,
+		String boftal_process_bar_title,render_container rc,int part_type_id,
+		system_parameter system_par,scene_parameter scene_par,scene_load_call_parameter load_par)
 	{
 		String package_directory_name	=file_directory.package_file_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name	=package_directory_name+"package_data.txt";
@@ -199,7 +197,7 @@ public class part_package
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 
-		string_locker_container.write_lock(package_lock_key);
+		load_par.string_locker_cont.write_lock(package_lock_key);
 		
 		if(new File(package_data_file_name).exists()) {
 			if(fast_load_type.compareTo("fast")==0) {
@@ -209,7 +207,7 @@ public class part_package
 					package_last_time[i]=fr.get_long();
 					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
 				}
-				string_locker_container.write_unlock(package_lock_key);
+				load_par.string_locker_cont.write_unlock(package_lock_key);
 				return;
 			}
 			if(new File(boftal_data_file_name).exists()){
@@ -227,15 +225,15 @@ public class part_package
 				}
 				fr.close();
 				if(not_create_flag) {
-					string_locker_container.write_unlock(package_lock_key);
+					load_par.string_locker_cont.write_unlock(package_lock_key);
 					return;
 				}
 			}
 		}
 
 		for(int i=0;i<package_number;i++){
-			if(process_bar!=null)
-				process_bar.set_process_bar((i<=0),
+			if(load_par.process_bar!=null)
+				load_par.process_bar.set_process_bar((i<=0),
 					package_process_bar_title,"package_"+i,i,package_number);
 			
 			String my_tmp_file_name		=package_directory_name+"package_"+i+".tmp";
@@ -291,9 +289,9 @@ public class part_package
 		fw.close();
 		
 		create_package_boftal(boftal_data_file_name,ppc.tree_get_value_list(),
-				system_par,scene_par,process_bar,boftal_process_bar_title);
+				system_par,scene_par,load_par.process_bar,boftal_process_bar_title);
 	
-		string_locker_container.write_unlock(package_lock_key);
+		load_par.string_locker_cont.write_unlock(package_lock_key);
 	
 		return;
 	}

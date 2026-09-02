@@ -91,16 +91,11 @@ public class client_interface
 			return null;
 		}
 		scene_call_result ecr=null;
-		client_process_bar process_bar=get_process_bar_routine(request_response);
 		p.modify_kernel_and_client_information_lock_number(1);
 		my_lock.unlock();
 		try{
-			ecr=p.get_scene_result(delay_time_length,statistics_user,scene_counter,
-					new scene_load_call_parameter(process_bar,
-							request_response,string_locker_container,
-							scene_kernel_search_tree.system_boftal_container,
-							scene_kernel_search_tree.system_component_load_source_cont));
-			
+			ecr=p.get_scene_result(delay_time_length,
+					statistics_user,scene_counter,request_response,null);
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;
@@ -170,11 +165,6 @@ public class client_interface
 			return null;
 		}
 		client_process_bar process_bar=get_process_bar_routine(request_response);
-		
-		scene_load_call_parameter load_par=new scene_load_call_parameter(
-				process_bar,request_response,string_locker_container,
-				scene_kernel_search_tree.system_boftal_container,
-				scene_kernel_search_tree.system_component_load_source_cont);
 
 		process_bar.set_process_bar(true,"start_create_kernel","",0,2);
 
@@ -184,8 +174,9 @@ public class client_interface
 		
 		try{
 			created_scene_kernel_only=scene_kernel_search_tree.create_scene_kernel_container(
-				client_scene_file_name,client_scene_file_charset,scene_counter,system_par,load_par);
-		}catch(Exception e) {
+				request_response,process_bar,string_locker_container,
+				client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
+		}catch(Exception e){
 			e.printStackTrace();
 
 			created_scene_kernel_only=null;
@@ -216,9 +207,16 @@ public class client_interface
 		scene_call_result ecr=null;
 		
 		my_lock.unlock();
+
 		try{
 			ecr=created_sk_and_ci.get_scene_result(
-					delay_time_length,statistics_user,scene_counter,load_par);
+					delay_time_length,statistics_user,scene_counter,request_response,
+					new scene_load_call_parameter(process_bar,
+							scene_kernel_search_tree.original_render,
+							scene_kernel_search_tree.part_loader_cont,
+							string_locker_container,
+							scene_kernel_search_tree.system_component_load_source_cont,
+							scene_kernel_search_tree.system_boftal_container));
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;

@@ -14,8 +14,12 @@ public class buffer_object_file_modify_time_and_length_container
 	public void load(client_process_bar process_bar,String process_title,
 			String my_boftal_file_name,String boftal_file_charset)
 	{
-		file_reader fr	=new file_reader(my_boftal_file_name,boftal_file_charset);
-		int number		=fr.get_int();
+		file_reader fr=new file_reader(my_boftal_file_name,boftal_file_charset);
+		if(fr.error_flag()) {
+			fr.close();
+			return;
+		}
+		int number=fr.get_int();
 
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,process_title,"",0,number);
@@ -31,5 +35,6 @@ public class buffer_object_file_modify_time_and_length_container
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,process_title,"",number,number);
 		fr.close();
+		return;
 	}
 }

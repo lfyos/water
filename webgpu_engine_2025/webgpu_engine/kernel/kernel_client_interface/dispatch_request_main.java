@@ -6,13 +6,11 @@ import kernel_scene.scene_kernel;
 import kernel_scene.scene_call_result;
 import kernel_scene.client_information;
 import kernel_common_class.debug_information;
-import kernel_common_class.tree_string_locker_container;
 
 public class dispatch_request_main
 {
 	static private String[] get_scene_result_routine(
-			long delay_time_length,scene_kernel sk,client_information ci,
-			tree_string_locker_container string_locker_container)
+			long delay_time_length,scene_kernel sk,client_information ci)
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("command"))==null) {
@@ -42,7 +40,7 @@ public class dispatch_request_main
 		case "part":
 			return dispatch_part_request.do_dispatch(sk,ci);
 		case "component":
-			return dispatch_component_request.do_dispatch(delay_time_length,sk,ci,string_locker_container);
+			return dispatch_component_request.do_dispatch(delay_time_length,sk,ci);
 		case "modifier":
 			return dispatch_modifier_request.do_dispatch(sk, ci);
 		case "collector":
@@ -56,11 +54,10 @@ public class dispatch_request_main
 		}
 	}
 	static public scene_call_result get_scene_result(
-			long delay_time_length,scene_kernel sk,client_information ci,
-			tree_string_locker_container string_locker_container)
+			long delay_time_length,scene_kernel sk,client_information ci)
 	{
 		sk.current_time.refresh_timer();
-		String file_name[]=get_scene_result_routine(delay_time_length,sk,ci,string_locker_container);
+		String file_name[]=get_scene_result_routine(delay_time_length,sk,ci);
 		sk.test_and_caculate_scene_component_flag();
 
 		if(file_name==null)

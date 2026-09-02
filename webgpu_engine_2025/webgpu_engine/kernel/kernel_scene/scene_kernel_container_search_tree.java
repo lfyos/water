@@ -6,31 +6,32 @@ import java.util.concurrent.locks.ReentrantLock;
 import kernel_render.render_container;
 import kernel_part.part_loader_container;
 import kernel_file_manager.file_directory;
+import kernel_interface.client_process_bar;
 import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
-import kernel_common_class.tree_string_locker_container;
 import kernel_component.component_load_source_container;
 import kernel_common_class.tree_search_container_tree_node;
 import kernel_common_class.tree_string_array_search_container;
+import kernel_common_class.tree_string_locker_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class scene_kernel_container_search_tree 
 {
 	private tree_string_array_search_container<scene_kernel_container> tree;
 	
-	private render_container original_render;
+	public render_container original_render;
 	
 	public component_load_source_container system_component_load_source_cont;
 	public buffer_object_file_modify_time_and_length_container system_boftal_container;
 	
-	private part_loader_container part_loader_cont;
+	public part_loader_container part_loader_cont;
 	
 	private volatile ReentrantLock scene_kernel_container_search_tree_lock;
 	
 	private void load_render_container(client_request_response request_response,
-			system_parameter system_par,tree_string_locker_container string_locker_container)
+			system_parameter system_par,scene_load_call_parameter load_par)
 	{
 		int part_type_id=0;
 		
@@ -46,21 +47,16 @@ public class scene_kernel_container_search_tree
 
 		String fast_load_type=request_response.get_fast_load_type();
 		
-		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,system_par,null,
-				new ArrayList<buffer_object_file_modify_time_and_length_container>(),
-				string_locker_container,null,null,fast_load_type);
+		original_render.load_part(((long)1)<<part_type_id,1,system_par,null,null,fast_load_type,load_par);
 		
 		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
-		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,system_par,null,
-				new ArrayList<buffer_object_file_modify_time_and_length_container>(),
-				string_locker_container,null,null,fast_load_type);
+		original_render.load_part(((long)1)<<part_type_id,2,system_par,null,null,fast_load_type,load_par);
 		
 		debug_information.println();
 		debug_information.println("Begin create system_part_package");
 		
-		original_render.system_part_package=new part_package(
-			fast_load_type,null,string_locker_container,
-			null,null,original_render,part_type_id,system_par,null);
+		original_render.system_part_package=new part_package(fast_load_type,
+			null,null,original_render,part_type_id,system_par,null,load_par);
 		
 		system_boftal_container=new buffer_object_file_modify_time_and_length_container();
 		try {
@@ -114,8 +110,7 @@ public class scene_kernel_container_search_tree
 		
 		scene_kernel_container scene_kernel_cont=new scene_kernel_container(
 				scene_name,link_name,request_response,system_par,
-				client_scene_file_name,client_scene_file_charset,
-				original_render,part_loader_cont);
+				client_scene_file_name,client_scene_file_charset);
 		
 		if(scene_kernel_cont.sk==null){
 			debug_information.println("Create scene fail:	",scene_name+"	"+link_name);
@@ -131,9 +126,10 @@ public class scene_kernel_container_search_tree
 		return scene_kernel_cont;
 	}
 	public scene_kernel_container create_scene_kernel_container(
+			client_request_response request_response,client_process_bar process_bar,
+			tree_string_locker_container string_locker_container,
 			String client_scene_file_name,String client_scene_file_charset,
-			create_scene_counter scene_counter,system_parameter system_par,
-			scene_load_call_parameter load_par)
+			create_scene_counter scene_counter,system_parameter system_par)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=scene_kernel_container_search_tree_lock)==null)
@@ -141,13 +137,16 @@ public class scene_kernel_container_search_tree
 		my_lock.lock();
 
 		if(original_render==null)
-			load_render_container(load_par.request_response,system_par,load_par.string_locker_cont);
+			load_render_container(request_response,system_par,
+					new scene_load_call_parameter(process_bar,original_render,
+							part_loader_cont,string_locker_container,
+							system_component_load_source_cont,system_boftal_container));
 		
 		scene_kernel_container my_scene_kernel_container=null;
 		try {
 			my_scene_kernel_container=create_scene_kernel_container_routine(
 				client_scene_file_name,client_scene_file_charset,
-				load_par.request_response,scene_counter,system_par);
+				request_response,scene_counter,system_par);
 		}catch(Exception e) {
 			e.printStackTrace();
 			
