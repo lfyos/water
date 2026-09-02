@@ -61,7 +61,7 @@ public class dispatch_request_main
 	{
 		sk.current_time.refresh_timer();
 		String file_name[]=get_scene_result_routine(delay_time_length,sk,ci,string_locker_container);
-		sk.caculate_scene_component_flag();
+		sk.test_and_caculate_scene_component_flag();
 
 		if(file_name==null)
 			return new scene_call_result();

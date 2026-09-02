@@ -6,6 +6,7 @@ import java.util.Date;
 
 import kernel_part.part;
 import kernel_camera.camera;
+import kernel_render.render;
 import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_render.render_container;
@@ -14,6 +15,7 @@ import kernel_driver.modifier_container;
 import kernel_part.part_loader_container;
 import kernel_file_manager.file_directory;
 import kernel_interface.client_process_bar;
+import kernel_render.load_shader_parameter;
 import kernel_component.component_container;
 import kernel_common_class.nanosecond_timer;
 import kernel_part.permanent_part_id_encoder;
@@ -23,58 +25,60 @@ import kernel_camera.camera_container_creator;
 import kernel_component.component_collector_stack;
 import kernel_part.part_container_for_part_search;
 import kernel_common_class.tree_string_locker_container;
+import kernel_common_class.tree_string_search_container;
 import kernel_component.component_load_source_container;
 import kernel_create_top_assemble_part.create_assemble_part;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class scene_kernel
 {
-	public String 							scene_name,link_name;
+	public String 								scene_name,link_name;
 	
-	public scene_kernel_create_parameter 	create_parameter;
+	public scene_kernel_create_parameter 		create_parameter;
 
-	public system_parameter		 			system_par;
-	public scene_parameter					scene_par;
+	public system_parameter		 				system_par;
+	public scene_parameter						scene_par;
 	
-	public render_container 				render_cont;
-	public part_container_for_part_search	part_search_cont;
-	public component_container			 	component_cont;
-	public ArrayList<camera> 				camera_cont;
-	public component_collector_stack		collector_stack;
+	public render_container 					render_cont;
+	public tree_string_search_container<render> render_search_cont;
+	public part_container_for_part_search		part_search_cont;
+	public component_container			 		component_cont;
+	public ArrayList<camera> 					camera_cont;
+	public component_collector_stack			collector_stack;
 	
-	public part_process_sequence			process_part_sequence;
+	public part_process_sequence				process_part_sequence;
 	
-	public nanosecond_timer					current_time;
+	public nanosecond_timer						current_time;
 	
-	public modifier_container				modifier_cont[];
+	public modifier_container					modifier_cont[];
 	
-	public part_lru_manager					part_lru;
+	public part_lru_manager						part_lru;
 
-	public part_loader_container 			part_loader_cont;
+	public part_loader_container 				part_loader_cont;
 
 	public void destroy()
 	{
-		if(part_lru!=null) {
-			part_lru.destroy();
-			part_lru=null;
-		}
-		if(modifier_cont!=null) {
-			for(var my_modifier:modifier_cont)
-				if(my_modifier!=null)
-					my_modifier.destroy();
-			modifier_cont=null;
-		}
-		if(component_cont!=null){
-			component_cont.destroy();
-			component_cont=null;
-		}
+		scene_name		=null;
+		link_name		=null;
+		create_parameter=null;
+		system_par		=null;
+		scene_par		=null;
+		
 		if(render_cont!=null) {
 			render_cont.destroy();
 			render_cont=null;
 		}
-		if(collector_stack!=null) {
-			collector_stack.destroy();
-			collector_stack=null;
+		if(render_search_cont!=null) {
+			render_search_cont.destroy();
+			render_search_cont=null;
+		}
+		if(part_search_cont!=null) {
+			part_search_cont.destroy();
+			part_search_cont=null;
+		}
+		if(component_cont!=null){
+			component_cont.destroy();
+			component_cont=null;
 		}
 		if(camera_cont!=null) {
 			for(var my_camera:camera_cont)
@@ -82,57 +86,61 @@ public class scene_kernel
 			camera_cont.clear();
 			camera_cont=null;
 		}
-		if(part_search_cont!=null) {
-			part_search_cont.destroy();
-			part_search_cont=null;
+		if(collector_stack!=null) {
+			collector_stack.destroy();
+			collector_stack=null;
 		}
 		if(process_part_sequence!=null) {
 			process_part_sequence.destroy();
 			process_part_sequence=null;
 		}
-		
-		scene_name		=null;
-		link_name		=null;
-		create_parameter=null;
-		system_par		=null;
-		scene_par		=null;
-		current_time	=null;
-
+		current_time=null;
+		if(modifier_cont!=null) {
+			for(var my_modifier:modifier_cont)
+				if(my_modifier!=null)
+					my_modifier.destroy();
+			modifier_cont=null;
+		}
+		if(part_lru!=null) {
+			part_lru.destroy();
+			part_lru=null;
+		}
 		part_loader_cont=null;
 	}
-	public scene_kernel(
-		String my_scene_name,String my_link_name,scene_kernel_create_parameter my_create_parameter,
+	public scene_kernel(String my_scene_name,String my_link_name,
+		scene_kernel_create_parameter my_create_parameter,
 		client_request_response request_response,system_parameter my_system_parameter,
 		render_container my_original_render,part_loader_container my_part_loader_cont)
 	{
-		scene_name				=my_scene_name;
-		link_name				=my_link_name;
+		scene_name			=my_scene_name;
+		link_name			=my_link_name;
 		
-		create_parameter		=my_create_parameter;
-		system_par				=my_system_parameter;
-		scene_par				=new scene_parameter(my_scene_name,
-										request_response,system_par,create_parameter);
+		create_parameter	=my_create_parameter;
+		system_par			=my_system_parameter;
+		scene_par			=new scene_parameter(
+				my_scene_name,request_response,system_par,create_parameter);
 		
-		component_cont			=null;
-		camera_cont				=null;
-		collector_stack			=null;
+		render_cont			=my_original_render;
+		render_search_cont	=null;
+		part_search_cont	=null;	
+		
+		component_cont		=null;
+		camera_cont			=null;
+		collector_stack		=null;
 
-		process_part_sequence	=null;
+		process_part_sequence=null;
 		
-		current_time			=new nanosecond_timer();
+		current_time		=new nanosecond_timer();
 
-		modifier_cont			=new modifier_container[scene_par.max_modifier_container_number];
+		modifier_cont		=new modifier_container[scene_par.max_modifier_container_number];
 		for(int i=0,ni=scene_par.max_modifier_container_number;i<ni;i++)
 			modifier_cont[i]=new modifier_container(current_time.nanoseconds());
 		
-		part_lru				=null;	
+		part_lru			=null;	
 
-		part_loader_cont		=my_part_loader_cont;
+		part_loader_cont	=my_part_loader_cont;
 		
-		caculate_component_flag	=false;
-		
-		render_cont				=my_original_render;
-		part_search_cont		=null;	
+		caculate_component_flag=false;
 	}
 	private void load_camera()
 	{
@@ -290,7 +298,7 @@ public class scene_kernel
 		render_cont	=new render_container(render_cont,load_par.request_response,system_par,scene_par);
 		part_search_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
 		
-		var load_shader_par=new kernel_render.load_shader_parameter(
+		load_shader_parameter load_shader_par=new load_shader_parameter(
 				load_par.request_response,part_search_cont,part_id_encoder,
 				load_par.scene_component_load_source_cont,system_par,scene_par);
 		
@@ -307,7 +315,6 @@ public class scene_kernel
 		debug_information.println("Load shaders time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
-		
 		
 		add_boftal_container(fast_load_type,load_par);
 
@@ -422,6 +429,10 @@ public class scene_kernel
 		component_cont.original_part_number=new compress_render_container(
 				render_cont,part_search_cont,component_cont.root_component).original_part_number;
 			
+		render_search_cont=new tree_string_search_container<render>(null);
+		for(var my_render:render_cont.renders)
+			render_search_cont.add(my_render.render_name,my_render);
+		
 		part_search_cont.destroy();
 		part_search_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
 		part_search_cont.reset_assembly_precision();
@@ -485,7 +496,7 @@ public class scene_kernel
 	{
 		caculate_component_flag=true;
 	}
-	public void caculate_scene_component_flag()
+	public void test_and_caculate_scene_component_flag()
 	{
 		if(caculate_component_flag){
 			caculate_component_flag=false;

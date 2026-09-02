@@ -21,15 +21,12 @@ import kernel_part.permanent_part_id_encoder;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
 import kernel_common_class.tree_string_locker_container;
-import kernel_common_class.tree_string_search_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class render_container
 {
 	public ArrayList<render> renders;
 	public part_package system_part_package,type_part_package[],scene_part_package;
-	
-	private tree_string_search_container<render> tree_renders;
 	
 	public void destroy()
 	{
@@ -44,10 +41,6 @@ public class render_container
 			}
 			renders=null;
 		}
-		if(tree_renders!=null) {
-			tree_renders.destroy();
-			tree_renders=null;
-		}
 		if(system_part_package!=null) 
 			system_part_package=null;
 
@@ -58,17 +51,6 @@ public class render_container
 		}
 		if(scene_part_package!=null)
 			scene_part_package=null;
-	}
-	public render search_render(String my_render_name)
-	{
-		if(tree_renders==null){
-			tree_renders=new tree_string_search_container<render>(null);
-			for(render my_render:renders) 
-				if(my_render!=null)
-					tree_renders.add(my_render.render_name,my_render);
-		}
-		ArrayList<render> my_render_list=tree_renders.search_value_list(my_render_name);
-		return (my_render_list==null)?null:(my_render_list.size()<=0)?null:my_render_list.get(0);
 	}
 	public ArrayList<part> part_array_list(int part_type_id)
 	{
@@ -307,17 +289,18 @@ public class render_container
 	public void load_shader(String shader_path_name,String shader_file_charset,
 			long last_modify_time,int part_type_id,load_shader_parameter load_par)
 	{
-		File f;
-		if((f=new File(shader_path_name)).lastModified()<last_modify_time)
-			f.setLastModified(last_modify_time);
-		
 		file_reader f_shader=new file_reader(shader_path_name,shader_file_charset);
 		if(f_shader.error_flag()){
 			debug_information.println();
 			debug_information.println("shader configure file error,file name is ",shader_path_name);
 			f_shader.close();
 			return;
+		}	
+		if(f_shader.lastModified_time<last_modify_time) {
+			new File(shader_path_name).setLastModified(last_modify_time);
+			f_shader.lastModified_time=last_modify_time;
 		}
+
 		debug_information.println();
 		debug_information.println("Begin shader and part initialization,file name is ",shader_path_name);
 
@@ -355,30 +338,29 @@ public class render_container
 					continue;
 				}
 				render_list_file_name[i]=file_directory.replace_special_char(render_list_file_name[i]);
-				if(!((f=new File(render_list_file_name[i])).exists())) {
+				file_reader f_render_list=new file_reader(render_list_file_name[i],render_list_file_name[i+1]);
+				if(f_render_list.error_flag()) {
+					f_render_list.close();
 					debug_information.println(render_list_file_name[i],"		not exist");
 					continue;
 				}
-				
-				if(f.lastModified()<my_shader_last_time)
-					f.setLastModified(my_shader_last_time);
-				
-				file_reader f_render_list=new file_reader(
-						render_list_file_name[i],render_list_file_name[i+1]);
-
+				if(f_render_list.lastModified_time<my_shader_last_time) {
+					new File(render_list_file_name[i]).setLastModified(my_shader_last_time);
+					f_render_list.lastModified_time=my_shader_last_time;
+				}
 				load_one_shader(
 						f_shader.directory_name+f_shader.file_name,
 						f_render_list,driver_name,ren,load_par);
 						
 				f_render_list.close();
 			}
-			
-			if(ren.parts==null)
-				ren.destroy();
-			else if(ren.parts.size()<=0) 
-				ren.destroy();
-			else 
-				renders.add(renders.size(),ren);
+
+			if(ren.parts!=null)
+				if(ren.parts.size()>0){
+					renders.add(renders.size(),ren);
+					continue;
+				}
+			ren.destroy();
 		}
 		debug_information.println("End shader and part initialization");
 		debug_information.println();
@@ -391,8 +373,6 @@ public class render_container
 		system_part_package		=new part_package();
 		type_part_package		=new part_package[] {};
 		scene_part_package		=new part_package();
-		
-		tree_renders=null;
 	}
 	public render_container(render_container ren_con,
 			client_request_response request_response,
@@ -407,7 +387,5 @@ public class render_container
 		for(int i=0,ni=ren_con.type_part_package.length;i<ni;i++)
 			type_part_package[i]=new part_package(ren_con.type_part_package[i]);
 		scene_part_package	=new part_package(ren_con.scene_part_package);
-		
-		tree_renders=null;
 	}
 }

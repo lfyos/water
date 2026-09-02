@@ -40,10 +40,9 @@ public class render
 			driver=null;
 		}
 	}
-	public render(
-			render r,client_request_response request_response,
-			system_parameter system_par,scene_parameter scene_par)
-	{	
+	public render(render r,client_request_response request_response,
+				system_parameter system_par,scene_parameter scene_par)
+	{
 		part p;
 		
 		render_name		=r.render_name;
@@ -208,8 +207,8 @@ public class render
 				delete_last_part();
 				my_part.destroy();
 			}
-			load_shader_par.component_load_source_cont.register_component(part_f,
-				my_part.part_par.part_load_assemble_type,
+			load_shader_par.component_load_source_cont.register_component(
+				part_f,my_part.part_par.part_load_assemble_type,
 				load_shader_par.system_par.default_system_mount_component_name);
 		}
 		part_f.close();

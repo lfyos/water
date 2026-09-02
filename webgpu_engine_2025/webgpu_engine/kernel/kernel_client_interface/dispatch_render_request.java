@@ -70,12 +70,27 @@ public class dispatch_render_request
 					debug_information.println("Can NOT decode render name in render_request_dispatch");
 					return null;
 				}
-				if((r=sk.render_cont.search_render(str))!=null) 
-					return response_render_event(r,sk,ci);
-				else{
-					debug_information.println("No render exist with name ",str+" in render_request_dispatch");
+				if(sk.render_search_cont==null) {
+					debug_information.println("sk.render_search_cont==null with name ",
+							str+" in render_request_dispatch");
 					return null;
 				}
+				ArrayList<render> render_list;
+				if((render_list=sk.render_search_cont.search_value_list(str))==null){
+					debug_information.println("search_value_list(str))==null with name ",
+							str+" in render_request_dispatch");
+					return null;
+				}
+				if(render_list.size()>1)
+					debug_information.println("render_list.size()>1 with name ",
+							str+" in render_request_dispatch");
+				
+				if((r=render_list.get(0))==null){
+					debug_information.println("(r=render_list.get(0))==null with name ",
+							str+" in render_request_dispatch");
+					return null;
+				}
+				return response_render_event(r,sk,ci);
 			}
 			if((str=ci.request_response.get_parameter("event_part_name"))!=null){
 				try {

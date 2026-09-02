@@ -10,9 +10,8 @@ class part_value_comparator_for_part_search implements Comparator<part>
 {
 	public int compare(part pi,part pj)
 	{
-		int name_compare_value=pi.system_name.compareTo(pj.system_name);
-		
-		if(name_compare_value!=0)
+		int name_compare_value;
+		if((name_compare_value=pi.system_name.compareTo(pj.system_name))!=0)
 			return name_compare_value;
 		
 		double diff;
