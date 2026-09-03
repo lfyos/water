@@ -49,11 +49,11 @@ public class common_writer
 		end_str=my_end_str;
 		newline_str="\n";
 	}
-	public String get_charset_name()
+	public String get_charset()
 	{
 		return charset_name;
 	}
-	public void set_charset_name(String my_charset_name)
+	public void set_charset(String my_charset_name)
 	{
 		charset_name=my_charset_name;
 	}

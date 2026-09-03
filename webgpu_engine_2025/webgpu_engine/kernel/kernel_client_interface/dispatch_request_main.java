@@ -106,7 +106,7 @@ public class dispatch_request_main
 		scene_call_result ret_val=new scene_call_result(f,sk.system_par);
 		ci.request_response.set_content_type(
 			(ret_val.content_type==null)?"text/plain":ret_val.content_type.content_str);
-		ci.request_response.set_charset_name(file_charset);
+		ci.request_response.set_charset(file_charset);
 		
 		return ret_val;
 	}

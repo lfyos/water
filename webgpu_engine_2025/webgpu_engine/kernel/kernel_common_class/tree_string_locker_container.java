@@ -42,14 +42,12 @@ public class tree_string_locker_container extends tree_string_search_container<l
 		locker_container locker_cont;
 		tree_search_container_tree_node<String,locker_container> search_tree_node;
 		
-		
 		if(modify_number>=0){
-			int last_id;
-			for(search_tree_node=add(locker_name,null);(last_id=search_tree_node.list.size()-1)>0;)
-				search_tree_node.list.remove(last_id);
-			if((locker_cont=search_tree_node.list.get(0))==null) {
+			if((search_tree_node=search_tree_node(locker_name))!=null)
+				locker_cont=search_tree_node.list.get(0);
+			else{
 				locker_cont=new locker_container();
-				search_tree_node.list.set(0,locker_cont);
+				add(locker_name,locker_cont);
 			}
 			locker_cont.number+=modify_number;
 		}else{
@@ -94,13 +92,5 @@ public class tree_string_locker_container extends tree_string_search_container<l
 		ReentrantReadWriteLock p;
 		if((p=operate_locker_routine(false,locker_name,-1))!=null)
 			p.readLock().unlock();
-	}
-	public void switch_read_lock_to_write_lock(String locker_name)
-	{
-		ReentrantReadWriteLock p;
-		if((p=operate_locker_routine(false,locker_name,0))!=null){
-			p.readLock().unlock();
-			p.writeLock().lock();
-		}
 	}
 }

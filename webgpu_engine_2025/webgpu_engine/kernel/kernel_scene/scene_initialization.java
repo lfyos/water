@@ -10,6 +10,7 @@ import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.jason_string;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.common_reader;
 import kernel_file_manager.file_directory;
 import kernel_interface.client_process_bar;
@@ -529,7 +530,8 @@ public class scene_initialization
 		
 		fw.println("}");
 	}
-	private void file_initialize(scene_kernel sk,
+	private void file_initialize(
+			scene_kernel sk,tree_string_locker_container string_locker_cont,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		ArrayList<component> init_comp=new ArrayList<component>();
@@ -549,7 +551,10 @@ public class scene_initialization
 		}
 
 		String destination_file_name=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
-		if((new File(destination_file_name)).lastModified()<=initialization_last_time(init_comp,sk,process_bar)){
+		
+		string_locker_cont.write_lock(destination_file_name);
+		
+		if((new File(destination_file_name)).lastModified()<initialization_last_time(init_comp,sk,process_bar)){
 			file_writer fw=new file_writer(destination_file_name,sk.system_par.network_data_charset);
 	
 			fw.println("export var initialization_data=[").println();
@@ -573,6 +578,9 @@ public class scene_initialization
 					sk.system_par.response_block_size,"gzip");
 			file_writer.file_delete(tmp_file_name);
 		}
+		
+		string_locker_cont.write_unlock(destination_file_name);
+
 		for(int i=0,ni=init_comp.size();i<ni;i++) {
 			component comp=init_comp.get(i);
 			if(comp.initialization!=null) {
@@ -581,7 +589,8 @@ public class scene_initialization
 			}
 		}
 	}
-	public scene_initialization(scene_kernel sk,
+	public scene_initialization(
+			scene_kernel sk,tree_string_locker_container string_locker_cont,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		debug_information.println();
@@ -602,7 +611,7 @@ public class scene_initialization
 		debug_information.println();
 		debug_information.println("Begin create initialization file");
 		
-		file_initialize(sk,request_response,process_bar);
+		file_initialize(sk,string_locker_cont,request_response,process_bar);
 		debug_information.println("End create initialization file");
 	}
 }

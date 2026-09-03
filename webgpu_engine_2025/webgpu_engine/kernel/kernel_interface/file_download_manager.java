@@ -99,7 +99,7 @@ public class file_download_manager
 			debug_information.println();
 			return true;
 		}
-		request_response.set_charset_name(file_charset);
+		request_response.set_charset(file_charset);
 		request_response.set_content_type(file_content);
 		return false;
 	}

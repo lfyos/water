@@ -24,7 +24,8 @@ class part_arraylist
 		last_time=0;
 	}
 };
-class comparator_for_part_package_collector extends comparator_for_part_container_for_process_sequence
+class comparator_for_part_package_collector 
+		extends comparator_for_part_container_for_process_sequence
 {
 	public static int package_compare(part s,part t)
 	{
@@ -40,6 +41,7 @@ class comparator_for_part_package_collector extends comparator_for_part_containe
 	public int compare(part pi,part pj)
 	{
 		int ret_val;
+		
 		if((ret_val=package_compare(pi,pj))!=0)
 			return ret_val;
 		else
@@ -51,7 +53,7 @@ class comparator_for_part_package_collector extends comparator_for_part_containe
 	{
 		super(my_box_distance_difference_scale,my_buffer_data_length_difference_scale);
 	}
-}
+};
 class part_package_collector extends tree_search_container<part,part>
 {
 	public ArrayList<part_arraylist> part_package;
@@ -88,7 +90,7 @@ class part_package_collector extends tree_search_container<part,part>
 			
 			my_part.part_package_sequence_id=my_part_arraylist.list.size();
 			my_part_arraylist.list.add(my_part.part_package_sequence_id,my_part);
-			
+
 			long my_last_time=my_part.boftal.buffer_object_head_last_modify_time;
 			if(my_last_time<my_part.part_par.last_modified_time)
 				my_last_time=my_part.part_par.last_modified_time;
@@ -100,6 +102,7 @@ class part_package_collector extends tree_search_container<part,part>
 					if(comparator_for_part_package_collector.
 						package_compare(my_part,data_list.get(i+1))==0)
 							continue;
+
 			package_number++;
 			my_package_length=0;
 		}
@@ -138,7 +141,9 @@ public class part_package
 		int part_number=my_part_array_list.size();
 		
 		debug_information.println();
-		debug_information.println("Begin create_package_boftal,Total part number:",part_number+",	"+boftal_data_file_name);
+		debug_information.println(
+				"Begin create_package_boftal,Total part number:",
+				part_number+",	"+boftal_data_file_name);
 		debug_information.println();
 		
 		if((process_bar!=null)&&(process_bar_title!=null))
@@ -150,12 +155,12 @@ public class part_package
 		
 		for(int i=0;i<part_number;i++) {
 			part boftal_part=my_part_array_list.get(i);
-			String part_temporary_file_directory=file_directory.part_temporary_directory(
-					boftal_part,system_par,scene_par);
+			String part_temporary_file_directory=file_directory.
+						part_temporary_directory(boftal_part,system_par,scene_par);
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 			fw.println(part_temporary_file_directory.substring(cut_directory_length));
 
-			file_reader fr=new file_reader(boftal_file_name,fw.get_charset_name());
+			file_reader fr=new file_reader(boftal_file_name,fw.get_charset());
 			for(String str;!(fr.eof());)
 				if((str=fr.get_string())!=null)
 					fw.println(str);

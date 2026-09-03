@@ -44,14 +44,30 @@ public class part_loader extends Thread
 		string_locker_container	=my_string_locker_container;
 		start();
 	}
+	private boolean fast_load(String boftal_file_name)
+	{
+		if(new File(boftal_file_name).lastModified()<=loaded_part.part_par.last_modified_time)
+			return false;
+		file_reader fr=new file_reader(boftal_file_name,system_par.local_data_charset);
+		loaded_part.boftal=new buffer_object_file_modify_time_and_length(fr);
+		fr.close();
+		
+		if(loaded_part.part_mesh==null)
+			loaded_part.part_mesh=loaded_part.boftal.simple_part_mesh;
+		if(loaded_part.part_mesh!=null)
+			loaded_part.part_mesh.free_memory();
+		
+		debug_information.println(fast_load_type+":	load part mesh.boftal:	user name:"+
+				loaded_part.user_name+"	system name:"+loaded_part.system_name,
+				"	mesh file:"	 +loaded_part.directory_name+loaded_part.mesh_file_name);
+		return true;
+	}
 	public void run()
 	{
 		String part_temporary_file_directory=file_directory.part_temporary_directory(
 				loaded_part,system_par,scene_par);
 		String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
-		
 		String my_lock_key=part_temporary_file_directory+"part.lock";
-		
 		switch(fast_load_type){
 		case "slow":
 		case "clear":
@@ -59,27 +75,21 @@ public class part_loader extends Thread
 			break;
 		default:
 			string_locker_container.read_lock(my_lock_key);
-			if(new File(boftal_file_name).lastModified()>=loaded_part.part_par.last_modified_time){
-				file_reader fr=new file_reader(boftal_file_name,system_par.local_data_charset);
-				loaded_part.boftal=new buffer_object_file_modify_time_and_length(fr);
-				fr.close();
-				
-				if(loaded_part.part_mesh==null)
-					loaded_part.part_mesh=loaded_part.boftal.simple_part_mesh;
-				if(loaded_part.part_mesh!=null)
-					loaded_part.part_mesh.free_memory();
-				
+			if(fast_load(boftal_file_name)) {
 				is_loading_flag=false;
 				string_locker_container.read_unlock(my_lock_key);
-				
-				debug_information.println(fast_load_type+":	load part mesh.boftal:	user name:"+
-						loaded_part.user_name+"	system name:"+loaded_part.system_name,
-						"	mesh file:"	 +loaded_part.directory_name+loaded_part.mesh_file_name);
 				return;
 			}
-			string_locker_container.switch_read_lock_to_write_lock(my_lock_key);
+			string_locker_container.read_unlock(my_lock_key);
+			string_locker_container.write_lock(my_lock_key);
+			if(fast_load(boftal_file_name)) {
+				is_loading_flag=false;
+				string_locker_container.write_unlock(my_lock_key);
+				return;
+			}
 			break;
 		}
+		
         try{
         	String str=loaded_part.load_mesh_and_create_buffer_object(system_par,scene_par);
 			debug_information.println("\n\tfast_load_type:\t\t\t"+fast_load_type+str);
@@ -89,7 +99,7 @@ public class part_loader extends Thread
 			debug_information.println(e.toString());
 			e.printStackTrace();
 		}
-
+        
         is_loading_flag=false;
         string_locker_container.write_unlock(my_lock_key);
 	}

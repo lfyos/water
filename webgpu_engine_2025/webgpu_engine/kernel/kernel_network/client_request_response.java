@@ -215,8 +215,7 @@ public class client_request_response extends common_writer
 				compress_response_header="gzip";
 			}
 		
-		implementor.set_response_http_header(
-			get_charset_name(),response_content_type,compress_response_header,
+		implementor.set_response_http_header(get_charset(),response_content_type,compress_response_header,
 			ecr.last_modified_time,system_par.file_buffer_expire_time_length,system_par.http_date_str);
 		implementor.response_binary_data("response_network_data error",data_buf,data_buf.length);
 		implementor.terminate_response_binary_data("Error 3 in response_network_data");
@@ -301,7 +300,7 @@ public class client_request_response extends common_writer
 
 		String error_msg;
 		error_msg ="\nresult_file_name is "+ecr.result_file_name;
-		error_msg ="\nfile_charset is "+get_charset_name();
+		error_msg ="\nfile_charset is "+get_charset();
 		error_msg+="\ncharset_name is "+system_par.network_data_charset;
 		
 		File f;
@@ -317,7 +316,7 @@ public class client_request_response extends common_writer
 		if(range_string.length()>0)
 			error_msg=range_string+"\n"+error_msg;
 		
-		implementor.set_response_http_header(get_charset_name(),
+		implementor.set_response_http_header(get_charset(),
 			response_content_type,compress_response_header,ecr.last_modified_time,
 			system_par.file_buffer_expire_time_length,system_par.http_date_str);
 
@@ -362,7 +361,7 @@ public class client_request_response extends common_writer
 	public common_writer print_routine(String str)
 	{
 		if(parameter!=null)
-			inset_result(new String[] {str,get_charset_name()});
+			inset_result(new String[] {str,get_charset()});
 		else
 			super.print_routine(str);
 		return this;
@@ -421,7 +420,7 @@ public class client_request_response extends common_writer
 		try{
 			output_stream.write(data,offset,length);
 			if(display_content_flag)
-				debug_information.print(new String(data,get_charset_name()));
+				debug_information.print(new String(data,get_charset()));
 		}catch(Exception e){
 			e.printStackTrace();
 			

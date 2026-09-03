@@ -16,6 +16,7 @@ import kernel_interface.client_process_bar;
 import kernel_render.load_shader_parameter;
 import kernel_component.component_container;
 import kernel_common_class.nanosecond_timer;
+import kernel_common_class.tree_string_locker_container;
 import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
@@ -417,8 +418,8 @@ public class scene_kernel
 		}
 		return fast_load_type;
 	}
-	private void scene_kernel_load_last_process(
-			client_request_response request_response,client_process_bar process_bar)
+	private void scene_kernel_load_last_process(tree_string_locker_container string_locker_cont,
+					client_request_response request_response,client_process_bar process_bar)
 	{
 		component_cont.original_part_number=new compress_render_container(
 				render_cont,part_search_cont,component_cont.root_component).original_part_number;
@@ -441,7 +442,7 @@ public class scene_kernel
 		load_camera();
 
 		long start_time=new Date().getTime();
-		new scene_initialization(this,request_response,process_bar);
+		new scene_initialization(this,string_locker_cont,request_response,process_bar);
 		debug_information.println("Create scene temp data time length:	",new Date().getTime()-start_time);
 		debug_information.println();
 			
@@ -481,7 +482,8 @@ public class scene_kernel
 		scene_kernel_create_component_assemble(
 				fast_load_type,part_id_encoder,part_type_code,request_response,load_par);
 		
-		scene_kernel_load_last_process(request_response,load_par.process_bar);
+		scene_kernel_load_last_process(
+				load_par.string_locker_cont,request_response,load_par.process_bar);
 
 		return false;
 	}
