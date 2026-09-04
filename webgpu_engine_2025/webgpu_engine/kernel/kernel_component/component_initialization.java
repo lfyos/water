@@ -13,6 +13,17 @@ public class component_initialization
 	{
 		program_and_charset=new ArrayList<String[]>();
 	}
+	public component_initialization(component_initialization old)
+	{
+		program_and_charset=new ArrayList<String[]>();
+		for(int i=0,ni=old.program_and_charset.size();i<ni;i++) {
+			String p[]=old.program_and_charset.get(i);
+			String q[]=new String[p.length];
+			for(int j=0,nj=p.length;j<nj;j++)
+				q[j]=(p[j]==null)?null:new String(p[j]);
+			program_and_charset.add(i,q);
+		}
+	}
 	public void destroy()
 	{
 		if(program_and_charset!=null){
@@ -24,14 +35,12 @@ public class component_initialization
 	{
 		String my_initialization_program		=null;
 		String my_initialization_program_charset=null;
-		String line_str,terminated_token,not_multifile_flag="true";
+		String line_str,terminated_token;
 		
 		switch(initialization_type){
 		default:
 			return;
 		case "file_program":
-			not_multifile_flag="false";
-		case "multifile_program":
 			if((my_initialization_program=file_directory.replace_special_char(fr.get_string()))!=null)
 				if((my_initialization_program=my_initialization_program.trim()).length()>0)
 					if((my_initialization_program_charset=fr.get_charset())!=null)
@@ -39,8 +48,6 @@ public class component_initialization
 							break;
 			return;
 		case "charset_file_program":
-			not_multifile_flag="false";
-		case "charset_multifile_program":
 			if((my_initialization_program=file_directory.replace_special_char(fr.get_string()))!=null)
 				if((my_initialization_program=my_initialization_program.trim()).length()>0)
 					if((my_initialization_program_charset=fr.get_string())!=null)
@@ -68,8 +75,7 @@ public class component_initialization
 		program_and_charset.add(
 			new String[]{
 				my_initialization_program,
-				my_initialization_program_charset,
-				not_multifile_flag
+				my_initialization_program_charset
 			});
 	}
 }

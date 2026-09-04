@@ -75,7 +75,7 @@ public class part_loader extends Thread
 			break;
 		default:
 			string_locker_container.read_lock(my_lock_key);
-			if(fast_load(boftal_file_name)) {
+			if(fast_load(boftal_file_name)){
 				is_loading_flag=false;
 				string_locker_container.read_unlock(my_lock_key);
 				return;

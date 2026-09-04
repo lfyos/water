@@ -136,18 +136,27 @@ public class file_download_manager
 				my_file_name=my_file_name.substring(0,index_id+1)+file_ext;
 		}
 
+		File f;
+		String my_lock_key=my_file_name+".lock";
 		long file_date_long=Long.decode(file_date);
 
-		String my_lock_key=my_file_name+".lock";
-		string_locker_container.write_lock(my_lock_key);
+		string_locker_container.read_lock(my_lock_key);
+		if((f=new File(my_file_name)).exists()){
+			if(f.lastModified()==file_date_long){
+				string_locker_container.read_unlock(my_lock_key);
+				return new scene_call_result(f,system_par);
+			}
+		}
+		string_locker_container.read_unlock(my_lock_key);
 		
-		File f;
+		string_locker_container.write_lock(my_lock_key);
 		if((f=new File(my_file_name)).exists()){
 			if(f.lastModified()==file_date_long){
 				string_locker_container.write_unlock(my_lock_key);
 				return new scene_call_result(f,system_par);
 			}
 		}
+		
 		if(download_file_from_url.do_download(
 			proxy_url,my_file_name,system_par.response_block_size))
 		{

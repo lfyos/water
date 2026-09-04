@@ -200,70 +200,73 @@ public class scene_parameter
 		scene_temporary_directory_name =system_par.temporary_file_par.temporary_root_directory_name;
 		scene_temporary_directory_name+="scene_directory"+File.separatorChar;
 		
-		if((str=request_response.get_parameter("scene_tmp_directory"))!=null)
+		if((str=request_response.get_parameter("scene_tmp_directory"))!=null) {
+			str=str.replace(':',File.separatorChar);
 			if((str=file_directory.replace_special_char(str)).length()>0){
-				str=str.replace(':',File.separatorChar);
 				if(str.charAt(str.length()-1)!=File.separatorChar)
 					str+=File.separatorChar;
 				scene_temporary_directory_name+=str;
 				return;
 			}
-
-		if((str=file_directory.replace_special_char(scene_name)).length()>0) {
-			str=str.replace(':',File.separatorChar);
-			if(str.charAt(str.length()-1)!=File.separatorChar)
-				str+=File.separatorChar;
-			scene_temporary_directory_name+=str;
 		}
-		String my_temporary_directory_name="";
-		
-		for(int i=0,ni=type_sub_directory.length;i<ni;i++) 
-			if((str=file_directory.replace_special_char(type_sub_directory[i])).length()>0){
-				str=str.replace(':',File.separatorChar);
+		if((str=scene_name)!=null) {
+			str=str.replace(':',File.separatorChar);
+			if((str=file_directory.replace_special_char(str)).length()>0){
 				if(str.charAt(str.length()-1)!=File.separatorChar)
 					str+=File.separatorChar;
-				type_sub_directory[i]=str;
 				scene_temporary_directory_name+=str;
 			}
-		if((str=file_directory.replace_special_char(scene_sub_directory)).length()>0){
-			str=str.replace(':',File.separatorChar);
-			if(str.charAt(str.length()-1)!=File.separatorChar)
-				str+=File.separatorChar;
-			scene_sub_directory=str;
-			scene_temporary_directory_name+=str;
 		}
 		
+		for(int i=0,ni=type_sub_directory.length;i<ni;i++) 
+			if((str=type_sub_directory[i])!=null){
+				str=str.replace(':',File.separatorChar);
+				if((str=file_directory.replace_special_char(str)).length()>0){
+					if(str.charAt(str.length()-1)!=File.separatorChar)
+						str+=File.separatorChar;
+					type_sub_directory[i]=str;
+					scene_temporary_directory_name+=str;
+				}
+			}
+		if((str=scene_sub_directory)!=null) {
+			str=str.replace(':',File.separatorChar);
+			if((str=file_directory.replace_special_char(str)).length()>0){
+				if(str.charAt(str.length()-1)!=File.separatorChar)
+					str+=File.separatorChar;
+				scene_sub_directory=str;
+				scene_temporary_directory_name+=str;
+			}
+		}
 		String str_array[]={change_part_string,change_component_string,part_type_string};
 		for(int i=0,ni=str_array.length;i<ni;i++)
-			if((str=str_array[i])!=null)
-				if((str=file_directory.replace_special_char(str)).length()>0) {
-					str=str.replace(':',File.separatorChar);
+			if((str=str_array[i])!=null) {
+				str=str.replace(':',File.separatorChar);
+				if((str=file_directory.replace_special_char(str)).length()>0){
 					if(str.charAt(str.length()-1)!=File.separatorChar)
 						str+=File.separatorChar;
 					str_array[i]=str;
 					scene_temporary_directory_name+=str;
 				}
-
-		for(var my_node:scene_environment.tree_get_node_collection()) {
-			if((str=file_directory.replace_special_char(my_node.key)).length()>0){
-				str=str.replace(':',File.separatorChar);
-				if(str.charAt(str.length()-1)!=File.separatorChar)
-					str+=File.separatorChar;
-				scene_temporary_directory_name+=str;
 			}
-			for(var my_list_item:my_node.list)
-				if((str=file_directory.replace_special_char(my_list_item)).length()>0){
-					str=str.replace(':',File.separatorChar);
+		for(var my_node:scene_environment.tree_get_node_collection()) {
+			if((str=my_node.key)!=null) {
+				str=str.replace(':',File.separatorChar);
+				if((str=file_directory.replace_special_char(str)).length()>0){
 					if(str.charAt(str.length()-1)!=File.separatorChar)
 						str+=File.separatorChar;
 					scene_temporary_directory_name+=str;
 				}
+			}
+			for(var my_list_item:my_node.list) 
+				if((str=my_list_item)!=null){
+					str=str.replace(':',File.separatorChar);
+					if((str=file_directory.replace_special_char(str)).length()>0){
+						if(str.charAt(str.length()-1)!=File.separatorChar)
+							str+=File.separatorChar;
+						scene_temporary_directory_name+=str;
+					}
+				}
 		}
-		
-		if(my_temporary_directory_name.length()<=0)
-			my_temporary_directory_name="no_parameter_directory"+File.separatorChar;
-		
-		scene_temporary_directory_name+=my_temporary_directory_name;
 	}
 	public scene_parameter(
 			String my_scene_name,client_request_response request_response,

@@ -29,25 +29,6 @@ public class file_directory
 			
 		return new_str;
 	}
-/*	
-	public static String delete_begin_end_separator(String directory)
-	{
-		if(directory==null)
-			return "";
-		directory=replace_special_char(directory).trim();
-		for(int i=0,ni=directory.length();i<ni;i++)
-			if(directory.charAt(i)!=File.separatorChar){
-				directory=directory.substring(i);
-				break;
-			}
-		for(int i=directory.length()-1;i>=0;i--)
-			if(directory.charAt(i)!=File.separatorChar) {
-				directory=directory.substring(0,i+1);
-				break;
-			}
-		return directory;
-	}
-*/	
 	public static String part_temporary_directory(part p,
 			system_parameter system_par,scene_parameter scene_par)
 	{

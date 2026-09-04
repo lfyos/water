@@ -186,6 +186,40 @@ public class part_package
 		
 		return;
 	}
+	
+	private boolean test_package(String fast_load_type,
+			String package_data_file_name,String package_directory_name,String boftal_data_file_name,
+			part_package_collector ppc,system_parameter system_par,scene_load_call_parameter load_par)
+	{
+		if(!(new File(package_data_file_name).exists()))
+			return false;
+		int package_number=package_length.length;
+		if(fast_load_type.compareTo("fast")==0) {
+			file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
+			for(int i=0;i<package_number;i++) {
+				package_length[i]	=fr.get_long();
+				package_last_time[i]=fr.get_long();
+				package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
+			}
+			return true;
+		}
+		if(new File(boftal_data_file_name).exists()){
+			file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
+			for(int i=0;i<package_number;i++) {
+				package_length[i]	=fr.get_long();
+				package_last_time[i]=fr.get_long();
+				package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
+				
+				if(new File(package_file_name[i]).lastModified()<ppc.part_package.get(i).last_time){
+					fr.close();
+					return false;
+				}
+			}
+			fr.close();
+			return true;
+		}
+		return false;
+	}
 	public part_package(String fast_load_type,String package_process_bar_title,
 		String boftal_process_bar_title,render_container rc,int part_type_id,
 		system_parameter system_par,scene_parameter scene_par,scene_load_call_parameter load_par)
@@ -202,38 +236,21 @@ public class part_package
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 
-		load_par.string_locker_cont.write_lock(package_lock_key);
+		load_par.string_locker_cont.read_lock(package_lock_key);
+		if(test_package(fast_load_type,package_data_file_name,
+			package_directory_name,boftal_data_file_name,ppc,system_par,load_par)) 
+		{
+			load_par.string_locker_cont.read_unlock(package_lock_key);
+			return;
+		}
+		load_par.string_locker_cont.read_unlock(package_lock_key);
 		
-		if(new File(package_data_file_name).exists()) {
-			if(fast_load_type.compareTo("fast")==0) {
-				file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
-				for(int i=0;i<package_number;i++) {
-					package_length[i]	=fr.get_long();
-					package_last_time[i]=fr.get_long();
-					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
-				}
-				load_par.string_locker_cont.write_unlock(package_lock_key);
-				return;
-			}
-			if(new File(boftal_data_file_name).exists()){
-				boolean not_create_flag=true;
-				file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
-				for(int i=0;i<package_number;i++) {
-					package_length[i]	=fr.get_long();
-					package_last_time[i]=fr.get_long();
-					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
-					
-					if(new File(package_file_name[i]).lastModified()<ppc.part_package.get(i).last_time){
-						not_create_flag=false;
-						break;
-					}
-				}
-				fr.close();
-				if(not_create_flag) {
-					load_par.string_locker_cont.write_unlock(package_lock_key);
-					return;
-				}
-			}
+		load_par.string_locker_cont.write_lock(package_lock_key);
+		if(test_package(fast_load_type,package_data_file_name,
+			package_directory_name,boftal_data_file_name,ppc,system_par,load_par)) 
+		{
+			load_par.string_locker_cont.write_unlock(package_lock_key);
+			return;
 		}
 
 		for(int i=0;i<package_number;i++){
