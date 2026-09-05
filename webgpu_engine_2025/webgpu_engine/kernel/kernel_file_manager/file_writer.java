@@ -63,12 +63,16 @@ public class file_writer extends common_writer
 	}
 	public static void make_directory(String directory_name)
 	{
-		File f;
 		directory_name=file_directory.replace_special_char(directory_name);
-		for(int pointer=0,length=directory_name.length();pointer<length;pointer++)
-			if(directory_name.charAt(pointer)==File.separatorChar)
-				if(!((f=new File(directory_name.substring(0,pointer))).exists()))
-					f.mkdir();
+		String my_sub_directory=directory_name,my_root_directory="";
+		for(int separator_pos;(separator_pos=my_sub_directory.indexOf(File.separatorChar)+1)>0;) {
+			my_root_directory+=my_sub_directory.substring(0,separator_pos);
+			my_sub_directory=my_sub_directory.substring(separator_pos);
+			File f=new File(my_root_directory);
+			if(f.exists())
+				continue;
+			f.mkdir();
+		}
 	}
 	static private long copy_file_data(File s_file,BufferedOutputStream	d_buf)
 	{

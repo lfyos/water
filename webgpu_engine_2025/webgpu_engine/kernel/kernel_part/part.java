@@ -123,12 +123,13 @@ public class part
 		String file_name=fw.directory_name+fw.file_name;
 		file_name=(file_name==null)?"":file_name.trim();
 		
-		for(int i=0;i<2;i++)
-			for(int j=file_name.length()-1;j>=0;j--)
-				if(file_name.charAt(j)=='.'){
-					file_name=file_name.substring(0,j);
-					break;
-				}
+		int dot_pos;
+		if((dot_pos=file_name.lastIndexOf('.'))>=0) {
+			file_name=file_name.substring(0,dot_pos);
+			if((dot_pos=file_name.lastIndexOf('.'))>=0)
+				file_name=file_name.substring(0,dot_pos);
+		}
+		
 		graphics_buffer_object_creater_container gbocc;
 		switch(front_str){
 		default:
@@ -316,7 +317,8 @@ public class part
 		}
 	}
 	public String load_mesh_and_create_buffer_object(
-			String part_temporary_file_directory,system_parameter system_par,scene_parameter scene_par)
+			String part_temporary_file_directory,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		String str;
 		

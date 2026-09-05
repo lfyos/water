@@ -11,8 +11,8 @@ public class file_directory
 {
 	public static String replace_special_char(String str)
 	{
-		final String single_separator_string=(""+File.separatorChar);
-		final String double_separator_string=(""+File.separatorChar)+File.separatorChar;
+		final String single_separator_string=File.separator;
+		final String double_separator_string=File.separator+File.separator;
 		
 		String new_str=str.trim().
 				replace(';',	File.separatorChar).
