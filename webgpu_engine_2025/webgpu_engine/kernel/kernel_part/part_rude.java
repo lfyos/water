@@ -7,9 +7,9 @@ import kernel_file_manager.file_writer;
 
 public class part_rude 
 {
-	public boolean test_memory_not_free()
+	public boolean test_loaded_flag()
 	{
-		return (body_array!=null)?true:false;
+		return (body_array!=null);
 	}
 	public boolean free_memory()
 	{
@@ -138,33 +138,42 @@ public class part_rude
 			if((default_attribute_string[j]=fr.get_string())==null)
 				default_attribute_string[j]="1";
 		}
-		if(version_string.compareTo("simple")==0) {
-			body_array=null;
-			fr.mark_start();
-			String str;
-			if((str=fr.get_string())==null)
-				str="nobox";
-			if(str.toLowerCase().compareTo("nobox")==0) {
-				fr.mark_terminate(false);
-				part_box=null;
-			}else{
-				fr.mark_terminate(true);
-				part_box=new box(fr);
-			}
-			total_face_primitive_number	=fr.get_int();
-			total_edge_primitive_number	=fr.get_int();
-			total_point_primitive_number=fr.get_int();
-		}else {
-			int my_body_number;
-			if((my_body_number=fr.get_int())<=0)
+		
+		switch(version_string) {
+		case "simple":
+			{
 				body_array=null;
-			else{
-				body_array=new body[my_body_number];
-				for(int i=0;i<my_body_number;i++)
-					body_array[i]=new body(fr);
+				fr.mark_start();
+				String str;
+				if((str=fr.get_string())==null)
+					str="nobox";
+				if(str.toLowerCase().compareTo("nobox")==0) {
+					fr.mark_terminate(false);
+					part_box=null;
+				}else{
+					fr.mark_terminate(true);
+					part_box=new box(fr);
+				}
+				total_face_primitive_number	=fr.get_int();
+				total_edge_primitive_number	=fr.get_int();
+				total_point_primitive_number=fr.get_int();
 			}
-			caculate_rp_box_and_primitive_number();
+			break;
+		default:
+			{
+				int my_body_number;
+				if((my_body_number=fr.get_int())<=0)
+					body_array=null;
+				else{
+					body_array=new body[my_body_number];
+					for(int i=0;i<my_body_number;i++)
+						body_array[i]=new body(fr);
+				}
+				caculate_rp_box_and_primitive_number();
+			}
+			break;
 		}
+		
 		return;
 	}
 	public part_rude(part_rude pr,int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])

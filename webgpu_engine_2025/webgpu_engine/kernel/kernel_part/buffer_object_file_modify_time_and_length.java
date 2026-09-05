@@ -52,7 +52,7 @@ public class buffer_object_file_modify_time_and_length
 		return;
 	}
 	public buffer_object_file_modify_time_and_length(
-		part_rude pr,String root_file_name,String file_charset)
+		part_rude my_part_rude,String root_file_name,String file_charset)
 	{
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss:SSS");
 		
@@ -67,9 +67,9 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_head_length			=f.length();
 		buffer_object_total_file_length		=buffer_object_head_length;
 
-		String file_type[]=new String[]{".face",".edge",".point"};		
+		String file_type[]=new String[]{".face",".edge",".point"};
 		for(int i=0,ni=file_type.length;i<ni;i++){
-			ArrayList<buffer_object_file_modify_time_and_length_item>my_item_arraylist=boftal_list.get(i);
+			var my_item_arraylist=boftal_list.get(i);
 			for(int j=0;;j++){
 				String my_file_name=root_file_name+file_type[i]+j+".txt";
 				if(!((f=new File(my_file_name)).exists()))
@@ -78,9 +78,8 @@ public class buffer_object_file_modify_time_and_length
 					break;
 				if(f.length()<=0)
 					break;
-				buffer_object_file_modify_time_and_length_item my_item;
-				my_item=new buffer_object_file_modify_time_and_length_item(f.lastModified(),f.length(),
-								new File(root_file_name+file_type[i]+j+".in_head_flag").exists());
+				var my_item=new buffer_object_file_modify_time_and_length_item(f.lastModified(),f.length(),
+										new File(root_file_name+file_type[i]+j+".in_head_flag").exists());
 				my_item_arraylist.add(my_item_arraylist.size(),my_item);
 				if(!(my_item.buffer_object_file_in_head_flag))
 					buffer_object_total_file_length+=my_item.buffer_object_text_file_length;
@@ -100,11 +99,11 @@ public class buffer_object_file_modify_time_and_length
 
 		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",boftal_list.size());
 		for(int i=0,ni=boftal_list.size();i<ni;i++){
-			ArrayList<buffer_object_file_modify_time_and_length_item> my_item_arraylist=boftal_list.get(i);
+			var my_item_arraylist=boftal_list.get(i);
 			String file_type_str=i+":"+file_type[i].substring(1);
 			fw.println("/*\t\tbuffer_object_text_file_length["+file_type_str+"]\t*/\t",my_item_arraylist.size());
 			for(int j=0,nj=my_item_arraylist.size();j<nj;j++){
-				buffer_object_file_modify_time_and_length_item my_item=my_item_arraylist.get(j);
+				var my_item=my_item_arraylist.get(j);
 				long t=my_item.buffer_object_file_last_modify_time;
 
 				fw.print  ("/*\t\t\tbuffer_object_file_last_modify_time\t["+file_type_str+","+j+"]\t*/\t",t);
@@ -121,8 +120,8 @@ public class buffer_object_file_modify_time_and_length
 		fw.println();
 		fw.println();
 		
-		if(pr!=null)
-			pr.write_out_to_simple_file(fw);
+		if(my_part_rude!=null)
+			my_part_rude.write_out_to_simple_file(fw);
 		else{
 			fw.println("/*	version:part_mesh==null				*/	simple");
 			fw.println("/*	origin material						*/	0	0	0	0");

@@ -403,21 +403,6 @@ public class scene_kernel
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 	}
-	private String get_fast_load_type(
-			client_request_response request_response,
-			client_process_bar process_bar)
-	{
-		String fast_load_type=request_response.get_fast_load_type();
-		switch(fast_load_type){
-		case "clear":
-			process_bar_delete_file.do_delete(
-				scene_par.scene_temporary_directory_name,process_bar);
-			break;
-		default:
-			break;
-		}
-		return fast_load_type;
-	}
 	private void scene_kernel_load_last_process(tree_string_locker_container string_locker_cont,
 					client_request_response request_response,client_process_bar process_bar)
 	{
@@ -465,15 +450,21 @@ public class scene_kernel
 		debug_information.println("scene_par.type_shader_file_name          :	",	scene_par.type_shader_file_name);
 		debug_information.println("scene_par.scene_shader_directory_name    :	",	scene_par.scene_shader_directory_name);	
 		debug_information.println("scene_par.scene_shader_file_name         :	",	scene_par.scene_shader_file_name);	
-		
-		String fast_load_type=get_fast_load_type(request_response,load_par.process_bar);
-		
+
 		long part_type_code=0;
 		for(int i=0,ni=scene_par.type_sub_directory.length;i<=ni;i++)
 			part_type_code|=((long)1)<<(1+i);
 		
 		permanent_part_id_encoder part_id_encoder=new permanent_part_id_encoder();
-
+		
+		String fast_load_type;
+		switch(fast_load_type=request_response.get_fast_load_type()){
+		case "clear":
+			process_bar_delete_file.do_delete(
+				scene_par.scene_temporary_directory_name,load_par.process_bar);
+			break;
+		}
+		
 		scene_kernel_load_part(fast_load_type,part_type_code,part_id_encoder,request_response,load_par);
 		
 		if(scene_kernel_load_component(request_response,load_par))

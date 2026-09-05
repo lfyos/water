@@ -194,14 +194,17 @@ public class part_package
 		if(!(new File(package_data_file_name).exists()))
 			return false;
 		int package_number=package_length.length;
-		if(fast_load_type.compareTo("fast")==0) {
-			file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
-			for(int i=0;i<package_number;i++) {
-				package_length[i]	=fr.get_long();
-				package_last_time[i]=fr.get_long();
-				package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
+		switch(fast_load_type){
+		case "fast": 
+			{
+				file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
+				for(int i=0;i<package_number;i++) {
+					package_length[i]	=fr.get_long();
+					package_last_time[i]=fr.get_long();
+					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
+				}
+				return true;
 			}
-			return true;
 		}
 		if(new File(boftal_data_file_name).exists()){
 			file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);

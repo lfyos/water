@@ -44,12 +44,16 @@ public class face_face
 		fr.mark_start();
 		if((str=fr.get_string())==null)
 			str="nobox";
-		if(str.toLowerCase().compareTo("nobox")==0) {
+		
+		switch(str.toLowerCase()) {
+		case "nobox":
 			fr.mark_terminate(false);
 			face_face_box=null;
-		}else{
+			break;
+		default:
 			fr.mark_terminate(true);
 			face_face_box=new box(fr);
+			break;
 		}
 		return;
 	}
@@ -62,7 +66,7 @@ public class face_face
 		total_face_primitive_number	=s.total_face_primitive_number;
 		attribute_number			=s.attribute_number;
 		
-		face_face_box=s.face_face_box;
+		face_face_box=(s.face_face_box==null)?null:new box(s.face_face_box);
 	}
 	public face_face(box b,int my_attribute_number)
 	{
@@ -72,6 +76,6 @@ public class face_face
 		total_face_primitive_number	=12;
 		attribute_number			=my_attribute_number;
 
-		face_face_box=new box(b);
+		face_face_box=(b==null)?null:new box(b);
 	}
 }

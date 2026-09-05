@@ -79,7 +79,7 @@ public class part_loader_container
 		for(int i=already_loaded_part.size()-1;i>=0;i--)
 			if(!((pl=already_loaded_part.get(i)).test_loading_flag())){
 				already_loaded_part.remove(i);
-				wait_for_part_loader_termination(pl,system_par,scene_par);	
+				wait_for_part_loader_termination(pl,system_par,scene_par);
 			}
 		pl=new part_loader(my_part,fast_load_type,system_par,scene_par,string_locker_container);
 		part_loader_list.add(pl);
@@ -91,33 +91,34 @@ public class part_loader_container
 			system_parameter system_par,scene_parameter scene_par,
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container)
 	{
-		int boftal_number;
-		
 		switch(fast_load_type){
 		case "fast":
-			if((boftal_number=boftal_container.size())>0){
-				String boftal_token_str=file_directory.part_temporary_directory(my_part,system_par,scene_par);
-				int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
-				String search_key=boftal_token_str.substring(pre_length);
+			if(boftal_container.size()<=0)
+				break;
+			String boftal_token_str=file_directory.part_temporary_directory(my_part,system_par,scene_par);
+			int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
+			String search_key=boftal_token_str.substring(pre_length);
 				
-				ArrayList<buffer_object_file_modify_time_and_length>my_list;
-				for(int i=0;i<boftal_number;i++)
-					if((my_list=boftal_container.get(i).search_value_list(search_key))!=null){
-						buffer_object_file_modify_time_and_length my_boftal=my_list.get(0);
-						long last_time=my_boftal.buffer_object_head_last_modify_time;
-						if(my_part.part_par.last_modified_time<=last_time){
-							my_part.boftal=my_boftal;
-							if(my_part.part_mesh==null)
-								my_part.part_mesh=my_part.boftal.simple_part_mesh;
-							else if(my_part.part_mesh!=null)
-								my_part.part_mesh.free_memory();
-							return;
-						}
-					}
+			for(var my_boftal_container:boftal_container){
+				var my_list=my_boftal_container.search_value_list(search_key);
+				if(my_list==null)
+					continue;
+				var my_boftal=my_list.get(0);
+				if(my_boftal==null)
+					continue;
+				long last_time=my_boftal.buffer_object_head_last_modify_time;
+				if(my_part.part_par.last_modified_time>last_time)
+					continue;
+				my_part.boftal=my_boftal;
+				if(my_part.part_mesh==null)
+					my_part.part_mesh=my_part.boftal.simple_part_mesh;
+				else if(my_part.part_mesh!=null)
+					my_part.part_mesh.free_memory();
+				return;
 			}
 			break;
 		}
-		
+
 		try{
 			load_routine(my_part,fast_load_type,system_par,scene_par,
 						string_locker_container,already_loaded_part);

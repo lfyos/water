@@ -91,7 +91,7 @@ public class face_curve
 			for(int i=0,ni=f_loop.length;i<ni;i++)
 				f_loop[i]=new face_loop(s.f_loop[i]);
 		}
-		curve_box=s.curve_box;
+		curve_box=(s.curve_box==null)?null:new box(s.curve_box);
 		total_edge_primitive_number	=s.total_edge_primitive_number;
 		total_point_primitive_number=s.total_point_primitive_number;
 	}

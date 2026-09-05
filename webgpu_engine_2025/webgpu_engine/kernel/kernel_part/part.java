@@ -30,7 +30,7 @@ public class part
 	};
 	public boolean is_normal_part()
 	{
-		return mesh_file_name!=null;
+		return (mesh_file_name!=null);
 	};
 	
 	public int part_type_id,part_package_id,part_package_sequence_id;
@@ -159,7 +159,7 @@ public class part
 	{
 		if(is_normal_part()){
 			if(part_mesh!=null){
-				if(part_mesh.test_memory_not_free())
+				if(part_mesh.test_loaded_flag())
 					return false;
 				part_mesh.destroy();
 			}
@@ -278,6 +278,7 @@ public class part
 		head_fw.print  ("}");
 		
 		file_collector.create_head_data(head_fw,part_par.max_file_head_length);
+		file_collector.destroy();
 		
 		head_fw.println();
 		head_fw.println();
@@ -307,15 +308,15 @@ public class part
 					break;
 				if(new File(my_flag_file_name).exists())
 					file_writer.file_delete(my_flag_file_name);
-				else{
+				else
 					compress_file_data.do_compress(new File(my_text_file_name),
 						new File(my_gzip_file_name),response_block_size,"gzip");
-				}
 				file_writer.file_delete(my_text_file_name);
 			}
 		}
 	}
-	public String load_mesh_and_create_buffer_object(system_parameter system_par,scene_parameter scene_par)
+	public String load_mesh_and_create_buffer_object(
+			String part_temporary_file_directory,system_parameter system_par,scene_parameter scene_par)
 	{
 		String str;
 		
@@ -328,24 +329,26 @@ public class part
 		str+="\n\tdescription file name:\t"		+description_file_name;
 		str+="\n\taudio_file_name:\t\t"			+audio_file_name;
 
-		String part_temporary_file_directory=file_directory.part_temporary_directory(this,system_par,scene_par);
-		
 		if(new File(part_temporary_file_directory).exists())
 			file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
 		
 		load_part_mesh();
 		
-		str+=create_mesh_and_material_routine(part_temporary_file_directory,system_par,scene_par);
+		str+=create_mesh_and_material_routine(
+				part_temporary_file_directory,system_par,scene_par);
 	
 		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
 				part_temporary_file_directory+"mesh",system_par.local_data_charset);
 		
-		create_part_network_compress_file(system_par.response_block_size,part_temporary_file_directory+"mesh");
+		create_part_network_compress_file(
+				system_par.response_block_size,
+				part_temporary_file_directory+"mesh");
 
 		if(audio_file_name!=null)
 			if(file_reader.is_exist(directory_name+audio_file_name))
-				file_writer.file_copy(directory_name+audio_file_name,part_temporary_file_directory+"audio.mp3");
+				file_writer.file_copy(directory_name+audio_file_name,
+						part_temporary_file_directory+"audio.mp3");
 
 		if(part_mesh!=null)
 			part_mesh.free_memory();

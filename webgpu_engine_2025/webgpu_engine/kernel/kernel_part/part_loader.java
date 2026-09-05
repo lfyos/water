@@ -1,12 +1,11 @@
 package kernel_part;
 
-import kernel_scene.scene_parameter;
-import kernel_scene.system_parameter;
-import kernel_file_manager.file_directory;
-import kernel_file_manager.file_reader;
-
 import java.io.File;
 
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_common_class.tree_string_locker_container;
 
@@ -42,6 +41,7 @@ public class part_loader extends Thread
 		system_par				=my_system_par;
 		scene_par				=my_scene_par;
 		string_locker_container	=my_string_locker_container;
+		
 		start();
 	}
 	private boolean fast_load(String boftal_file_name)
@@ -64,34 +64,36 @@ public class part_loader extends Thread
 	}
 	public void run()
 	{
-		String part_temporary_file_directory=file_directory.part_temporary_directory(
-				loaded_part,system_par,scene_par);
-		String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
+		String part_temporary_file_directory=file_directory.
+				part_temporary_directory(loaded_part,system_par,scene_par);
 		String my_lock_key=part_temporary_file_directory+"part.lock";
 		switch(fast_load_type){
-		case "slow":
-		case "clear":
-			string_locker_container.write_lock(my_lock_key);
+		case "fast":
+			{
+				String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
+				string_locker_container.read_lock(my_lock_key);
+				if(fast_load(boftal_file_name)){
+					is_loading_flag=false;
+					string_locker_container.read_unlock(my_lock_key);
+					return;
+				}
+				string_locker_container.read_unlock(my_lock_key);
+				string_locker_container.write_lock(my_lock_key);
+				if(fast_load(boftal_file_name)) {
+					is_loading_flag=false;
+					string_locker_container.write_unlock(my_lock_key);
+					return;
+				}
+			}
 			break;
 		default:
-			string_locker_container.read_lock(my_lock_key);
-			if(fast_load(boftal_file_name)){
-				is_loading_flag=false;
-				string_locker_container.read_unlock(my_lock_key);
-				return;
-			}
-			string_locker_container.read_unlock(my_lock_key);
 			string_locker_container.write_lock(my_lock_key);
-			if(fast_load(boftal_file_name)) {
-				is_loading_flag=false;
-				string_locker_container.write_unlock(my_lock_key);
-				return;
-			}
 			break;
 		}
-		
+
         try{
-        	String str=loaded_part.load_mesh_and_create_buffer_object(system_par,scene_par);
+        	String str=loaded_part.load_mesh_and_create_buffer_object(
+        			part_temporary_file_directory,system_par,scene_par);
 			debug_information.println("\n\tfast_load_type:\t\t\t"+fast_load_type+str);
 		}catch(Exception e){
 			String str="Error in load_mesh_and_create_buffer_object_and_material_file:\t";

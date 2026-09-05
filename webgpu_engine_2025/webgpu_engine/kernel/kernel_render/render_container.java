@@ -81,32 +81,30 @@ public class render_container
 		
 		int load_number=0,all_number=0;
 		for(int pass_id=0;pass_id<2;pass_id++) {
-			for(int i=0,ni=renders.size();i<ni;i++) {
-				render r;
-				if((r=renders.get(i))==null)
+			for(var my_render:renders) {
+				if(my_render==null)
 					continue;
-				if(r.parts==null)
+				if(my_render.parts==null)
 					continue;
-				for(int j=0,part_number=r.parts.size();j<part_number;j++) {
-					part p;
-					if((p=r.parts.get(j))==null)
+				for(part my_part:my_render.parts) {
+					if(my_part==null)
 						continue;
-					if(((((long)1)<<p.part_type_id)&part_type_code)==0)
+					if(((((long)1)<<my_part.part_type_id)&part_type_code)==0)
 						continue;
-					int my_part_flag=	(p.is_normal_part()		?1:0)+
-										(p.is_bottom_box_part()	?2:0)+
-										(p.is_top_box_part()	?4:0);
+					int my_part_flag=	(my_part.is_normal_part()		?1:0)+
+										(my_part.is_bottom_box_part()	?2:0)+
+										(my_part.is_top_box_part()		?4:0);
 					if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 						continue;
 					if(pass_id==0)
 						all_number++;
 					else{
-						load_par.part_loader_cont.load(p,fast_load_type,already_loaded_part,
+						load_par.part_loader_cont.load(my_part,fast_load_type,already_loaded_part,
 								load_par.string_locker_cont,system_par,scene_par,load_par.boftal_cont);
-						load_number++;
 						if(load_par.process_bar!=null)
-							load_par.process_bar.set_process_bar(false,
-								process_bar_title,p.user_name,load_number,all_number);
+							load_par.process_bar.set_process_bar((load_number<=0),
+								process_bar_title,my_part.user_name,load_number,all_number);
+						load_number++;
 					}
 				}
 			}

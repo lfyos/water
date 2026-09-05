@@ -30,7 +30,7 @@ public class face
 		if(face_box!=null)
 			face_box=null;
 	}
-	private void caculate_box()
+	private void caculate_face_box()
 	{
 		face_box=null;	
 		if(fa_face!=null)
@@ -39,7 +39,7 @@ public class face
 		if(fa_curve!=null)
 			if(fa_curve.curve_box!=null){
 				if(face_box==null)
-					face_box=fa_curve.curve_box;
+					face_box=new box(fa_curve.curve_box);
 				else
 					face_box=face_box.add(fa_curve.curve_box);
 			}
@@ -59,7 +59,7 @@ public class face
 		fa_face=new face_face(fr);
 		fa_curve=new face_curve(fr);
 		reference_part=null;
-		caculate_box();
+		caculate_face_box();
 	}
 	public face(part my_reference_part,location my_face_loca,box my_face_box)
 	{
@@ -88,6 +88,6 @@ public class face
 				?double_attribute_number:string_attribute_number);		
 
 		reference_part=my_reference_part;
-		caculate_box();
+		caculate_face_box();
 	}
 }
