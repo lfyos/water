@@ -311,7 +311,7 @@ public class client_request_response extends common_writer
 		
 		String compress_response_header=ecr.already_compress_file_flag?"gzip":null;
 		long file_range[];
-		if((file_range=get_range(f.length(),system_par.response_block_size))==null)
+		if((file_range=get_range(f.length(),system_par.file_read_write_buffer_size))==null)
 			return;
 		if(range_string.length()>0)
 			error_msg=range_string+"\n"+error_msg;
@@ -320,7 +320,7 @@ public class client_request_response extends common_writer
 			response_content_type,compress_response_header,ecr.last_modified_time,
 			system_par.file_buffer_expire_time_length,system_par.http_date_str);
 
-		byte data_buf[]=new byte[system_par.response_block_size];
+		byte data_buf[]=new byte[system_par.file_read_write_buffer_size];
 		FileInputStream 	s_stream=null;
 		BufferedInputStream	s_buf=null;
 		try{

@@ -581,7 +581,7 @@ public class scene_initialization
 			file_writer.file_rename(my_file_name,tmp_file_name);
 			compress_file_data.do_compress(
 					new File(tmp_file_name),new File(my_file_name),
-					sk.system_par.response_block_size,"gzip");
+					sk.system_par.file_read_write_buffer_size,"gzip");
 			file_writer.file_delete(tmp_file_name);
 			string_locker_cont.write_unlock(destination_file_name);
 		}while(false);

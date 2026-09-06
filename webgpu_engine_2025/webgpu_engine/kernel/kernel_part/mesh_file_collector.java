@@ -37,24 +37,23 @@ public class mesh_file_collector extends tree_search_container<Long,mesh_file_co
 	{
 		super(new mesh_file_collector_item_comparator(),null);
 	}
-	public void create_head_data(file_writer head_fw,long system_max_file_data_length)
+	public void create_head_data(file_writer head_fw,long max_file_head_length)
 	{
-		long my_max_file_data_length=system_max_file_data_length-head_fw.output_data_length;
-		
-		for(mesh_file_collector_item p:tree_get_value_list()){
-			if(system_max_file_data_length>0)
-				if((my_max_file_data_length-=p.file_length)<=0) {
-					file_writer.file_delete(p.file_name+".in_head_flag");
+		long my_max_file_head_length=max_file_head_length-head_fw.output_data_length;
+
+		for(mesh_file_collector_item my_item:tree_get_value_list()){
+			if(max_file_head_length>0)
+				if((my_max_file_head_length-=my_item.file_length)<=0) {
+					file_writer.file_delete(my_item.file_name+".in_head_flag");
 					continue;
 				}
 			head_fw.println(",");
 			head_fw.println("{");
-			head_fw.print  ("\t\"file_type\"\t:\t\"",	p.file_type).	println("\",");
-			head_fw.print  ("\t\"file_id\"\t:\t",		p.file_id).		println(",");
-			
+			head_fw.print  ("\t\"file_type\"\t:\t\"",	my_item.file_type).	println("\",");
+			head_fw.print  ("\t\"file_id\"\t:\t",		my_item.file_id).	println(",");
 			head_fw.print  ("\t\"file_data\"\t:\t");
 			
-			file_reader fr=new file_reader(p.file_name+".txt",head_fw.get_charset());
+			file_reader fr=new file_reader(my_item.file_name+".txt",head_fw.get_charset());
 			for(String str;!(fr.eof());) {
 				if((str=fr.get_string())==null)
 					continue;
@@ -63,21 +62,15 @@ public class mesh_file_collector extends tree_search_container<Long,mesh_file_co
 				head_fw.print("\t",str);
 			}
 			fr.close();
-			
-			head_fw.println();
+			head_fw.println().print("}");
 
-			file_writer.file_touch(p.file_name+".in_head_flag");
-
-			head_fw.print  ("}");
+			file_writer.file_touch(my_item.file_name+".in_head_flag");
 		}
-		
-		return;
 	}
 	public void register(String my_file_type,int my_file_id,String my_file_name)
 	{
 		long file_length=new File(my_file_name+".txt").length();
-		mesh_file_collector_item mfci=new mesh_file_collector_item(
-				my_file_type,my_file_id,my_file_name,file_length);
-		add(file_length,mfci);
+		add(file_length,new mesh_file_collector_item(
+				my_file_type,my_file_id,my_file_name,file_length));
 	}
 }

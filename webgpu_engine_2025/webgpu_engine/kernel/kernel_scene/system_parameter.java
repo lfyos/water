@@ -26,7 +26,7 @@ public class system_parameter
 	
 	public int default_max_loading_number,max_loading_number,max_material_id,max_method_number;
 	
-	public int response_block_size;
+	public int file_read_write_buffer_size;
 	
 	public long scene_expire_time_length,scene_touch_time_length,part_load_sleep_time_length;
 	
@@ -107,7 +107,7 @@ public class system_parameter
 		
 		max_material_id						=sp.max_material_id;
 		
-		response_block_size					=sp.response_block_size;
+		file_read_write_buffer_size			=sp.file_read_write_buffer_size;
 		
 		scene_expire_time_length			=sp.scene_expire_time_length;
 		scene_touch_time_length				=sp.scene_touch_time_length;
@@ -245,7 +245,7 @@ public class system_parameter
 		
 		max_material_id							=f.get_int();
 		
-		response_block_size						=f.get_int();
+		file_read_write_buffer_size				=f.get_int();
 		
 		scene_expire_time_length				=f.get_long();
 		scene_touch_time_length					=f.get_long();
