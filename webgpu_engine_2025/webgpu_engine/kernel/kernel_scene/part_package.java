@@ -14,11 +14,11 @@ import kernel_common_class.compress_file_data;
 import kernel_common_class.tree_search_container;
 import kernel_part.comparator_for_part_container_for_process_sequence;
 
-class part_arraylist
+class package_partlist
 {
-	public ArrayList<part> list;
+	public ArrayList<part>list;
 	public long last_time;
-	public part_arraylist()
+	public package_partlist()
 	{
 		list=new ArrayList<part>();
 		last_time=0;
@@ -56,7 +56,7 @@ class comparator_for_part_package_collector
 };
 class part_package_collector extends tree_search_container<part,part>
 {
-	public ArrayList<part_arraylist> part_package;
+	public ArrayList<package_partlist> part_package_collector_list;
 	
 	public part_package_collector(ArrayList<part> my_part_list,system_parameter system_par)
 	{
@@ -71,11 +71,11 @@ class part_package_collector extends tree_search_container<part,part>
 		
 		int package_number=0;
 		long my_package_length=0;
-		var data_list=tree_get_value_list();
-		part_package=new ArrayList<part_arraylist>();
+		ArrayList<part> sorted_part_list=tree_get_value_list();
+		part_package_collector_list=new ArrayList<package_partlist>();
 		
-		for(int i=0,ni=data_list.size();i<ni;i++){
-			part my_part=data_list.get(i);
+		for(int i=0,ni=sorted_part_list.size();i<ni;i++){
+			part my_part=sorted_part_list.get(i);
 			my_part.part_package_id=package_number;
 			if(my_part.boftal==null)
 				debug_information.println("Find null boftal:	",
@@ -83,10 +83,10 @@ class part_package_collector extends tree_search_container<part,part>
 			else
 				my_package_length+=my_part.boftal.buffer_object_head_length;
 			
-			while(package_number>(part_package.size()-1))
-				part_package.add(new part_arraylist());
+			while(package_number>(part_package_collector_list.size()-1))
+				part_package_collector_list.add(new package_partlist());
 			
-			part_arraylist my_part_arraylist=part_package.get(my_part.part_package_id);
+			package_partlist my_part_arraylist=part_package_collector_list.get(my_part.part_package_id);
 			
 			my_part.part_package_sequence_id=my_part_arraylist.list.size();
 			my_part_arraylist.list.add(my_part.part_package_sequence_id,my_part);
@@ -100,7 +100,7 @@ class part_package_collector extends tree_search_container<part,part>
 			if(i<(ni-1))
 				if(my_package_length<system_par.max_buffer_object_head_package_length)
 					if(comparator_for_part_package_collector.
-						package_compare(my_part,data_list.get(i+1))==0)
+						package_compare(my_part,sorted_part_list.get(i+1))==0)
 							continue;
 
 			package_number++;
@@ -213,7 +213,7 @@ public class part_package
 				package_last_time[i]=fr.get_long();
 				package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
 				
-				if(new File(package_file_name[i]).lastModified()<ppc.part_package.get(i).last_time){
+				if(new File(package_file_name[i]).lastModified()<ppc.part_package_collector_list.get(i).last_time){
 					fr.close();
 					return false;
 				}
@@ -234,7 +234,7 @@ public class part_package
 
 		part_package_collector ppc=new part_package_collector(rc.part_array_list(part_type_id),system_par);
 		
-		int package_number=ppc.part_package.size();
+		int package_number=ppc.part_package_collector_list.size();
 		package_length	 =new long	 [package_number];
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
@@ -260,7 +260,7 @@ public class part_package
 			if(load_par.process_bar!=null)
 				load_par.process_bar.set_process_bar((i<=0),
 					package_process_bar_title,"package_"+i,i,package_number);
-			
+
 			String my_tmp_file_name		=package_directory_name+"package_"+i+".tmp";
 			String my_package_file_name	=package_directory_name+"package_"+i+".gzip_text";
 	
@@ -270,15 +270,17 @@ public class part_package
 			file_writer fw=new file_writer(my_package_file_name,system_par.network_data_charset);
 			fw.println("[");
 	
-			ArrayList<part> my_part_list=ppc.part_package.get(i).list;
+			ArrayList<part> my_part_list=ppc.part_package_collector_list.get(i).list;
 			for(int j=0,nj=my_part_list.size();j<nj;j++){
 				part my_part=my_part_list.get(j);
 				String my_directory=file_directory.part_temporary_directory(my_part,system_par,scene_par);
 				compress_file_data.do_uncompress(
 					new File(my_tmp_file_name),
 					new File(my_directory+"mesh.head.gzip_text"),
-					system_par.response_block_size,"gzip");
-				fw.print_file(my_tmp_file_name).println((j<(nj-1))?",":"");
+					system_par.file_read_write_buffer_size,"gzip");
+				fw.print_file(my_tmp_file_name,system_par.file_read_write_buffer_size);
+				if(j<(nj-1))
+					fw.println(",");
 				
 				debug_information.print  ("	part user_name:	",	my_part.user_name);
 				debug_information.print  ("		part type:	",	my_part.part_par.part_type_string);
@@ -293,10 +295,8 @@ public class part_package
 			fw.println("]");
 			fw.close();
 						
-			compress_file_data.do_compress(
-					new File(my_package_file_name),
-					new File(my_tmp_file_name),
-					system_par.response_block_size,"gzip");
+			compress_file_data.do_compress(new File(my_package_file_name),
+				new File(my_tmp_file_name),system_par.file_read_write_buffer_size,"gzip");
 			file_writer.file_rename(my_tmp_file_name,my_package_file_name);
 
 			File f=new File(my_package_file_name);

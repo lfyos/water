@@ -25,7 +25,7 @@ public class system_parameter_information extends jason_creator
 		print("max_loading_number",						sp.max_loading_number);
 		print("max_material_id",						sp.max_material_id);
 
-		print("response_block_size",					sp.response_block_size);
+		print("file_read_write_buffer_size",			sp.file_read_write_buffer_size);
 		
 		print("scene_expire_time_length",				sp.scene_expire_time_length);
 		print("scene_touch_time_length",				sp.scene_touch_time_length);

@@ -230,10 +230,10 @@ public class common_writer
 		print_charset_file(file_name,file_charset);
 		return this;
 	}
-	public common_writer print_file(String file_name)
+	public common_writer print_file(String file_name,int buffer_length)
 	{
 		File f=new File(file_name);
-		byte[] data_buf=new byte[16*1024];
+		byte data_buf[]=new byte[buffer_length];
 		try{
 			FileInputStream 	s_stream=new FileInputStream(f);
 			BufferedInputStream	s_buf	=new BufferedInputStream(s_stream);
@@ -252,22 +252,22 @@ public class common_writer
 		}
 		return this;
 	}
-	public common_writer print_file(String str,String file_name)
+	public common_writer print_file(String str,String file_name,int buffer_length)
 	{
 		print(str);
-		print_file(file_name);
+		print_file(file_name,buffer_length);
 		return this;
 	}
-	public common_writer println_file(String file_name)
+	public common_writer println_file(String file_name,int buffer_length)
 	{
-		print_file(file_name);
+		print_file(file_name,buffer_length);
 		println();
 		return this;
 	}
-	public common_writer println_file(String str,String file_name)
+	public common_writer println_file(String str,String file_name,int buffer_length)
 	{
 		print(str);
-		print_file(file_name);
+		print_file(file_name,buffer_length);
 		println();
 		return this;
 	}

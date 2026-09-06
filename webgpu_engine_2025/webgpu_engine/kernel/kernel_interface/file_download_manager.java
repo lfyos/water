@@ -157,8 +157,8 @@ public class file_download_manager
 			}
 		}
 		
-		if(download_file_from_url.do_download(
-			proxy_url,my_file_name,system_par.response_block_size))
+		if(download_file_from_url.do_download(proxy_url,
+				my_file_name,system_par.file_read_write_buffer_size))
 		{
 			string_locker_container.write_unlock(my_lock_key);
 			debug_information.println("Download fail:	",my_file_name);

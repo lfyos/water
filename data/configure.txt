@@ -16,7 +16,7 @@
 
 /*	max_material_id											*/		100
 
-/*	response_block_size										*/		65536
+/*	file_read_write_buffer_size								*/		65536
 
 /*	engine_expire_time_length		unit:nanosecond			*/		60000000000
 /*	engine_touch_time_length		unit:nanosecond			*/		10000000000

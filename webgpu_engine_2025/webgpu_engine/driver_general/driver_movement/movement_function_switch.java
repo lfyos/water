@@ -1106,7 +1106,7 @@ public class movement_function_switch
 			try{
 				InputStream is=ci.request_response.implementor.get_content_stream();
 				FileOutputStream os	=new FileOutputStream(new File(file_name)); 
-				byte buffer[]=new byte[sk.system_par.response_block_size];
+				byte buffer[]=new byte[sk.system_par.file_read_write_buffer_size];
 				for(int len;(len=is.read(buffer))>=0;) { 
 					write_length+=len;
 					os.write(buffer,0,len);

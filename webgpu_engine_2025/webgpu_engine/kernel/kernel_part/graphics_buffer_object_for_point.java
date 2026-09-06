@@ -9,7 +9,6 @@ public class graphics_buffer_object_for_point
 	private part gbo_part;
 	private String file_name,file_charset;
 	private int max_material_id;
-	private long max_file_data_length,create_buffer_object_bitmap;
 	private int body_id,face_id,loop_id,edge_id;
 	
 	private face_edge fe;
@@ -20,14 +19,14 @@ public class graphics_buffer_object_for_point
 				gbo_part.driver,max_material_id,gbo_part,
 				"line",body_id,face_id,loop_id,edge_id,fe.parameter_material);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
-				file_name,file_charset,create_buffer_object_bitmap);
+				file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 		
 		point normal=fe.end_point.sub(fe.start_point);
-		point pp	=fe.end_point.add(fe.start_point).scale(0.5);
+		point middle=fe.end_point.add(fe.start_point).scale(0.5);
 		
-		gbo.vertex_begin(pp.x,pp.y,pp.z);
+		gbo.vertex_begin(middle.x,middle.y,middle.z);
 			
-		gbo.register(pp.x,		pp.y,		pp.z,		fe.parameter_extra_data);
+		gbo.register(middle.x,	middle.y,	middle.z,	fe.parameter_extra_data);
 		gbo.register(normal.x,	normal.y,	normal.z,	"1");
 		gbo.register(
 				fe.parameter_material[0],fe.parameter_material[1],
@@ -36,7 +35,7 @@ public class graphics_buffer_object_for_point
 		gbo.register(body_id,face_id,3,"0");
 		gbo.register(loop_id,edge_id,0,"0");
 		
-		if(gbo.test_end(max_file_data_length,false))
+		if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
 	
 		return normal;
@@ -46,7 +45,7 @@ public class graphics_buffer_object_for_point
 		int material_id=caculate_material_id.caculate(gbo_part.driver,max_material_id,
 				gbo_part,"circle",body_id,face_id,loop_id,edge_id,fe.parameter_material);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
-				file_name,file_charset,create_buffer_object_bitmap);
+				file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 		
 		gbo.vertex_begin(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2]);
 			
@@ -60,7 +59,7 @@ public class graphics_buffer_object_for_point
 		gbo.register(body_id,face_id,4,"0");
 		gbo.register(loop_id,edge_id,0,"0");
 		
-		if(gbo.test_end(max_file_data_length,false))
+		if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
 		
 		return (new point(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5])).expand(1);
@@ -76,7 +75,7 @@ public class graphics_buffer_object_for_point
 
 		for(int point_i=0,point_n=point_array.length;point_i<point_n;point_i++){
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
-				file_name,file_charset,create_buffer_object_bitmap);
+				file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 			
 			point pp=point_array[point_i];
 			
@@ -90,7 +89,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(body_id,face_id,5,Integer.toString(point_i));
 			gbo.register(loop_id,edge_id,0,"0");
 
-			if(gbo.test_end(max_file_data_length,false))
+			if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
 		
@@ -108,7 +107,7 @@ public class graphics_buffer_object_for_point
 		
 		for(int point_i=0;point_i<point_n;point_i++){
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
-					file_name,file_charset,create_buffer_object_bitmap);
+					file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 			
 			double x=fe.curve_parameter[3*point_i+0];
 			double y=fe.curve_parameter[3*point_i+1];
@@ -124,7 +123,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(body_id,face_id,6,Integer.toString(point_i));
 			gbo.register(loop_id,edge_id,0,"0");
 			
-			if(gbo.test_end(max_file_data_length,false))
+			if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
 	}
@@ -140,7 +139,7 @@ public class graphics_buffer_object_for_point
 					"render_point_set",body_id,face_id,loop_id,edge_id,my_material);
 
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
-					file_name,file_charset,create_buffer_object_bitmap);
+					file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 			
 			double x=my_location_data[0],y=my_location_data[1],z=my_location_data[2];
 			
@@ -153,7 +152,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(body_id,face_id,7,Integer.toString(point_i));
 			gbo.register(loop_id,edge_id,0,"0");
 			
-			if(gbo.test_end(max_file_data_length,false))
+			if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
 	}
@@ -165,7 +164,7 @@ public class graphics_buffer_object_for_point
 					gbo_part.driver,max_material_id,gbo_part,
 					"start",body_id,face_id,loop_id,edge_id,fe.start_point_material);
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
-					file_name,file_charset,create_buffer_object_bitmap);
+					file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 			
 			gbo.vertex_begin(fe.start_point.x,fe.start_point.y,fe.start_point.z);
 
@@ -177,7 +176,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(body_id,face_id,1,"0");
 			gbo.register(loop_id,edge_id,0,"0");
 			
-			if(gbo.test_end(max_file_data_length,false))
+			if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
 		if(fe.end_point!=null){
@@ -185,7 +184,7 @@ public class graphics_buffer_object_for_point
 					gbo_part.driver,max_material_id,gbo_part,
 					"end",body_id,face_id,loop_id,edge_id,fe.end_point_material);
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
-					file_name,file_charset,create_buffer_object_bitmap);
+					file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 			
 			gbo.vertex_begin(fe.end_point.x,fe.end_point.y,fe.end_point.z);
 			gbo.register(fe.end_point.x,fe.end_point.y,fe.end_point.z,fe.end_extra_data);
@@ -196,7 +195,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(body_id,face_id,2,"0");
 			gbo.register(loop_id,edge_id,0,"0");
 
-			if(gbo.test_end(max_file_data_length,false))
+			if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
 	}
@@ -208,7 +207,7 @@ public class graphics_buffer_object_for_point
 				"origin",-1,-1,-1,-1,gbo_part.part_mesh.origin_material);
 		
 		graphics_buffer_object_creater gbo=gbocc.get_creater(
-				material_id,file_name,file_charset,create_buffer_object_bitmap);
+				material_id,file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 				
 		gbo.vertex_begin();
 		
@@ -220,31 +219,32 @@ public class graphics_buffer_object_for_point
 		gbo.register(-1,-1,0,"0");
 		gbo.register(-1,-1,0,"0");
 
-		if(gbo.test_end(max_file_data_length,false))
+		if(gbo.test_end(gbo_part.part_par.max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
 	}
 	
 	public graphics_buffer_object_for_point(primitive_interface p_i,
-			int my_max_material_id,part my_part,String my_file_name,String my_file_charset,
-			long my_max_file_data_length,long my_create_buffer_object_bitmap)
+			int my_max_material_id,part my_part,String my_file_name,String my_file_charset)
 	{	
-		int body_number,face_number,loop_number,edge_number;
 		max_material_id		=my_max_material_id;
 		gbo_part			=my_part;
 		file_name			=my_file_name;
 		file_charset		=my_file_charset;
-		max_file_data_length=my_max_file_data_length;
-		create_buffer_object_bitmap=my_create_buffer_object_bitmap;
 		
 		gbocc=new graphics_buffer_object_creater_container();
 		origin_create();
-		for(body_id=0,body_number=gbo_part.part_mesh.body_number();body_id<body_number;body_id++) {
+		
+		int body_number=gbo_part.part_mesh.body_number();
+		for(body_id=0;body_id<body_number;body_id++) {
 			var my_body=gbo_part.part_mesh.body_array[body_id];
-			for(face_id=0,face_number=my_body.face_number();face_id<face_number;face_id++) {
+			int face_number=my_body.face_number();
+			for(face_id=0;face_id<face_number;face_id++) {
 				var my_face=my_body.face_array[face_id];
-				for(loop_id=0,loop_number=my_face.fa_curve.face_loop_number();loop_id<loop_number;loop_id++) {
+				int loop_number=my_face.fa_curve.face_loop_number();
+				for(loop_id=0;loop_id<loop_number;loop_id++) {
 					var my_loop=my_face.fa_curve.f_loop[loop_id];
-					for(edge_id=0,edge_number=my_loop.edge_number();edge_id<edge_number;edge_id++) {
+					int edge_number=my_loop.edge_number();
+					for(edge_id=0;edge_id<edge_number;edge_id++) {
 						fe=my_loop.edge[edge_id];
 						point start_end_normal=new point(0,0,1);
 						

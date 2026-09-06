@@ -44,8 +44,7 @@ public class scene_kernel_and_client_information_container
 			return null;
 		}
 		if(load_par!=null){
-			load_par.component_load_source_cont=new component_load_source_container(
-						load_par.component_load_source_cont);
+			load_par.component_load_source_cont=new component_load_source_container(load_par.component_load_source_cont);
 			if(scene_kernel_cont.sk.load(request_response,load_par)) {
 				scene_kernel_cont.sk.destroy();
 				scene_kernel_cont.sk=null;
