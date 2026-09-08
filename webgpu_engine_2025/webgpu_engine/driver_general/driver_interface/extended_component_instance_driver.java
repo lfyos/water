@@ -43,7 +43,8 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
-		String url=ci.get_component_request_url_header(comp.component_id,driver_id);
+		String url=ci.get_component_request_url_header_by_component_id(
+							comp.component_id,Integer.toString(driver_id));
 		ci.request_response.print(jason_string.change_string(url+"&operation=file"));
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)

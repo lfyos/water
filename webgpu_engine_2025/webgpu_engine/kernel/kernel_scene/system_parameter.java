@@ -55,30 +55,34 @@ public class system_parameter
 	public http_date_string 		http_date_str;
 	
 	private change_name content_type_change_name;
+	
 	public search_file_content_type_result search_file_content_type(String path_name)
 	{
-		int index_id;
-		for(String link_token=null,str,ext_str,zip_link_str;;){
-			if((index_id=path_name.lastIndexOf('.'))<0)
+		for(String link_token=null;;){
+			int index_id=path_name.lastIndexOf('.');
+			if(index_id<0)
 				break;
-			ext_str=path_name.substring(index_id+1);
-			if((str=content_type_change_name.search_change_name(ext_str,null))==null) 
+			String ext_str=path_name.substring(index_id+1);
+			String search_str;
+			if((search_str=content_type_change_name.search_change_name(ext_str,null))==null) 
 				break;
-			if((index_id=str.indexOf(':'))<0)
+			if((index_id=search_str.indexOf(':'))<0)
 				break;
-			if((zip_link_str=str.substring(0,index_id).trim()).compareTo("link")==0) {
+			String zip_link_str	=search_str.substring(0,index_id).trim();
+			String content_str	=search_str.substring(index_id+1).trim();
+			if(zip_link_str.compareTo("link")==0){
 				file_reader fr=new file_reader(path_name,local_data_charset);
-				if((path_name=fr.get_string())!=null)
+				path_name=fr.get_string();
+				fr.close();
+				if(path_name!=null)
 					if((path_name=path_name.trim()).length()>0) {
-						fr.close();
 						link_token=zip_link_str;
 						continue;
-					}			
-				fr.close();
+					}
 				break;
 			}
-			return new search_file_content_type_result(zip_link_str,
-						str.substring(index_id+1).trim(),ext_str,link_token,path_name);
+			return new search_file_content_type_result(
+						zip_link_str,content_str,ext_str,(link_token!=null),path_name);
 		};
 		return null;
 	}
