@@ -101,13 +101,12 @@ public class dispatch_part_request
 							if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 								for(int i=0;i<driver_number;i++)
 									if((c_d=comp.driver_array.get(i))!=null)
-										return response_part_event(
-												c_d.component_part,sk,ci);
+										return response_part_event(c_d.component_part,sk,ci);
 							}else{
 								int driver_id=Integer.decode(str);
 								if((driver_id>=0)&&(driver_id<driver_number))
 									if((c_d=comp.driver_array.get(driver_id))!=null)
-										return response_part_event(	c_d.component_part,sk,ci);
+										return response_part_event(c_d.component_part,sk,ci);
 							}
 						}
 					}

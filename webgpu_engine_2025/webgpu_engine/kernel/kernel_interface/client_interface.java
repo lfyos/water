@@ -94,8 +94,7 @@ public class client_interface
 		p.modify_kernel_and_client_information_lock_number(1);
 		my_lock.unlock();
 		try{
-			ecr=p.get_scene_result(delay_time_length,
-					statistics_user,scene_counter,request_response,null);
+			ecr=p.get_scene_result(delay_time_length,scene_counter,request_response,null);
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;
@@ -210,7 +209,7 @@ public class client_interface
 
 		try{
 			ecr=created_sk_and_ci.get_scene_result(
-					delay_time_length,statistics_user,scene_counter,request_response,
+					delay_time_length,scene_counter,request_response,
 					new scene_load_call_parameter(process_bar,
 							scene_kernel_search_tree.original_render,
 							scene_kernel_search_tree.part_loader_cont,

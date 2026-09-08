@@ -1,7 +1,7 @@
 package kernel_information;
 
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
+import kernel_scene.client_information;
 
 public class scene_information extends jason_creator
 {
@@ -22,7 +22,6 @@ public class scene_information extends jason_creator
 		print("channel_id",ci.channel_id);
 		
 		print("client_parameter",		new client_parameter_information(sk,ci));
-		print("statistics_user",		new statistics_user_information(sk,ci));
 		print("proxy",					new proxy_information(ci));
 	}
 	

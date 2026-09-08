@@ -8,8 +8,6 @@ import kernel_render.render_target;
 import kernel_transformation.plane;
 import kernel_camera.camera_result;
 import kernel_buffer.buffer_container;
-import kernel_interface.user_statistics;
-import kernel_interface.client_process_bar;
 import kernel_component.component_collector;
 import kernel_render.render_target_container;
 import kernel_render.render_target_parameter;
@@ -39,10 +37,7 @@ public class client_information
 	public String								channel_id;
 	
 	public client_parameter						parameter;
-	public create_scene_counter					scene_counter;
-	public user_statistics 						statistics_user;
 	public client_request_response 				request_response;
-	public client_process_bar					process_bar;
 	
 	public render_instance_driver_container		render_instance_driver_cont;
 	public part_instance_driver_container		part_instance_driver_cont;
@@ -57,24 +52,8 @@ public class client_information
 	
 	public void destroy()
 	{
-		if(request_url_header!=null)
-			request_url_header=null;
-	
-		if(message_display!=null)
-			message_display=null;
-			
-		if(component_instance_driver_cont!=null) {
-			component_instance_driver_cont.destroy();
-			component_instance_driver_cont=null;
-		}
-		if(part_instance_driver_cont!=null) {
-			part_instance_driver_cont.destroy();
-			part_instance_driver_cont=null;
-		}
-		if(render_instance_driver_cont!=null) {
-			render_instance_driver_cont.destroy();
-			render_instance_driver_cont=null;
-		}
+		not_acknowledge_render_part_id=null;
+		
 		if(render_buffer!=null) {
 			render_buffer.destroy();
 			render_buffer=null;
@@ -83,12 +62,10 @@ public class client_information
 			target_container.destroy();
 			target_container=null;
 		}
-		
 		if(display_component_collector!=null) {
 			display_component_collector.destroy();
 			display_component_collector=null;
 		}
-		
 		if(target_component_collector_list!=null) {
 			component_collector cc;
 			for(int i=0,ni=target_component_collector_list.size();i<ni;i++)
@@ -97,7 +74,6 @@ public class client_information
 			target_component_collector_list.clear();
 			target_component_collector_list=null;
 		}
-
 		if(display_camera_result!=null) {
 			display_camera_result.destroy();
 			display_camera_result=null;
@@ -110,23 +86,39 @@ public class client_information
 			target_camera_result_list.clear();
 			target_camera_result_list=null;
 		}
-		
 		if(clip_plane!=null)
 			clip_plane=null;
+		
+		channel_id=null;
 		
 		if(parameter!=null) {
 			parameter.destroy();
 			parameter=null;
 		}
-		
-		if(scene_counter!=null)
-			scene_counter=null;
-		
-		if(statistics_user!=null)
-			statistics_user=null;
-
 		if(request_response!=null)
-			request_response=null;		
+			request_response=null;
+		
+		if(render_instance_driver_cont!=null) {
+			render_instance_driver_cont.destroy();
+			render_instance_driver_cont=null;
+		}
+		if(part_instance_driver_cont!=null) {
+			part_instance_driver_cont.destroy();
+			part_instance_driver_cont=null;
+		}
+		if(component_instance_driver_cont!=null) {
+			component_instance_driver_cont.destroy();
+			component_instance_driver_cont=null;
+		}
+		if(message_display!=null)
+			message_display=null;
+		if(request_url_header!=null)
+			request_url_header=null;
+	
+		if(file_proxy_cont!=null) {
+			file_proxy_cont.clear();
+			file_proxy_cont=null;
+		}
 	}
 	public String[] get_all_file_proxy_url()
 	{
@@ -135,44 +127,21 @@ public class client_information
 			url_array[i]=file_proxy_cont.get(i);
 		return url_array;
 	}
-	public String get_component_request_url_header(int component_id,String driver_id)
+	
+	public String caculate_file_proxy_url(String file_name,String file_charset,system_parameter system_par)
 	{
-		String  url_header;
-		url_header =request_url_header+"&command=component&method=event";
-		url_header+="&event_component_id="+Integer.toString(component_id);
-		if(driver_id!=null)
-			if((driver_id=driver_id.trim()).length()>0)
-				url_header+="&event_driver_id="+driver_id;
-		return url_header;
-	}
-	public String get_component_request_url_header(int component_id,int driver_id)
-	{
-		return get_component_request_url_header(component_id,Integer.toString(driver_id));
-	}
-	public String get_part_request_url_header(int render_id,int part_id)
-	{
-		String  url_header;
-		url_header =request_url_header+"&command=part&method=event";
-		url_header+="&event_render_id="+Integer.toString(render_id);
-		url_header+="&event_part_id="+Integer.toString(part_id);
-		return url_header;
-	}
-	public String caculate_file_proxy_url(
-			String file_name,String file_charset,system_parameter system_par)
-	{
-		File original_f,target_f;
 		if(file_proxy_cont.size()<=0)
 			return null;
-		if(!((original_f=new File(file_name)).exists()))
+		File original_f=new File(file_name);
+		if(!(original_f.exists()))
 			return null;
-		
-		var content_type=system_par.search_file_content_type(file_name);
-		if(content_type==null)
+		search_file_content_type_result content_type;
+		if((content_type=system_par.search_file_content_type(file_name))==null)
 			return null;
-		target_f=new File(content_type.path_name);
+		File target_f=new File(content_type.path_name);
 		if(target_f.length()<system_par.max_file_response_length)
 			return null;
-		
+
 		String proxy_file_name=original_f.getAbsolutePath().replace(File.separatorChar,'/');
 		String proxy_directory_name=system_par.temporary_file_par.
 					temporary_root_directory_name.replace(File.separatorChar,'/');
@@ -180,10 +149,10 @@ public class client_information
 			return null;
 		proxy_file_name=proxy_file_name.substring(proxy_directory_name.length());
 
-		String code_str=request_response.implementor.get_request_charset();
+		String encode_str=request_response.implementor.get_request_charset();
 		try {
-			proxy_file_name	=java.net.URLEncoder.encode(proxy_file_name,code_str);
-			proxy_file_name	=java.net.URLEncoder.encode(proxy_file_name,code_str);
+			proxy_file_name	=java.net.URLEncoder.encode(proxy_file_name,encode_str);
+			proxy_file_name	=java.net.URLEncoder.encode(proxy_file_name,encode_str);
 		}catch(Exception e) {
 			;
 		}
@@ -197,11 +166,11 @@ public class client_information
 			file_charset=system_par.network_data_charset;
 		
 		return proxy_url					+"&proxy_info="
-				+code_str					+";"
+				+encode_str					+";"
 				+file_charset				+";"
 				+content_type.content_str	+";"
 				+content_type.ext_str		+";"
-				+((content_type.link_token!=null)?"true;":"false;")
+				+(content_type.link_flag?"true;":"false;")
 				+Long.toString(target_f.lastModified());
 	}
 	public void add_file_proxy_url(String my_file_proxy_url)
@@ -218,9 +187,7 @@ public class client_information
 					if(file_proxy_cont.get(i).compareTo(my_file_proxy_url)==0)
 						file_proxy_cont.remove(i);
 	}
-	public client_information(
-			client_request_response my_request_response,client_process_bar my_process_bar,
-			scene_kernel sk,user_statistics my_statistics_user,create_scene_counter my_scene_counter)
+	public client_information(client_request_response my_request_response,scene_kernel sk)
 	{
 		not_acknowledge_render_part_id=new boolean[sk.render_cont.renders.size()][];
 		for(int i=0,ni=not_acknowledge_render_part_id.length;i<ni;i++) {
@@ -254,12 +221,7 @@ public class client_information
 		
 		parameter						=new client_parameter();
 		
-		scene_counter					=my_scene_counter;
-		statistics_user					=my_statistics_user;
-		
 		request_response				=my_request_response;
-		
-		process_bar						=my_process_bar;
 
 		file_proxy_cont					=new ArrayList<String>();
 		file_proxy_pointer				=0;
@@ -271,7 +233,7 @@ public class client_information
 		message_display		=new display_message();	
 		
 		request_url_header	 =request_response.implementor.get_url();
-		request_url_header	+="?channel="		+channel_id;
+		request_url_header	+="?channel="	+channel_id;
 		request_url_header	+="&container="	+request_response.container_id;
 		request_url_header	+="&user_name="	+request_response.user_name;
 		request_url_header	+="&pass_word="	+request_response.pass_word;
@@ -279,6 +241,82 @@ public class client_information
 
 		return;
 	}
-	
 	private volatile static long system_channel_id=0;
+	
+	public String get_component_request_url_header_by_component_id(int component_id,String driver_id)
+	{
+		String url_header=request_url_header+"&command=component&method=event&event_component_id="+component_id;
+		if(driver_id!=null)
+			if((driver_id=driver_id.trim()).length()>0)
+				url_header+="&event_driver_id="+driver_id;
+		return url_header;
+	}
+	public String get_component_request_url_header_by_component_name(String component_name,String driver_id)
+	{
+		String url_header=request_url_header+"&command=component&method=event&event_component_name="+component_name;
+		if(driver_id!=null)
+			if((driver_id=driver_id.trim()).length()>0)
+				url_header+="&event_driver_id="+driver_id;
+		return url_header;
+	}
+	public String get_part_request_url_header_by_part_id(int render_id,int part_id)
+	{
+		String url_header=request_url_header+"&command=part&method=event";
+		return url_header+"&event_render_id="+render_id+"&event_part_id="+part_id;
+	}
+	public String get_part_request_url_header_by_part_name(String part_name)
+	{
+		return request_url_header+"&command=part&method=event"+"&event_part_name="+part_name;
+	}
+	public String get_part_request_url_header_by_component_id(int component_id,String driver_id)
+	{
+		String url_header=request_url_header+"&command=part&method=event";
+		url_header+="&event_component_id="+Integer.toString(component_id);
+		if(driver_id!=null)
+			if((driver_id=driver_id.trim()).length()>0)
+				url_header+="&event_driver_id="+driver_id;
+		return url_header;
+	}
+	public String get_part_request_url_header_by_component_name(String component_name,String driver_id)
+	{
+		String url_header=request_url_header+"&command=part&method=event";
+		url_header+="&event_component_name="+component_name;
+		if(driver_id!=null)
+			if((driver_id=driver_id.trim()).length()>0)
+				url_header+="&event_driver_id="+driver_id;
+		return url_header;
+	}
+	
+	public String get_render_request_url_header_by_render_id(int render_id)
+	{
+		return request_url_header+"&command=render&method=event&event_render_id="+render_id;
+	}
+	public String get_render_request_url_header_by_render_name(String render_name)
+	{
+		return request_url_header+"&command=render&method=event&event_render_name="+render_name;
+	}
+	public String get_render_request_url_header_by_part_name(String part_name,String driver_id)
+	{
+		String url_header=request_url_header+"&command=render&method=event&event_part_name="+part_name;
+		if(driver_id!=null)
+			if((driver_id=driver_id.trim()).length()>0)
+				url_header+="&event_driver_id="+driver_id;
+		return url_header;
+	}
+	public String get_render_request_url_header_by_component_id(int component_id,String driver_id)
+	{
+		String url_header=request_url_header+"&command=render&method=event&event_component_id="+component_id;
+		if(driver_id!=null)
+			if((driver_id=driver_id.trim()).length()>0)
+				url_header+="&event_driver_id="+driver_id;
+		return url_header;
+	}
+	public String get_render_request_url_header_by_component_name(String component_name,String driver_id)
+	{
+		String url_header=request_url_header+"&command=render&method=event&event_component_name="+component_name;
+		if(driver_id!=null)
+			if((driver_id=driver_id.trim()).length()>0)
+				url_header+="&event_driver_id="+driver_id;
+		return url_header;
+	}
 }

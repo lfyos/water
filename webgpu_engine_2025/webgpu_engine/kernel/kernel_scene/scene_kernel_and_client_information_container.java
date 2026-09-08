@@ -2,7 +2,6 @@ package kernel_scene;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
 import kernel_common_class.debug_information;
 import kernel_client_interface.dispatch_request_main;
@@ -34,8 +33,8 @@ public class scene_kernel_and_client_information_container
 		kernel_and_client_information_lock_number+=modify_number;
 		return kernel_and_client_information_lock_number;
 	}
-	private scene_call_result get_scene_result_routine(long delay_time_length,
-			create_scene_counter scene_counter,user_statistics statistics_user,
+	private scene_call_result get_scene_result_routine(
+			long delay_time_length,create_scene_counter scene_counter,
 			client_request_response request_response,scene_load_call_parameter load_par)
 	{
 		if(scene_kernel_cont.sk==null){
@@ -57,8 +56,7 @@ public class scene_kernel_and_client_information_container
 			}
 			scene_counter.update_kernel_component_number(1,
 					scene_kernel_cont.sk.component_cont.component_number);
-			client_information=new client_information(request_response,
-					load_par.process_bar,scene_kernel_cont.sk,statistics_user,scene_counter);
+			client_information=new client_information(request_response,scene_kernel_cont.sk);
 			
 			debug_information.print  (
 					"scene_interface load scene,scene_name:",scene_kernel_cont.sk.scene_name);
@@ -78,8 +76,8 @@ public class scene_kernel_and_client_information_container
 		return dispatch_request_main.get_scene_result(
 				delay_time_length,scene_kernel_cont.sk,client_information);
 	}
-	public scene_call_result get_scene_result(long delay_time_length,
-			user_statistics statistics_user,create_scene_counter scene_counter,
+	public scene_call_result get_scene_result(
+			long delay_time_length,create_scene_counter scene_counter,
 			client_request_response request_response,scene_load_call_parameter load_par)
 	{
 		scene_call_result ret_val=null;
@@ -89,8 +87,7 @@ public class scene_kernel_and_client_information_container
 			my_lock.lock();
 			update_sk_and_ci_processing_number(1);
 			try{
-				ret_val=get_scene_result_routine(delay_time_length,
-						scene_counter,statistics_user,request_response,load_par);
+				ret_val=get_scene_result_routine(delay_time_length,scene_counter,request_response,load_par);
 			}catch(Exception e){
 				e.printStackTrace();
 				debug_information.println(
