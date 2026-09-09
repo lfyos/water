@@ -32,7 +32,6 @@ public class component_render
 	public component_link_list delete_in_cll;
 	public component_link_list delete_out_cll;
 	public component_link_list refresh_cll;
-	public component_link_list keep_cll;
 	public component_link_list append_cll;
 	
 	public long lastest_append_touch_time;
@@ -62,10 +61,6 @@ public class component_render
 		if(refresh_cll!=null)
 			refresh_cll.destroy();
 		refresh_cll=null;
-		
-		if(keep_cll!=null)
-			keep_cll.destroy();
-		keep_cll=null;
 		
 		if(append_cll!=null)
 			append_cll.destroy();
@@ -102,7 +97,6 @@ public class component_render
 	{
 		delete_in_cll	=null;
 		delete_out_cll	=null;
-		keep_cll		=null;
 		refresh_cll		=null;
 		append_cll		=null;
 		
@@ -166,7 +160,6 @@ public class component_render
 			case 2://component in both buffer and link list, NOT modified, should NOT update 
 				flag[data_buffer_id]|=8;
 				rcc.component_keep_number++;
-				keep_cll=new component_link_list(p.comp,p.driver_id,keep_cll);
 				break;
 			default://impossible
 				flag[data_buffer_id]=0;
