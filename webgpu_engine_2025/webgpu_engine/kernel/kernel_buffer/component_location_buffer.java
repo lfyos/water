@@ -1,15 +1,15 @@
 package kernel_buffer;
 
-import kernel_driver.component_driver;
-import kernel_common_class.const_value;
+import kernel_scene.scene_kernel;
 import kernel_component.component;
+import kernel_driver.component_driver;
+import kernel_transformation.location;
+import kernel_common_class.const_value;
+import kernel_scene.client_information;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
 import kernel_network.client_request_response;
 import kernel_render.render_component_counter;
-import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
-import kernel_transformation.location;
 
 public class component_location_buffer
 {
@@ -113,18 +113,23 @@ public class component_location_buffer
 		long my_current_time=sk.current_time.nanoseconds();
 	
 		ci.request_response.print(",[");
-		
+
 		for(int response_number=0,i=0,ni=sk.process_part_sequence.process_parts_sequence.length;i<ni;i++){
 			int render_id			=sk.process_part_sequence.process_parts_sequence[i][0];
 			int part_id				=sk.process_part_sequence.process_parts_sequence[i][1];
 			component_link_list p	=location_collector.component_collector[render_id][part_id];
+			location_collector.component_collector[render_id][part_id]=null;
 			
-			for(;p!=null;p=p.next_list_item){
-				component_not_in_list_flag[p.comp.component_id]=true;
+			for(component_link_list next_p;p!=null;p=next_p){
+				next_p=p.next_list_item;
 				if(rcc.update_location_number>=sk.scene_par.most_update_location_number)
-					if((my_current_time-touch_time[p.comp.component_id])>sk.scene_par.touch_time_length)
+					if((my_current_time-touch_time[p.comp.component_id])>sk.scene_par.touch_time_length) {
+						p.next_list_item=location_collector.component_collector[render_id][part_id];
+						location_collector.component_collector[render_id][part_id]=p;
 						continue;
-			
+					}
+				
+				component_not_in_list_flag[p.comp.component_id]=true;
 				move_location_version[p.comp.component_id]=p.comp.get_move_location_version();
 				
 				ci.request_response.print(((response_number++)<=0)?"[":",[",p.comp.component_id);
@@ -142,8 +147,7 @@ public class component_location_buffer
 			}
 		}
 		ci.request_response.print("]");
-		
-		location_collector.reset();
+		location_collector.reset_number();
 	}
 	public void synchronize_location_version(component comp,scene_kernel sk,boolean update_flag)
 	{
@@ -167,7 +171,7 @@ public class component_location_buffer
 		
 		if(update_flag)
 			put_in_list(comp,sk);
-		
+
 		return;
 	}
 }

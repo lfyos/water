@@ -27,10 +27,10 @@
 /*	discard_top_part_component_precision		*/		0.05
 
 /*	touch_time_length							*/		5000000000
-/*	most_delete_number							*/		500
-/*	most_append_number							*/		500
-/*	most_update_parameter_number				*/		500
-/*	most_update_location_number					*/		500
+/*	most_delete_number							*/		2
+/*	most_append_number							*/		2
+/*	most_update_parameter_number				*/		2
+/*	most_update_location_number					*/		2
 
 /*	display_precision							*/		4
 

@@ -74,8 +74,7 @@ public class camera_buffer
 		return;
 	}
 	private void response_one_camera_data(
-			response_flag create_flag,client_information ci,
-			camera cam,int current_camera_id)
+		response_flag create_flag,client_information ci,camera cam,int current_camera_id)
 	{
 		if(cam==null)
 			return;
