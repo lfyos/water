@@ -154,7 +154,7 @@ public class component_collector
 		}
 		return register_number;
 	}
-	public void reset()
+	public void reset_number()
 	{
 		render_number	=0;
 		part_number		=0;
@@ -176,7 +176,9 @@ public class component_collector
 				if(part_component_number[i]!=null)
 					for(int j=0,nj=part_component_number[i].length;j<nj;j++)
 						part_component_number[i][j]=0;
-		
+	}
+	public void reset()
+	{
 		if(component_collector!=null)
 			for(int i=0,ni=component_collector.length;i<ni;i++)
 				if(component_collector[i]!=null)
@@ -187,6 +189,8 @@ public class component_collector
 		title="";
 		description="";
 		audio_file_name="";
+		
+		reset_number();
 	}
 	private void init(ArrayList<render> renders)
 	{
