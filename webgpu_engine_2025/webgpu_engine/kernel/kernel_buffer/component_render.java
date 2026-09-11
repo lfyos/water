@@ -1,28 +1,14 @@
 package kernel_buffer;
 
 import kernel_part.part;
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
+import kernel_scene.client_information;
 import kernel_component.component_container;
 import kernel_component.component_link_list;
 import kernel_common_class.debug_information;
 import kernel_render.render_component_counter;
-import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
-import kernel_driver.component_instance_driver;
-
-
-//	flag usage:
-//	1: in buffer,	   need update
-//	2: in buffer,	No need update
-//	4: in list,		   need update
-//	8: in list,		No need update
-
-//	16:can not delete, so become keep
-//	32:delete success, so deleted
-
-//	64:can not append
-//	128:append success
 
 public class component_render
 {
@@ -70,17 +56,11 @@ public class component_render
 	public component_render(int max_part_component_number)
 	{
 		component_number=0;
-		
 		comp		=new component[max_part_component_number];
-		comp[0]		=null;
-		
 		driver_id	=new int[max_part_component_number];
-		driver_id[0]=-1;
-		
 		flag		=new int[max_part_component_number];
 		instance_id	=new int[max_part_component_number];
 	}
-	
 	public void clear_clip_flag(component_container component_cont)
 	{
 		for(int i=0;i<component_number;i++)
@@ -93,7 +73,8 @@ public class component_render
 		for(int i=0;i<component_number;i++)
 			cr.clipper_test(comp[i],component_cont,parameter_channel_id);
 	}
-	private void clear_component_link_list()
+	public void mark(component_link_list cll,client_information ci,
+			camera_result cam_result,render_component_counter rcc)
 	{
 		delete_in_cll	=null;
 		delete_out_cll	=null;
@@ -104,75 +85,66 @@ public class component_render
 		lastest_out_delete_touch_time	=0;
 		lastest_append_touch_time		=0;
 		lastest_refresh_touch_time		=0;
-	}
-	private component_link_list revere_component_link_list(component_link_list cll)
-	{
-		component_link_list ret_val=null;
-		for(component_link_list p;(p=cll)!=null;){
-			cll=cll.next_list_item;
-			p.next_list_item=ret_val;
-			ret_val=p;
-		}
-		return ret_val;
-	}
-	public void mark(component_link_list cll,client_information ci,
-			camera_result cam_result,render_component_counter rcc)
-	{
-		clear_component_link_list();
 		
-// clear component flag in link list
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
 			int data_buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			flag[data_buffer_id]=0;
 			instance_id[data_buffer_id]=-1;
 		}
-// set component flag in buffer
 		for(int i=0;i<component_number;i++){
-			component_instance_driver in_dr=ci.component_instance_driver_cont.
-					get_component_instance_driver(comp[i],driver_id[i]);
+			var in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp[i],driver_id[i]);
 			long old_component_render_version=in_dr.get_component_render_version(cam_result.target.target_id);
 			long new_component_render_version=comp[i].driver_array.get(driver_id[i]).get_component_render_version();
 			int data_buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
 			flag[data_buffer_id]=(old_component_render_version!=new_component_render_version)?1:2;
 			instance_id[data_buffer_id]=i;
 		}
-// append component flag in link list	
+//flag==0:	component only in link list
+//flag==1:	component in buffer,maybe in link list or not, need update
+//flag==2:	component in buffer,maybe in link list or not, unnecessary update
+
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
 			int data_buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			switch(flag[data_buffer_id]){
-			case 0://component not in buffer,but in link list 
-				component_instance_driver in_dr=ci.component_instance_driver_cont.
-						get_component_instance_driver(p.comp,p.driver_id);
+			case 0:
+				var in_dr=ci.component_instance_driver_cont.get_component_instance_driver(p.comp,p.driver_id);
 				long old_component_render_version=in_dr.get_component_render_version(cam_result.target.target_id);
 				long new_component_render_version=p.comp.driver_array.get(p.driver_id).get_component_render_version();
 				flag[data_buffer_id]|=(old_component_render_version!=new_component_render_version)?4:8;
-				
+
 				if(p.comp.uniparameter.touch_time>lastest_append_touch_time)
 					lastest_append_touch_time=p.comp.uniparameter.touch_time;
 				append_cll=new component_link_list(p.comp,p.driver_id,append_cll);
 				break;
-			case 1://component in both buffer and link list, modified,should update 
+			case 1:
 				flag[data_buffer_id]|=4;
 				if(p.comp.uniparameter.touch_time>lastest_refresh_touch_time)
 					lastest_refresh_touch_time=p.comp.uniparameter.touch_time;
 				refresh_cll=new component_link_list(p.comp,p.driver_id,refresh_cll);
 				break;
-			case 2://component in both buffer and link list, NOT modified, should NOT update 
+			case 2:			
 				flag[data_buffer_id]|=8;
 				rcc.component_keep_number++;
 				break;
-			default://impossible
-				flag[data_buffer_id]=0;
-				break;
 			}
 		}
+		
+//flag==0:	impossible,has change to 0|4 or 0|8
+//	flag==0|4:	in link list, not in buffer, need update, 		 has add to append_cll
+//	flag==0|8:	in link list, not in buffer, unnecessary update, has add to append_cll
 
-//create delete_cll, refresh_cll, keep_cll link list
+//flag==1:	component in buffer,NOT in link list, need update,		  should do delete
+//flag==2:	component in buffer,NOT in link list, unnecessary update, should do delete
+		
+//flag==1|4: both in link list and buffer, need update,			has add to refresh_cll
+//flag==2|8: both in link list and buffer, unnecessary update,	should do keep
+
+//create delete link list
 		for(int i=0;i<component_number;i++){
 			int data_buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
 			switch(flag[data_buffer_id]){
-			case 1://last display(refresh),			this not display,DELETE
-			case 2://last display(not refresh),		this not display,DELETE
+			case 1:
+			case 2:
 				if(comp[i].clip.can_be_clipped_flag){
 					if(comp[i].uniparameter.touch_time>lastest_out_delete_touch_time)
 						lastest_out_delete_touch_time=comp[i].uniparameter.touch_time;
@@ -183,17 +155,141 @@ public class component_render
 					delete_in_cll=new component_link_list(comp[i],driver_id[i],delete_in_cll);
 				}
 				break;
-			case 1+4://last display(refresh),		this display(refresh),DELETE
-				break;
-			case 2+8://last display(not refresh),	this display(not refresh),KEEP
-				break;	
-			default://impossible
-				flag[data_buffer_id]=0;
+			}
+		}
+//flag==0:	impossible,has change to 0|4 or 0|8
+//		flag==0|4:	in link list, not in buffer, need update, 		 has add to append_cll
+//		flag==0|8:	in link list, not in buffer, unnecessary update, has add to append_cll
+
+//flag==1:	component in buffer,NOT in link list, need update,		 has add to delete_in_cll or delete_out_cll
+//flag==2:	component in buffer,NOT in link list, unnecessary update,has add to delete_in_cll or delete_out_cll
+			
+//flag==1|4: both in link list and buffer,		  need update,		  has add to refresh_cll
+//flag==2|8: both in link list and buffer,		  unnecessary update, should keep
+
+		return;
+	}
+	public void create_append_render_parameter(
+			response_flag create_flag,component_link_list cll,long render_current_time,
+			scene_kernel sk,client_information ci,camera_result cam_result,render_component_counter rcc)
+	{
+		for(component_link_list p=cll;p!=null;p=p.next_list_item){
+			int data_buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
+			switch(flag[data_buffer_id]){
+			case 0|4://update append
+			case 0|8://no update append
+			case 1|4://refresh
+				var instance_driver=ci.component_instance_driver_cont.
+						get_component_instance_driver(p.comp,p.driver_id);
+				if(instance_driver.get_component_parameter_version()<=0){
+					// 	if buffer parameter has not transfer to client broswer,
+					//	do not transfer render parameter to client broswer
+					flag[data_buffer_id]|=16;			//abandon transfer append or refresh data
+					break;
+				}
+				if((rcc.component_append_number+rcc.component_refresh_number)>=sk.scene_par.most_component_append_number)
+					if((render_current_time-p.comp.uniparameter.touch_time)>sk.scene_par.touch_time_length){
+						if(ci.parameter.comp==null){
+							flag[data_buffer_id]|=16;	//abandon transfer append or refresh data
+							break;
+						}
+						if(ci.parameter.comp.component_id!=p.comp.component_id){
+							flag[data_buffer_id]|=16;	//abandon transfer append or refresh data
+							break;
+						}
+					}
+				int my_instance_id;
+				if(flag[data_buffer_id]==(1|4)){//refresh component, put in original buffer
+					rcc.component_refresh_number++;
+					my_instance_id=instance_id[data_buffer_id];
+				}else if(delete_in_cll!=null){//put in delete vissible buffer
+					rcc.component_refresh_number++;
+					int delete_buffer_id=delete_in_cll.comp.driver_array.get(
+							delete_in_cll.driver_id).same_part_component_driver_id;
+					my_instance_id=instance_id[delete_buffer_id];
+					delete_in_cll=delete_in_cll.next_list_item;
+				}else if(delete_out_cll!=null){//put in delete unvissible buffer
+					rcc.component_refresh_number++;
+					int delete_buffer_id=delete_out_cll.comp.driver_array.get(
+							delete_out_cll.driver_id).same_part_component_driver_id;
+					my_instance_id=instance_id[delete_buffer_id];
+					delete_out_cll=delete_out_cll.next_list_item;
+				}else{//append to buffer end
+					rcc.component_append_number++;
+					my_instance_id=component_number++;
+				}
+				comp[my_instance_id]		=p.comp;
+				driver_id[my_instance_id]	=p.driver_id;
+				instance_id[data_buffer_id]	=my_instance_id;
+				
+				flag[data_buffer_id]|=32;	//DO transfer append or refresh data
+
+				part my_part=p.comp.driver_array.get(p.driver_id).component_part;
+				
+				if(create_flag.first_item_flag) {
+					ci.request_response.print("[");
+					create_flag.first_item_flag=false;
+				}else
+					ci.request_response.print(",[");
+				
+				if((create_flag.render_id!=my_part.render_id)||(create_flag.part_id!=my_part.part_id)) {
+					create_flag.render_id		=my_part.render_id;
+					create_flag.part_id			=my_part.part_id;
+					create_flag.target_id		=cam_result.target.target_id;
+					ci.request_response.print(		my_part.render_id).
+										print(",",	my_part.part_id).
+										print(",",	cam_result.target.target_id).
+										print(",");
+				}else if(create_flag.target_id!=cam_result.target.target_id) { 
+					create_flag.target_id=cam_result.target.target_id;
+					ci.request_response.print(cam_result.target.target_id).
+										print(",");			
+				}
+				ci.request_response.print(data_buffer_id).
+									print(",",my_instance_id).
+									print(",");
+				try{
+					instance_driver.create_render_parameter(sk,ci,cam_result);
+				}catch(Exception e){
+					e.printStackTrace();
+					
+					debug_information.println("instance driver create_render_parameter fail:	",e.toString());
+					debug_information.println("Component name:	",	cll.comp.component_name);
+					debug_information.println("Driver ID:		",	cll.driver_id);
+					debug_information.println("Part user name:	",	my_part.user_name);
+					debug_information.println("Part system name:",	my_part.system_name);
+					debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
+					
+				}
+				ci.request_response.print("]");
+
+				instance_driver.update_component_render_version(cam_result.target.target_id,
+						p.comp.driver_array.get(p.driver_id).get_component_render_version());
 				break;
 			}
 		}
-		return;
 	}
+//flag==0:	impossible,has change to 0|4 or 0|8
+//	flag==0|4:		impossible,has change to 0|4|16 or 0|4|32
+//	flag==0|8:		impossible,has change to 0|4|16 or 0|4|32
+	
+//	flag==0|4|16:	in link list, not in buffer, need update, 		 has add to append_cll,abandon transfer data
+//	flag==0|8|16:	in link list, not in buffer, unnecessary update, has add to append_cll,abandon transfer data
+	
+//	flag==0|4|32:	in link list, not in buffer, need update, 		 has add to append_cll,DO transfer data
+//	flag==0|8|32:	in link list, not in buffer, unnecessary update, has add to append_cll,DO transfer data	
+	
+
+//flag==1:	component in buffer,NOT in link list, need update,		 has add to delete_in_cll or delete_out_cll
+//flag==2:	component in buffer,NOT in link list, unnecessary update,has add to delete_in_cll or delete_out_cll
+		
+//flag==1|4: 		impossible,has change to 1|4|16 or 1|4|32
+	
+//	flag==1|4|16:	both in link list and buffer,need update,has add to refresh_cll,abandon transfer data
+//	flag==1|4|32:	both in link list and buffer,need update,has add to refresh_cll,DO transfer data
+
+//flag==2|8: both in link list and buffer,		  unnecessary update, should keep	
+	
 	
 	public void create_delete_render_parameter(response_flag create_flag,
 			int render_id,int part_id,component_link_list cll,long render_current_time,
@@ -201,12 +297,12 @@ public class component_render
 	{
 		for(;cll!=null;cll=cll.next_list_item) {
 			int data_buffer_id=cll.comp.driver_array.get(cll.driver_id).same_part_component_driver_id;
-			switch(flag[data_buffer_id]&(1+2+4+8)){
-			case 1://last display(refresh),			this not display,DELETE
-			case 2://last display(not refresh),		this not display,DELETE
+			switch(flag[data_buffer_id]){
+			case 1:
+			case 2:
 				if(rcc.component_delete_number>=sk.scene_par.most_component_delete_number)
 					if((render_current_time-cll.comp.uniparameter.touch_time)>sk.scene_par.touch_time_length){
-						flag[data_buffer_id]|=16;//become KEEP
+						flag[data_buffer_id]|=16;//abandon delete
 						break;
 					}
 				int my_instance_id=instance_id[data_buffer_id];
@@ -235,7 +331,7 @@ public class component_render
 				}else
 					ci.request_response.print(my_instance_id);
 
-				flag[data_buffer_id]|=32;
+				flag[data_buffer_id]|=32;	//has done delete
 				
 				component_number--;
 				if(my_instance_id<component_number) {
@@ -251,149 +347,48 @@ public class component_render
 
 				rcc.component_delete_number++;
 				break;
-			case 1+4://last display(refresh),		this display(refresh),		REFRESH
-				break;
-			case 2+8://last display(not refresh),	this display(not refresh),	KEEP
-				break;
-			default://impossible
-				flag[data_buffer_id]=0;
-				break;
 			}
 		}
 		return;
 	}
 	
-	public void create_append_render_parameter(
-			response_flag create_flag,component_link_list cll,long render_current_time,
-			scene_kernel sk,client_information ci,camera_result cam_result,render_component_counter rcc)
-	{
-		delete_in_cll=revere_component_link_list(delete_in_cll);
-		delete_out_cll=revere_component_link_list(delete_out_cll);
-		
-		for(component_link_list p=cll;p!=null;p=p.next_list_item){
-			int my_flag;
-			int data_buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
-			switch(my_flag=flag[data_buffer_id]&(1+2+4+8)){
-			default://impossible
-				flag[data_buffer_id]=0;
-				break;
-			case 1:		//last display(refresh),		this not display,			DELETE,NO APPEND
-			case 2:		//last display(not refresh),	this not display,			DELETE,NO APPEND
-			case 2+8:	//last display(not refresh),	this display(not refresh),	KEEP,NO APPEND
-				break;
-			case 1+4:	//last display(refresh),		this display(refresh),		DELETE,		DO ADD
-			case 4:		//last not display,				this display(refresh),		NOT EXIST,	DO ADD
-			case 8:		//last not display,				this display(not refresh),	NOT EXIST,	DO ADD
-				
-				component_instance_driver in_dr=ci.component_instance_driver_cont.
-									get_component_instance_driver(p.comp,p.driver_id);
-				if(in_dr.get_component_parameter_version()<=0){
-					// 	if buffer parameter has not transfer to client broswer,
-					//	do not transfer render parameter to client broswer
-					flag[data_buffer_id]|=64;
-					continue;
-				}
-				if((rcc.component_append_number+rcc.component_refresh_number)>=sk.scene_par.most_component_append_number)
-					if((render_current_time-p.comp.uniparameter.touch_time)>sk.scene_par.touch_time_length){
-						if(ci.parameter.comp==null){
-							flag[data_buffer_id]|=64;
-							continue;
-						}
-						if(ci.parameter.comp.component_id!=p.comp.component_id){
-							flag[data_buffer_id]|=64;
-							continue;
-						}
-					}
+//flag==0:	impossible,has change to 0|4 or 0|8
+//	flag==0|4:		impossible,has change to 0|4|16 or 0|4|32
+//	flag==0|8:		impossible,has change to 0|4|16 or 0|4|32
+	
+//	flag==0|4|16:	in link list, not in buffer, need update, 		 has add to append_cll,abandon transfer data
+//	flag==0|8|16:	in link list, not in buffer, unnecessary update, has add to append_cll,abandon transfer data
+	
+//	flag==0|4|32:	in link list, not in buffer, need update, 		 has add to append_cll,DO transfer data
+//	flag==0|8|32:	in link list, not in buffer, unnecessary update, has add to append_cll,DO transfer data	
 
-				int my_instance_id;
-				if(my_flag==(1+4)) {
-					rcc.component_refresh_number++;
-					my_instance_id=instance_id[data_buffer_id];
-				}else if(delete_in_cll!=null){
-					rcc.component_refresh_number++;
-					int delete_buffer_id=delete_in_cll.comp.driver_array.get(
-							delete_in_cll.driver_id).same_part_component_driver_id;
-					my_instance_id=instance_id[delete_buffer_id];
-					delete_in_cll=delete_in_cll.next_list_item;
-				}else if(delete_out_cll!=null){
-					rcc.component_refresh_number++;
-					int delete_buffer_id=delete_out_cll.comp.driver_array.get(
-							delete_out_cll.driver_id).same_part_component_driver_id;
-					my_instance_id=instance_id[delete_buffer_id];
-					delete_out_cll=delete_out_cll.next_list_item;
-				}else{
-					rcc.component_append_number++;
-					my_instance_id=component_number++;
-					
-				}
-				comp[my_instance_id]		=p.comp;
-				driver_id[my_instance_id]	=p.driver_id;
-				instance_id[data_buffer_id]	=my_instance_id;
+//flag==1:	component NOT in buffer,NOT in link list, need update,		 has add to delete_in_cll or delete_out_cll,be replaced 
+//flag==2:	component NOT in buffer,NOT in link list, unnecessary update,has add to delete_in_cll or delete_out_cll,be replaced 
 
-				flag[data_buffer_id]|=128;
-				
-				part my_part=p.comp.driver_array.get(p.driver_id).component_part;
-				
-				if(create_flag.first_item_flag) {
-					ci.request_response.print("[");
-					create_flag.first_item_flag=false;
-				}else
-					ci.request_response.print(",[");
-				
-				if((create_flag.render_id!=my_part.render_id)||(create_flag.part_id!=my_part.part_id)) {
-					create_flag.render_id		=my_part.render_id;
-					create_flag.part_id			=my_part.part_id;
-					create_flag.target_id		=cam_result.target.target_id;
-					ci.request_response.print(		my_part.render_id).
-										print(",",	my_part.part_id).
-										print(",",	cam_result.target.target_id).
-										print(",");
-				}else if(create_flag.target_id!=cam_result.target.target_id) { 
-					create_flag.target_id=cam_result.target.target_id;
-					ci.request_response.print(cam_result.target.target_id).print(",");
-				}
-				ci.request_response.
-						print(data_buffer_id).print(",").
-						print(my_instance_id).print(",");
-				try{
-					in_dr.create_render_parameter(sk,ci,cam_result);
-				}catch(Exception e){
-					e.printStackTrace();
-					
-					debug_information.println("instance driver create_render_parameter fail:	",e.toString());
-					debug_information.println("Component name:	",	cll.comp.component_name);
-					debug_information.println("Driver ID:		",	cll.driver_id);
-					debug_information.println("Part user name:	",	my_part.user_name);
-					debug_information.println("Part system name:",	my_part.system_name);
-					debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
-					
-				}
-				ci.request_response.print("]");
+//flag==1|16:	component in buffer,NOT in link list, need update,		 has add to delete_in_cll or delete_out_cll,abandon delete
+//flag==2|16:	component in buffer,NOT in link list, unnecessary update,has add to delete_in_cll or delete_out_cll,abandon delete
+//flag==1|32:	component in buffer,NOT in link list, need update,		 has add to delete_in_cll or delete_out_cll,DO delete
+//flag==2|32:	component in buffer,NOT in link list, unnecessary update,has add to delete_in_cll or delete_out_cll,DO delete	
 
-				in_dr.update_component_render_version(cam_result.target.target_id,
-						p.comp.driver_array.get(p.driver_id).get_component_render_version());
+//flag==1|4: 		impossible,has change to 1|4|16 or 1|4|32
+	
+//	flag==1|4|16:	both in link list and buffer,need update,has add to refresh_cll,abandon transfer data
+//	flag==1|4|32:	both in link list and buffer,need update,has add to refresh_cll,DO transfer data
 
-				break;
-			}
-		}
-		delete_in_cll=revere_component_link_list(delete_in_cll);
-		delete_out_cll=revere_component_link_list(delete_out_cll);
-	}
+//flag==2|8: both in link list and buffer,		  unnecessary update, should keep	
+	
 	public void register_location(scene_kernel sk,client_information ci)
 	{
 		for(int i=0;i<component_number;i++){
 			int data_buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
-			switch(flag[data_buffer_id]&(1+2+4+8)){
-			case 4:		//last not display,				this display(refresh),		need position
-			case 8:		//last not display,				this display(not refresh),	need position
-			case 1+4:	//last display(refresh),		this display(refresh),		need position 	
-			case 2+8:	//last display(not refresh),	this display(not refresh),	need position 	
-				ci.render_buffer.location_buffer.put_in_list(comp[i],sk);
+			switch(flag[data_buffer_id]){
+			case 1|16:
+			case 2|16:
 				break;
 			default:
+				ci.render_buffer.location_buffer.put_in_list(comp[i],sk);
 				break;
 			}
 		}
-		clear_component_link_list();
 	}
 }
