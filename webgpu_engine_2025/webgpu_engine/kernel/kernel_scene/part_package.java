@@ -77,11 +77,11 @@ class part_package_collector extends tree_search_container<part,part>
 		for(int i=0,ni=sorted_part_list.size();i<ni;i++){
 			part my_part=sorted_part_list.get(i);
 			my_part.part_package_id=package_number;
-			if(my_part.boftal==null)
+			if(my_part.bofmtal==null)
 				debug_information.println("Find null boftal:	",
 						my_part.system_name+"	"+my_part.directory_name+my_part.mesh_file_name);
 			else
-				my_package_length+=my_part.boftal.buffer_object_head_length;
+				my_package_length+=my_part.bofmtal.buffer_object_head_length;
 			
 			while(package_number>(part_package_collector_list.size()-1))
 				part_package_collector_list.add(new package_partlist());
@@ -91,7 +91,7 @@ class part_package_collector extends tree_search_container<part,part>
 			my_part.part_package_sequence_id=my_part_arraylist.list.size();
 			my_part_arraylist.list.add(my_part.part_package_sequence_id,my_part);
 
-			long my_last_time=my_part.boftal.buffer_object_head_last_modify_time;
+			long my_last_time=my_part.bofmtal.buffer_object_head_last_modify_time;
 			if(my_last_time<my_part.part_par.last_modified_time)
 				my_last_time=my_part.part_par.last_modified_time;
 			if(my_part_arraylist.last_time<my_last_time)

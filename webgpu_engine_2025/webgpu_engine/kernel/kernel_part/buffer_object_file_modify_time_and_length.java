@@ -14,7 +14,7 @@ public class buffer_object_file_modify_time_and_length
 	public long	buffer_object_head_length;
 	public long	buffer_object_total_file_length;
 
-	public ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>> boftal_list;
+	public ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>> bofmtali_list;
 	
 	public part_rude simple_part_mesh;
 	
@@ -24,7 +24,7 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_head_length			=0;
 		buffer_object_total_file_length		=0;
 		
-		boftal_list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
+		bofmtali_list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
 		simple_part_mesh=null;
 	}
 	public buffer_object_file_modify_time_and_length(file_reader fr)
@@ -36,7 +36,7 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_head_length			=fr.get_long();
 		buffer_object_total_file_length		=buffer_object_head_length;
 		
-		boftal_list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
+		bofmtali_list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
 		for(int i=0,ni=fr.get_int();i<ni;i++){
 			bofmtli_list=new ArrayList<buffer_object_file_modify_time_and_length_item>();
 			for(int j=0,nj=fr.get_int();j<nj;j++){
@@ -46,7 +46,7 @@ public class buffer_object_file_modify_time_and_length
 				if(!(bofmtli.buffer_object_file_in_head_flag))
 					buffer_object_total_file_length+=bofmtli.buffer_object_text_file_length;
 			}
-			boftal_list.add(i,bofmtli_list);
+			bofmtali_list.add(i,bofmtli_list);
 		}
 		simple_part_mesh=new part_rude(fr);
 		return;
@@ -57,10 +57,10 @@ public class buffer_object_file_modify_time_and_length
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss:SSS");
 		
 		simple_part_mesh=null;
-		boftal_list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
-		boftal_list.add(0,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//face
-		boftal_list.add(1,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//edge
-		boftal_list.add(2,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//point
+		bofmtali_list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
+		bofmtali_list.add(0,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//face
+		bofmtali_list.add(1,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//edge
+		bofmtali_list.add(2,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//point
 		
 		File f=new File(root_file_name+".head.txt");
 		buffer_object_head_last_modify_time	=f.lastModified();
@@ -69,7 +69,7 @@ public class buffer_object_file_modify_time_and_length
 
 		String file_type[]=new String[]{".face",".edge",".point"};
 		for(int i=0,ni=file_type.length;i<ni;i++){
-			var my_item_arraylist=boftal_list.get(i);
+			var my_item_arraylist=bofmtali_list.get(i);
 			for(int j=0;;j++){
 				String my_file_name=root_file_name+file_type[i]+j+".txt";
 				if(!((f=new File(my_file_name)).exists()))
@@ -97,9 +97,9 @@ public class buffer_object_file_modify_time_and_length
 		
 		fw.println("/*\tbuffer_object_head_length\t\t\t\t*/\t",buffer_object_head_length);
 
-		fw.println("/*\tbuffer_object_text_file_length size\t*/\t",boftal_list.size());
-		for(int i=0,ni=boftal_list.size();i<ni;i++){
-			var my_item_arraylist=boftal_list.get(i);
+		fw.println("/*\tbuffer_object_text_file_length size\t*/\t",bofmtali_list.size());
+		for(int i=0,ni=bofmtali_list.size();i<ni;i++){
+			var my_item_arraylist=bofmtali_list.get(i);
 			String file_type_str=i+":"+file_type[i].substring(1);
 			fw.println("/*\t\tbuffer_object_text_file_length["+file_type_str+"] size\t*/\t",my_item_arraylist.size());
 			for(int j=0,nj=my_item_arraylist.size();j<nj;j++){

@@ -50,14 +50,13 @@ public class part_process_sequence
 		
 		int index_id=0;
 		for(var my_part:my_part_list) {
-			for(var my_boftal_list:my_part.boftal.boftal_list) 
-				for(var my_boftal:my_boftal_list) {
-					if(my_boftal.buffer_object_file_in_head_flag)
-						continue;
-					total_file_number++;
-					total_data_length+=my_boftal.buffer_object_text_file_length;
-				}
 			process_parts_sequence[index_id++]=new int[]{my_part.render_id,my_part.part_id};
+			for(var my_boftal_list:my_part.bofmtal.bofmtali_list)
+				for(var my_boftal:my_boftal_list)
+					if(!(my_boftal.buffer_object_file_in_head_flag)) {
+						total_file_number++;
+						total_data_length+=my_boftal.buffer_object_text_file_length;
+					}
 		}
 	}
 	private void init_package_sequence(render_container render_cont)
@@ -65,31 +64,31 @@ public class part_process_sequence
 		process_package_sequence=new ArrayList<int[]>();
 		
 		int number=render_cont.system_part_package.package_file_name.length;
-		boolean system_flag[]=new boolean[number];
+		boolean has_registered_system_package_flag[]=new boolean[number];
 		system_package_render_part_id=new ArrayList<ArrayList<int[]>>();
 		for(int i=0;i<number;i++) {
 			system_package_render_part_id.add(new ArrayList<int[]>());
-			system_flag[i]=false;
+			has_registered_system_package_flag[i]=false;
 		}
 		
 		number=render_cont.scene_part_package.package_file_name.length;
-		boolean scene_flag[]=new boolean[number];
+		boolean has_registered_scene_package_flag[]=new boolean[number];
 		scene_package_render_part_id=new ArrayList<ArrayList<int[]>>();
 		for(int i=0;i<number;i++) {
 			scene_package_render_part_id.add(new ArrayList<int[]>());
-			scene_flag[i]=false;
+			has_registered_scene_package_flag[i]=false;
 		}
 		
 		number=render_cont.type_part_package.length;
-		boolean type_flag[][]=new boolean[number][];
+		boolean has_registered_type_package_flag[][]=new boolean[number][];
 		type_package_render_part_id=new ArrayList<ArrayList<ArrayList<int[]>>>();
 		for(int i=0;i<number;i++) {
-			var p=new ArrayList<ArrayList<int[]>>();
+			ArrayList<ArrayList<int[]>> p=new ArrayList<ArrayList<int[]>>();
 			type_package_render_part_id.add(p);
-			type_flag[i]=new boolean[render_cont.type_part_package[i].package_file_name.length];
-			for(int j=0,nj=type_flag[i].length;j<nj;j++) {
+			has_registered_type_package_flag[i]=new boolean[render_cont.type_part_package[i].package_file_name.length];
+			for(int j=0,nj=has_registered_type_package_flag[i].length;j<nj;j++) {
 				p.add(new ArrayList<int[]>());
-				type_flag[i][j]=false;
+				has_registered_type_package_flag[i][j]=false;
 			}
 		}
 		
@@ -97,53 +96,51 @@ public class part_process_sequence
 		for(int i=0,ni=process_parts_sequence.length;i<ni;i++) {
 			int render_id	=process_parts_sequence[i][0];
 			int part_id		=process_parts_sequence[i][1];
-			var p=render_cont.renders.get(render_id).parts.get(part_id);
+			part my_part	=render_cont.renders.get(render_id).parts.get(part_id);
 			
-			if((p.part_package_id<0)||(p.part_package_sequence_id<0))
+			if((my_part.part_package_id<0)||(my_part.part_package_sequence_id<0))
 				continue;
 			
-			if(all_buffer_object_head_package_last_modify_time<p.boftal.buffer_object_head_last_modify_time)
-				all_buffer_object_head_package_last_modify_time=p.boftal.buffer_object_head_last_modify_time;
+			if(all_buffer_object_head_package_last_modify_time<my_part.bofmtal.buffer_object_head_last_modify_time)
+				all_buffer_object_head_package_last_modify_time=my_part.bofmtal.buffer_object_head_last_modify_time;
 			
-			part_package p_p;
-			ArrayList<int[]> list;
+			part_package my_package;
 
-			switch(p.part_type_id){
+			switch(my_part.part_type_id){
 			case 0:
-				list=system_package_render_part_id.get(p.part_package_id);
-				list.add(new int[] {p.render_id,p.part_id});
-				if(system_flag[p.part_package_id])
+				system_package_render_part_id.get(my_part.part_package_id).add(
+						new int[] {my_part.render_id,my_part.part_id});
+				if(has_registered_system_package_flag[my_part.part_package_id])
 					continue;
-				system_flag[p.part_package_id]=true;
-				p_p=render_cont.system_part_package;
+				has_registered_system_package_flag[my_part.part_package_id]=true;
+				my_package=render_cont.system_part_package;
 				break;
 			case 1:
-				list=scene_package_render_part_id.get(p.part_package_id);
-				list.add(new int[] {p.render_id,p.part_id});
-				if(scene_flag[p.part_package_id])
+				scene_package_render_part_id.get(my_part.part_package_id).add(
+						new int[] {my_part.render_id,my_part.part_id});
+				if(has_registered_scene_package_flag[my_part.part_package_id])
 					continue;
-				scene_flag[p.part_package_id]=true;
-				p_p=render_cont.scene_part_package;
+				has_registered_scene_package_flag[my_part.part_package_id]=true;
+				my_package=render_cont.scene_part_package;
 				break;
 			default:
-				list=type_package_render_part_id.get(p.part_type_id-2).get(p.part_package_id);
-				list.add(new int[] {p.render_id,p.part_id});
-				if(type_flag[p.part_type_id-2][p.part_package_id])
+				type_package_render_part_id.get(my_part.part_type_id-2).get(my_part.part_package_id).add(
+						new int[] {my_part.render_id,my_part.part_id});
+				if(has_registered_type_package_flag[my_part.part_type_id-2][my_part.part_package_id])
 					continue;
-				type_flag[p.part_type_id-2][p.part_package_id]=true;
-				p_p=render_cont.type_part_package[p.part_type_id-2];
+				has_registered_type_package_flag[my_part.part_type_id-2][my_part.part_package_id]=true;
+				my_package=render_cont.type_part_package[my_part.part_type_id-2];
 				break;
 			}
-			
-			process_package_sequence.add(new int[]{p.part_type_id,p.part_package_id});
+
+			process_package_sequence.add(new int[]{my_part.part_type_id,my_part.part_package_id});
 			
 			total_file_number++;
-			total_data_length+=p_p.package_length[p.part_package_id];
-			if(all_buffer_object_head_package_last_modify_time<p_p.package_last_time[p.part_package_id])
-				all_buffer_object_head_package_last_modify_time=p_p.package_last_time[p.part_package_id];
+			total_data_length+=my_package.package_length[my_part.part_package_id];
+			if(all_buffer_object_head_package_last_modify_time<my_package.package_last_time[my_part.part_package_id])
+				all_buffer_object_head_package_last_modify_time=my_package.package_last_time[my_part.part_package_id];
 		}
 	}
-	
 	private void init_package_priority()
 	{
 		int pps_number=process_package_sequence.size();

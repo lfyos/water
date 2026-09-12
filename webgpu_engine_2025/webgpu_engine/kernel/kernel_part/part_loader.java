@@ -49,11 +49,11 @@ public class part_loader extends Thread
 		if(new File(boftal_file_name).lastModified()<=loaded_part.part_par.last_modified_time)
 			return false;
 		file_reader fr=new file_reader(boftal_file_name,system_par.local_data_charset);
-		loaded_part.boftal=new buffer_object_file_modify_time_and_length(fr);
+		loaded_part.bofmtal=new buffer_object_file_modify_time_and_length(fr);
 		fr.close();
 		
 		if(loaded_part.part_mesh==null)
-			loaded_part.part_mesh=loaded_part.boftal.simple_part_mesh;
+			loaded_part.part_mesh=loaded_part.bofmtal.simple_part_mesh;
 		if(loaded_part.part_mesh!=null)
 			loaded_part.part_mesh.free_memory();
 		

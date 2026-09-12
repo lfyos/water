@@ -49,6 +49,7 @@ public class component_location_buffer
 		}
 		
 		location_collector=new component_collector(sk.render_cont.renders);
+		location_collector.set_no_number_modify_register_flag(true);
 	}
 	private int []get_render_part_id(component comp,scene_kernel sk)
 	{
@@ -117,6 +118,7 @@ public class component_location_buffer
 		for(int response_number=0,i=0,ni=sk.process_part_sequence.process_parts_sequence.length;i<ni;i++){
 			int render_id			=sk.process_part_sequence.process_parts_sequence[i][0];
 			int part_id				=sk.process_part_sequence.process_parts_sequence[i][1];
+			
 			component_link_list p	=location_collector.component_collector[render_id][part_id];
 			location_collector.component_collector[render_id][part_id]=null;
 			
@@ -147,7 +149,6 @@ public class component_location_buffer
 			}
 		}
 		ci.request_response.print("]");
-		location_collector.reset_number();
 	}
 	public void synchronize_location_version(component comp,scene_kernel sk,boolean update_flag)
 	{
