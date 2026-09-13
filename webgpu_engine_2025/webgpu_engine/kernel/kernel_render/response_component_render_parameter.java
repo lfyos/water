@@ -40,7 +40,8 @@ public class response_component_render_parameter
 					int all_number=rcc.component_append_number+rcc.component_refresh_number;
 					if(all_number>sk.scene_par.most_component_append_number){
 						long lastest_touch_time=(type_id==0)
-								?ren_buf.lastest_append_touch_time:ren_buf.lastest_refresh_touch_time;
+								?ren_buf.lastest_append_touch_time
+								:ren_buf.lastest_refresh_touch_time;
 						if((render_current_time-lastest_touch_time)>sk.scene_par.touch_time_length)
 							continue;
 					}

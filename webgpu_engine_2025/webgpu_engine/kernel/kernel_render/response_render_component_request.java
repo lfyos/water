@@ -158,8 +158,8 @@ public class response_render_component_request
 			String package_file_name;
 			ArrayList<int[]> package_render_part_id;
 
-			int part_type_id	=request_package[0];
-			int part_package_id	=request_package[1];
+			int part_type_id=request_package[0],part_package_id=request_package[1];
+			
 			switch(part_type_id){
 			case 0:
 				package_file_name		=sk.render_cont.system_part_package.package_file_name[part_package_id];
@@ -216,7 +216,9 @@ public class response_render_component_request
 		if((index_id=str.indexOf("_"))<0)
 			return;
 		ci.loaded_file_number=Integer.decode(str.substring(0,index_id));
-		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))<0)
+		
+		str=str.substring(index_id+1);
+		if((index_id=str.indexOf("_"))<0)
 			return;
 		ci.loaded_data_length=Long.decode(str.substring(0,index_id));
 
@@ -232,7 +234,8 @@ public class response_render_component_request
 		}
 		
 		int loading_render_id,loading_part_id;
-		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))>0){
+		str=str.substring(index_id+1);
+		if((index_id=str.indexOf("_"))>0){
 			loading_render_id=Integer.decode(str.substring(0,index_id  ));
 			loading_part_id  =Integer.decode(str.substring(  index_id+1));
 			if((loading_render_id>=0)&&(loading_render_id<sk.render_cont.renders.size())) {
@@ -244,7 +247,6 @@ public class response_render_component_request
 				}
 			}
 		}
-		
 		ci.message_display.set_display_message(display_message,
 			(ci.loaded_data_length>=sk.process_part_sequence.total_data_length)?1000*1000*1000*10:-1);
 	}
@@ -278,7 +280,7 @@ public class response_render_component_request
 		response_parameter(sk,ci,delay_time_length);
 		render_component_counter rcc=new render_component_counter();
 		response_component_render_parameter.response(process_target(sk,ci),sk,ci,rcc);
-		new response_component_buffer_parameter(sk,ci,rcc);
+		response_component_buffer_parameter.response(sk,ci,rcc);
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,sk.camera_cont);
 		ci.render_buffer.location_buffer.response_location(sk,ci,rcc);
 		response_buffer_object_request(sk,ci,current_loading_number,max_loading_number);

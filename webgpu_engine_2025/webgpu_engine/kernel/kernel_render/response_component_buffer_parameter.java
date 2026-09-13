@@ -11,11 +11,7 @@ import kernel_scene.scene_kernel;
 
 public class response_component_buffer_parameter
 {
-	private scene_kernel sk;
-	private client_information ci;
-	private long current_touch_time;
-	
-	private component_instance_driver test_should_response_parameter(
+	private static component_instance_driver test_should_response_parameter(
 			component_link_list cll,long current_touch_time,
 			scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
@@ -38,8 +34,9 @@ public class response_component_buffer_parameter
 				return my_instance_driver;
 		return null;
 	}
-	private void response(int render_id,int part_id,component_link_list cll,
-			response_flag create_flag,render_component_counter rcc)
+	private static void response_routine(
+			int render_id,int part_id,component_link_list cll,response_flag create_flag,
+			scene_kernel sk,client_information ci,render_component_counter rcc,long current_touch_time)
 	{
 		for(component_instance_driver my_instance_driver;cll!=null;cll=cll.next_list_item) {
 			if((my_instance_driver=test_should_response_parameter(cll,current_touch_time,sk,ci,rcc))==null)
@@ -81,12 +78,9 @@ public class response_component_buffer_parameter
 					cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version());
 		}	
 	}
-	public response_component_buffer_parameter(
-			scene_kernel my_sk,client_information my_ci,render_component_counter rcc)
+	public static void response(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
-		sk=my_sk;
-		ci=my_ci;
-		current_touch_time=sk.current_time.nanoseconds();
+		long current_touch_time=sk.current_time.nanoseconds();
 		response_flag create_flag=new response_flag();
 		
 		ci.request_response.print(",[");
@@ -98,7 +92,7 @@ public class response_component_buffer_parameter
 				if(collector==null)
 					continue;
 				component_link_list cll=collector.component_collector[render_id][part_id];
-				response(render_id,part_id,cll,create_flag,rcc);
+				response_routine(render_id,part_id,cll,create_flag,sk,ci,rcc,current_touch_time);
 			}
 		}
 		ci.request_response.print("]");
