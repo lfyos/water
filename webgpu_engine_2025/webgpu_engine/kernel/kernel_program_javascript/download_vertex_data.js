@@ -238,8 +238,9 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				part_file_proxy_url,part_head_data,part_affiliated_data,scene)
 	{
 		if(this.acknowledge_render_part_id==null)
-			this.acknowledge_render_part_id="";
-		this.acknowledge_render_part_id+=render_id+"_"+part_id+"_";
+			this.acknowledge_render_part_id=render_id+"_"+part_id;
+		else
+			this.acknowledge_render_part_id+="_"+render_id+"_"+part_id;
 		
 		scene.part_array[render_id][part_id]={
 			find_error_flag					:	false,

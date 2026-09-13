@@ -20,84 +20,78 @@ public class response_render_component_request
 	private static component_collector collect_render_parts(
 			ArrayList<response_render_data> render_data_list,
 			scene_kernel sk,client_information ci,camera_result cam_result)
-	{	
-		component_render ren_buf;
-		
+	{
 		int pps[][]=sk.process_part_sequence.process_parts_sequence;
 		int id_array[][][][]=sk.component_cont.part_component_id_and_driver_id;
-		component_render_buffer	buffer=ci.render_buffer.component_buffer;
+		component_render_buffer	render_buffer=ci.render_buffer.component_buffer;
 
 		for(int i=0,ni=pps.length;i<ni;i++) {
 			int render_id=pps[i][0],part_id=pps[i][1];
-			if((ren_buf=buffer.get_render_buffer(render_id,part_id,
-					cam_result.target.target_id,id_array[render_id][part_id].length))!=null)
-					ren_buf.clear_clip_flag(sk.component_cont);
+			component_render ren_buf=render_buffer.get_render_buffer(render_id,part_id,
+					cam_result.target.target_id,id_array[render_id][part_id].length);
+			if(ren_buf!=null)
+				ren_buf.clear_clip_flag(sk.component_cont);
 		}
-		var list=new list_component_on_collector(sk,ci,cam_result);
+		component_collector collector=(new list_component_on_collector(sk,ci,cam_result)).collector;
 		
 		long current_time=sk.current_time.nanoseconds();
-		for(int i=0,ni=list.collector.component_collector.length;i<ni;i++)
-			if(list.collector.component_collector[i]!=null)
-				for(int j=0,nj=list.collector.component_collector[i].length;j<nj;j++) {
-					component_link_list cll=list.collector.component_collector[i][j];
+		for(int i=0,ni=collector.component_collector.length;i<ni;i++)
+			if(collector.component_collector[i]!=null)
+				for(int j=0,nj=collector.component_collector[i].length;j<nj;j++) {
+					component_link_list cll=collector.component_collector[i][j];
 					for(;cll!=null;cll=cll.next_list_item)
 						cll.comp.render_touch_time=current_time;
 				}
-		for(int i=0,ni=pps.length;i<ni;i++)
-			if((ren_buf=buffer.get_render_buffer(pps[i][0],pps[i][1],
-					cam_result.target.target_id,id_array[pps[i][0]][pps[i][1]].length))!=null)
-					ren_buf.test_clip_flag_of_delete_component(cam_result,
+		for(int i=0,ni=pps.length;i<ni;i++) {
+			int render_id=pps[i][0],part_id=pps[i][1];
+			component_render ren_buf=render_buffer.get_render_buffer(render_id,part_id,
+				cam_result.target.target_id,id_array[pps[i][0]][pps[i][1]].length);
+			if(ren_buf!=null)
+				ren_buf.test_clip_flag_of_delete_component(cam_result,
 						sk.component_cont,cam_result.target.parameter_channel_id);
-		
-		render_data_list.add(render_data_list.size(),new response_render_data(list.collector,cam_result));
-		
-		return list.collector;
-	}
-	private static void process_target(scene_kernel sk,client_information ci,render_component_counter rcc)
-	{
-		camera_result cr;
-		render_target rt;
-		render_target target_list[]=ci.target_container.get_render_target();
-		int target_number=target_list.length;
-
-		for(int pos;(pos=ci.target_component_collector_list.size())<target_number;){
-			ci.target_component_collector_list.add(pos,null);
-			ci.target_camera_result_list.add(pos,null);
 		}
-		for(int i=0;i<target_number;i++)
-			if((rt=target_list[i])!=null)
-				if((rt.camera_id>=0)&&(rt.camera_id<sk.camera_cont.size()))
-					ci.target_camera_result_list.set(rt.target_id,
-							new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont));
-		for(int i=0;i<target_number;i++)
-			if((rt=target_list[i])!=null)
-				if(rt.main_display_target_flag)
-					if((cr=ci.target_camera_result_list.get(rt.target_id))!=null){
-						ci.display_camera_result=cr;
-						break;
-					}
-		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data> (); 
+		
+		render_data_list.add(new response_render_data(collector,cam_result));
+		
+		return collector;
+	}
+	private static ArrayList<response_render_data> process_target(scene_kernel sk,client_information ci)
+	{
+		render_target target_list[]=ci.target_container.get_render_target();
+		for(int i=ci.target_component_collector_list.size(),ni=target_list.length;i<ni;i++){
+			ci.target_component_collector_list.add(i,null);
+			ci.target_camera_result_list.add(i,null);
+		}
+		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data>(); 
 		
 		ci.request_response.print(",[");
-		for(int response_number=0,i=0;i<target_number;i++)
-			if((rt=target_list[i])!=null){
-				cr=ci.target_camera_result_list.get(rt.target_id);
-				ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,sk);
-	
-				component_collector collector=collect_render_parts(render_data_list,sk,ci,cr);
-				ci.target_component_collector_list.set(rt.target_id,collector);
-				if(ci.display_camera_result!=null)
-					if(ci.display_camera_result.target.target_id==rt.target_id)
-						ci.display_component_collector=collector;
-				
-				
-				if((response_number++)>0)
-					ci.request_response.print(",");
-				ci.render_buffer.target_buffer.response_parameter(rt,ci.request_response);
+		int response_number=0;
+		for(render_target rt:target_list) {
+			if(rt==null)
+				continue;
+			if(rt.camera_id<0)
+				continue;
+			if(rt.camera_id>=sk.camera_cont.size())
+				continue;
+			
+			camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
+			component_collector collector=collect_render_parts(render_data_list,sk,ci,cr);
+			
+			ci.target_camera_result_list.set(rt.target_id,cr);
+			ci.target_component_collector_list.set(rt.target_id,collector);
+			ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,sk);
+			
+			if(rt.main_display_target_flag){
+				ci.display_camera_result=cr;
+				ci.display_component_collector=collector;
 			}
+			if((response_number++)>0)
+				ci.request_response.print(",");
+			ci.render_buffer.target_buffer.response_parameter(rt,ci.request_response);
+		}
 		ci.request_response.print("]");
 		
-		response_component_render_parameter.response(render_data_list,sk,ci,rcc);
+		return render_data_list;
 	}
 	private static void response_parameter(scene_kernel sk,client_information ci,long delay_time_length)
 	{
@@ -276,16 +270,14 @@ public class response_render_component_request
 					max_loading_number=sk.system_par.max_loading_number;
 			}
 		
+		display_data_load_message(sk,ci);
 		ci.render_buffer.mesh_loader.clear_request_package_id(max_loading_number);
 
-		display_data_load_message(sk,ci);
-
-		render_component_counter rcc=new render_component_counter();
-				
 		ci.request_response.print("[");
 		
 		response_parameter(sk,ci,delay_time_length);
-		process_target(sk,ci,rcc);
+		render_component_counter rcc=new render_component_counter();
+		response_component_render_parameter.response(process_target(sk,ci),sk,ci,rcc);
 		new response_component_buffer_parameter(sk,ci,rcc);
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,sk.camera_cont);
 		ci.render_buffer.location_buffer.response_location(sk,ci,rcc);
