@@ -111,7 +111,7 @@ public class part_mesh_loader
 	}
 	public void clear_request_package_id(int my_max_loading_number)
 	{
-		request_package_id=new ArrayList<int[]>();
+		request_package_id.clear();
 		max_loading_number=my_max_loading_number;
 	}
 }

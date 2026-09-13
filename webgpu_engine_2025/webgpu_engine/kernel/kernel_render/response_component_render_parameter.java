@@ -25,8 +25,7 @@ public class response_component_render_parameter
 			int render_id=pps[i][0],part_id=pps[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id]) 
 				continue;
-			for(int list_id=0,list_size=render_data_list.size();list_id<list_size;list_id++) {
-				response_render_data rrd=render_data_list.get(list_id);
+			for(response_render_data rrd:render_data_list) {
 				component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
 						render_id,part_id,rrd.cam_result.target.target_id,pcd[render_id][part_id].length);
 				if(ren_buf==null)
@@ -56,8 +55,7 @@ public class response_component_render_parameter
 		for(int i=0,ni=pps.length;i<ni;i++){
 			int render_id=pps[i][0],part_id=pps[i][1];
 			for(int type_id=0;type_id<2;type_id++){
-				for(int list_id=0,list_size=render_data_list.size();list_id<list_size;list_id++) {
-					response_render_data rrd=render_data_list.get(list_id);
+				for(response_render_data rrd:render_data_list){
 					component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
 							render_id,part_id,rrd.cam_result.target.target_id,pcd[render_id][part_id].length);
 					if(ren_buf==null)
@@ -88,8 +86,7 @@ public class response_component_render_parameter
 			int render_id=pps[i][0],part_id=pps[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id]) 
 				continue;
-			for(int list_id=0,list_size=render_data_list.size();list_id<list_size;list_id++) {
-				response_render_data rrd=render_data_list.get(list_id);
+			for(response_render_data rrd:render_data_list) {
 				component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
 						render_id,part_id,rrd.cam_result.target.target_id,pcd[render_id][part_id].length);
 				if(ren_buf!=null)
