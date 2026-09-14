@@ -45,7 +45,7 @@ public class render_target
 			for(int i=0,ni=comp.length;i<ni;i++)
 				comp[i]=rt.comp[i];
 		};
-		
+
 		camera_id			=rt.camera_id;
 		parameter_channel_id=rt.parameter_channel_id;
 		

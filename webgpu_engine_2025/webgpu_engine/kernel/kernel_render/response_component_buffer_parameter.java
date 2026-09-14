@@ -80,20 +80,23 @@ public class response_component_buffer_parameter
 	}
 	public static void response(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
-		long current_touch_time=sk.current_time.nanoseconds();
+		component_collector my_collector;
 		response_flag create_flag=new response_flag();
+		long current_touch_time=sk.current_time.nanoseconds();
+		int target_number=ci.target_component_collector_list.size();
 		
 		ci.request_response.print(",[");
-		for(int ppc[][]=sk.process_part_sequence.process_parts_sequence,i=0,ni=ppc.length;i<ni;i++) {
+		int ppc[][]=sk.process_part_sequence.process_parts_sequence;
+		for(int i=0,ni=ppc.length;i<ni;i++) {
 			int render_id=ppc[i][0],part_id=ppc[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id])
 				continue;
-			for(component_collector collector:ci.target_component_collector_list) {
-				if(collector==null)
-					continue;
-				component_link_list cll=collector.component_collector[render_id][part_id];
-				response_routine(render_id,part_id,cll,create_flag,sk,ci,rcc,current_touch_time);
-			}
+			for(int target_id=0;target_id<target_number;target_id++)
+				if(ci.target_do_render_flag_list.get(target_id))
+					if((my_collector=ci.target_component_collector_list.get(target_id))!=null)
+						response_routine(render_id,part_id,
+								my_collector.component_collector[render_id][part_id],
+								create_flag,sk,ci,rcc,current_touch_time);
 		}
 		ci.request_response.print("]");
 	}

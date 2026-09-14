@@ -11,7 +11,7 @@ import kernel_scene.scene_kernel;
 public class response_component_render_parameter
 {
 	public static void response(
-			ArrayList<response_render_data> render_data_list,
+			ArrayList<render_collector_and_camera_result> rcacr_list,
 			scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
 		int pps[][]=sk.process_part_sequence.process_parts_sequence;
@@ -25,13 +25,13 @@ public class response_component_render_parameter
 			int render_id=pps[i][0],part_id=pps[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id]) 
 				continue;
-			for(response_render_data rrd:render_data_list) {
+			for(render_collector_and_camera_result rcacr:rcacr_list) {
 				component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
-						render_id,part_id,rrd.cam_result.target.target_id,pcd[render_id][part_id].length);
+						render_id,part_id,rcacr.cam_result.target.target_id,pcd[render_id][part_id].length);
 				if(ren_buf==null)
 					continue;
 				
-				ren_buf.mark(rrd.collector.component_collector[render_id][part_id],ci,rrd.cam_result,rcc);
+				ren_buf.mark(rcacr.collector.component_collector[render_id][part_id],ci,rcacr.cam_result,rcc);
 
 				for(int type_id=0;type_id<2;type_id++){
 					component_link_list cll=(type_id==0)?ren_buf.append_cll:ren_buf.refresh_cll;
@@ -46,7 +46,7 @@ public class response_component_render_parameter
 							continue;
 					}
 					ren_buf.create_append_render_parameter(
-							create_flag,cll,render_current_time,sk,ci,rrd.cam_result,rcc);
+							create_flag,cll,render_current_time,sk,ci,rcacr.cam_result,rcc);
 				}
 			}
 		}
@@ -56,9 +56,9 @@ public class response_component_render_parameter
 		for(int i=0,ni=pps.length;i<ni;i++){
 			int render_id=pps[i][0],part_id=pps[i][1];
 			for(int type_id=0;type_id<2;type_id++){
-				for(response_render_data rrd:render_data_list){
+				for(render_collector_and_camera_result rcacr:rcacr_list){
 					component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
-							render_id,part_id,rrd.cam_result.target.target_id,pcd[render_id][part_id].length);
+							render_id,part_id,rcacr.cam_result.target.target_id,pcd[render_id][part_id].length);
 					if(ren_buf==null)
 						continue;
 					component_link_list cll;
@@ -76,7 +76,7 @@ public class response_component_render_parameter
 								continue;
 					}
 					ren_buf.create_delete_render_parameter(create_flag,render_id,part_id,
-							cll,render_current_time,sk,ci,rrd.cam_result.target.target_id,rcc);
+							cll,render_current_time,sk,ci,rcacr.cam_result.target.target_id,rcc);
 				}
 			}
 		}
@@ -87,9 +87,9 @@ public class response_component_render_parameter
 			int render_id=pps[i][0],part_id=pps[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id]) 
 				continue;
-			for(response_render_data rrd:render_data_list) {
+			for(render_collector_and_camera_result rcacr:rcacr_list) {
 				component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
-						render_id,part_id,rrd.cam_result.target.target_id,pcd[render_id][part_id].length);
+						render_id,part_id,rcacr.cam_result.target.target_id,pcd[render_id][part_id].length);
 				if(ren_buf!=null)
 					ren_buf.register_location(sk,ci);
 			}

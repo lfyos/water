@@ -1,5 +1,6 @@
 package kernel_buffer;
 
+import kernel_camera.camera;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_driver.component_driver;
@@ -44,14 +45,13 @@ public class component_location_buffer
 		for(int i=0;i<number;i++){
 			component_not_in_list_flag[i]				=true;
 			has_not_response_relative_location_flag[i]	=true;
-			move_location_version[i]				=-1;
+			move_location_version[i]					=-1;
 			touch_time[i]								=0;
 		}
-		
 		location_collector=new component_collector(sk.render_cont.renders);
 		location_collector.set_no_number_modify_register_flag(true);
 	}
-	private int []get_render_part_id(component comp,scene_kernel sk)
+	private int []caculate_render_part_id(component comp,scene_kernel sk)
 	{
 		component_driver comp_driver;
 		for(int i=0,ni=comp.driver_array.size();i<ni;i++)
@@ -71,7 +71,7 @@ public class component_location_buffer
 	public void put_in_list(component response_component,scene_kernel sk)
 	{
 		if(response_component!=null){
-			int render_part_id[]=get_render_part_id(response_component,sk);
+			int render_part_id[]=caculate_render_part_id(response_component,sk);
 			int render_id=render_part_id[0],part_id=render_part_id[1];
 			long my_touch_time=response_component.uniparameter.touch_time;
 			for(component comp=response_component;comp!=null;
@@ -101,48 +101,46 @@ public class component_location_buffer
 				code++;
 			}
 		}
-		request_response.print((number<=0)?"[]":(","+code+"]"));		
+		request_response.print((number<=0)?"[]":(","+code+"]"));
 	}
 	public void response_location(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
-		component eye_component;
 		if(sk.camera_cont!=null)
-			for(int i=0,ni=sk.camera_cont.size();i<ni;i++)
-				if((eye_component=sk.camera_cont.get(i).eye_component)!=null)
-					put_in_list(eye_component,sk);
+			for(camera my_camera:sk.camera_cont)
+				put_in_list(my_camera.eye_component,sk);
 		
 		long my_current_time=sk.current_time.nanoseconds();
-	
+
 		ci.request_response.print(",[");
 
-		for(int response_number=0,i=0,ni=sk.process_part_sequence.process_parts_sequence.length;i<ni;i++){
-			int render_id			=sk.process_part_sequence.process_parts_sequence[i][0];
-			int part_id				=sk.process_part_sequence.process_parts_sequence[i][1];
+		int pps[][]=sk.process_part_sequence.process_parts_sequence;
+		for(int response_number=0,i=0,ni=pps.length;i<ni;i++){
+			int render_id=pps[i][0],part_id=pps[i][1];
 			
-			component_link_list p	=location_collector.component_collector[render_id][part_id];
+			component_link_list cll=location_collector.component_collector[render_id][part_id];
 			location_collector.component_collector[render_id][part_id]=null;
 			
-			for(component_link_list next_p;p!=null;p=next_p){
-				next_p=p.next_list_item;
+			for(component_link_list next_cll;cll!=null;cll=next_cll){
+				next_cll=cll.next_list_item;
 				if(rcc.update_location_number>=sk.scene_par.most_update_location_number)
-					if((my_current_time-touch_time[p.comp.component_id])>sk.scene_par.touch_time_length) {
-						p.next_list_item=location_collector.component_collector[render_id][part_id];
-						location_collector.component_collector[render_id][part_id]=p;
+					if((my_current_time-touch_time[cll.comp.component_id])>sk.scene_par.touch_time_length) {
+						cll.next_list_item=location_collector.component_collector[render_id][part_id];
+						location_collector.component_collector[render_id][part_id]=cll;
 						continue;
 					}
+				cll.next_list_item=null;
+				component_not_in_list_flag[cll.comp.component_id]=true;
+				move_location_version[cll.comp.component_id]=cll.comp.get_move_location_version();
 				
-				component_not_in_list_flag[p.comp.component_id]=true;
-				move_location_version[p.comp.component_id]=p.comp.get_move_location_version();
-				
-				ci.request_response.print(((response_number++)<=0)?"[":",[",p.comp.component_id);
-				ci.request_response.print(",",p.comp.uniparameter.caculate_location_flag?"1,":"-1,");
-				response_location_data(p.comp.move_location,ci.request_response);
+				ci.request_response.print(((response_number++)<=0)?"[":",[",cll.comp.component_id);
+				ci.request_response.print(",",cll.comp.uniparameter.caculate_location_flag?"1,":"-1,");
+				response_location_data(cll.comp.move_location,ci.request_response);
 				rcc.update_location_number++;
 
-				if(has_not_response_relative_location_flag[p.comp.component_id]){
+				if(has_not_response_relative_location_flag[cll.comp.component_id]){
 					ci.request_response.print(",");
-					has_not_response_relative_location_flag[p.comp.component_id]=false;
-					response_location_data(p.comp.relative_location,ci.request_response);
+					has_not_response_relative_location_flag[cll.comp.component_id]=false;
+					response_location_data(cll.comp.relative_location,ci.request_response);
 					rcc.update_location_number++;
 				}
 				ci.request_response.print("]");
@@ -152,7 +150,7 @@ public class component_location_buffer
 	}
 	public void synchronize_location_version(component comp,scene_kernel sk,boolean update_flag)
 	{
-		int render_part_id[]=get_render_part_id(comp,sk);
+		int render_part_id[]=caculate_render_part_id(comp,sk);
 		int render_id=render_part_id[0],part_id=render_part_id[1];
 		
 		move_location_version[comp.component_id]=update_flag?-1:comp.get_move_location_version();

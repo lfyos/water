@@ -32,6 +32,8 @@ public class client_information
 	public camera_result						display_camera_result;
 	public ArrayList<camera_result>				target_camera_result_list;
 	
+	public ArrayList<Boolean>	 				target_do_render_flag_list;
+	
 	public plane								clip_plane;
 	
 	public String								channel_id;
@@ -86,10 +88,14 @@ public class client_information
 			target_camera_result_list.clear();
 			target_camera_result_list=null;
 		}
+		if(target_do_render_flag_list!=null)
+			target_do_render_flag_list=null;
+		
 		if(clip_plane!=null)
 			clip_plane=null;
 		
-		channel_id=null;
+		if(channel_id!=null)
+			channel_id=null;
 		
 		if(parameter!=null) {
 			parameter.destroy();
@@ -212,8 +218,9 @@ public class client_information
 		camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
 
 		display_camera_result			=cr;
-
 		target_camera_result_list		=new ArrayList<camera_result>();
+		
+		target_do_render_flag_list		=new ArrayList<Boolean>();
 		
 		clip_plane						=null;
 		

@@ -18,7 +18,6 @@ import kernel_part.buffer_object_file_modify_time_and_length_item;
 public class response_render_component_request
 {
 	private static component_collector collect_render_parts(
-			ArrayList<response_render_data> render_data_list,
 			scene_kernel sk,client_information ci,camera_result cam_result)
 	{
 		int pps[][]=sk.process_part_sequence.process_parts_sequence;
@@ -50,19 +49,20 @@ public class response_render_component_request
 				ren_buf.test_clip_flag_of_delete_component(cam_result,
 						sk.component_cont,cam_result.target.parameter_channel_id);
 		}
-		
-		render_data_list.add(new response_render_data(collector,cam_result));
-		
 		return collector;
 	}
-	private static ArrayList<response_render_data> process_target(scene_kernel sk,client_information ci)
+	private static ArrayList<render_collector_and_camera_result> process_target(scene_kernel sk,client_information ci)
 	{
 		render_target target_list[]=ci.target_container.get_render_target();
 		for(int i=ci.target_component_collector_list.size(),ni=target_list.length;i<ni;i++){
-			ci.target_component_collector_list.add(i,null);
-			ci.target_camera_result_list.add(i,null);
+			ci.target_component_collector_list.	add(i,null);
+			ci.target_camera_result_list.		add(i,null);
+			ci.target_do_render_flag_list.		add(i,false);
 		}
-		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data>(); 
+		for(int i=0,ni=ci.target_do_render_flag_list.size();i<ni;i++)
+			ci.target_do_render_flag_list.set(i,false);
+		
+		var rcacr_list=new ArrayList<render_collector_and_camera_result>();
 		
 		ci.request_response.print(",[");
 		int response_number=0;
@@ -74,8 +74,10 @@ public class response_render_component_request
 			if(rt.camera_id>=sk.camera_cont.size())
 				continue;
 			
+			ci.target_do_render_flag_list.set(rt.target_id,true);
 			camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
-			component_collector collector=collect_render_parts(render_data_list,sk,ci,cr);
+			component_collector collector=collect_render_parts(sk,ci,cr);
+			rcacr_list.add(new render_collector_and_camera_result(collector,cr));
 			
 			ci.target_camera_result_list.set(rt.target_id,cr);
 			ci.target_component_collector_list.set(rt.target_id,collector);
@@ -91,26 +93,28 @@ public class response_render_component_request
 		}
 		ci.request_response.print("]");
 		
-		return render_data_list;
+		return rcacr_list;
 	}
 	private static void response_parameter(scene_kernel sk,client_information ci,long delay_time_length)
 	{
-		long my_current_time_difference;
-		my_current_time_difference =sk.current_time.nanoseconds();
-		my_current_time_difference-=ci.render_buffer.response_current_time_pointer;
-		ci.render_buffer.response_current_time_pointer+=my_current_time_difference;
-
 		ci.request_response.print("[",sk.collector_stack.get_collector_version());
 		ci.request_response.print(",",delay_time_length);
-		ci.request_response.print(",",my_current_time_difference);
+		
+		long my_current_time=sk.current_time.nanoseconds();
+		ci.request_response.print(",",my_current_time-ci.render_buffer.response_current_time_pointer);
+		ci.render_buffer.response_current_time_pointer=my_current_time;
+
 		for(int i=0,ni=sk.scene_par.max_modifier_container_number;i<ni;i++){
 			modifier_container_timer timer=sk.modifier_cont[i].get_timer();
 			modifier_parameter_buffer old_p=ci.render_buffer.modifier_parameter[i];
 			modifier_parameter_buffer new_p=new modifier_parameter_buffer(timer.get_timer_adjust_value());
+			
 			if(new_p.timer_adjust_value==old_p.timer_adjust_value)
 				continue;
+			
 			ci.request_response.print(",",i);
 			ci.request_response.print(",",new_p.timer_adjust_value-old_p.timer_adjust_value);
+			
 			ci.render_buffer.modifier_parameter[i]=new_p;
 		}
 		ci.request_response.print("]");
@@ -153,12 +157,11 @@ public class response_render_component_request
 		for(int request_package[],i=current_loading_number;i<max_loading_number;i++){
 			if((request_package=ci.render_buffer.mesh_loader.get_request_package(sk.process_part_sequence))==null)
 				break;
+			int part_type_id=request_package[0],part_package_id=request_package[1];
 
-			long package_length;
 			String package_file_name;
 			ArrayList<int[]> package_render_part_id;
-
-			int part_type_id=request_package[0],part_package_id=request_package[1];
+			long package_length;
 			
 			switch(part_type_id){
 			case 0:
@@ -216,11 +219,12 @@ public class response_render_component_request
 		if((index_id=str.indexOf("_"))<0)
 			return;
 		ci.loaded_file_number=Integer.decode(str.substring(0,index_id));
-		
 		str=str.substring(index_id+1);
+		
 		if((index_id=str.indexOf("_"))<0)
 			return;
 		ci.loaded_data_length=Long.decode(str.substring(0,index_id));
+		str=str.substring(index_id+1);
 
 		String display_message=sk.system_par.language_change_name.search_change_name(
 				"load+"+ci.request_response.language_str,"Load");
@@ -234,7 +238,6 @@ public class response_render_component_request
 		}
 		
 		int loading_render_id,loading_part_id;
-		str=str.substring(index_id+1);
 		if((index_id=str.indexOf("_"))>0){
 			loading_render_id=Integer.decode(str.substring(0,index_id  ));
 			loading_part_id  =Integer.decode(str.substring(  index_id+1));
