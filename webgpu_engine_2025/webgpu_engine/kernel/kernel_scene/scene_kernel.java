@@ -491,8 +491,4 @@ public class scene_kernel
 			component_cont.root_component.recurse_caculate_component_flag(component_cont,null);
 		}
 	}
-	public String get_scene_environment_parameter(String parameter_name)
-	{
-		return scene_par.scene_environment.search_change_name(parameter_name,null);
-	}
 }

@@ -12,7 +12,7 @@ public class buffer_container
 	
 	public part_mesh_loader 			mesh_loader;
 	public modifier_parameter_buffer	modifier_parameter[];
-	public long response_current_time_pointer;
+	public long 						response_current_time;
 	
 	public void destroy()
 	{
@@ -49,6 +49,6 @@ public class buffer_container
 		modifier_parameter	=new modifier_parameter_buffer[sk.scene_par.max_modifier_container_number];
 		for(int i=0;i<sk.scene_par.max_modifier_container_number;i++)
 			modifier_parameter[i]=new modifier_parameter_buffer(0);
-		response_current_time_pointer=0;
+		response_current_time=0;
 	}
 }

@@ -1,6 +1,6 @@
 /*	following are user environment variable	*/
 
-	system_data_directory		E:\project_data				false
+	system_data_directory		E:\project_data				false		false
 	
-	client_sub_directory		client_sub_directory		true
-	coordinate					coordinate					true
+	client_sub_directory		client_sub_directory		true		true
+	coordinate					coordinate					true		false

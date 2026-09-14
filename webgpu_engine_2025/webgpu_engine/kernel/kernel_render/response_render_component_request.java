@@ -97,8 +97,8 @@ public class response_render_component_request
 		ci.request_response.print(",",delay_time_length);
 		
 		long my_current_time=sk.current_time.nanoseconds();
-		ci.request_response.print(",",my_current_time-ci.render_buffer.response_current_time_pointer);
-		ci.render_buffer.response_current_time_pointer=my_current_time;
+		ci.request_response.print(",",my_current_time-ci.render_buffer.response_current_time);
+		ci.render_buffer.response_current_time=my_current_time;
 
 		for(int i=0,ni=sk.scene_par.max_modifier_container_number;i<ni;i++){
 			modifier_container_timer timer=sk.modifier_cont[i].get_timer();

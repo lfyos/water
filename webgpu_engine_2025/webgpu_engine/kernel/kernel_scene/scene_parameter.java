@@ -1,6 +1,7 @@
 package kernel_scene;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
@@ -11,7 +12,7 @@ import kernel_network.client_request_response;
 
 public class scene_parameter 
 {
-	public change_name scene_environment;
+	public scene_environment_varible_container scene_environment_varible_cont;
 	
 	public String change_part_string,part_type_string;
 	
@@ -99,7 +100,7 @@ public class scene_parameter
 		else
 			debug_information.println("extra parameter system scene_environment file NOT exist:	",path_name);
 		
-		scene_environment=new change_name();
+		scene_environment_varible_cont=new scene_environment_varible_container();
 		
 		for(var my_reader:environment_file_reader) {
 			if(my_reader==null)
@@ -107,22 +108,28 @@ public class scene_parameter
 			debug_information.println("environment_file:	",
 					my_reader.directory_name+my_reader.file_name);
 			while(!(my_reader.eof())) {
-				String	parameter_name	=my_reader.get_string();
-				String	parameter_value	=my_reader.get_string();
-				boolean	parameter_flag	=my_reader.get_boolean();
-				if((parameter_name==null)||(parameter_value==null))
+				String environment_varible_name			=my_reader.get_string();
+				String environment_varible_value		=my_reader.get_string();
+				boolean	get_value_from_client_flag		=my_reader.get_boolean();
+				boolean add_to_temporary_directory_flag	=my_reader.get_boolean();
+				
+				if((environment_varible_name==null)||(environment_varible_value==null))
 					continue;
-				if((parameter_name=parameter_name.trim()).length()<=0)
+				if((environment_varible_name=environment_varible_name.trim()).length()<=0)
 					continue;
-				if((parameter_value=parameter_value.trim()).length()<=0)
+				if((environment_varible_value=environment_varible_value.trim()).length()<=0)
 					continue;
-				if(parameter_flag) {
-					if((parameter_value=request_response.get_parameter(parameter_value))==null)
+				if(get_value_from_client_flag) {
+					if((environment_varible_value=request_response.get_parameter(environment_varible_value))==null)
 						continue;
-					if((parameter_value=parameter_value.trim()).length()<=0)
+					if((environment_varible_value=environment_varible_value.trim()).length()<=0)
 						continue;
 				}
-				scene_environment.add(parameter_name,parameter_value);
+				scene_environment_varible_cont.add(environment_varible_name,
+					new scene_environment_varible(
+							environment_varible_name,
+							environment_varible_value,
+							add_to_temporary_directory_flag));
 			}
 			my_reader.close();	
 		}
@@ -146,15 +153,13 @@ public class scene_parameter
 			path_directory_name="";
 			break;
 		case "environment_directory":
-			if((path_directory_name=fr.get_string())!=null)
-				if((path_directory_name=scene_environment.search_change_name(path_directory_name,null))!=null) {
-					path_directory_name=file_directory.replace_special_char(path_directory_name);
-					if(path_directory_name.length()>0) {
+			if((path_directory_name=fr.get_string())!=null) 
+				if((path_directory_name=get_environment_varible(path_directory_name))!=null)
+					if((path_directory_name=file_directory.replace_special_char(path_directory_name)).length()>0) {
 						if(path_directory_name.charAt(path_directory_name.length()-1)!=File.separatorChar)
 							path_directory_name+=File.separatorChar;
 						break;
 					}
-				}
 			path_directory_name=directory_name;
 			break;
 		}
@@ -243,23 +248,27 @@ public class scene_parameter
 					str_array[i]=str;
 					scene_temporary_directory_name+=str;
 				}
-		for(var my_node:scene_environment.tree_get_node_collection()) {
-			if((str=my_node.key)!=null) 
-				if((str=file_directory.replace_special_char(
-						str.replace(':',File.separatorChar))).length()>0){
-					if(str.charAt(str.length()-1)!=File.separatorChar)
-						str+=File.separatorChar;
-					scene_temporary_directory_name+=str;
-				}
-			for(var my_list_item:my_node.list) 
-				if((str=my_list_item)!=null)
-					if((str=file_directory.replace_special_char(
-							str.replace(':',File.separatorChar))).length()>0){
-						if(str.charAt(str.length()-1)!=File.separatorChar)
-							str+=File.separatorChar;
-						scene_temporary_directory_name+=str;
-					}
-		}
+		
+		for(scene_environment_varible my_varible:scene_environment_varible_cont.tree_get_value_list())
+			if(my_varible.add_to_temporary_directory_flag)
+				for(String env_str:new String[]{
+						my_varible.environment_varible_name,
+						my_varible.environment_varible_value})
+					if((str=env_str)!=null) 
+						if((str=file_directory.replace_special_char(
+								str.replace(':',File.separatorChar))).length()>0){
+							if(str.charAt(str.length()-1)!=File.separatorChar)
+								str+=File.separatorChar;
+							scene_temporary_directory_name+=str;
+						}
+	}
+	public String get_environment_varible(String varible_name)
+	{
+		ArrayList<scene_environment_varible> list;
+		return	(varible_name==null)															?null:
+				((list=scene_environment_varible_cont.search_value_list(varible_name))==null)	?null:
+				(list.size()<=0)																?null:
+				(list.get(0).environment_varible_value);
 	}
 	public scene_parameter(
 			String my_scene_name,client_request_response request_response,

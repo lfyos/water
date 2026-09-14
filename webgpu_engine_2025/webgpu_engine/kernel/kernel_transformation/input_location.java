@@ -59,7 +59,7 @@ public class input_location
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+						if((name=scene_par.get_environment_varible(name))!=null)
 							if((name=name.trim()).length()>0)
 								return new location(name,sepa.trim());
 				return new location();
@@ -130,7 +130,7 @@ public class input_location
 			case "environment_relative_file_location":
 				if((name=fr.get_string())!=null)
 					if((name=name.trim()).length()>0) 
-						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+						if((name=scene_par.get_environment_varible(name))!=null)
 							if((name=name.trim()).length()>0){
 								name=fr.directory_name+file_directory.replace_special_char(name);
 								file_reader f=new file_reader(name,fr.get_charset());
@@ -147,7 +147,7 @@ public class input_location
 			case "environment_absolute_file_location":
 				if((name=fr.get_string())!=null)
 					if((name=name.trim()).length()>0) 
-						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+						if((name=scene_par.get_environment_varible(name))!=null)
 							if((name=name.trim()).length()>0){
 								name=file_directory.replace_special_char(name);
 								file_reader f=new file_reader(name,fr.get_charset());
@@ -166,7 +166,7 @@ public class input_location
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+						if((name=scene_par.get_environment_varible(name))!=null)
 							if((name=name.trim()).length()>0){
 								name=fr.directory_name+file_directory.replace_special_char(name);
 								file_reader f=new file_reader(name,charset.trim());
@@ -185,7 +185,7 @@ public class input_location
 				charset	=fr.get_string();
 				if((name!=null)&&(charset!=null))
 					if((name=name.trim()).length()>0)
-						if((name=scene_par.scene_environment.search_change_name(name,null))!=null)
+						if((name=scene_par.get_environment_varible(name))!=null)
 							if((name=name.trim()).length()>0){
 								name=file_directory.replace_special_char(name);
 								file_reader f=new file_reader(name,charset.trim());

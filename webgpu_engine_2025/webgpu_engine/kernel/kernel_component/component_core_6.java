@@ -229,10 +229,8 @@ public class component_core_6 extends component_core_5
 				break;
 			case "environment_component_mount":	
 			{
-				String add_component_name=fr.get_string();
-				change_name ch_name=ccp.sk.scene_par.scene_environment;
-				String add_file_name=ch_name.search_change_name(fr.get_string(),null);
-				if(add_file_name==null) 
+				String add_file_name,add_component_name=fr.get_string();
+				if((add_file_name=ccp.sk.scene_par.get_environment_varible(fr.get_string()))==null) 
 					debug_information.println("environment_component_mount error,(add_file_name==null)");
 				else
 					ccp.clsc.file_add_source_item(add_component_name,token_string,
@@ -242,8 +240,7 @@ public class component_core_6 extends component_core_5
 			case "environment_charset_component_mount":	
 			{
 				String add_component_name=fr.get_string();
-				change_name ch_name=ccp.sk.scene_par.scene_environment;
-				String add_file_name=ch_name.search_change_name(fr.get_string(),null);
+				String add_file_name=ccp.sk.scene_par.get_environment_varible(fr.get_string());
 				String component_file_charset=fr.get_string();
 				if(add_file_name==null)
 					debug_information.println("environment_charset_component_mount error,(add_file_name==null)");

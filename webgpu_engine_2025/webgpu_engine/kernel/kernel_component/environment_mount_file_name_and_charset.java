@@ -27,7 +27,7 @@ public class environment_mount_file_name_and_charset
 		select_assemble_file_name	=file_directory.replace_special_char(select_assemble_file_name.trim());
 		select_assemble_file_name	=file_directory.replace_special_char(select_assemble_file_name.trim());
 		select_file_charset			=file_directory.replace_special_char(select_file_charset.trim());
-
+		
 		if((select_token.length()<=0)||(select_file_name.length()<=0)
 			||(select_assemble_file_name.length()<=0)||(select_file_charset.length()<=0)) 
 		{
@@ -36,7 +36,7 @@ public class environment_mount_file_name_and_charset
 			return false;
 		}
 		
-		if((select_token=ccp.sk.get_scene_environment_parameter(select_token))==null){
+		if((select_token=ccp.sk.scene_par.get_environment_varible(select_token))==null) {
 			debug_information.println("select_charset_mount:",
 					"((select_token=ccp.sk.get_client_parameter(select_token))==null)");
 			return false;
@@ -77,7 +77,8 @@ public class environment_mount_file_name_and_charset
 					"((my_directory_name==null)||(my_file_name==null)||(my_file_charset==null))");
 			return false;
 		}
-		if((my_directory_name=ccp.sk.get_scene_environment_parameter(my_directory_name.trim()))==null) {
+		
+		if((my_directory_name=ccp.sk.scene_par.get_environment_varible(my_directory_name.trim()))==null) {
 			debug_information.println("client_parameter_charset_mount error",
 					"((my_directory_name=ccp.sk.get_client_parameter(my_directory_name.trim()))==null)");
 			return false;
@@ -112,7 +113,7 @@ public class environment_mount_file_name_and_charset
 					"((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0)");
 			return false;
 		}
-		if((my_directory_name=ccp.sk.scene_par.scene_environment.search_change_name(my_directory_name.trim(),null))==null) {
+		if((my_directory_name=ccp.sk.scene_par.get_environment_varible(my_directory_name.trim()))==null) {
 			debug_information.println("environment_scene_sub_directory_charset_mount:",
 					"((my_directory_name=get_environment(my_directory_name.trim()))==null)");
 			return false;
