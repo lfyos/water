@@ -47,8 +47,8 @@ public class comparator_for_part_container_for_process_sequence implements Compa
 				return i_flag?1:-1;
 		}
 
-		long data_length_i=pi.boftal.buffer_object_total_file_length;
-		long data_length_j=pj.boftal.buffer_object_total_file_length;
+		long data_length_i=pi.bofmtal.buffer_object_total_file_length;
+		long data_length_j=pj.bofmtal.buffer_object_total_file_length;
 		long data_length_max=Math.max(data_length_i,data_length_j);
 
 		if(data_length_max>const_value.min_value){

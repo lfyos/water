@@ -47,7 +47,7 @@ public class part
 	
 	public part_rude part_mesh;
 	
-	public buffer_object_file_modify_time_and_length boftal;
+	public buffer_object_file_modify_time_and_length bofmtal;
 	
 	public box secure_caculate_part_box(component comp,int driver_id,
 			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,
@@ -110,11 +110,12 @@ public class part
 			part_mesh.destroy();
 			part_mesh=null;
 		}
-		boftal=null;
+		bofmtal=null;
 	}
 	private String response_buffer_object_data(primitive_interface p_i,int max_material_id,
 		mesh_file_collector file_collector,file_writer head_fw,String front_str,String follow_str)
 	{	
+<<<<<<< HEAD
 <<<<<<< HEAD
 		fw.print  ("\t\t\"",front_str);
 		fw.println("\"\t:");
@@ -130,6 +131,8 @@ public class part
 					break;
 				}
 =======
+=======
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		int dot_pos;
 		String my_charset=head_fw.get_charset();
 		String my_file_name=head_fw.directory_name+head_fw.file_name;
@@ -141,7 +144,10 @@ public class part
 		head_fw.println("\"\t:");
 		head_fw.println("\t\t{");
 
+<<<<<<< HEAD
 >>>>>>> f69bb2aa8 (commit-2026-09-06)
+=======
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		graphics_buffer_object_creater_container gbocc;
 		switch(front_str){
 		default:
@@ -316,7 +322,8 @@ public class part
 			}
 	}
 	public String load_mesh_and_create_buffer_object(
-			String part_temporary_file_directory,system_parameter system_par,scene_parameter scene_par)
+			String part_temporary_file_directory,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		String str;
 		
@@ -340,7 +347,11 @@ public class part
 				part_temporary_file_directory,system_par,scene_par);
 		
 		String root_file_name=part_temporary_file_directory+"mesh";
+<<<<<<< HEAD
 		boftal=new buffer_object_file_modify_time_and_length(
+=======
+		bofmtal=new buffer_object_file_modify_time_and_length(
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 					part_mesh,root_file_name,system_par.local_data_charset);
 		create_part_network_compress_file(
 					system_par.file_read_write_buffer_size,root_file_name);
@@ -395,7 +406,7 @@ public class part
 
 		driver					=null;
 		
-		boftal					=new buffer_object_file_modify_time_and_length();
+		bofmtal					=new buffer_object_file_modify_time_and_length();
 	}
 	public part(part p,client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
@@ -430,7 +441,7 @@ public class part
 		else
 			part_mesh=new part_rude(p.part_mesh);
 		
-		boftal=p.boftal;
+		bofmtal=p.bofmtal;
 
 		try{
 			driver=p.driver.clone(p,this,request_response,system_par,scene_par);

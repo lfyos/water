@@ -25,7 +25,7 @@ public class component_instance_driver
 	
 	public void destroy()
 	{
-		if(render_version!=null) {
+		if(render_version!=null){
 			render_version.clear();
 			render_version=null;
 		}

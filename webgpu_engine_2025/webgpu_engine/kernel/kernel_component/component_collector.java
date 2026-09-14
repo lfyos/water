@@ -90,12 +90,23 @@ public class component_collector
 		else
 			return comp_array.get_component();
 	}
+	private boolean no_number_modify_register_flag;
+	public void set_no_number_modify_register_flag(boolean my_no_number_modify_register_flag)
+	{
+		no_number_modify_register_flag=my_no_number_modify_register_flag;
+	}
 	public int register_component(component comp,int driver_id,int render_id,int part_id)
 	{
 		if((render_id<0)||(render_id>=component_collector.length))
 			return 0;
 		if((part_id<0)||(part_id>=component_collector[render_id].length))
 			return 0;
+		component_collector[render_id][part_id]=new component_link_list(
+				comp,driver_id,component_collector[render_id][part_id]);
+		
+		if(no_number_modify_register_flag)
+			return 1;
+		
 		component_number++;
 		if((render_component_number[render_id]++)==0)
 			render_number++;
@@ -115,8 +126,6 @@ public class component_collector
 					}
 				}
 		}
-		component_collector[render_id][part_id]=new component_link_list(
-				comp,driver_id,component_collector[render_id][part_id]);
 		return 1;
 	}
 	public int register_component(component comp,int driver_id)
@@ -190,7 +199,11 @@ public class component_collector
 		description="";
 		audio_file_name="";
 		
+<<<<<<< HEAD
 		reset_number();
+=======
+		no_number_modify_register_flag=false;
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 	}
 	private void init(ArrayList<render> renders)
 	{

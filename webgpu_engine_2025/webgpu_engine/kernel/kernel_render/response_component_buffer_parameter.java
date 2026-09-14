@@ -13,11 +13,15 @@ import kernel_scene.scene_kernel;
 
 public class response_component_buffer_parameter
 {
+<<<<<<< HEAD
 	private scene_kernel sk;
 	private client_information ci;
 	private long current_touch_time;
 	
 	private component_instance_driver test_should_response_parameter(
+=======
+	private static component_instance_driver test_should_response_parameter(
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 			component_link_list cll,long current_touch_time,
 			scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
@@ -40,8 +44,9 @@ public class response_component_buffer_parameter
 				return my_instance_driver;
 		return null;
 	}
-	private void response(int render_id,int part_id,component_link_list cll,
-			response_flag create_flag,render_component_counter rcc)
+	private static void response_routine(
+			int render_id,int part_id,component_link_list cll,response_flag create_flag,
+			scene_kernel sk,client_information ci,render_component_counter rcc,long current_touch_time)
 	{
 		for(component_instance_driver my_instance_driver;cll!=null;cll=cll.next_list_item) {
 			if((my_instance_driver=test_should_response_parameter(cll,current_touch_time,sk,ci,rcc))==null)
@@ -84,6 +89,7 @@ public class response_component_buffer_parameter
 		}	
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public response_component_buffer_parameter(
 			scene_kernel my_sk,client_information my_ci,render_component_counter rcc)
 	{
@@ -119,6 +125,21 @@ public class response_component_buffer_parameter
 =======
 				response_routine(render_id,part_id,cll,create_flag,sk,ci,rcc,current_touch_time);
 =======
+=======
+	public static void response_buffer_parameter(
+			ArrayList<render_collector_and_camera_result> rcacr_list,
+			scene_kernel sk,client_information ci,render_component_counter rcc)
+	{
+		response_flag create_flag=new response_flag();
+		long current_touch_time=sk.current_time.nanoseconds();
+		
+		ci.request_response.print(",[");
+		int ppc[][]=sk.process_part_sequence.process_parts_sequence;
+		for(int i=0,ni=ppc.length;i<ni;i++) {
+			int render_id=ppc[i][0],part_id=ppc[i][1];
+			if(ci.not_acknowledge_render_part_id[render_id][part_id])
+				continue;
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 			for(render_collector_and_camera_result rcacr:rcacr_list){
 				int target_id=rcacr.cam_result.target.target_id;
 				component_collector my_collector=ci.target_component_collector_list.get(target_id);
@@ -126,8 +147,11 @@ public class response_component_buffer_parameter
 					continue;
 				component_link_list my_cll=my_collector.component_collector[render_id][part_id];
 				response_routine(render_id,part_id,my_cll,create_flag,sk,ci,rcc,current_touch_time);
+<<<<<<< HEAD
 >>>>>>> 52cfb22f2 (commit-2026-09-14)
 >>>>>>> 544c28ac6 (commit-2026-09-14)
+=======
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 			}
 		}
 		ci.request_response.print("]");

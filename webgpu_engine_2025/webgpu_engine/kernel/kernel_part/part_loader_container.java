@@ -109,9 +109,9 @@ public class part_loader_container
 				long last_time=my_boftal.buffer_object_head_last_modify_time;
 				if(my_part.part_par.last_modified_time>last_time)
 					continue;
-				my_part.boftal=my_boftal;
+				my_part.bofmtal=my_boftal;
 				if(my_part.part_mesh==null)
-					my_part.part_mesh=my_part.boftal.simple_part_mesh;
+					my_part.part_mesh=my_part.bofmtal.simple_part_mesh;
 				else if(my_part.part_mesh!=null)
 					my_part.part_mesh.free_memory();
 				return;

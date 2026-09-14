@@ -93,7 +93,12 @@ public class client_information
 		if(clip_plane!=null)
 			clip_plane=null;
 		
+<<<<<<< HEAD
 		channel_id=null;
+=======
+		if(channel_id!=null)
+			channel_id=null;
+>>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		
 		if(parameter!=null) {
 			parameter.destroy();
@@ -216,7 +221,6 @@ public class client_information
 		camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
 
 		display_camera_result			=cr;
-
 		target_camera_result_list		=new ArrayList<camera_result>();
 		
 		clip_plane						=null;
