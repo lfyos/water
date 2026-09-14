@@ -1,5 +1,7 @@
 package kernel_render;
 
+import java.util.ArrayList;
+
 import kernel_buffer.response_flag;
 import kernel_common_class.debug_information;
 import kernel_component.component_collector;
@@ -78,12 +80,12 @@ public class response_component_buffer_parameter
 					cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version());
 		}	
 	}
-	public static void response(scene_kernel sk,client_information ci,render_component_counter rcc)
+	public static void response_buffer_parameter(
+			ArrayList<render_collector_and_camera_result> rcacr_list,
+			scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
-		component_collector my_collector;
 		response_flag create_flag=new response_flag();
 		long current_touch_time=sk.current_time.nanoseconds();
-		int target_number=ci.target_component_collector_list.size();
 		
 		ci.request_response.print(",[");
 		int ppc[][]=sk.process_part_sequence.process_parts_sequence;
@@ -91,12 +93,14 @@ public class response_component_buffer_parameter
 			int render_id=ppc[i][0],part_id=ppc[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id])
 				continue;
-			for(int target_id=0;target_id<target_number;target_id++)
-				if(ci.target_do_render_flag_list.get(target_id))
-					if((my_collector=ci.target_component_collector_list.get(target_id))!=null)
-						response_routine(render_id,part_id,
-								my_collector.component_collector[render_id][part_id],
-								create_flag,sk,ci,rcc,current_touch_time);
+			for(render_collector_and_camera_result rcacr:rcacr_list){
+				int target_id=rcacr.cam_result.target.target_id;
+				component_collector my_collector=ci.target_component_collector_list.get(target_id);
+				if(my_collector==null)
+					continue;
+				component_link_list my_cll=my_collector.component_collector[render_id][part_id];
+				response_routine(render_id,part_id,my_cll,create_flag,sk,ci,rcc,current_touch_time);
+			}
 		}
 		ci.request_response.print("]");
 	}

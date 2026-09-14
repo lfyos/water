@@ -32,8 +32,6 @@ public class client_information
 	public camera_result						display_camera_result;
 	public ArrayList<camera_result>				target_camera_result_list;
 	
-	public ArrayList<Boolean>	 				target_do_render_flag_list;
-	
 	public plane								clip_plane;
 	
 	public String								channel_id;
@@ -88,8 +86,6 @@ public class client_information
 			target_camera_result_list.clear();
 			target_camera_result_list=null;
 		}
-		if(target_do_render_flag_list!=null)
-			target_do_render_flag_list=null;
 		
 		if(clip_plane!=null)
 			clip_plane=null;
@@ -219,8 +215,6 @@ public class client_information
 
 		display_camera_result			=cr;
 		target_camera_result_list		=new ArrayList<camera_result>();
-		
-		target_do_render_flag_list		=new ArrayList<Boolean>();
 		
 		clip_plane						=null;
 		

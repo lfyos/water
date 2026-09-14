@@ -10,7 +10,7 @@ import kernel_scene.scene_kernel;
 
 public class response_component_render_parameter
 {
-	public static void response(
+	public static void response_render_parameter(
 			ArrayList<render_collector_and_camera_result> rcacr_list,
 			scene_kernel sk,client_information ci,render_component_counter rcc)
 	{

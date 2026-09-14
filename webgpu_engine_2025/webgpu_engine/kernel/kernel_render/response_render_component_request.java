@@ -57,10 +57,7 @@ public class response_render_component_request
 		for(int i=ci.target_component_collector_list.size(),ni=target_list.length;i<ni;i++){
 			ci.target_component_collector_list.	add(i,null);
 			ci.target_camera_result_list.		add(i,null);
-			ci.target_do_render_flag_list.		add(i,false);
 		}
-		for(int i=0,ni=ci.target_do_render_flag_list.size();i<ni;i++)
-			ci.target_do_render_flag_list.set(i,false);
 		
 		var rcacr_list=new ArrayList<render_collector_and_camera_result>();
 		
@@ -74,7 +71,6 @@ public class response_render_component_request
 			if(rt.camera_id>=sk.camera_cont.size())
 				continue;
 			
-			ci.target_do_render_flag_list.set(rt.target_id,true);
 			camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
 			component_collector collector=collect_render_parts(sk,ci,cr);
 			rcacr_list.add(new render_collector_and_camera_result(collector,cr));
@@ -282,8 +278,9 @@ public class response_render_component_request
 		
 		response_parameter(sk,ci,delay_time_length);
 		render_component_counter rcc=new render_component_counter();
-		response_component_render_parameter.response(process_target(sk,ci),sk,ci,rcc);
-		response_component_buffer_parameter.response(sk,ci,rcc);
+		ArrayList<render_collector_and_camera_result>rcacr_list=process_target(sk,ci);
+		response_component_render_parameter.response_render_parameter(rcacr_list,sk,ci,rcc);
+		response_component_buffer_parameter.response_buffer_parameter(rcacr_list,sk,ci,rcc);
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,sk.camera_cont);
 		ci.render_buffer.location_buffer.response_location(sk,ci,rcc);
 		response_buffer_object_request(sk,ci,current_loading_number,max_loading_number);
