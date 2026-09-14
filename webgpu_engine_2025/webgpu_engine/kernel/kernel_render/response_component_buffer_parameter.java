@@ -1,5 +1,7 @@
 package kernel_render;
 
+import java.util.ArrayList;
+
 import kernel_buffer.response_flag;
 import kernel_common_class.debug_information;
 import kernel_component.component_collector;
@@ -81,24 +83,51 @@ public class response_component_buffer_parameter
 					cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version());
 		}	
 	}
+<<<<<<< HEAD
 	public response_component_buffer_parameter(
 			scene_kernel my_sk,client_information my_ci,render_component_counter rcc)
 	{
 		sk=my_sk;
 		ci=my_ci;
 		current_touch_time=sk.current_time.nanoseconds();
+=======
+	public static void response_buffer_parameter(
+			ArrayList<render_collector_and_camera_result> rcacr_list,
+			scene_kernel sk,client_information ci,render_component_counter rcc)
+	{
+<<<<<<< HEAD
+		long current_touch_time=sk.current_time.nanoseconds();
+>>>>>>> 544c28ac6 (commit-2026-09-14)
 		response_flag create_flag=new response_flag();
+=======
+		response_flag create_flag=new response_flag();
+		long current_touch_time=sk.current_time.nanoseconds();
+>>>>>>> 52cfb22f2 (commit-2026-09-14)
 		
 		ci.request_response.print(",[");
 		for(int ppc[][]=sk.process_part_sequence.process_parts_sequence,i=0,ni=ppc.length;i<ni;i++) {
 			int render_id=ppc[i][0],part_id=ppc[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id])
 				continue;
+<<<<<<< HEAD
 			for(component_collector collector:ci.target_component_collector_list) {
 				if(collector==null)
 					continue;
 				component_link_list cll=collector.component_collector[render_id][part_id];
+<<<<<<< HEAD
 				response(render_id,part_id,cll,create_flag,rcc);
+=======
+				response_routine(render_id,part_id,cll,create_flag,sk,ci,rcc,current_touch_time);
+=======
+			for(render_collector_and_camera_result rcacr:rcacr_list){
+				int target_id=rcacr.cam_result.target.target_id;
+				component_collector my_collector=ci.target_component_collector_list.get(target_id);
+				if(my_collector==null)
+					continue;
+				component_link_list my_cll=my_collector.component_collector[render_id][part_id];
+				response_routine(render_id,part_id,my_cll,create_flag,sk,ci,rcc,current_touch_time);
+>>>>>>> 52cfb22f2 (commit-2026-09-14)
+>>>>>>> 544c28ac6 (commit-2026-09-14)
 			}
 		}
 		ci.request_response.print("]");

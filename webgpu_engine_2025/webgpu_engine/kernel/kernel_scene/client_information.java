@@ -86,6 +86,10 @@ public class client_information
 			target_camera_result_list.clear();
 			target_camera_result_list=null;
 		}
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 52cfb22f2 (commit-2026-09-14)
 		if(clip_plane!=null)
 			clip_plane=null;
 		

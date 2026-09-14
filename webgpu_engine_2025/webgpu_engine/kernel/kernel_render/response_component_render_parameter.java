@@ -10,8 +10,13 @@ import kernel_scene.scene_kernel;
 
 public class response_component_render_parameter
 {
+<<<<<<< HEAD
 	public static void response(
 			ArrayList<response_render_data> render_data_list,
+=======
+	public static void response_render_parameter(
+			ArrayList<render_collector_and_camera_result> rcacr_list,
+>>>>>>> 52cfb22f2 (commit-2026-09-14)
 			scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
 		int pps[][]=sk.process_part_sequence.process_parts_sequence;

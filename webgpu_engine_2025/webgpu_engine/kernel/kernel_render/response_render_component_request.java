@@ -59,10 +59,18 @@ public class response_render_component_request
 	{
 		render_target target_list[]=ci.target_container.get_render_target();
 		for(int i=ci.target_component_collector_list.size(),ni=target_list.length;i<ni;i++){
+<<<<<<< HEAD
 			ci.target_component_collector_list.add(i,null);
 			ci.target_camera_result_list.add(i,null);
 		}
 		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data>(); 
+=======
+			ci.target_component_collector_list.	add(i,null);
+			ci.target_camera_result_list.		add(i,null);
+		}
+		
+		var rcacr_list=new ArrayList<render_collector_and_camera_result>();
+>>>>>>> 52cfb22f2 (commit-2026-09-14)
 		
 		ci.request_response.print(",[");
 		int response_number=0;
@@ -277,8 +285,14 @@ public class response_render_component_request
 		
 		response_parameter(sk,ci,delay_time_length);
 		render_component_counter rcc=new render_component_counter();
+<<<<<<< HEAD
 		response_component_render_parameter.response(process_target(sk,ci),sk,ci,rcc);
 		new response_component_buffer_parameter(sk,ci,rcc);
+=======
+		ArrayList<render_collector_and_camera_result>rcacr_list=process_target(sk,ci);
+		response_component_render_parameter.response_render_parameter(rcacr_list,sk,ci,rcc);
+		response_component_buffer_parameter.response_buffer_parameter(rcacr_list,sk,ci,rcc);
+>>>>>>> 544c28ac6 (commit-2026-09-14)
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,sk.camera_cont);
 		ci.render_buffer.location_buffer.response_location(sk,ci,rcc);
 		response_buffer_object_request(sk,ci,current_loading_number,max_loading_number);
