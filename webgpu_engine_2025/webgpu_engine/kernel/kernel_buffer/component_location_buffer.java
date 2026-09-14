@@ -1,9 +1,6 @@
 package kernel_buffer;
 
-<<<<<<< HEAD
-=======
 import kernel_camera.camera;
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_driver.component_driver;
@@ -116,25 +113,6 @@ public class component_location_buffer
 
 		ci.request_response.print(",[");
 
-<<<<<<< HEAD
-		for(int response_number=0,i=0,ni=sk.process_part_sequence.process_parts_sequence.length;i<ni;i++){
-			int render_id			=sk.process_part_sequence.process_parts_sequence[i][0];
-			int part_id				=sk.process_part_sequence.process_parts_sequence[i][1];
-			component_link_list p	=location_collector.component_collector[render_id][part_id];
-			location_collector.component_collector[render_id][part_id]=null;
-			
-			for(component_link_list next_p;p!=null;p=next_p){
-				next_p=p.next_list_item;
-				if(rcc.update_location_number>=sk.scene_par.most_update_location_number)
-					if((my_current_time-touch_time[p.comp.component_id])>sk.scene_par.touch_time_length) {
-						p.next_list_item=location_collector.component_collector[render_id][part_id];
-						location_collector.component_collector[render_id][part_id]=p;
-						continue;
-					}
-				
-				component_not_in_list_flag[p.comp.component_id]=true;
-				move_location_version[p.comp.component_id]=p.comp.get_move_location_version();
-=======
 		int pps[][]=sk.process_part_sequence.process_parts_sequence;
 		for(int response_number=0,i=0,ni=pps.length;i<ni;i++){
 			int render_id=pps[i][0],part_id=pps[i][1];
@@ -153,7 +131,6 @@ public class component_location_buffer
 				cll.next_list_item=null;
 				component_not_in_list_flag[cll.comp.component_id]=true;
 				move_location_version[cll.comp.component_id]=cll.comp.get_move_location_version();
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 				
 				ci.request_response.print(((response_number++)<=0)?"[":",[",cll.comp.component_id);
 				ci.request_response.print(",",cll.comp.uniparameter.caculate_location_flag?"1,":"-1,");
@@ -170,18 +147,10 @@ public class component_location_buffer
 			}
 		}
 		ci.request_response.print("]");
-<<<<<<< HEAD
-		location_collector.reset_number();
-	}
-	public void synchronize_location_version(component comp,scene_kernel sk,boolean update_flag)
-	{
-		int render_part_id[]=get_render_part_id(comp,sk);
-=======
 	}
 	public void synchronize_location_version(component comp,scene_kernel sk,boolean update_flag)
 	{
 		int render_part_id[]=caculate_render_part_id(comp,sk);
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		int render_id=render_part_id[0],part_id=render_part_id[1];
 		
 		move_location_version[comp.component_id]=update_flag?-1:comp.get_move_location_version();

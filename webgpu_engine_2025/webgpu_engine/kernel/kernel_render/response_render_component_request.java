@@ -49,39 +49,17 @@ public class response_render_component_request
 				ren_buf.test_clip_flag_of_delete_component(cam_result,
 						sk.component_cont,cam_result.target.parameter_channel_id);
 		}
-<<<<<<< HEAD
-		
-		render_data_list.add(new response_render_data(collector,cam_result));
-		
-		return collector;
-	}
-	private static ArrayList<response_render_data> process_target(scene_kernel sk,client_information ci)
-	{
-		render_target target_list[]=ci.target_container.get_render_target();
-		for(int i=ci.target_component_collector_list.size(),ni=target_list.length;i<ni;i++){
-<<<<<<< HEAD
-			ci.target_component_collector_list.add(i,null);
-			ci.target_camera_result_list.add(i,null);
-		}
-		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data>(); 
-=======
-=======
 		return collector;
 	}
 	private static ArrayList<render_collector_and_camera_result> process_target(scene_kernel sk,client_information ci)
 	{
 		render_target target_list[]=ci.target_container.get_render_target();
 		for(int i=ci.target_component_collector_list.size(),ni=target_list.length;i<ni;i++){
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 			ci.target_component_collector_list.	add(i,null);
 			ci.target_camera_result_list.		add(i,null);
 		}
 		
 		var rcacr_list=new ArrayList<render_collector_and_camera_result>();
-<<<<<<< HEAD
->>>>>>> 52cfb22f2 (commit-2026-09-14)
-=======
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		
 		ci.request_response.print(",[");
 		int response_number=0;
@@ -94,12 +72,8 @@ public class response_render_component_request
 				continue;
 			
 			camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
-<<<<<<< HEAD
-			component_collector collector=collect_render_parts(render_data_list,sk,ci,cr);
-=======
 			component_collector collector=collect_render_parts(sk,ci,cr);
 			rcacr_list.add(new render_collector_and_camera_result(collector,cr));
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 			
 			ci.target_camera_result_list.set(rt.target_id,cr);
 			ci.target_component_collector_list.set(rt.target_id,collector);
@@ -115,11 +89,7 @@ public class response_render_component_request
 		}
 		ci.request_response.print("]");
 		
-<<<<<<< HEAD
-		return render_data_list;
-=======
 		return rcacr_list;
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 	}
 	private static void response_parameter(scene_kernel sk,client_information ci,long delay_time_length)
 	{
@@ -308,20 +278,9 @@ public class response_render_component_request
 		
 		response_parameter(sk,ci,delay_time_length);
 		render_component_counter rcc=new render_component_counter();
-<<<<<<< HEAD
-<<<<<<< HEAD
-		response_component_render_parameter.response(process_target(sk,ci),sk,ci,rcc);
-		new response_component_buffer_parameter(sk,ci,rcc);
-=======
 		ArrayList<render_collector_and_camera_result>rcacr_list=process_target(sk,ci);
 		response_component_render_parameter.response_render_parameter(rcacr_list,sk,ci,rcc);
 		response_component_buffer_parameter.response_buffer_parameter(rcacr_list,sk,ci,rcc);
->>>>>>> 544c28ac6 (commit-2026-09-14)
-=======
-		ArrayList<render_collector_and_camera_result>rcacr_list=process_target(sk,ci);
-		response_component_render_parameter.response_render_parameter(rcacr_list,sk,ci,rcc);
-		response_component_buffer_parameter.response_buffer_parameter(rcacr_list,sk,ci,rcc);
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,sk.camera_cont);
 		ci.render_buffer.location_buffer.response_location(sk,ci,rcc);
 		response_buffer_object_request(sk,ci,current_loading_number,max_loading_number);

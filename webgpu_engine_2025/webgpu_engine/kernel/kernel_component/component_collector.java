@@ -163,7 +163,7 @@ public class component_collector
 		}
 		return register_number;
 	}
-	public void reset_number()
+	public void reset()
 	{
 		render_number	=0;
 		part_number		=0;
@@ -185,9 +185,7 @@ public class component_collector
 				if(part_component_number[i]!=null)
 					for(int j=0,nj=part_component_number[i].length;j<nj;j++)
 						part_component_number[i][j]=0;
-	}
-	public void reset()
-	{
+		
 		if(component_collector!=null)
 			for(int i=0,ni=component_collector.length;i<ni;i++)
 				if(component_collector[i]!=null)
@@ -199,11 +197,7 @@ public class component_collector
 		description="";
 		audio_file_name="";
 		
-<<<<<<< HEAD
-		reset_number();
-=======
 		no_number_modify_register_flag=false;
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 	}
 	private void init(ArrayList<render> renders)
 	{

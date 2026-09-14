@@ -124,10 +124,6 @@ public class component_render
 				break;
 			case 2:			
 				flag[data_buffer_id]|=8;
-<<<<<<< HEAD
-				rcc.component_keep_number++;
-=======
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 				break;
 			}
 		}

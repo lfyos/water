@@ -97,15 +97,9 @@ public class buffer_object_file_modify_time_and_length
 		
 		fw.println("/*\tbuffer_object_head_length\t\t\t\t*/\t",buffer_object_head_length);
 
-<<<<<<< HEAD
-		fw.println("/*\tbuffer_object_text_file_length size\t*/\t",boftal_list.size());
-		for(int i=0,ni=boftal_list.size();i<ni;i++){
-			var my_item_arraylist=boftal_list.get(i);
-=======
 		fw.println("/*\tbuffer_object_text_file_length size\t*/\t",bofmtali_list.size());
 		for(int i=0,ni=bofmtali_list.size();i<ni;i++){
 			var my_item_arraylist=bofmtali_list.get(i);
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 			String file_type_str=i+":"+file_type[i].substring(1);
 			fw.println("/*\t\tbuffer_object_text_file_length["+file_type_str+"] size\t*/\t",my_item_arraylist.size());
 			for(int j=0,nj=my_item_arraylist.size();j<nj;j++){

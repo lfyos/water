@@ -115,24 +115,6 @@ public class part
 	private String response_buffer_object_data(primitive_interface p_i,int max_material_id,
 		mesh_file_collector file_collector,file_writer head_fw,String front_str,String follow_str)
 	{	
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fw.print  ("\t\t\"",front_str);
-		fw.println("\"\t:");
-		fw.println("\t\t{");
-		
-		String file_name=fw.directory_name+fw.file_name;
-		file_name=(file_name==null)?"":file_name.trim();
-		
-		for(int i=0;i<2;i++)
-			for(int j=file_name.length()-1;j>=0;j--)
-				if(file_name.charAt(j)=='.'){
-					file_name=file_name.substring(0,j);
-					break;
-				}
-=======
-=======
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		int dot_pos;
 		String my_charset=head_fw.get_charset();
 		String my_file_name=head_fw.directory_name+head_fw.file_name;
@@ -144,10 +126,6 @@ public class part
 		head_fw.println("\"\t:");
 		head_fw.println("\t\t{");
 
-<<<<<<< HEAD
->>>>>>> f69bb2aa8 (commit-2026-09-06)
-=======
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		graphics_buffer_object_creater_container gbocc;
 		switch(front_str){
 		default:
@@ -347,11 +325,7 @@ public class part
 				part_temporary_file_directory,system_par,scene_par);
 		
 		String root_file_name=part_temporary_file_directory+"mesh";
-<<<<<<< HEAD
-		boftal=new buffer_object_file_modify_time_and_length(
-=======
 		bofmtal=new buffer_object_file_modify_time_and_length(
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 					part_mesh,root_file_name,system_par.local_data_charset);
 		create_part_network_compress_file(
 					system_par.file_read_write_buffer_size,root_file_name);

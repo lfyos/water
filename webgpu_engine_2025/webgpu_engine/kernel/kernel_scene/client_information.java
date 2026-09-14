@@ -86,19 +86,12 @@ public class client_information
 			target_camera_result_list.clear();
 			target_camera_result_list=null;
 		}
-<<<<<<< HEAD
-=======
 		
->>>>>>> 52cfb22f2 (commit-2026-09-14)
 		if(clip_plane!=null)
 			clip_plane=null;
 		
-<<<<<<< HEAD
-		channel_id=null;
-=======
 		if(channel_id!=null)
 			channel_id=null;
->>>>>>> 52cfb22f299be965937de0da91f448d839b63522
 		
 		if(parameter!=null) {
 			parameter.destroy();
