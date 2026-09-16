@@ -240,42 +240,43 @@ public class part_rude
 	{
 		String str[]=new String[] {
 				"/*	version								*/	simple",
-				"/*	origin material						*/	"
+				"/*	point_default_material				*/	"
 						+point_default_material[0]+"	"+point_default_material[1]+"	"
 						+point_default_material[2]+"	"+point_default_material[3],
-				"/*	face_default material					*/	"
+				"/*	face_default_material				*/	"
 						+face_default_material[0]+"	"+face_default_material[1]+"	"
 						+face_default_material[2]+"	"+face_default_material[3],
-				"/*	edge_default material					*/	"
+				"/*	edge_default_material				*/	"
 						+edge_default_material[0]+"	"+edge_default_material[1]+"	"
 						+edge_default_material[2]+"	"+edge_default_material[3],
-				"/*	point  vertex_location_extra_data	*/	"	 +point_default_vertex_extra_String,
-				"/*	face_default vertex_location_extra_data	*/	"+face_default_vertex_extra_string,
-				"/*	face_default vertex_normal_extra_data	*/	"+face_default_normal_extra_string,
-				"/*	edge_default vertex_location_extra_data	*/	"+edge_default_vertex_extra_string,
+				"/*	point_default_vertex_extra_String	*/	"+point_default_vertex_extra_String,
+				"/*	face_default_vertex_extra_string	*/	"+face_default_vertex_extra_string,
+				"/*	face_default_normal_extra_string	*/	"+face_default_normal_extra_string,
+				"/*	edge_default_vertex_extra_string	*/	"+edge_default_vertex_extra_string,
 				"",
-				"/*	face_max_attribute_number				*/	"+face_default_attribute_string.length
+				"/*	face_max_attribute_number			*/	"+face_default_attribute_string.length
 		};
 		
 		for(int i=0,ni=str.length;i<ni;i++)
 			fw.println(str[i]);
+		
 		for(int i=0,j=0,ni=face_default_attribute_string.length;i<ni;i++) {
-			fw.print  ("/*		"+i+".attribute:					*/	",
-								face_default_attribute_double[j++]);
-			fw.print  ("	",	face_default_attribute_double[j++]);
-			fw.print  ("	",	face_default_attribute_double[j++]);
-			fw.println("	",	face_default_attribute_double[i]);
+			fw.print  ("/*		"+i+".attribute:		*/	",
+							face_default_attribute_double[j++]);
+			fw.print  (" ",	face_default_attribute_double[j++]);
+			fw.print  (" ",	face_default_attribute_double[j++]);
+			fw.println(" ",	face_default_attribute_string[i]);
 		}
 		
 		fw.println();
-		fw.print  ("/*	part_box							*/	");
+		fw.print  ("/*	part_box						*/");
 		if(part_box==null)
-			fw.println("nobox");
-		else
-			fw.println(	part_box.p[0].x+"	"+part_box.p[0].y+"	"+part_box.p[0].z+"	"+
-						part_box.p[1].x+"	"+part_box.p[1].y+"	"+part_box.p[1].z);
+			fw.println("	 nobox");
+		else { 
+			fw.print  ("	 ");
+			part_box.write_out(fw);
+		}
 		fw.println();
-		
 		fw.println("/*	total_face_primitive_number			*/	",total_face_primitive_number);
 		fw.println("/*	total_edge_primitive_number			*/	",total_edge_primitive_number);
 		fw.println("/*	total_point_primitive_number		*/	",total_point_primitive_number);

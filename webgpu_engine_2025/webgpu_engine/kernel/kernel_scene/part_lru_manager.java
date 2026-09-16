@@ -55,7 +55,8 @@ public class part_lru_manager
 			}
 		}else{
 			in_list_number++;
-			if(touch_part.load_part_mesh()) {
+			
+			if(touch_part.load_part_mesh(file_directory.part_temporary_directory(touch_part,system_par,scene_par))) {
 				debug_information.println("Load touch part:",
 					 "	in_list_number:	"	+in_list_number+"/"+max_in_list_number);
 				debug_information.println("	user name:		",	touch_part.user_name);

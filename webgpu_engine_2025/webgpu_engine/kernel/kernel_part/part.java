@@ -147,7 +147,7 @@ public class part
 		return   "item number:\t"	+Long.toString(gbocc.total_item_number)
 				+"\tfile number:\t"	+Integer.toString(file_number);
 	}
-	public boolean load_part_mesh()
+	public boolean load_part_mesh(String my_tmp_directory_name)
 	{
 		if(is_normal_part()){
 			if(part_mesh!=null){
@@ -155,9 +155,9 @@ public class part
 					return false;
 				part_mesh.destroy();
 			}
-			String my_file_path=directory_name+mesh_file_name;
-			my_file_path=file_directory.replace_special_char(my_file_path);
-			part_mesh=load_part_mesh.load(my_file_path,file_charset);
+			String my_file_path_name=directory_name+mesh_file_name;
+			my_file_path_name=file_directory.replace_special_char(my_file_path_name);
+			part_mesh=load_part_mesh.load(my_file_path_name,my_tmp_directory_name,file_charset);
 			return true;
 		}
 		return false;
@@ -317,7 +317,7 @@ public class part
 			file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
 		
-		load_part_mesh();
+		load_part_mesh(part_temporary_file_directory);
 		
 		str+=create_mesh_and_material_routine(
 				part_temporary_file_directory,system_par,scene_par);

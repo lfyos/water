@@ -102,7 +102,7 @@ public class part_rude_2021_07_15
 				.print	(" ",face_default_attribute_double[3*i+1])
 				.println(" ",face_default_attribute_double[3*i+2]);
 			fw	.print  ("/*	face_default_attribute_double:"+i+"		*/	")
-				.print	(face_default_attribute_string[i]);
+				.println(face_default_attribute_string[i]);
 		}
 		
 		int my_body_number=(body_array==null)?0:body_array.length;
