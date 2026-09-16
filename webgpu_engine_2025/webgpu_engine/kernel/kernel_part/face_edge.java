@@ -1,8 +1,9 @@
 package kernel_part;
 
-import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.point;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 
 public class face_edge
 {
@@ -40,7 +41,7 @@ public class face_edge
 	public String parameter_extra_data,parameter_material[];
 	
 	public box edge_box;
-	public int total_edge_primitive_number,total_point_primitive_number;
+	public int total_edge_primitive_vertex_number,total_point_primitive_vertex_number;
 	
 	public face_edge(face_edge s)
 	{
@@ -60,8 +61,8 @@ public class face_edge
 		
 		edge_box				=s.edge_box;
 		
-		total_edge_primitive_number	=s.total_edge_primitive_number;
-		total_point_primitive_number=s.total_point_primitive_number;
+		total_edge_primitive_vertex_number	=s.total_edge_primitive_vertex_number;
+		total_point_primitive_vertex_number	=s.total_point_primitive_vertex_number;
 	}
 	public face_edge(point my_start_point,point my_end_point,
 				String my_extra_data,String my_material[])
@@ -87,8 +88,8 @@ public class face_edge
 			else
 				edge_box=edge_box.add(new box(end_point));
 		}
-		total_edge_primitive_number	=2;
-		total_point_primitive_number=2;
+		total_edge_primitive_vertex_number	=2;
+		total_point_primitive_vertex_number	=2;
 	}
 	public face_edge(file_reader fr)
 	{
@@ -153,9 +154,66 @@ public class face_edge
 			fr.mark_terminate(true);
 			edge_box=new box(fr);
 		}
-		total_edge_primitive_number	=fr.get_int();
-		total_point_primitive_number=fr.get_int();
+		total_edge_primitive_vertex_number	=fr.get_int();
+		total_point_primitive_vertex_number	=fr.get_int();
 		
+		return;
+	}
+	
+	public void write_out(file_writer fw)
+	{
+		int my_curve_parameter_number=(curve_parameter==null)?0:curve_parameter.length;
+		fw.println();
+		fw.println("/*	curve_type					*/	 ",curve_type);
+		fw.println("/*	curve_parameter_number		*/	 ",my_curve_parameter_number);
+		fw.print  ("/*	curve_parameter				*/	 ");
+		for(int i=0;i<my_curve_parameter_number;i++)
+			fw.print(curve_parameter[i]+" ");
+		fw.println();
+		
+		if(start_point==null)
+			fw.println("/*	start_point					*/	 start_not_effective");
+		else {
+			fw.print  ("/*	start_point					*/	 start_effective");
+			start_point.write_out(fw);
+			fw.println();
+			fw.println("/*	start_extra_data			*/	 ",start_extra_data);
+			fw.print  ("/*	start_point_material		*/	 ");
+			for(int i=0,ni=start_point_material.length;i<ni;i++)
+				fw.print(start_point_material[i]+" ");
+			fw.println();
+		}
+		
+		if(end_point==null)
+			fw.println("/*	end_point					*/	 end_not_effective");
+		else {
+			fw.print  ("/*	end_point					*/	 end_effective");
+			end_point.write_out(fw);
+			fw.println();
+			fw.println("/*	end_extra_data				*/	 ",end_extra_data);
+			fw.print  ("/*	end_point_material			*/	 ");
+			for(int i=0,ni=end_point_material.length;i<ni;i++)
+				fw.print(end_point_material[i]+" ");
+			fw.println();
+		}
+		fw.println("/*	parameter_extra_data		*/	 ",parameter_extra_data);
+		
+		fw.print  ("/*	parameter_material			*/	 ");
+		for(int i=0,ni=parameter_material.length;i<ni;i++)
+			fw.print(parameter_material[i]+" ");
+		fw.println();
+		
+		fw.print  ("/*	edge_box					*/	");
+		if(edge_box==null)
+			fw.print(" nobox");
+		else
+			edge_box.write_out(fw);
+		fw.println();
+		
+		fw.println("/*	total_edge_primitive_vertex_number	*/	 ",total_edge_primitive_vertex_number);
+		fw.println("/*	total_point_primitive_vertex_number	*/	 ",total_point_primitive_vertex_number);
+
+		fw.println();
 		return;
 	}
 }

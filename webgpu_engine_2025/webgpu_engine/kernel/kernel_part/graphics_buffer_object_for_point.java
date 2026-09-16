@@ -129,7 +129,7 @@ public class graphics_buffer_object_for_point
 	}
 	private void render_point_set_create(primitive_interface p_i)
 	{
-		for(int point_i=0,point_number=fe.total_point_primitive_number;point_i<point_number;point_i++){
+		for(int point_i=0,point_number=fe.total_point_primitive_vertex_number;point_i<point_number;point_i++){
 			double my_location_data[]		=p_i.get_point_location_data(body_id,face_id,loop_id,edge_id,point_i);
 			String my_location_extra_data	=p_i.get_point_extra_data	(body_id,face_id,loop_id,edge_id,point_i);
 			String my_material[]			=p_i.get_point_material		(body_id,face_id,loop_id,edge_id,point_i);
@@ -204,17 +204,19 @@ public class graphics_buffer_object_for_point
 	{
 		int material_id=caculate_material_id.caculate(
 				gbo_part.driver,max_material_id,gbo_part,
-				"origin",-1,-1,-1,-1,gbo_part.part_mesh.origin_material);
+				"origin",-1,-1,-1,-1,gbo_part.part_mesh.point_default_material);
 		
 		graphics_buffer_object_creater gbo=gbocc.get_creater(
 				material_id,file_name,file_charset,gbo_part.part_par.create_point_buffer_object_bitmap);
 				
 		gbo.vertex_begin();
 		
-		gbo.register(0,0,0,gbo_part.part_mesh.origin_vertex_extra_data);
+		gbo.register(0,0,0,gbo_part.part_mesh.point_default_vertex_extra_String);
 		gbo.register(0,0,1,"1");
-		gbo.register(gbo_part.part_mesh.origin_material[0],	 gbo_part.part_mesh.origin_material[1],
-					 gbo_part.part_mesh.origin_material[2],	 gbo_part.part_mesh.origin_material[3]);
+		gbo.register(gbo_part.part_mesh.point_default_material[0],
+					 gbo_part.part_mesh.point_default_material[1],
+					 gbo_part.part_mesh.point_default_material[2],
+					 gbo_part.part_mesh.point_default_material[3]);
 	
 		gbo.register(-1,-1,0,"0");
 		gbo.register(-1,-1,0,"0");

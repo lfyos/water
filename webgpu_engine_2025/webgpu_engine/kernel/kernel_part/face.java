@@ -1,8 +1,9 @@
 package kernel_part;
 
-import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.location;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 
 public class face
 {
@@ -52,6 +53,37 @@ public class face
 		reference_part=s.reference_part;
 		face_box=(s.face_box==null)?null:new box(s.face_box);
 	}
+	public face(part my_reference_part,location my_face_loca,box my_face_box)
+	{
+		name=my_reference_part.system_name+"_box_face";
+		String my_edge_extra_data=null,my_edge_material[]=null;
+		int double_attribute_number=0,string_attribute_number=0;
+
+		if(my_reference_part!=null)
+			if(my_reference_part.part_mesh!=null) {
+				if(my_reference_part.part_mesh.edge_default_vertex_extra_string!=null)
+					my_edge_extra_data=my_reference_part.part_mesh.edge_default_vertex_extra_string;
+				if(my_reference_part.part_mesh.edge_default_material!=null)
+					if(my_reference_part.part_mesh.edge_default_material.length>=4)
+						my_edge_material=my_reference_part.part_mesh.edge_default_material;
+				if(my_reference_part.part_mesh.face_default_attribute_double!=null)
+					double_attribute_number=my_reference_part.part_mesh.face_default_attribute_double.length;
+				double_attribute_number/=3;
+				if(my_reference_part.part_mesh.face_default_attribute_string!=null)
+					string_attribute_number=my_reference_part.part_mesh.face_default_attribute_string.length;
+			}
+		if(my_edge_extra_data==null)
+			my_edge_extra_data="1";
+		if(my_edge_material==null)
+			my_edge_material=new String[] {"0","0","0","0"};
+		fa_curve=new face_curve(my_face_loca,my_face_box,my_edge_extra_data,my_edge_material);
+		fa_face=new face_face(fa_curve.curve_box,
+				(double_attribute_number<string_attribute_number)
+				?double_attribute_number:string_attribute_number);		
+
+		reference_part=my_reference_part;
+		caculate_face_box();
+	}
 	public face(file_reader fr)
 	{
 		name=fr.get_string();
@@ -61,33 +93,12 @@ public class face
 		reference_part=null;
 		caculate_face_box();
 	}
-	public face(part my_reference_part,location my_face_loca,box my_face_box)
+	public void write_out(file_writer fw)
 	{
-		name=my_reference_part.system_name+"_box_face";
-		int double_attribute_number=0,string_attribute_number=0;
-		String my_extra_data=null,my_material[]=null;
-		if(my_reference_part!=null)
-			if(my_reference_part.part_mesh!=null) {
-				if(my_reference_part.part_mesh.default_vertex_extra_string!=null)
-					my_extra_data=my_reference_part.part_mesh.default_vertex_extra_string;
-				if(my_reference_part.part_mesh.default_material!=null)
-					if(my_reference_part.part_mesh.default_material.length>=4)
-						my_material=my_reference_part.part_mesh.default_material;
-				if(my_reference_part.part_mesh.default_attribute_double!=null)
-					double_attribute_number=my_reference_part.part_mesh.default_attribute_double.length;
-				if(my_reference_part.part_mesh.default_attribute_string!=null)
-					string_attribute_number=my_reference_part.part_mesh.default_attribute_string.length;
-			}
-		if(my_extra_data==null)
-			my_extra_data="1";
-		if(my_material==null)
-			my_material=new String[] {"0","0","0","0"};
-		fa_curve=new face_curve(my_face_loca,my_face_box,my_extra_data,my_material);
-		fa_face=new face_face(fa_curve.curve_box,
-				(double_attribute_number<string_attribute_number)
-				?double_attribute_number:string_attribute_number);		
-
-		reference_part=my_reference_part;
-		caculate_face_box();
+		fw.println();
+		fw.println("/*	face name:	*/	",name);
+		fa_face.write_out(fw);
+		fa_curve.write_out(fw);
+		fw.println();
 	}
 }

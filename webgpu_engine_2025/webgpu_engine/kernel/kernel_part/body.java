@@ -1,8 +1,9 @@
 package kernel_part;
 
-import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.location;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 
 public class body
 {
@@ -58,6 +59,14 @@ public class body
 			total_point_primitive_number+=face_array[i].fa_curve.total_point_primitive_number;
 		}
 	}
+	public body(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
+	{
+		name="box_body_with_"+my_box_number+"_faces";	
+		face_array=new face[my_box_number];
+		for(int i=0;i<my_box_number;i++)
+			face_array[i]=new face(my_reference_part[i],my_box_loca[i],my_box_array[i]);
+		caculate_box_and_primitive_number();
+	}
 	public body(file_reader fr)
 	{
 		name=fr.get_string();
@@ -75,13 +84,15 @@ public class body
 		}
 		caculate_box_and_primitive_number();
 	}
-	
-	public body(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
+	public void write_out(file_writer fw)
 	{
-		name="box_body_with_"+my_box_number+"_faces";	
-		face_array=new face[my_box_number];
-		for(int i=0;i<my_box_number;i++)
-			face_array[i]=new face(my_reference_part[i],my_box_loca[i],my_box_array[i]);
-		caculate_box_and_primitive_number();
+		int my_face_number=(face_array==null)?0:face_array.length;
+		
+		fw.println();
+		fw.println("/*	body name:		*/	",name);
+		fw.println("/*	face number:	*/	",my_face_number);
+		for(int i=0;i<my_face_number;i++)
+			face_array[i].write_out(fw);
+		fw.println();
 	}
 }

@@ -28,7 +28,7 @@ public class graphics_buffer_object_for_face
 		gbo.register(material_str[0],material_str[1],material_str[2],material_str[3]);
 		gbo.register(body_id,face_id,primitive_id,Integer.toString(primitive_vertex_id));
 		
-		int max_attribute_number=gbo_part.part_mesh.default_attribute_string.length;
+		int max_attribute_number=gbo_part.part_mesh.face_default_attribute_string.length;
 		if(attribute_number>max_attribute_number)
 			attribute_number=max_attribute_number;
 
@@ -40,10 +40,10 @@ public class graphics_buffer_object_for_face
 			gbo.register(my_data,extra_data);
 		}
 		for(int attribute_id=attribute_number;attribute_id<max_attribute_number;attribute_id++)
-			gbo.register(	gbo_part.part_mesh.default_attribute_double[3*attribute_id+0],
-							gbo_part.part_mesh.default_attribute_double[3*attribute_id+1],
-							gbo_part.part_mesh.default_attribute_double[3*attribute_id+2],
-							gbo_part.part_mesh.default_attribute_string[  attribute_id  ]);
+			gbo.register(	gbo_part.part_mesh.face_default_attribute_double[3*attribute_id+0],
+							gbo_part.part_mesh.face_default_attribute_double[3*attribute_id+1],
+							gbo_part.part_mesh.face_default_attribute_double[3*attribute_id+2],
+							gbo_part.part_mesh.face_default_attribute_string[  attribute_id  ]);
 	}
 	private void create_primitive(int primitive_id,int body_id,int face_id,int attribute_number)
 	{

@@ -140,7 +140,7 @@ public class graphics_buffer_object_for_edge
 						tessellation_material_0		=null;
 						tessellation_material_1		=null;
 
-						int vertex_number=fe.total_edge_primitive_number-1;
+						int vertex_number=fe.total_edge_primitive_vertex_number-1;
 						for(int vertex_id=0;vertex_id<vertex_number;vertex_id+=step)
 							create_edge(step,body_id,face_id,loop_id,edge_id,vertex_id);
 					}

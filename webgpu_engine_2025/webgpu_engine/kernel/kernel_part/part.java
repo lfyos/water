@@ -8,8 +8,8 @@ import kernel_component.component;
 import kernel_transformation.point;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
-import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_mesh.load_part_mesh;
 import kernel_common_class.jason_string;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
@@ -157,9 +157,7 @@ public class part
 			}
 			String my_file_path=directory_name+mesh_file_name;
 			my_file_path=file_directory.replace_special_char(my_file_path);
-			file_reader fr=new file_reader(my_file_path,file_charset);
-			part_mesh=new part_rude(fr);
-			fr.close();
+			part_mesh=load_part_mesh.load(my_file_path,file_charset);
 			return true;
 		}
 		return false;

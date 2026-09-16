@@ -1,9 +1,10 @@
 package kernel_part;
 
-import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.location;
 import kernel_transformation.point;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 
 public class face_curve
 {
@@ -69,19 +70,6 @@ public class face_curve
 		
 		caculate_box_and_primitive_number();
 	}
-	
-	public face_curve(file_reader fr)
-	{
-		int my_face_loop_number;
-		if((my_face_loop_number=fr.get_int())<=0)
-			f_loop=null;
-		else{
-			f_loop=new face_loop[my_face_loop_number];
-			for(int i=0;i<my_face_loop_number;i++)
-				f_loop[i]=new face_loop(fr);
-		}
-		caculate_box_and_primitive_number();
-	}
 	public face_curve(face_curve s)
 	{
 		if(s.face_loop_number()<=0)
@@ -94,5 +82,25 @@ public class face_curve
 		curve_box=(s.curve_box==null)?null:new box(s.curve_box);
 		total_edge_primitive_number	=s.total_edge_primitive_number;
 		total_point_primitive_number=s.total_point_primitive_number;
+	}
+	public face_curve(file_reader fr)
+	{
+		int my_face_loop_number;
+		if((my_face_loop_number=fr.get_int())<=0)
+			f_loop=null;
+		else{
+			f_loop=new face_loop[my_face_loop_number];
+			for(int i=0;i<my_face_loop_number;i++)
+				f_loop[i]=new face_loop(fr);
+		}
+		caculate_box_and_primitive_number();
+	}
+	public void write_out(file_writer fw)
+	{
+		int my_face_loop_number=(f_loop==null)?0:f_loop.length;
+		fw.println("/*	loop_number	*/	",my_face_loop_number);
+		for(int i=0;i<my_face_loop_number;i++)
+			f_loop[i].write_out(fw);
+		fw.println();
 	}
 };

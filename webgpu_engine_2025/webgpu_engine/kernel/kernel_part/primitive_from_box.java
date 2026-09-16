@@ -15,9 +15,9 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_material!=null)
-					if(rp.part_mesh.default_material.length>=4)
-						return rp.part_mesh.default_material;
+				if(rp.part_mesh.face_default_material!=null)
+					if(rp.part_mesh.face_default_material.length>=4)
+						return rp.part_mesh.face_default_material;
 		
 		return default_primitive_material;
 	}
@@ -57,8 +57,8 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_vertex_extra_string!=null)
-					return rp.part_mesh.default_vertex_extra_string;		
+				if(rp.part_mesh.face_default_vertex_extra_string!=null)
+					return rp.part_mesh.face_default_vertex_extra_string;		
 		return "1";
 	}
 	public double[]get_primitive_vertex_normal_data(int body_id,int face_id,int primitive_id,int vertex_id)
@@ -85,8 +85,8 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_normal_extra_string!=null)
-					return rp.part_mesh.default_normal_extra_string;		
+				if(rp.part_mesh.face_default_normal_extra_string!=null)
+					return rp.part_mesh.face_default_normal_extra_string;		
 		return "1";
 	}
 	public double[]get_primitive_vertex_attribute_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id)
@@ -94,13 +94,13 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_attribute_double!=null)
+				if(rp.part_mesh.face_default_attribute_double!=null)
 					if(attribute_id>=0)
-						if((3*attribute_id+2)<rp.part_mesh.default_attribute_double.length)
+						if((3*attribute_id+2)<rp.part_mesh.face_default_attribute_double.length)
 							return new double[] {
-									rp.part_mesh.default_attribute_double[3*attribute_id+0],
-									rp.part_mesh.default_attribute_double[3*attribute_id+1],
-									rp.part_mesh.default_attribute_double[3*attribute_id+2]
+									rp.part_mesh.face_default_attribute_double[3*attribute_id+0],
+									rp.part_mesh.face_default_attribute_double[3*attribute_id+1],
+									rp.part_mesh.face_default_attribute_double[3*attribute_id+2]
 							};
 		return new double[] {0,0,0};
 	}
@@ -109,10 +109,10 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_attribute_string!=null)
+				if(rp.part_mesh.face_default_attribute_string!=null)
 					if(attribute_id>=0)
-						if(attribute_id<rp.part_mesh.default_attribute_string.length)
-							return rp.part_mesh.default_attribute_string[attribute_id];
+						if(attribute_id<rp.part_mesh.face_default_attribute_string.length)
+							return rp.part_mesh.face_default_attribute_string[attribute_id];
 		return "1";
 	}
 	public double[]get_edge_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
@@ -126,8 +126,8 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_vertex_extra_string!=null)
-					return rp.part_mesh.default_vertex_extra_string;		
+				if(rp.part_mesh.edge_default_vertex_extra_string!=null)
+					return rp.part_mesh.edge_default_vertex_extra_string;
 		return "1";
 	}
 	public String[] get_edge_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
@@ -135,10 +135,9 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_material!=null)
-					if(rp.part_mesh.default_material.length>=4)
-						return rp.part_mesh.default_material;
-		
+				if(rp.part_mesh.edge_default_material!=null)
+					if(rp.part_mesh.edge_default_material.length>=4)
+						return rp.part_mesh.edge_default_material;
 		return default_primitive_material;
 	}
 	public double[]get_point_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
@@ -150,8 +149,8 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.default_vertex_extra_string!=null)
-					return rp.part_mesh.default_vertex_extra_string;		
+				if(rp.part_mesh.point_default_vertex_extra_String!=null)
+					return rp.part_mesh.point_default_vertex_extra_String;
 		return "1";
 	}
 	public String[] get_point_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
@@ -159,9 +158,9 @@ public class primitive_from_box implements primitive_interface
 		part rp=body_array[body_id].face_array[face_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
-				if(rp.part_mesh.origin_material!=null)
-					if(rp.part_mesh.origin_material.length>=4)
-						return rp.part_mesh.origin_material;
+				if(rp.part_mesh.point_default_material!=null)
+					if(rp.part_mesh.point_default_material.length>=4)
+						return rp.part_mesh.point_default_material;
 		return default_primitive_material;
 	}
 	public void destroy()

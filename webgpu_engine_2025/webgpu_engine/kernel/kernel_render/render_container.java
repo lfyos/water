@@ -129,30 +129,33 @@ public class render_container
 			permanent_part_id_encoder part_id_encoder,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		var data_list=pcps.tree_get_value_list();
-		for(int i=0,j,part_number=data_list.size();i<part_number;i=j){
-			part i_part=data_list.get(i);
+		ArrayList<part> existed_part_list=pcps.tree_get_value_list();
+		for(int i=0,j,part_number=existed_part_list.size();i<part_number;i=j){
+			part i_part=existed_part_list.get(i);
 			for(j=i;j<part_number;j++)
-				if(i_part.system_name.compareTo(data_list.get(j).system_name)!=0)
+				if(i_part.system_name.compareTo(existed_part_list.get(j).system_name)!=0)
 					break;
 			part insert_part=null;
 			box  part_box	=null;
 			
 			for(;i<j;i++) {
-				i_part=data_list.get(i);
-				boolean normal_flag	=i_part.is_normal_part();
-				boolean do_flag		=i_part.part_par.do_create_bottom_box_flag;
-				if((!normal_flag)||(!do_flag)){
+				i_part=existed_part_list.get(i);
+				if(!(i_part.is_normal_part())){
 					insert_part=null;
 					part_box=null;
 					break;
 				}
-				if((insert_part!=null)&&(part_box!=null))
-					continue;
+				if(!(i_part.part_par.do_create_bottom_box_flag)){
+					insert_part=null;
+					part_box=null;
+					break;
+				}
 				if((i_part.part_mesh==null)||(i_part.driver==null))
 					continue;
-				part_box=i_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
-				insert_part=(part_box==null)?null:i_part;
+				if((insert_part!=null)&&(part_box!=null))
+					continue;
+				if((part_box=i_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null))!=null)
+					insert_part=i_part;
 			}
 			if((insert_part==null)||(part_box==null))
 				continue;
@@ -170,6 +173,7 @@ public class render_container
 
 			add_part.part_from_id			=insert_part.part_id;
 			add_part.permanent_part_from_id	=insert_part.permanent_part_id;
+			
 			try {
 				add_part.driver=insert_part.driver.clone(
 					insert_part,add_part,request_response,system_par,scene_par);

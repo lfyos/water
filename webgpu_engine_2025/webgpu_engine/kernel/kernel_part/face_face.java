@@ -1,7 +1,8 @@
 package kernel_part;
 
-import kernel_file_manager.file_reader;
 import kernel_transformation.box;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 
 public class face_face
 {
@@ -21,7 +22,27 @@ public class face_face
 	public int total_face_primitive_number,attribute_number;
 	
 	public box face_face_box;
+	
+	public face_face(face_face s)
+	{
+		face_type=s.face_type;
+		face_parameter=s.face_parameter;
+		
+		total_face_primitive_number	=s.total_face_primitive_number;
+		attribute_number			=s.attribute_number;
+		
+		face_face_box=(s.face_face_box==null)?null:new box(s.face_face_box);
+	}
+	public face_face(box b,int my_attribute_number)
+	{
+		face_type="unknown";
+		face_parameter=null;
+		
+		total_face_primitive_number	=12;
+		attribute_number			=my_attribute_number;
 
+		face_face_box=(b==null)?null:new box(b);
+	}
 	public face_face(file_reader fr)
 	{
 		String str;
@@ -57,25 +78,25 @@ public class face_face
 		}
 		return;
 	}
-	
-	public face_face(face_face s)
+	public void write_out(file_writer fw)
 	{
-		face_type=s.face_type;
-		face_parameter=s.face_parameter;
-		
-		total_face_primitive_number	=s.total_face_primitive_number;
-		attribute_number			=s.attribute_number;
-		
-		face_face_box=(s.face_face_box==null)?null:new box(s.face_face_box);
-	}
-	public face_face(box b,int my_attribute_number)
-	{
-		face_type="unknown";
-		face_parameter=null;
-		
-		total_face_primitive_number	=12;
-		attribute_number			=my_attribute_number;
+		fw.println();
 
-		face_face_box=(b==null)?null:new box(b);
+		int my_face_parameter_number=(face_parameter==null)?0:face_parameter.length;
+		fw.println("/*	face_type:						*/	 ",face_type);
+		fw.println("/*	face_parameter_number:			*/	 ",my_face_parameter_number);
+		fw.print  ("/*	face_parameter:					*/	 ");
+		for(int i=0;i<my_face_parameter_number;i++)
+			fw.print(face_parameter[i]+" ");
+		fw.println();
+		fw.println("/*	total_face_primitive_number:	*/	 ",total_face_primitive_number);
+		fw.println("/*	attribute_number:				*/	 ",attribute_number);
+		fw.print  ("/*	face_face_box:					*/	");
+		if(face_face_box==null)
+			fw.print(" nobox");
+		else 
+			face_face_box.write_out(fw);
+		fw.println();
+		fw.println();
 	}
 }
