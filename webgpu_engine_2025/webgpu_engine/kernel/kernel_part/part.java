@@ -9,11 +9,11 @@ import kernel_transformation.point;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
 import kernel_file_manager.file_writer;
-import kernel_mesh.load_part_mesh;
 import kernel_common_class.jason_string;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
+import kernel_part_mesh_convert.load_part_mesh;
 import kernel_common_class.compress_file_data;
 
 public class part

@@ -1,4 +1,4 @@
-package kernel_mesh;
+package kernel_part_mesh_convert;
 
 import kernel_part.body;
 import kernel_file_manager.file_reader;
@@ -97,11 +97,13 @@ public class part_rude_2021_07_15
 		fw.println("/*	max_attribute_number				*/	",face_default_attribute_string.length);
 		
 		for(int i=0,ni=face_default_attribute_string.length;i<ni;i++) {
+			
 			fw	.print  ("/*	face_default_attribute_double:"+i+"		*/	")
 				.print	(face_default_attribute_double[3*i+0])
 				.print	(" ",face_default_attribute_double[3*i+1])
 				.println(" ",face_default_attribute_double[3*i+2]);
-			fw	.print  ("/*	face_default_attribute_double:"+i+"		*/	")
+			
+			fw	.print  ("/*	face_default_attribute_string:"+i+"		*/	")
 				.println(face_default_attribute_string[i]);
 		}
 		

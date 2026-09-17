@@ -8,7 +8,7 @@ public class test_5
 	{
 		debug_information.println("start");
 		file_writer fw=new file_writer("G:\\temp\\y.mesh","GBK");
-		new kernel_mesh.part_rude_2021_07_15("G:\\temp\\x.mesh","GBK").write_out(fw);
+		new kernel_part_mesh_convert.part_rude_2021_07_15("G:\\temp\\x.mesh","GBK").write_out(fw);
 		fw.close();
 		debug_information.println("end");
 	}
