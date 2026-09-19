@@ -33,15 +33,15 @@ public class face_face
 		
 		face_face_box=(s.face_face_box==null)?null:new box(s.face_face_box);
 	}
-	public face_face(box b,int my_attribute_number)
+	public face_face(box my_face_box,int my_attribute_number)
 	{
 		face_type="unknown";
 		face_parameter=null;
 		
-		total_face_primitive_number	=12;
+		total_face_primitive_number	=2;
 		attribute_number			=my_attribute_number;
 
-		face_face_box=(b==null)?null:new box(b);
+		face_face_box=(my_face_box==null)?null:new box(my_face_box);
 	}
 	public face_face(file_reader fr)
 	{

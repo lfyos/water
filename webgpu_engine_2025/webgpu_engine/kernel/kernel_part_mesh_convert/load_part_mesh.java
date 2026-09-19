@@ -17,6 +17,7 @@ public class load_part_mesh
 
 		file_reader fr=new file_reader(my_file_path_name,file_charset);
 		if(fr.error_flag()) {
+			fr.close();
 			debug_information.println("load_part_mesh error:	",my_file_path_name);
 			return null;
 		}

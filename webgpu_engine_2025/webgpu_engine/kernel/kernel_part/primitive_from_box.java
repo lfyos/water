@@ -1,8 +1,8 @@
 package kernel_part;
 
 import kernel_transformation.point;
-import kernel_common_class.const_value;
 import kernel_transformation.plane;
+import kernel_common_class.const_value;
 
 public class primitive_from_box implements primitive_interface
 {
@@ -12,7 +12,7 @@ public class primitive_from_box implements primitive_interface
 	
 	public String[]get_primitive_material(int body_id,int face_id,int primitive_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.face_default_material!=null)
@@ -26,35 +26,15 @@ public class primitive_from_box implements primitive_interface
 		return 3;
 	}
 	public double[]get_primitive_vertex_location_data(int body_id,int face_id,int primitive_id,int vertex_id)
-	{
-		point p;
-		face_loop fl=body_array[body_id].face_array[face_id].fa_curve.f_loop[primitive_id/2];
-		switch(3*(primitive_id%2)+vertex_id) {
-		default:
-		case 0:
-			p=fl.edge[0].start_point;
-			break;
-		case 1:
-			p=fl.edge[0].end_point;
-			break;
-		case 2:
-			p=fl.edge[1].end_point;
-			break;
-		case 3:
-			p=fl.edge[2].start_point;
-			break;
-		case 4:
-			p=fl.edge[2].end_point;	
-			break;
-		case 5:
-			p=fl.edge[3].end_point;
-			break;
-		}
+	{	
+		final int index_id[]={0,1,2,2,3,0};
+		face_loop fl[]	=body_array[body_id].face_array[face_id].fa_curve.f_loop;
+		point p			=fl[0].edge[index_id[3*primitive_id+vertex_id]].start_point;
 		return new double[] {p.x,p.y,p.z};
 	}
 	public String get_primitive_vertex_location_extra_data(int body_id,int face_id,int primitive_id,int vertex_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.face_default_vertex_extra_string!=null)
@@ -63,17 +43,27 @@ public class primitive_from_box implements primitive_interface
 	}
 	public double[]get_primitive_vertex_normal_data(int body_id,int face_id,int primitive_id,int vertex_id)
 	{
-		face_loop fl=body_array[body_id].face_array[face_id].fa_curve.f_loop[primitive_id/2];
+		face_loop fl=body_array[body_id].face_array[face_id].fa_curve.f_loop[0];
 		point p[]=new point[] {
 				fl.edge[0].start_point,
 				fl.edge[0].end_point,
 				fl.edge[1].end_point,
+				
+				fl.edge[1].start_point,
+				fl.edge[1].end_point,
 				fl.edge[2].end_point,
-				fl.edge[3].end_point
+				
+				fl.edge[2].start_point,
+				fl.edge[2].end_point,
+				fl.edge[3].end_point,
+				
+				fl.edge[3].start_point,
+				fl.edge[3].end_point,
+				fl.edge[0].end_point
 		};
 		plane pl;
 		
-		for(int i=1,ni=p.length-1;i<ni;i++)
+		for(int i=1,ni=p.length-1;i<ni;i+=3)
 			if((p[i].sub(p[i-1]).distance2()>const_value.min_value2))
 				if((p[i].sub(p[i+1]).distance2()>const_value.min_value2))
 					if(!((pl=new plane(p[i-1],p[i],p[i+1])).error_flag))
@@ -82,7 +72,7 @@ public class primitive_from_box implements primitive_interface
 	}
 	public String get_primitive_vertex_normal_extra_data(int body_id,int face_id,int primitive_id,int vertex_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.face_default_normal_extra_string!=null)
@@ -91,7 +81,7 @@ public class primitive_from_box implements primitive_interface
 	}
 	public double[]get_primitive_vertex_attribute_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.face_default_attribute_double!=null)
@@ -106,7 +96,7 @@ public class primitive_from_box implements primitive_interface
 	}
 	public String get_primitive_vertex_attribute_extra_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.face_default_attribute_string!=null)
@@ -123,7 +113,7 @@ public class primitive_from_box implements primitive_interface
 	}
 	public String get_edge_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.edge_default_vertex_extra_string!=null)
@@ -132,7 +122,7 @@ public class primitive_from_box implements primitive_interface
 	}
 	public String[] get_edge_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.edge_default_material!=null)
@@ -142,11 +132,13 @@ public class primitive_from_box implements primitive_interface
 	}
 	public double[]get_point_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		return new double[] {0,0,0,1};
+		face_edge fe=body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge[edge_id];
+		point p=((point_id%2)==0)?fe.start_point:fe.end_point;
+		return new double[] {p.x,p.y,p.z};
 	}
 	public String get_point_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.point_default_vertex_extra_String!=null)
@@ -155,7 +147,7 @@ public class primitive_from_box implements primitive_interface
 	}
 	public String[] get_point_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		part rp=body_array[body_id].face_array[face_id].reference_part;
+		part rp=body_array[body_id].reference_part;
 		if(rp!=null)
 			if(rp.part_mesh!=null)
 				if(rp.part_mesh.point_default_material!=null)

@@ -78,24 +78,24 @@ public class part_rude
 					}else
 						part_box=part_box.add(body_array[i].body_box);
 				}
-				total_face_primitive_number+=body_array[i].total_face_primitive_number;
-				total_edge_primitive_number+=body_array[i].total_edge_primitive_number;
+				total_face_primitive_number	+=body_array[i].total_face_primitive_number;
+				total_edge_primitive_number	+=body_array[i].total_edge_primitive_number;
 				total_point_primitive_number+=body_array[i].total_point_primitive_number;
 			}
 	}
 	public part_rude(part_rude s)
 	{
-		point_default_material			=s.point_default_material;
-		face_default_material			=s.face_default_material;
-		edge_default_material			=s.edge_default_material;
+		point_default_material	=s.point_default_material;
+		face_default_material	=s.face_default_material;
+		edge_default_material	=s.edge_default_material;
 		
 		point_default_vertex_extra_String=s.point_default_vertex_extra_String;
-		face_default_vertex_extra_string=s.face_default_vertex_extra_string;
-		face_default_normal_extra_string=s.face_default_normal_extra_string;
-		edge_default_vertex_extra_string=s.edge_default_vertex_extra_string;
+		face_default_vertex_extra_string =s.face_default_vertex_extra_string;
+		face_default_normal_extra_string =s.face_default_normal_extra_string;
+		edge_default_vertex_extra_string =s.edge_default_vertex_extra_string;
 		
-		face_default_attribute_double	=s.face_default_attribute_double;
-		face_default_attribute_string	=s.face_default_attribute_string;
+		face_default_attribute_double=s.face_default_attribute_double;
+		face_default_attribute_string=s.face_default_attribute_string;
 		
 		int body_number;
 		if((body_number=s.body_number())<=0)
@@ -228,10 +228,9 @@ public class part_rude
 						face_default_attribute_double[j]=pr.face_default_attribute_double[j];
 				}
 			}
-		body_array=new body[]
-			{
-				new body(my_box_number,my_reference_part,my_box_loca,my_box_array)
-			};
+		body_array=new body[my_box_number];
+		for(int i=0;i<my_box_number;i++)
+			body_array[i]=new body(my_reference_part[i],my_box_loca[i],my_box_array[i]);
 		caculate_rp_box_and_primitive_number();
 		return;
 	}

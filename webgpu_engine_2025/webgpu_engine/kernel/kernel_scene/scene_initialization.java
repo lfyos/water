@@ -467,7 +467,7 @@ public class scene_initialization
 					int index_id=shader_file_name[i][j].lastIndexOf('.');
 					if(index_id>=0)
 						if(my_file_name.substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0)
-							class_charset	=sk.system_par.js_class_charset;
+							class_charset=sk.system_par.js_class_charset;
 					String str="";	
 					common_reader reader=class_file_reader.get_reader(
 						my_file_name,r.driver.getClass(),class_charset);
@@ -481,8 +481,8 @@ public class scene_initialization
 					else{
 						str=jason_string.change_string(str);
 						fw.print("			",str).println((j==(nj-1))?"":",");
-					}					
-				}				
+					}
+				}
 				if(i!=0) 
 					fw.print  ("		]");
 				else{

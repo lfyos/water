@@ -1,7 +1,6 @@
 package kernel_part;
 
 import kernel_transformation.box;
-import kernel_transformation.location;
 import kernel_transformation.point;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
@@ -37,37 +36,17 @@ public class face_curve
 					curve_box=new box(f_loop[i].loop_box);
 				else
 					curve_box=curve_box.add(f_loop[i].loop_box);
-				total_edge_primitive_number+=f_loop[i].total_edge_primitive_number;
+				total_edge_primitive_number +=f_loop[i].total_edge_primitive_number;
 				total_point_primitive_number+=f_loop[i].total_point_primitive_number;
 			}
 	}
-	public face_curve(location loca,box b,String my_extra_data,String my_material[])
-	{														//		 Y
-		point p[]=new point[]								//		 |
-		{													//       2***********************6
-			new point(b.p[0].x,b.p[0].y,b.p[0].z),			//     * |                     * *
-			new point(b.p[0].x,b.p[0].y,b.p[1].z),			//	 *   |                    *  *
-			new point(b.p[0].x,b.p[1].y,b.p[0].z),			//	3************************7   *
-			new point(b.p[0].x,b.p[1].y,b.p[1].z),			//	*    |                   *   *
-			new point(b.p[1].x,b.p[0].y,b.p[0].z),			//	*    0-------------------*---4-------X
-			new point(b.p[1].x,b.p[0].y,b.p[1].z),			//	*   /                    *  *
-			new point(b.p[1].x,b.p[1].y,b.p[0].z),			//	* /                      * *  
-			new point(b.p[1].x,b.p[1].y,b.p[1].z),			//	1************************5
-		};													// Z
-
-		for(int i=0,ni=p.length;i<ni;i++)
-			p[i]=loca.multiply(p[i]);
-		
-		f_loop=new face_loop[] 
+	public face_curve(point p0,point p1,point p2,point p3,
+			String my_edge_extra_data,String my_edge_material[])
+	{
+		f_loop=new face_loop[]
 		{
-			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material),	//left face
-			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material),	//right face
-			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material),	//down
-			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material),	//up
-			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material),	//front
-			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material)	//back
-		};
-		
+			new face_loop(p0,p1,p2,p3,my_edge_extra_data,my_edge_material)
+		};	
 		caculate_box_and_primitive_number();
 	}
 	public face_curve(face_curve s)
@@ -98,7 +77,7 @@ public class face_curve
 	public void write_out(file_writer fw)
 	{
 		int my_face_loop_number=(f_loop==null)?0:f_loop.length;
-		fw.println("/*	loop_number	*/	",my_face_loop_number);
+		fw.println().println("/*	loop_number	*/	",my_face_loop_number);
 		for(int i=0;i<my_face_loop_number;i++)
 			f_loop[i].write_out(fw);
 		fw.println();

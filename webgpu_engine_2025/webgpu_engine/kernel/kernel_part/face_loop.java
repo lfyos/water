@@ -122,8 +122,7 @@ public class face_loop
 	public void write_out(file_writer fw)
 	{		
 		int my_edge_number=(edge==null)?0:edge.length;
-		fw.println();
-		fw.println("/*	edge_number		*/	",my_edge_number);
+		fw.println().println("/*	edge_number		*/	",my_edge_number);
 		for(int i=0;i<my_edge_number;i++)
 			edge[i].write_out(fw);
 		fw.println();
