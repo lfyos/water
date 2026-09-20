@@ -48,7 +48,7 @@ public class face
 		fa_curve=(s.fa_curve==null)?null:new face_curve(s.fa_curve);
 		face_box=(s.face_box==null)?null:new box(s.face_box);
 	}
-	public face(point p0,point p1,point p2,point p3,String face_name,
+	public face(String face_name,point p0,point p1,point p2,point p3,
 			String my_edge_extra_data,String my_edge_material[],int attribute_number)
 	{
 		name=face_name;

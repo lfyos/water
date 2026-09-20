@@ -220,11 +220,10 @@ public class scene_kernel
 		if(component_cont.root_component==null)
 			return;
 
-		ArrayList<part>top_box_part_list=new create_assemble_part(
-				fast_load_type,component_cont,render_cont,request_response,part_id_encoder,
-				all_part_part_cont,caculate_scene_last_modified_time(),
-				create_parameter,system_par,scene_par,load_par).top_box_part;
-		
+		ArrayList<part>top_box_part_list=new create_assemble_part(fast_load_type,
+			caculate_scene_last_modified_time(),component_cont,render_cont,
+			request_response,part_id_encoder,all_part_part_cont,
+			create_parameter,load_par,system_par,scene_par).top_box_part;
 		
 		if(top_box_part_list==null)
 			return;

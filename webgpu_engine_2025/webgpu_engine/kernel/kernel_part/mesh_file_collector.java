@@ -35,7 +35,7 @@ public class mesh_file_collector extends tree_search_container<Long,mesh_file_co
 {
 	public mesh_file_collector()
 	{
-		super(new mesh_file_collector_item_comparator(),null);
+		super(new mesh_file_collector_item_comparator());
 	}
 	public void create_head_data(file_writer head_fw,long max_file_head_length)
 	{

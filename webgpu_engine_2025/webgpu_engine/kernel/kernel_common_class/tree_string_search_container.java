@@ -8,4 +8,8 @@ public class tree_string_search_container <VALUE_TYPE> extends tree_search_conta
 	{
 		super(null,value_comparator);
 	}
+	public tree_string_search_container()
+	{
+		super();
+	}
 }

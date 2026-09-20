@@ -104,19 +104,20 @@ public class body
 		for(int i=0,ni=p.length;i<ni;i++)
 			p[i]=loca.multiply(p[i]);
 		
-		face_array=new face[] {
-				new face(p[0],p[1],p[3],p[2],"box_part_face_0",
-						my_edge_extra_data,my_edge_material,attribute_number),	//left face
-				new face(p[4],p[6],p[7],p[5],"box_part_face_1",
-						my_edge_extra_data,my_edge_material,attribute_number),	//right face
-				new face(p[0],p[4],p[5],p[1],"box_part_face_2",
-						my_edge_extra_data,my_edge_material,attribute_number),	//down
-				new face(p[2],p[3],p[7],p[6],"box_part_face_3",
-						my_edge_extra_data,my_edge_material,attribute_number),	//up
-				new face(p[0],p[2],p[6],p[4],"box_part_face_4",
-						my_edge_extra_data,my_edge_material,attribute_number),	//front
-				new face(p[1],p[5],p[7],p[3],"box_part_face_5",
-						my_edge_extra_data,my_edge_material,attribute_number)	//back
+		face_array=new face[] 
+		{
+			new face("left_face",	p[0],p[1],p[3],p[2],
+					my_edge_extra_data,my_edge_material,attribute_number),
+			new face("right_face",	p[4],p[6],p[7],p[5],
+					my_edge_extra_data,my_edge_material,attribute_number),
+			new face("down_face",	p[0],p[4],p[5],p[1],
+					my_edge_extra_data,my_edge_material,attribute_number),
+			new face("up_face",		p[2],p[3],p[7],p[6],
+					my_edge_extra_data,my_edge_material,attribute_number),
+			new face("front_face",	p[0],p[2],p[6],p[4],
+					my_edge_extra_data,my_edge_material,attribute_number),
+			new face("back_face",	p[1],p[5],p[7],p[3],
+					my_edge_extra_data,my_edge_material,attribute_number)
 		};
 		caculate_box_and_primitive_number();
 	}

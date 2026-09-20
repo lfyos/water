@@ -22,7 +22,7 @@
 													
 /*	******************************		driver_lession		********************************************	*/
 
-/*	render_19	*/	lession_00_start_driver							driver_lession_00_start_driver.extended_render_driver							driver_lession\lession_00_start_driver\render.list
+/*	render_19	*/	lession_00_start_driver			driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
 
 /*
 

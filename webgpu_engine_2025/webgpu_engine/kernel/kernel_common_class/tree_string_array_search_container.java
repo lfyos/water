@@ -23,4 +23,8 @@ public class tree_string_array_search_container <VALUE_TYPE> extends tree_search
 	{
 		super(new tree_string_array_search_container_comparator(),my_value_comparator);
 	}
+	public tree_string_array_search_container()
+	{
+		super(new tree_string_array_search_container_comparator(),null);
+	}
 }

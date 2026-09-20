@@ -5,7 +5,7 @@ import kernel_part.part;
 
 public class create_assemble_part_name 
 {
-	public String can_create_assemble_part_name[];
+	private String can_create_assemble_part_name[];
 
 	private int do_create(component comp)
 	{
@@ -30,17 +30,17 @@ public class create_assemble_part_name
 		can_create_assemble_part_name[comp.component_id]
 				=can_create_assemble_part_name[my_child_comp.component_id];
 		
-		for(int child_do_test_result,i=1,ni=comp.children.size();i<ni;i++){
+		for(int i=1,ni=comp.children.size();i<ni;i++){
 			my_child_comp=comp.children.get(i);
-			if((child_do_test_result=do_create(my_child_comp))>=0)
-				if(do_test_result==child_do_test_result)
-					if(can_create_assemble_part_name[comp.component_id].compareTo(
-						can_create_assemble_part_name[my_child_comp.component_id])==0)
-							continue;
+			int child_do_test_result=do_create(my_child_comp);
+			if((child_do_test_result>=0)&&(do_test_result==child_do_test_result))
+				if(can_create_assemble_part_name[comp.component_id].compareTo(
+					can_create_assemble_part_name[my_child_comp.component_id])==0)
+						continue;
 			do_test_result=-1;
 			can_create_assemble_part_name[comp.component_id]=null;
 		}
-		return (can_create_assemble_part_name[comp.component_id]==null)?-1:do_test_result;
+		return do_test_result;
 	}
 	private create_assemble_part_name(component comp,int component_number)
 	{

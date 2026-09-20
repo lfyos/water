@@ -180,7 +180,7 @@ public class modifier_container
 		{
 			public modifier_driver_list_sorter()
 			{
-				super(new modifier_driver_list_comparator(),null);
+				super(new modifier_driver_list_comparator());
 				
 				if(modifier_driver_list!=null)
 					for(var my_modifier_driver_holder:modifier_driver_list)

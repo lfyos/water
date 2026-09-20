@@ -195,7 +195,8 @@ public class part_rude
 		
 		return;
 	}
-	public part_rude(part_rude pr,int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
+	public part_rude(part_rude pr,
+			part my_reference_part[],location my_box_loca[],box my_box_array[])
 	{
 		point_default_material			=pr.point_default_material;
 		face_default_material			=pr.face_default_material;
@@ -208,8 +209,13 @@ public class part_rude
 		
 		face_default_attribute_double	=pr.face_default_attribute_double;
 		face_default_attribute_string	=pr.face_default_attribute_string;
-		
-		for(int i=0;i<my_box_number;i++) 
+
+		int number=my_reference_part.length;
+		if(number>my_box_loca.length)
+			number=my_box_loca.length;
+		if(number>my_box_array.length)
+			number=my_box_array.length;
+		for(int i=0;i<number;i++) 
 			if((pr=my_reference_part[i].part_mesh)!=null){
 				if(face_default_attribute_string.length<pr.face_default_attribute_string.length) {
 					String bak[]=face_default_attribute_string;
@@ -228,13 +234,12 @@ public class part_rude
 						face_default_attribute_double[j]=pr.face_default_attribute_double[j];
 				}
 			}
-		body_array=new body[my_box_number];
-		for(int i=0;i<my_box_number;i++)
+		body_array=new body[number];
+		for(int i=0;i<number;i++)
 			body_array[i]=new body(my_reference_part[i],my_box_loca[i],my_box_array[i]);
 		caculate_rp_box_and_primitive_number();
 		return;
 	}
-	
 	public void write_out_to_simple_file(file_writer fw)
 	{
 		String str[]=new String[] {

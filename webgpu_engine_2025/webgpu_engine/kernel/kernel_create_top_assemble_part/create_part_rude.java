@@ -65,11 +65,10 @@ public class create_part_rude
 		int box_number=box_array.size();
 		if((box_number>1)&&(select_ref_part!=null)) {
 			select_ref_part=(my_ref_part==null)?select_ref_part:my_ref_part;
-			topbox_part_rude=new part_rude(
-				select_ref_part.part_mesh,box_number,
-				reference_part.toArray(new part[box_number]),
-				box_loca.toArray(new location[box_number]),
-				box_array.toArray(new box[box_number]));
+			topbox_part_rude=new part_rude(select_ref_part.part_mesh,
+					reference_part.	toArray(new part[box_number]),
+					box_loca.		toArray(new location[box_number]),
+					box_array.		toArray(new box[box_number]));
 		}else{
 			select_ref_part	=null;
 			topbox_part_rude=null;

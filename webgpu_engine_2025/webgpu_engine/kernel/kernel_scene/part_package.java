@@ -60,10 +60,9 @@ class part_package_collector extends tree_search_container<part,part>
 	
 	public part_package_collector(ArrayList<part> my_part_list,system_parameter system_par)
 	{
-		super(	new comparator_for_part_package_collector(
-					system_par.box_distance_difference_scale,
-					system_par.buffer_data_length_difference_scale),
-				null);
+		super(new comparator_for_part_package_collector(
+			system_par.box_distance_difference_scale,
+			system_par.buffer_data_length_difference_scale));
 		
 		if(my_part_list!=null)
 			for(var my_part:my_part_list)

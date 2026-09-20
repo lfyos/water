@@ -40,7 +40,7 @@ public class render_target_container extends tree_search_container<render_target
 	}
 	public render_target_container()
 	{
-		super(new render_target_comparator(),null);
+		super(new render_target_comparator());
 		target_array=new ArrayList<render_target>();
 	}
 	public render_target[]get_render_target()

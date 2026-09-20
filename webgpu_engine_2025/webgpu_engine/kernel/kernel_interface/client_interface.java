@@ -207,15 +207,13 @@ public class client_interface
 		
 		my_lock.unlock();
 
+		var slcp=new scene_load_call_parameter(
+			process_bar,scene_kernel_search_tree.original_render,
+			scene_kernel_search_tree.part_loader_cont,string_locker_container,
+			scene_kernel_search_tree.system_component_load_source_cont,
+			scene_kernel_search_tree.system_boftal_container);
 		try{
-			ecr=created_sk_and_ci.get_scene_result(
-					delay_time_length,scene_counter,request_response,
-					new scene_load_call_parameter(process_bar,
-							scene_kernel_search_tree.original_render,
-							scene_kernel_search_tree.part_loader_cont,
-							string_locker_container,
-							scene_kernel_search_tree.system_component_load_source_cont,
-							scene_kernel_search_tree.system_boftal_container));
+			ecr=created_sk_and_ci.get_scene_result(delay_time_length,scene_counter,request_response,slcp);
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;

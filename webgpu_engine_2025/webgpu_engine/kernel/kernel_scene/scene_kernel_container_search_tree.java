@@ -136,12 +136,11 @@ public class scene_kernel_container_search_tree
 			return null;
 		my_lock.lock();
 
-		if(original_render==null)
-			load_render_container(request_response,system_par,
-					new scene_load_call_parameter(process_bar,original_render,
-							part_loader_cont,string_locker_container,
-							system_component_load_source_cont,system_boftal_container));
-		
+		if(original_render==null) {
+			var slcp=new scene_load_call_parameter(process_bar,original_render,	part_loader_cont,
+					string_locker_container,system_component_load_source_cont,system_boftal_container);
+			load_render_container(request_response,system_par,slcp);
+		}
 		scene_kernel_container my_scene_kernel_container=null;
 		try {
 			my_scene_kernel_container=create_scene_kernel_container_routine(

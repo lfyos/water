@@ -13,6 +13,7 @@ import kernel_part.part_loader_container;
 import kernel_file_manager.file_directory;
 import kernel_component.component_container;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_search_container_tree_node;
 import kernel_part.permanent_part_id_encoder;
 import kernel_scene.scene_load_call_parameter;
 import kernel_network.client_request_response;
@@ -29,12 +30,11 @@ public class create_assemble_part
 
 	public ArrayList<part> top_box_part;
 	
-	public create_assemble_part(String fast_load_type,
+	public create_assemble_part(String fast_load_type,long last_modified_time,
 			component_container component_cont,render_container render_cont,
 			client_request_response request_response,permanent_part_id_encoder part_id_encoder,
-			part_container_for_part_search pcps,long last_modified_time,
-			scene_kernel_create_parameter create_par,system_parameter system_par,scene_parameter scene_par,
-			scene_load_call_parameter load_par)
+			part_container_for_part_search pcps,scene_kernel_create_parameter create_par,
+			scene_load_call_parameter load_par,system_parameter system_par,scene_parameter scene_par)
 	{
 		debug_information.println("Begin creating top box");
 		
@@ -44,26 +44,27 @@ public class create_assemble_part
 			component_cont.root_component,component_cont.component_number);
 		can_create_assemble_part_name=create_assemble_part_name.create(
 			component_cont.root_component,component_cont.component_number);
-		component_heap=new assemble_component_heap();
-		component_heap.register_component(component_cont.root_component,
-			can_create_assemble_part_name,part_number.part_number);
-		component_heap.split_large_assemble(create_par.create_top_part_expand_ratio,
-			can_create_assemble_part_name,part_number.part_number,part_number.all_part_number);
+		component_heap=new assemble_component_heap(
+				part_number.part_number,can_create_assemble_part_name);
+		component_heap.register_component(component_cont.root_component);
+		component_heap.split_large_assemble(
+				(int)(part_number.all_part_number/create_par.create_top_part_expand_ratio));
 
-		int create_part_number		=0;
-		var already_loaded_part		=new ArrayList<part_loader>();
-		var part_component_container=new tree_string_search_container<component>(null);
-
+		tree_string_search_container<component> part_component_container;
+		part_component_container=new tree_string_search_container<component>(null);
+		ArrayList<part_loader>already_loaded_part=new ArrayList<part_loader>();
+		int create_part_number=0;
+		
 		for(component comp_p;;){
 			int min_left_part_number=(int)(((double)part_number.all_part_number)
 					/create_par.create_top_part_left_ratio);
 			if((create_part_number+min_left_part_number)>=part_number.all_part_number)
 				break;
-			if((comp_p=component_heap.get_heap_component(part_number.part_number))==null)
+			if((comp_p=component_heap.get_heap_component())==null)
 				break;
 			int my_create_part_number=part_number.part_number[comp_p.component_id];
-			var component_tree_node=part_component_container.search_tree_node(comp_p.part_name); 
-			if(component_tree_node!=null) {
+			tree_search_container_tree_node <String,component>component_tree_node;
+			if((component_tree_node=part_component_container.search_tree_node(comp_p.part_name))!=null){
 				component_tree_node.list.add(comp_p);
 				create_part_number+=my_create_part_number;
 				continue;
@@ -79,7 +80,7 @@ public class create_assemble_part
 							break;
 						part_par_assemble_part=null;
 					}
-			var cpr=new create_part_rude(comp_p,
+			create_part_rude cpr=new create_part_rude(comp_p,
 					scene_par.discard_top_part_component_precision2,
 					part_par_assemble_part);
 			if((cpr.topbox_part_rude==null)||(cpr.select_ref_part==null)){

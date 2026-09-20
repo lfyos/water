@@ -71,7 +71,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		}
 		return p;
 	}
-	public tree_search_container(
+	private void init(
 			Comparator<KEY_TYPE>my_key_comparator,
 			Comparator<VALUE_TYPE>my_value_comparator)
 	{
@@ -84,6 +84,20 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		value_comparator=my_value_comparator;
 		
 		tree_value_list	=null;
+	}
+	public tree_search_container()
+	{
+		init(null,null);
+	}
+	public tree_search_container(Comparator<KEY_TYPE>my_key_comparator)
+	{
+		init(my_key_comparator,null);
+	}
+	public tree_search_container(
+			Comparator<KEY_TYPE>my_key_comparator,
+			Comparator<VALUE_TYPE>my_value_comparator)
+	{
+		init(my_key_comparator,my_value_comparator);
 	}
 	public void destroy()
 	{
@@ -123,7 +137,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	public ArrayList<VALUE_TYPE>search_value_list(KEY_TYPE my_key)
 	{
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
-		
 		if((tree_node=search_tree_node(my_key))!=null)
 			if(tree_node.list!=null)
 				if(tree_node.list.size()>0)
