@@ -19,13 +19,12 @@ import kernel_scene.scene_load_call_parameter;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
 import kernel_scene.scene_kernel_create_parameter;
-import kernel_content_type.create_assemble_part_name;
 import kernel_common_class.tree_string_search_container;
 
 public class create_assemble_part 
 {
 	private create_part_number part_number;
-	private String can_create_assemble_part_name[];
+	private String assemble_part_name[];
 	private assemble_component_heap component_heap;
 
 	public ArrayList<part> top_box_part;
@@ -42,10 +41,9 @@ public class create_assemble_part
 		
 		part_number=new create_part_number(
 			component_cont.root_component,component_cont.component_number);
-		can_create_assemble_part_name=create_assemble_part_name.create(
+		assemble_part_name=create_assemble_part_name.create(
 			component_cont.root_component,component_cont.component_number);
-		component_heap=new assemble_component_heap(
-				part_number.part_number,can_create_assemble_part_name);
+		component_heap=new assemble_component_heap(assemble_part_name,part_number.part_number);
 		component_heap.register_component(component_cont.root_component);
 		component_heap.split_large_assemble(
 				(int)(part_number.all_part_number/create_par.create_top_part_expand_ratio));
@@ -72,7 +70,7 @@ public class create_assemble_part
 
 			part part_par_assemble_part=null;
 			ArrayList<part> assemble_part_array=pcps.search_value_list(
-				can_create_assemble_part_name[comp_p.component_id]);
+					assemble_part_name[comp_p.component_id]);
 			if(assemble_part_array!=null)
 				for(int i=0,ni=assemble_part_array.size();i<ni;i++)
 					if((part_par_assemble_part=assemble_part_array.get(i))!=null){
