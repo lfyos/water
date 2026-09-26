@@ -208,31 +208,6 @@ public class scene_kernel
 		
 		return last_modified_time;
 	}
-	
-	private void load_create_assemble_part(String fast_load_type,client_request_response request_response,
-			part_container_for_part_search all_part_part_cont,permanent_part_id_encoder part_id_encoder,
-			scene_load_call_parameter load_par)
-	{		
-		if(create_parameter.create_top_part_expand_ratio<1.0)
-			return;
-		if(create_parameter.create_top_part_left_ratio<1.0)
-			return;
-		if(component_cont.root_component==null)
-			return;
-
-		ArrayList<part>top_box_part_list=new create_assemble_part(fast_load_type,
-			caculate_scene_last_modified_time(),component_cont,render_cont,
-			request_response,part_id_encoder,all_part_part_cont,
-			create_parameter,load_par,system_par,scene_par).top_box_part;
-		
-		if(top_box_part_list==null)
-			return;
-		if(top_box_part_list.size()<=0)
-			return;
-		mount_top_box_part(component_cont.root_component,load_par.component_load_source_cont,
-				new part_container_for_part_search(top_box_part_list),request_response);
-		return;
-	}
 	private void add_boftal_container(String fast_load_type,scene_load_call_parameter load_par)
 	{
 		switch(fast_load_type){
@@ -381,25 +356,34 @@ public class scene_kernel
 			permanent_part_id_encoder part_id_encoder,long part_type_code,
 			client_request_response request_response,scene_load_call_parameter load_par)
 	{
-		long start_time=new Date().getTime(),current_time;
-		load_create_assemble_part(fast_load_type,request_response,
-				part_search_cont,part_id_encoder,load_par);	
-	
+		long start_time=new Date().getTime();
+		
+		if(create_parameter.create_top_part_expand_ratio<1.0)
+			return;
+		if(create_parameter.create_top_part_left_ratio<1.0)
+			return;
+		if(component_cont.root_component==null)
+			return;
+
+		ArrayList<part>top_box_part_list=new create_assemble_part(fast_load_type,
+				caculate_scene_last_modified_time(),component_cont,render_cont,
+				request_response,part_id_encoder,part_search_cont,
+				create_parameter,load_par,system_par,scene_par).top_box_part;
+
 		render_cont.load_part(part_type_code,4,system_par,scene_par,
 				"load_third_class_part",fast_load_type,load_par);
 
-		debug_information.println("Create top assemble time length:	",
-				(current_time=new Date().getTime())-start_time);
-
-		start_time=current_time;
-		
 		render_cont.scene_part_package=new part_package(fast_load_type,
 			"create_second_class_package","create_second_boftal_file",
 			render_cont,1,system_par,scene_par,load_par);
 		
+		if(top_box_part_list!=null)
+			if(top_box_part_list.size()>0)
+				mount_top_box_part(component_cont.root_component,load_par.component_load_source_cont,
+					new part_container_for_part_search(top_box_part_list),request_response);
+		
 		debug_information.println();
-		debug_information.println("Create second part package time length:	",
-				(current_time=new Date().getTime())-start_time);
+		debug_information.println("Create top assemble time length:	",new Date().getTime()-start_time);
 		debug_information.println();
 	}
 	private void scene_kernel_load_last_process(tree_string_locker_container string_locker_cont,
