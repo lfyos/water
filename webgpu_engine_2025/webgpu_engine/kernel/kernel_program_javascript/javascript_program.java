@@ -25,8 +25,8 @@ public class javascript_program
 		"construct_scene.js",			"create_scene.js",					"create_scene_container.js",
 		"download_vertex_data.js",		"draw_scene_sequence_target.js",	"driver_create_data.js",
 		"event_listener.js",			"event_container_listener.js",		"init_ids.js",
-		"modifier_time.js",				"operate_component.js",				"pickup.js",
-		"process_bar.js",				"process_scene.js",					"request_create_scene.js",
+		"interface.js",					"modifier_time.js",					"operate_component.js",
+		"pickup.js",					"process_bar.js",					"request_create_scene.js",
 		"request_render_data.js",		"system_buffer.js",					"webgpu.js"
 	};
 	public void destroy()
@@ -122,25 +122,17 @@ public class javascript_program
 		String str[]=new String[]
 		{
 			"export var create_scene=async function(my_webgpu,",
-			"	my_draw_canvas_id,my_create_parameter,user_process_bar_function)",
+			"	my_create_parameter,my_draw_canvas_id,user_process_bar_function)",
 			"{",
-			"	if(typeof(my_draw_canvas_id)!=\"number\")",
-			"		my_draw_canvas_id=my_webgpu.canvas.length-1;",
-			"	my_draw_canvas_id%=my_webgpu.canvas.length;",
-			"	my_draw_canvas_id+=my_webgpu.canvas.length;",
-			"	my_draw_canvas_id%=my_webgpu.canvas.length;",
-			
-			"	if(typeof(user_process_bar_function)!=\"function\")",
-			"		user_process_bar_function=default_user_process_bar_function;",
-		
-			"	return await create_scene_routine(my_webgpu,my_draw_canvas_id,my_create_parameter,",
-			"				user_process_bar_function,\""+request_response.implementor.get_url()+"\",",
+			"	return await create_scene_routine(my_webgpu,my_create_parameter,my_draw_canvas_id,",
+			"				user_process_bar_function,default_user_process_bar_function,",
+			"				\""+request_response.implementor.get_url()+"\",",
 			"				default_fetch_parameter,"+
-							system_par.create_scene_sleep_time_length_scale+","+
+							system_par.create_scene_sleep_time_length_scale	+","+
 							system_par.create_scene_sleep_time_length		+","+
 							system_par.create_scene_max_sleep_time_length	+");",
 			"};",
-			"export var scene_container_create=async function(my_canvas_array)",
+			"export var create_scene_container=async function(my_canvas_array)",
 			"{",
 			"	var my_webgpu;",
 			"	if((my_webgpu=await create_webgpu(my_canvas_array)).error_flag)",

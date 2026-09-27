@@ -82,7 +82,7 @@ function create_scene_container_routine(my_webgpu)
 				if(my_scene_touch_time_length<scene_touch_time_length)
 					scene_touch_time_length=my_scene_touch_time_length;
 
-				for(var j=0,nj=si.get_render_buffer_number();j<nj;j++){
+				for(var j=0,nj=si.get_target_number();j<nj;j++){
 					var target_par=si.get_target_parameter(j);
 					if(target_par==null)
 						continue;
@@ -132,7 +132,7 @@ function create_scene_container_routine(my_webgpu)
 				if(this.terminate_flag)
 					break;
 				var my_scene=this.scene_object[scene_name_array[i]];
-				for(var j=0,nj=my_scene.scene_interface.get_render_buffer_number();j<nj;j++){
+				for(var j=0,nj=my_scene.scene_interface.get_target_number();j<nj;j++){
 					if(my_scene.terminate_flag||this.terminate_flag)
 						break;
 					if(my_scene.scene_interface.get_target_parameter(j).do_render_flag)
@@ -160,29 +160,13 @@ function create_scene_container_routine(my_webgpu)
 			});
 		}
 	}	
-	this.url_scene_create=async function(url,
-		client_scene_name,create_parameter,my_draw_canvas_id,user_process_bar_function)
-	{
-		var my_program=await import(url);
-		var old_scene=this.scene_object[client_scene_name];
-		if((typeof(old_scene)!="object")||(old_scene==null)){
-			var new_scene=await my_program.create_scene(this.webgpu,
-					my_draw_canvas_id,create_parameter,user_process_bar_function);
-			old_scene=this.scene_object[client_scene_name];
-			if((typeof(old_scene)!="object")||(old_scene==null))
-				this.scene_object[client_scene_name]=new_scene;
-			else
-				new_scene.destroy();
-		}
-		return this.scene_object[client_scene_name];
-	}
-	this.this_scene_create=async function(
-		client_scene_name,create_parameter,my_draw_canvas_id,user_process_bar_function)
+	this.create_scene=async function(scene_program,client_scene_name,
+			create_parameter,my_draw_canvas_id,user_process_bar_function)
 	{
 		var old_scene=this.scene_object[client_scene_name];
 		if((typeof(old_scene)!="object")||(old_scene==null)){
-			var new_scene=await create_scene(this.webgpu,
-					my_draw_canvas_id,create_parameter,user_process_bar_function);
+			var new_scene=await scene_program.create_scene(this.webgpu,
+					create_parameter,my_draw_canvas_id,user_process_bar_function);
 			old_scene=this.scene_object[client_scene_name];
 			if((typeof(old_scene)!="object")||(old_scene==null))
 				this.scene_object[client_scene_name]=new_scene;

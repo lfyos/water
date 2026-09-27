@@ -7,7 +7,7 @@ function construct_scene_interface(my_scene)
 		this.scene.system_buffer.set_system_buffer(this.scene);
 		this.scene.component_location_data.compute_component_location();
 	}
-	this.get_render_buffer_number=function()
+	this.get_target_number=function()
 	{
 		return this.scene.render_buffer_array.length;
 	}
@@ -19,8 +19,7 @@ function construct_scene_interface(my_scene)
 				target_id				:	target_id,
 				do_render_flag			:	p.do_render_flag,
 				target_or_bundle_flag	:	p.target_or_bundle_flag,
-				target_name				:	p.target_name,
-				target_ids				:	p.target_ids
+				target_name				:	p.target_name
 			};
 		return ret_val;
 	}
