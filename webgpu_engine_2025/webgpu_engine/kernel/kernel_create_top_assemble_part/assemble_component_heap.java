@@ -7,18 +7,6 @@ import kernel_common_class.heap_list;
 
 public class assemble_component_heap
 {
-	class component_comparator implements Comparator<component>
-	{
-		public int compare(component s,component t)
-		{
-			int s_part_number=part_number[s.component_id];
-			int t_part_number=part_number[t.component_id];
-			return (s_part_number!=t_part_number)
-						?(s_part_number-t_part_number)
-						:s.part_name.compareTo(t.part_name);
-		}
-	};
-	
 	private heap_list<component> component_heap;
 	private String assemble_part_name[];
 	private int part_number[];
@@ -57,6 +45,18 @@ public class assemble_component_heap
 	}
 	public assemble_component_heap(String my_assemble_part_name[],int my_part_number[])
 	{
+		class component_comparator implements Comparator<component>
+		{
+			public int compare(component s,component t)
+			{
+				int s_part_number=part_number[s.component_id];
+				int t_part_number=part_number[t.component_id];
+				int ret_val=(s_part_number!=t_part_number)
+							?(s_part_number-t_part_number)
+							:s.part_name.compareTo(t.part_name);
+				return -ret_val;
+			}
+		};
 		part_number=my_part_number;
 		assemble_part_name=my_assemble_part_name;
 		component_heap=new heap_list<component>(new component_comparator());

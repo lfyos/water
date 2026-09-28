@@ -381,7 +381,7 @@ public class scene_kernel
 			if(top_box_part_list.size()>0)
 				mount_top_box_part(component_cont.root_component,load_par.component_load_source_cont,
 					new part_container_for_part_search(top_box_part_list),request_response);
-		
+
 		debug_information.println();
 		debug_information.println("Create top assemble time length:	",new Date().getTime()-start_time);
 		debug_information.println();

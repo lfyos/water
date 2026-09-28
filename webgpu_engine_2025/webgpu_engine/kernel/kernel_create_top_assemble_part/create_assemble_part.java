@@ -133,9 +133,11 @@ public class create_assemble_part
 			create_part_number+=my_create_part_number;
 
 			debug_information.println();
-			debug_information.println(top_box_part.size()
-					+".add top part		name:"+add_part.system_name);
+			debug_information.println(top_box_part.size()+".add top part"
+					+"		part name:"+add_part.system_name
+					+"		component name:"+comp_p.component_name);
 			debug_information.println(top_box_part.size()+".add top part	"
+					+"	part_number:"			+part_number.part_number[comp_p.component_id]
 					+"	render_id:"				+add_part.render_id
 					+"	part_id:"				+add_part.part_id
 					+"	part_from_id:"			+add_part.part_from_id

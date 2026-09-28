@@ -21,13 +21,13 @@ public class heap_list<DATA>
 		}
 		int child_id,left_id,right_id,data_number=data_list.size();
 		for(;(left_id=this_id+this_id+1)<data_number;this_id=child_id){
-			DATA child_data,this_data=data_list.get(this_id);
+			DATA child_data;
 			if((right_id=left_id+1)>=data_number){
 				child_id=left_id;
 				child_data=data_list.get(left_id);
 			}else{
-				DATA left_data=data_list.get(left_id);
-				DATA right_data=data_list.get(right_id);
+				DATA left_data	=data_list.get(left_id);
+				DATA right_data	=data_list.get(right_id);
 				if(comparator.compare(left_data,right_data)<=0){
 					child_id=left_id;
 					child_data=left_data;
@@ -36,6 +36,7 @@ public class heap_list<DATA>
 					child_data=right_data;
 				}
 			}
+			DATA this_data=data_list.get(this_id);
 			if(comparator.compare(this_data,child_data)<=0)
 				break;
 			data_list.set(child_id,this_data);
