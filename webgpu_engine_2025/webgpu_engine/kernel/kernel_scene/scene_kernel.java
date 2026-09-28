@@ -4,10 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.ArrayList;
 
-import kernel_part.part;
 import kernel_camera.camera;
-import kernel_component.component;
-import kernel_driver.component_driver;
 import kernel_render.render_container;
 import kernel_file_manager.file_reader;
 import kernel_driver.modifier_container;
@@ -16,16 +13,15 @@ import kernel_interface.client_process_bar;
 import kernel_render.load_shader_parameter;
 import kernel_component.component_container;
 import kernel_common_class.nanosecond_timer;
-import kernel_common_class.tree_string_locker_container;
 import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_camera.camera_container_creator;
 import kernel_component.component_collector_stack;
 import kernel_part.part_container_for_part_search;
-import kernel_component.component_load_source_container;
+import kernel_common_class.tree_string_locker_container;
 import kernel_render.render_container_for_render_search;
-import kernel_create_top_assemble_part.create_assemble_part;
+import kernel_create_top_assemble_part.mount_top_box_assemble_part;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class scene_kernel
@@ -154,45 +150,6 @@ public class scene_kernel
 					f_camera,component_cont,scene_par.max_camera_return_stack_number);
 		f_camera.close();
 	}
-	private void mount_top_box_part(
-			component comp,component_load_source_container scene_component_load_source_cont,
-			part_container_for_part_search part_search,client_request_response request_response)
-	{
-		int child_number;
-		if((child_number=comp.children.size())<=0)
-			return;
-		if(comp.driver_array.size()>0)
-			return;
-		do{
-			ArrayList<part> my_part_list;
-			if((my_part_list=part_search.search_value_list(comp.part_name))==null)
-				break;
-			if(my_part_list.size()<=0)
-				break;
-			part my_part=my_part_list.get(0);
-			try{
-				component_driver cd=my_part.driver.create_component_driver(null,false,my_part,
-					scene_component_load_source_cont,this,request_response);
-				if(cd==null)
-					break;
-				comp.driver_array=new ArrayList<component_driver>();
-				comp.driver_array.add(cd);
-				return;
-			}catch(Exception e){
-				e.printStackTrace();
-				debug_information.println(
-						"create_component_driver fail in mount_top_box_part():	",e.toString());
-				debug_information.println("Part user name:",	my_part.user_name);
-				debug_information.println("Part system name:",	my_part.system_name);
-				debug_information.println("Mesh_file_name:",	my_part.directory_name+my_part.mesh_file_name);
-				debug_information.println("Material_file_name:",my_part.directory_name+my_part.material_file_name);
-			}
-		}while(false);
-		
-		for(int i=0;i<child_number;i++)
-			mount_top_box_part(comp.children.get(i),
-				scene_component_load_source_cont,part_search,request_response);
-	}
 	public long caculate_scene_last_modified_time()
 	{
 		long last_modified_time=0;
@@ -208,6 +165,7 @@ public class scene_kernel
 		
 		return last_modified_time;
 	}
+	
 	private void add_boftal_container(String fast_load_type,scene_load_call_parameter load_par)
 	{
 		switch(fast_load_type){
@@ -252,8 +210,9 @@ public class scene_kernel
 		load_par.boftal_cont=new ArrayList<buffer_object_file_modify_time_and_length_container>();
 		
 		for(var my_boftal:old_boftal_container)
-			load_par.boftal_cont.add(my_boftal);
-		
+			if(my_boftal.size()>0)
+				load_par.boftal_cont.add(my_boftal);
+
 		if(bofmtlc.size()>0)
 			load_par.boftal_cont.add(bofmtlc);
 	}
@@ -311,7 +270,7 @@ public class scene_kernel
 			render_cont.type_part_package[i]=new part_package(fast_load_type,
 					"create_first_class_package","create_first_boftal_file",
 					render_cont,i+2,system_par,scene_par,load_par);
-		
+
 		debug_information.println();
 		debug_information.println("Create first part package time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -351,40 +310,6 @@ public class scene_kernel
 		component_cont.root_component.recurse_caculate_component_flag(component_cont,null);
 		
 		return false;
-	}
-	private void scene_kernel_create_component_assemble(String fast_load_type,
-			permanent_part_id_encoder part_id_encoder,long part_type_code,
-			client_request_response request_response,scene_load_call_parameter load_par)
-	{
-		long start_time=new Date().getTime();
-		
-		if(create_parameter.create_top_part_expand_ratio<1.0)
-			return;
-		if(create_parameter.create_top_part_left_ratio<1.0)
-			return;
-		if(component_cont.root_component==null)
-			return;
-
-		ArrayList<part>top_box_part_list=new create_assemble_part(fast_load_type,
-				caculate_scene_last_modified_time(),component_cont,render_cont,
-				request_response,part_id_encoder,part_search_cont,
-				create_parameter,load_par,system_par,scene_par).top_box_part;
-
-		render_cont.load_part(part_type_code,4,system_par,scene_par,
-				"load_third_class_part",fast_load_type,load_par);
-
-		render_cont.scene_part_package=new part_package(fast_load_type,
-			"create_second_class_package","create_second_boftal_file",
-			render_cont,1,system_par,scene_par,load_par);
-		
-		if(top_box_part_list!=null)
-			if(top_box_part_list.size()>0)
-				mount_top_box_part(component_cont.root_component,load_par.component_load_source_cont,
-					new part_container_for_part_search(top_box_part_list),request_response);
-
-		debug_information.println();
-		debug_information.println("Create top assemble time length:	",new Date().getTime()-start_time);
-		debug_information.println();
 	}
 	private void scene_kernel_load_last_process(tree_string_locker_container string_locker_cont,
 					client_request_response request_response,client_process_bar process_bar)
@@ -448,16 +373,17 @@ public class scene_kernel
 			break;
 		}
 		
-		scene_kernel_load_part(fast_load_type,part_type_code,part_id_encoder,request_response,load_par);
+		scene_kernel_load_part(fast_load_type,
+			part_type_code,part_id_encoder,request_response,load_par);
 		
 		if(scene_kernel_load_component(request_response,load_par))
 			return true;
 		
-		scene_kernel_create_component_assemble(
-				fast_load_type,part_id_encoder,part_type_code,request_response,load_par);
+		mount_top_box_assemble_part.create_and_mount_top_box_part(this,
+			fast_load_type,part_type_code,part_id_encoder,request_response,load_par);
 		
 		scene_kernel_load_last_process(
-				load_par.string_locker_cont,request_response,load_par.process_bar);
+			load_par.string_locker_cont,request_response,load_par.process_bar);
 
 		return false;
 	}

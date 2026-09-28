@@ -87,15 +87,16 @@ public class compress_render_container
 	private void touch_component_access_part(component comp,part_container_for_part_search pcps)
 	{
 		part p;
-		ArrayList<part>p_array;
-		
+
 		for(int i=0,ni=comp.children.size();i<ni;i++)
 			touch_component_access_part(comp.children.get(i),pcps);
 		
 		for(int i=0,ni=comp.driver_array.size();i<ni;i++)
 			if((p=comp.driver_array.get(i).component_part)!=null){
-				if(p.part_par.assemble_part_name!=null) {
-					if((p_array=pcps.search_value_list(p.part_par.assemble_part_name))!=null)
+				if(p.part_par.reference_part_name!=null) {
+					ArrayList<part>p_array=pcps.search_value_list(
+							p.part_par.reference_part_name);
+					if(p_array!=null)
 						for(int j=0,nj=p_array.size();j<nj;j++)
 							p_array.get(j).render_id=-1;
 				}

@@ -19,7 +19,8 @@ function construct_scene_interface(my_scene)
 				target_id				:	target_id,
 				do_render_flag			:	p.do_render_flag,
 				target_or_bundle_flag	:	p.target_or_bundle_flag,
-				target_name				:	p.target_name
+				target_name				:	p.target_name,
+				target_ids				:	p.target_ids
 			};
 		return ret_val;
 	}

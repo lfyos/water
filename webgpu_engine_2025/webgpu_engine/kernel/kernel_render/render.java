@@ -105,8 +105,8 @@ public class render
 			return;
 		}
 		if(driver==null) {
-			debug_information.println("Create render driver (driver==null),class name:	",	my_driver_name);
-			debug_information.println("Create render driver (driver==null),file_name:	",	my_file_name);
+			debug_information.println("Create render driver (driver==null),class name:	",my_driver_name);
+			debug_information.println("Create render driver (driver==null),file_name:	",my_file_name);
 		};
 	}
 	public void delete_last_part()

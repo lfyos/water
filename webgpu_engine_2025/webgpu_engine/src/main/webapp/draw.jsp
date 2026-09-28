@@ -43,17 +43,15 @@ function body_onresize()
 
 async function body_onload()
 {
-//	var url="https://192.168.71.2:8443/webgpu_engine//water";
-	var client_scene_name		="my_client_scene_name";
-	var scene_program			=await import("./water");
-	var scene_container_program	=await import("./water");
+	var client_scene_name="my_client_scene_name";
+	var create_scene_program=await import("./water");
 
-	scene_container=await scene_container_program.create_scene_container(["my_canvas"]);
+	scene_container=await create_scene_program.create_scene_container(["my_canvas"]);
 	scene_container.event_scene_name=client_scene_name;
 	
 	body_onresize();
 
-	await scene_container.create_scene(scene_program,client_scene_name,
+	await scene_container.create_scene(create_scene_program,client_scene_name,
 		{
 			user_name				:	my_user_name,				//用户名	
 			pass_word				:	my_pass_word,				//用户密码

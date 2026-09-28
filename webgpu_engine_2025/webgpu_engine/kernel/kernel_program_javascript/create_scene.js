@@ -1,4 +1,4 @@
-async function create_scene_routine(my_webgpu,my_create_parameter,my_draw_canvas_id,
+async function create_scene_routine(my_webgpu,my_draw_canvas_id,my_create_parameter,
 	user_process_bar_function,default_user_process_bar_function,my_url,my_default_fetch_parameter,
 	create_scene_sleep_time_length_scale,create_scene_sleep_time_length,create_scene_max_sleep_time_length)
 {
@@ -7,7 +7,7 @@ async function create_scene_routine(my_webgpu,my_create_parameter,my_draw_canvas
 	my_draw_canvas_id%=my_webgpu.canvas.length;
 	my_draw_canvas_id+=my_webgpu.canvas.length;
 	my_draw_canvas_id%=my_webgpu.canvas.length;
-
+	
 	if(typeof(user_process_bar_function)!="function")
 		user_process_bar_function=default_user_process_bar_function;
 

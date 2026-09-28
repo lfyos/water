@@ -19,7 +19,8 @@ public class create_part_rude
 	
 	private double max_distance2;
 	
-	private void create_location_box_and_material(component comp,location nega,double length2)
+	private void create_location_box_and_material(
+		component comp,location nega,double length2)
 	{
 		part p;
 		int children_number;
@@ -48,7 +49,9 @@ public class create_part_rude
 			return;
 		}
 	}
-	public create_part_rude(component comp,double discard_top_part_component_precision2,part my_ref_part)
+
+	public create_part_rude(component comp,part my_ref_part,
+				double discard_top_part_component_precision2)
 	{
 		box my_box;
 		select_ref_part	=null;
@@ -59,19 +62,21 @@ public class create_part_rude
 		reference_part	=new ArrayList<part>();
 		box_loca		=new ArrayList<location>();
 		box_array		=new ArrayList<box>();
-		create_location_box_and_material(comp,comp.caculate_negative_absolute_location(),
+		
+		create_location_box_and_material(
+			comp,comp.caculate_negative_absolute_location(),
 			my_box.distance2()*discard_top_part_component_precision2);
 		
 		int box_number=box_array.size();
-		if((box_number>1)&&(select_ref_part!=null)) {
-			select_ref_part=(my_ref_part==null)?select_ref_part:my_ref_part;
-			topbox_part_rude=new part_rude(select_ref_part.part_mesh,
-					reference_part.	toArray(new part[box_number]),
-					box_loca.		toArray(new location[box_number]),
-					box_array.		toArray(new box[box_number]));
-		}else{
+		if((box_number<=1)||(select_ref_part==null)) {
 			select_ref_part	=null;
 			topbox_part_rude=null;
+			return;
 		}
+		select_ref_part=(my_ref_part==null)?select_ref_part:my_ref_part;
+		topbox_part_rude=new part_rude(select_ref_part.part_mesh,
+				reference_part.	toArray(new part	[box_number]),
+				box_loca.		toArray(new location[box_number]),
+				box_array.		toArray(new box		[box_number]));
 	}
 }

@@ -170,8 +170,8 @@ public class part_package
 			if((process_bar!=null)&&(process_bar_title!=null))
 				process_bar.set_process_bar(false,
 					process_bar_title,boftal_part.user_name,i,part_number);
-			debug_information.println((i+1)+".create_package_boftal for\t:\t",
-				 boftal_part.system_name+"\t\t\tboftal_file:\t"+boftal_file_name);
+			debug_information.println((i+1)+".create_package_boftal for	",
+				 boftal_part.system_name+"			boftal_file:	"+boftal_file_name);
 		}		
 		fw.close();
 		file_writer.file_rename(boftal_data_file_name+".tmp",boftal_data_file_name);
