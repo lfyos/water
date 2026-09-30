@@ -15,13 +15,13 @@ function create_scene_container_routine(my_webgpu)
 		var target_name_array=Object.keys(my_collector).sort();
 		for(var i=0,ni=target_name_array.length;i<ni;i++){
 			var scene_pass_array=new Array();
-			var render_component_target_id=new Array();
+			var do_render_flag=new Array();
 			var p=my_collector[target_name_array[i]];
 			
-			for(var j=0,nj=p.length;j<nj;j++)
-				render_component_target_id[j]=p[j].scene_object.	//interface scene_target_begin
-					scene_interface.scene_target_begin(p[j].target_id,scene_pass_array);
-
+			for(var j=0,nj=p.length;j<nj;j++)	//interface scene_target_begin
+				do_render_flag[j]=p[j].scene_object.scene_interface.	
+					scene_target_begin(p[j].target_id,scene_pass_array);
+			
 			for(var pass_id=0,pass_number=scene_pass_array.length;pass_id<pass_number;pass_id++){
 				if(typeof(scene_pass_array[pass_id])!="object")
 					continue;
@@ -38,10 +38,9 @@ function create_scene_container_routine(my_webgpu)
 				if(this.webgpu.render_pass_encoder==null)
 					continue;
 				for(var j=0,nj=p.length;j<nj;j++)
-					if(render_component_target_id[j]>=0)				//interface draw_scene_target
-						p[j].scene_object.scene_interface.draw_scene_target(
-								p[j].target_id,render_component_target_id[j],scene_pass_array,pass_id);
-				
+					if(do_render_flag[j])		//interface draw_scene_target
+						p[j].scene_object.scene_interface.
+								draw_scene_target(p[j].target_id,scene_pass_array,pass_id);
 				if(my_collector_flag)
 					scene_pass_array[pass_id].render_bundle=this.webgpu.render_pass_encoder.finish();
 				else{		
@@ -54,7 +53,6 @@ function create_scene_container_routine(my_webgpu)
 				p[j].scene_object.scene_interface.scene_target_end(p[j].target_id,scene_pass_array);
 		}
 	}
-	
 	this.draw_scene=async function()
 	{
 		while(!(this.terminate_flag)){

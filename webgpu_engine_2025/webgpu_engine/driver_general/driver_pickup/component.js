@@ -106,14 +106,14 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{
 		if(this.main_target_id<0)
-			return render_data.target_id;
-		
+			return false;
+			
 		this.caculate_view_volume_box(render_data.target_id,this.main_target_id,scene);
 		
-		var my_pass_descriptor;
 		if(scene_target_array.length>1)
-			return render_data.target_id;
+			return true;
 		
+		var my_pass_descriptor;
 		if((typeof(scene_target_array[0])!="object")||(scene_target_array[0]==null)){
 			my_pass_descriptor=
 			{
@@ -190,9 +190,9 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				]
 			};
 		};
-		return (scene.view.far_distance_pickup_flag)?(this.main_target_id):(render_data.target_id);
+		return true;
 	}
-	this.end_scene_target=function(	scene_target_array,render_data,
+	this.end_scene_target=function(scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{	
 		scene.webgpu.command_encoder.copyTextureToBuffer(

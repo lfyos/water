@@ -270,17 +270,13 @@ async function request_render_data(scene)
 	};
 
 	for(var start_time=0;!(scene.terminate_flag);){
-		var current_time=(new Date()).getTime(),sleep_time_length;
-		var clear_far_distance_pickup_flag=scene.view.far_distance_pickup_flag;
-		if(!clear_far_distance_pickup_flag)
-			if((sleep_time_length=start_time+scene.parameter.delay_time_length-current_time)>0){
-				await new Promise((resolve)=>{setTimeout(resolve,sleep_time_length);});
-				continue;
-			}
-		if(await fetch_web_server_response_data(create_request_url(scene),scene))
+		var current_time=(new Date()).getTime();
+		var sleep_time_length=start_time+scene.parameter.delay_time_length-current_time;
+		if(sleep_time_length>0)
+			await new Promise((resolve)=>{setTimeout(resolve,sleep_time_length);});
+		else if(await fetch_web_server_response_data(create_request_url(scene),scene))
 			break;
-		start_time=current_time;
-		if(clear_far_distance_pickup_flag)
-			scene.view.far_distance_pickup_flag=false;
+		else
+			start_time=current_time;
 	}
 }

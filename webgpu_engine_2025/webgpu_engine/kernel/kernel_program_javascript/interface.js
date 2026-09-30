@@ -19,14 +19,14 @@ function construct_scene_interface(my_scene)
 				target_id				:	target_id,
 				do_render_flag			:	p.do_render_flag,
 				target_or_bundle_flag	:	p.target_or_bundle_flag,
-				target_name				:	p.target_name,
-				target_ids				:	p.target_ids
+				target_name				:	p.target_name
 			};
 		return ret_val;
 	}
 	this.scene_target_begin=function(target_id,scene_target_array)
 	{
-		var ret_val=target_id,render_data=this.scene.render_buffer_array[target_id];
+		var do_render_flag=false;
+		var render_data=this.scene.render_buffer_array[target_id];
 		if(render_data.do_render_flag){
 			render_data.view_volume_box=[
 				[	render_data.view_volume_box_bak[0][0],render_data.view_volume_box_bak[0][1],
@@ -45,7 +45,7 @@ function construct_scene_interface(my_scene)
 				whole_view_height	:	render_data.target_view_parameter_bak.whole_view_height
 			};
 			
-			ret_val=scene_target_begin_routine(target_id,scene_target_array,this.scene);
+			do_render_flag=scene_target_begin_routine(target_id,scene_target_array,this.scene);
 			
 			var render_data_from=null;
 			if(render_data.target_id_from>=0)
@@ -54,15 +54,15 @@ function construct_scene_interface(my_scene)
 			render_data.project_matrix=this.scene.camera.compute_camera_data(render_data,render_data_from);
 			this.scene.system_buffer.set_target_buffer(render_data,render_data_from,this.scene);
 		}
-		return ret_val;
+		return do_render_flag;
 	}
 	this.scene_target_end=function(target_id,scene_target_array)
 	{
 		scene_target_end_routine(target_id,scene_target_array,this.scene);
 	}
-	this.draw_scene_target=function(original_target_id,render_component_target_id,scene_target_array,pass_id)
+	this.draw_scene_target=function(target_id,scene_target_array,pass_id)
 	{
-		draw_scene_target_routine(original_target_id,render_component_target_id,scene_target_array,pass_id,this.scene);
+		draw_scene_target_routine(target_id,scene_target_array,pass_id,this.scene);
 	}
 	this.complete_render_target=async function(target_id)
 	{

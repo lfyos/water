@@ -60,8 +60,7 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 		main_target_x				:	-10.0,
 		main_target_y				:	-10.0,
 		
-		mouse_down_flag				:	false,
-		far_distance_pickup_flag	:	false
+		mouse_down_flag				:	false
 	};
 	this.view_bak=
 	{
