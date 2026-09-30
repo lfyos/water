@@ -161,14 +161,6 @@ async function request_render_data(scene)
 						[	my_data[j++],	my_data[j++],	my_data[j++],	1	],
 						[	my_data[j++],	my_data[j++],	my_data[j++],	1	]
 					];
-					p.view_volume_box_bak=[
-						[	p.view_volume_box[0][0],	p.view_volume_box[0][1],
-							p.view_volume_box[0][2],	p.view_volume_box[0][3]
-						],
-						[	p.view_volume_box[1][0],	p.view_volume_box[1][1],
-							p.view_volume_box[1][2],	p.view_volume_box[1][3]
-						]
-					];
 					break;
 				case 6:
 					p.clip_plane=null;
@@ -205,15 +197,7 @@ async function request_render_data(scene)
 					p.target_view_parameter.view_height			=my_data[j++];
 					p.target_view_parameter.whole_view_width	=my_data[j++];
 					p.target_view_parameter.whole_view_height	=my_data[j++];
-					
-					p.target_view_parameter_bak={
-						view_x0				:	p.target_view_parameter.view_x0,
-						view_y0				:	p.target_view_parameter.view_y0,
-						view_width			:	p.target_view_parameter.view_width,
-						view_height			:	p.target_view_parameter.view_height,
-						whole_view_width	:	p.target_view_parameter.whole_view_width,
-						whole_view_height	:	p.target_view_parameter.whole_view_height
-					}
+
 					break;
 				}
 		}

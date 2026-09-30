@@ -92,7 +92,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		var center_y=p.view_y0+0.5*p.view_height;
 		var pos_x=2.0*(view_x-center_x)/p.view_width;
 		var pos_y=2.0*(view_y-center_y)/p.view_height;
-		
+
 		var aspect_value=p.view_width/p.view_height;
 		var diff_value	=0.5/p.view_height;
 		

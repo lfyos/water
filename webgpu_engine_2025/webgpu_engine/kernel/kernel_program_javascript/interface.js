@@ -28,29 +28,10 @@ function construct_scene_interface(my_scene)
 		var do_render_flag=false;
 		var render_data=this.scene.render_buffer_array[target_id];
 		if(render_data.do_render_flag){
-			render_data.view_volume_box=[
-				[	render_data.view_volume_box_bak[0][0],render_data.view_volume_box_bak[0][1],
-					render_data.view_volume_box_bak[0][2],render_data.view_volume_box_bak[0][3]
-				],
-				[	render_data.view_volume_box_bak[1][0],render_data.view_volume_box_bak[1][1],
-					render_data.view_volume_box_bak[1][2],render_data.view_volume_box_bak[1][3]
-				]
-			];
-			render_data.target_view_parameter={
-				view_x0				:	render_data.target_view_parameter_bak.view_x0,
-				view_y0				:	render_data.target_view_parameter_bak.view_y0,
-				view_width			:	render_data.target_view_parameter_bak.view_width,
-				view_height			:	render_data.target_view_parameter_bak.view_height,
-				whole_view_width	:	render_data.target_view_parameter_bak.whole_view_width,
-				whole_view_height	:	render_data.target_view_parameter_bak.whole_view_height
-			};
-			
 			do_render_flag=scene_target_begin_routine(target_id,scene_target_array,this.scene);
-			
 			var render_data_from=null;
 			if(render_data.target_id_from>=0)
 				render_data_from=this.scene.render_buffer_array[render_data.target_id_from];
-			
 			render_data.project_matrix=this.scene.camera.compute_camera_data(render_data,render_data_from);
 			this.scene.system_buffer.set_target_buffer(render_data,render_data_from,this.scene);
 		}
