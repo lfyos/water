@@ -1,3 +1,22 @@
+function set_system_buffer_and_compute_component_location_routine(scene)
+{
+	scene.system_buffer.set_system_buffer(scene);
+	scene.component_location_data.compute_component_location();
+}
+function get_target_number_routine(scene)
+{
+	return scene.render_buffer_array.length;
+}
+function get_target_parameter_routine(target_id,scene)
+{
+	var p=scene.render_buffer_array[target_id];
+	return	{
+				target_id				:	target_id,
+				do_render_flag			:	p.do_render_flag,
+				target_or_bundle_flag	:	p.target_or_bundle_flag,
+				target_name				:	p.target_name
+			};
+}
 function front_process_scene_routine(scene_id,scene)
 {
 	if(scene.terminate_flag)

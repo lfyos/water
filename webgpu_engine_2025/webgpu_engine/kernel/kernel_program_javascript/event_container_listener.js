@@ -10,8 +10,6 @@ function construct_scene_container_event_listener(my_canvas_id,my_canvas_array,m
 			return null;
 		if(scene_container.event_scene_name==null)
 			return null;
-		if(scene_container.event_scene_name.length<=0)
-			return null;
 		var my_scene=scene_container.scene_object[scene_container.event_scene_name];	
 		if(typeof(my_scene)!="object")
 			return null;

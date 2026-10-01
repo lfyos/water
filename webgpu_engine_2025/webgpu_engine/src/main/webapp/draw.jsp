@@ -47,7 +47,7 @@ async function body_onload()
 	var create_scene_program=await import("./water");
 
 	scene_container=await create_scene_program.create_scene_container(["my_canvas"]);
-	scene_container.event_scene_name=client_scene_name;
+	scene_container.set_event_scene_name(client_scene_name);
 	
 	body_onresize();
 

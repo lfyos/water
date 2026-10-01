@@ -128,22 +128,18 @@ public class javascript_program
 			"export var create_scene=async function(my_webgpu,",
 			"	my_draw_canvas_id,my_create_parameter,user_process_bar_function)",
 			"{",
-			"	return await create_scene_routine(my_webgpu,my_draw_canvas_id,my_create_parameter,",
-			"				user_process_bar_function,default_user_process_bar_function,",
-			"				\""+request_response.implementor.get_url()+"\",",
-			"				default_fetch_parameter,"+
-							system_par.create_scene_sleep_time_length_scale+","+
-							system_par.create_scene_sleep_time_length		+","+
-							system_par.create_scene_max_sleep_time_length	+");",
+			"	return await create_scene_routine(",
+			"		my_webgpu,my_draw_canvas_id,my_create_parameter,",
+			"		user_process_bar_function,default_user_process_bar_function,",
+			"		\""+request_response.implementor.get_url()+"\",",
+			"		default_fetch_parameter,"+
+								system_par.create_scene_sleep_time_length_scale	+","+
+								system_par.create_scene_sleep_time_length		+","+
+								system_par.create_scene_max_sleep_time_length	+");",
 			"};",
 			"export var create_scene_container=async function(my_canvas_array)",
 			"{",
-			"	var my_webgpu;",
-			"	if((my_webgpu=await create_webgpu(my_canvas_array)).error_flag)",
-			"		return null;",
-			"	var my_scene_container=new create_scene_container_routine(my_webgpu);",
-			"	my_scene_container.draw_scene();",
-			"	return my_scene_container;"	,
+			"	return await create_scene_container_routine(my_canvas_array);",
 			"};",
 		};
 		

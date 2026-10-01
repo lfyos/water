@@ -11,7 +11,7 @@ async function body_onload()
 	var create_scene_program=await import("./water");
 	
 	scene_container=await create_scene_program.create_scene_container(["my_canvas"]);
-	scene_container.event_scene_name=client_scene_name;
+	scene_container.set_event_scene_name(client_scene_name);
 		//每个元素是Object类型的绘图画布。
 		//如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
 
