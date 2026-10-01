@@ -251,7 +251,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			});
 	}
 
-	this.complete_render_target=async function(render_data,
+	this.scene_target_complete=async function(render_data,
 		target_part_object,target_part_driver,target_render_driver,scene)
 	{
 		if(scene.terminate_flag)

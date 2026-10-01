@@ -25,17 +25,7 @@ function construct_scene_interface(my_scene)
 	}
 	this.scene_target_begin=function(target_id,scene_target_array)
 	{
-		var do_render_flag=false;
-		var render_data=this.scene.render_buffer_array[target_id];
-		if(render_data.do_render_flag){
-			do_render_flag=scene_target_begin_routine(target_id,scene_target_array,this.scene);
-			var render_data_from=null;
-			if(render_data.target_id_from>=0)
-				render_data_from=this.scene.render_buffer_array[render_data.target_id_from];
-			render_data.project_matrix=this.scene.camera.compute_camera_data(render_data,render_data_from);
-			this.scene.system_buffer.set_target_buffer(render_data,render_data_from,this.scene);
-		}
-		return do_render_flag;
+		return scene_target_begin_routine(target_id,scene_target_array,this.scene);
 	}
 	this.scene_target_end=function(target_id,scene_target_array)
 	{
@@ -45,75 +35,16 @@ function construct_scene_interface(my_scene)
 	{
 		draw_scene_target_routine(target_id,scene_target_array,pass_id,this.scene);
 	}
-	this.complete_render_target=async function(target_id)
+	this.scene_target_complete=async function(target_id)
 	{
-		var render_data=this.scene.render_buffer_array[target_id];
-		
-		var render_id		=render_data.target_ids.render_id;
-		var part_id			=render_data.target_ids.part_id;
-		var data_buffer_id	=render_data.target_ids.data_buffer_id;
-						
-		var target_render_driver	=this.scene.render_driver[render_id];
-		var target_part_driver		=this.scene.part_driver[render_id][part_id];
-		var target_part_object		=this.scene.part_array[render_id][part_id];
-					
-		if((typeof(target_part_object)!="object")||(target_part_object==null))
-			return;
-		var target_component_driver	=target_part_object.component_driver_array[data_buffer_id];
-		if((typeof(target_component_driver)!="object")||(target_component_driver==null))
-			return;
-		if(typeof(target_component_driver.complete_render_target)!="function")
-			return;
-		await target_component_driver.complete_render_target(render_data,
-				target_part_object,target_part_driver,target_render_driver,this.scene);
+		await scene_target_complete_routine(target_id,this.scene);
 	}
 	this.front_process_scene=function(scene_id)
 	{
-		if(this.scene.terminate_flag)
-			return 0;
-		
-		var new_fun_array=new Array();
-		var old_fun_array=this.scene.routine_object.before_draw_scene_routine_array;
-		for(var i=0,ni=old_fun_array.length;i<ni;i++)
-			if(typeof(old_fun_array[i])=="function")
-				if(old_fun_array[i](this.scene))
-					new_fun_array.push(old_fun_array[i]);
-		this.scene.routine_object.before_draw_scene_routine_array=new_fun_array;
-
-		this.scene.scene_id=scene_id;
-		this.scene.vertex_data_downloader.process_buffer_head_request_queue(this.scene);
-		
-		var start_time=(new Date()).getTime();
-		if(this.scene.browser_current_time>0){
-			var pass_time=(start_time-this.scene.browser_current_time)*1000*1000;
-			var new_current_time=this.scene.modifier_time_parameter.webserver_current_time+pass_time;
-			if(this.scene.current_time<=new_current_time)
-				this.scene.current_time=new_current_time;
-			else
-				this.scene.current_time++;
-	
-			for(var i=0,ni=this.scene.modifier_current_time.length;i<ni;i++){
-				new_current_time =this.scene.modifier_time_parameter.caculate_current_time(i)+pass_time;
-				if(this.scene.modifier_current_time[i]<new_current_time)
-					this.scene.modifier_current_time[i]=new_current_time;
-				else
-					this.scene.modifier_current_time[i]++;
-			}
-		}
-		return this.scene.init_parameter.scene_touch_time_length;
+		return front_process_scene_routine(scene_id,this.scene);
 	}
 	this.back_process_scene=function()
 	{
-		if(this.scene.terminate_flag)
-			return 0;
-		var new_fun_array=new Array();
-		var old_fun_array=this.scene.routine_object.after_draw_scene_routine_array;
-		
-		for(var i=0,ni=old_fun_array.length;i<ni;i++)
-			if(typeof(old_fun_array[i])=="function")
-				if(old_fun_array[i](this.scene))
-					new_fun_array.push(old_fun_array[i]);
-
-		this.scene.routine_object.after_draw_scene_routine_array=new_fun_array;
+		back_process_scene_routine(this.scene);
 	}
 }

@@ -138,8 +138,7 @@ function create_scene_container_routine(my_webgpu)
 					if(my_scene.terminate_flag||this.terminate_flag)
 						break;
 					if(my_scene.scene_interface.get_target_parameter(j).do_render_flag)
-						await my_scene.scene_interface.complete_render_target(j);
-											//interface complete_render_target
+						await my_scene.scene_interface.scene_target_complete(j);
 				}
 			}
 			if(this.terminate_flag)

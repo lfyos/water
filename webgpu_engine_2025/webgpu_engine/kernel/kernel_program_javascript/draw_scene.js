@@ -1,6 +1,59 @@
+function front_process_scene_routine(scene_id,scene)
+{
+	if(scene.terminate_flag)
+		return 0;
+		
+	scene.scene_id=scene_id;
+		
+	var new_fun_array=new Array();
+	var old_fun_array=scene.routine_object.before_draw_scene_routine_array;
+	for(var i=0,ni=old_fun_array.length;i<ni;i++)
+		if(typeof(old_fun_array[i])=="function")
+			if(old_fun_array[i](scene))
+				new_fun_array.push(old_fun_array[i]);
+	scene.routine_object.before_draw_scene_routine_array=new_fun_array;
+
+	scene.vertex_data_downloader.process_buffer_head_request_queue(scene);
+	
+	var start_time=(new Date()).getTime();
+	if(scene.browser_current_time>0){
+		var pass_time=(start_time-scene.browser_current_time)*1000*1000;
+		var new_current_time=scene.modifier_time_parameter.webserver_current_time+pass_time;
+		if(scene.current_time<=new_current_time)
+			scene.current_time=new_current_time;
+		else
+			scene.current_time++;
+
+		for(var i=0,ni=scene.modifier_current_time.length;i<ni;i++){
+			new_current_time =scene.modifier_time_parameter.caculate_current_time(i)+pass_time;
+			if(scene.modifier_current_time[i]<new_current_time)
+				scene.modifier_current_time[i]=new_current_time;
+			else
+				scene.modifier_current_time[i]++;
+		}
+	}
+	return scene.init_parameter.scene_touch_time_length;
+}
+function back_process_scene_routine(scene)
+{
+	if(scene.terminate_flag)
+		return 0;
+	var new_fun_array=new Array();
+	var old_fun_array=scene.routine_object.after_draw_scene_routine_array;
+	
+	for(var i=0,ni=old_fun_array.length;i<ni;i++)
+		if(typeof(old_fun_array[i])=="function")
+			if(old_fun_array[i](scene))
+				new_fun_array.push(old_fun_array[i]);
+
+	scene.routine_object.after_draw_scene_routine_array=new_fun_array;
+}
+
 function scene_target_begin_routine(target_id,scene_target_array,scene)
 {
-	var render_data		=scene.render_buffer_array[target_id];
+	var render_data=scene.render_buffer_array[target_id];
+	if(!(render_data.do_render_flag))
+		return false;
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
 	var data_buffer_id	=render_data.target_ids.data_buffer_id;
@@ -15,10 +68,17 @@ function scene_target_begin_routine(target_id,scene_target_array,scene)
 		return false;
 	if(typeof(target_component_driver.begin_scene_target)!="function")
 		return false;
-	
-	return target_component_driver.begin_scene_target(
-				scene_target_array,render_data,target_part_object,
-				target_part_driver,target_render_driver,scene);
+	if(!(target_component_driver.begin_scene_target(scene_target_array,
+		render_data,target_part_object,target_part_driver,target_render_driver,scene)))
+			return false;
+		
+	var render_data_from=null;
+	if(render_data.target_id_from>=0)
+		render_data_from=scene.render_buffer_array[render_data.target_id_from];
+	render_data.project_matrix=scene.camera.compute_camera_data(render_data,render_data_from);
+	scene.system_buffer.set_target_buffer(render_data,render_data_from,scene);
+
+	return true;
 }
 
 function scene_target_end_routine(target_id,scene_target_array,scene)
@@ -42,6 +102,28 @@ function scene_target_end_routine(target_id,scene_target_array,scene)
 	target_component_driver.end_scene_target(scene_target_array,render_data,
 		target_part_object,target_part_driver,target_render_driver,scene);
 	return;
+}
+async function scene_target_complete_routine(target_id,scene)
+{
+	var render_data=scene.render_buffer_array[target_id];
+	
+	var render_id		=render_data.target_ids.render_id;
+	var part_id			=render_data.target_ids.part_id;
+	var data_buffer_id	=render_data.target_ids.data_buffer_id;
+					
+	var target_render_driver	=scene.render_driver[render_id];
+	var target_part_driver		=scene.part_driver[render_id][part_id];
+	var target_part_object		=scene.part_array[render_id][part_id];
+				
+	if((typeof(target_part_object)!="object")||(target_part_object==null))
+		return;
+	var target_component_driver	=target_part_object.component_driver_array[data_buffer_id];
+	if((typeof(target_component_driver)!="object")||(target_component_driver==null))
+		return;
+	if(typeof(target_component_driver.scene_target_complete)!="function")
+		return;
+	await target_component_driver.scene_target_complete(render_data,
+			target_part_object,target_part_driver,target_render_driver,scene);
 }
 function draw_scene_target_routine(target_id,scene_target_array,pass_id,scene)
 {

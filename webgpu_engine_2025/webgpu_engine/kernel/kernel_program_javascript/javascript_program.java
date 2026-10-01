@@ -23,7 +23,7 @@ public class javascript_program
 		"call_server.js",				"camera.js",						"collector_loader.js",
 		"component_location.js",		"component_render.js",				"computer.js",
 		"construct_scene.js",			"create_scene.js",					"create_scene_container.js",
-		"download_vertex_data.js",		"draw_scene_sequence_target.js",	"driver_create_data.js",
+		"download_vertex_data.js",		"draw_scene.js",					"driver_create_data.js",
 		"event_listener.js",			"event_container_listener.js",		"init_ids.js",
 		"interface.js",					"modifier_time.js",					"operate_component.js",
 		"pickup.js",					"process_bar.js",					"request_create_scene.js",
