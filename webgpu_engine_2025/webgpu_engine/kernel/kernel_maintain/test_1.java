@@ -7,11 +7,7 @@ import kernel_file_manager.travel_through_directory;
 public class test_1 extends travel_through_directory
 {
 	private static final String mode_string[]= {
-		"file_program",
-		"multifile_program",
-		"charset_file_program",
-		"charset_multifile_program",
-		"token_program"
+		"append_routine_function"
 	};
 	
 	public void operate_file(String file_name)
@@ -33,7 +29,7 @@ public class test_1 extends travel_through_directory
 	public static void main(String args[])
 	{
 		String path_name[]={
-				"E:\\project_data",
+//				"E:\\project_data",
 				"G:\\water_all\\data"
 		};
 		
@@ -42,7 +38,7 @@ public class test_1 extends travel_through_directory
 		for(String my_path_name:path_name) {
 			debug_information.println("Begin:		",	my_path_name);
 			new test_1().do_travel(my_path_name,false);
-			debug_information.println("End:			",	my_path_name);
+			debug_information.println("End: 		",	my_path_name);
 		}
 		
 		debug_information.println("end search");

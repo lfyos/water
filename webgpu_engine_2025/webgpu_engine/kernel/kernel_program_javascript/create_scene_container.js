@@ -76,13 +76,13 @@ function create_scene_container_routine(my_webgpu)
 
 				var si=my_scene.scene_interface;
 				scene_interface_collector.push(si);
-				
+
 				var my_scene_touch_time_length=si.front_process_scene(scene_id++);	//interface front_process_scene
 				if(my_scene_touch_time_length<scene_touch_time_length)
 					scene_touch_time_length=my_scene_touch_time_length;
 
-				for(var j=0,nj=si.get_target_number();j<nj;j++){				//interface get_target_number
-					var target_par=si.get_target_parameter(j);					//interface get_target_parameter
+				for(var j=0,nj=si.get_target_number();j<nj;j++){					//interface get_target_number
+					var target_par=si.get_target_parameter(j);						//interface get_target_parameter
 					if(target_par==null)
 						continue;
 					if(!(target_par.do_render_flag))
@@ -127,21 +127,24 @@ function create_scene_container_routine(my_webgpu)
 			
 			if(this.terminate_flag)
 				break;
-			var scene_name_array=Object.keys(this.scene_object);
+			var scene_name_array=Object.keys(my_scene_object).sort();
 			for(var i=0,ni=scene_name_array.length;i<ni;i++){
 				if(this.terminate_flag)
 					break;
 				var my_scene=this.scene_object[scene_name_array[i]];
+				if(my_scene.terminate_flag)
+					continue;
 				for(var j=0,nj=my_scene.scene_interface.get_target_number();j<nj;j++){
 					if(my_scene.terminate_flag||this.terminate_flag)
 						break;
 					if(my_scene.scene_interface.get_target_parameter(j).do_render_flag)
-						await my_scene.scene_interface.complete_render_target(j);	//interface complete_render_target
+						await my_scene.scene_interface.complete_render_target(j);
+											//interface complete_render_target
 				}
 			}
 			if(this.terminate_flag)
 				break;
-			var scene_name_array=Object.keys(this.scene_object);
+			var scene_name_array=Object.keys(my_scene_object).sort();
 			for(var i=0,ni=scene_name_array.length;i<ni;i++){
 				if(this.terminate_flag)
 					break;

@@ -72,6 +72,14 @@ function construct_scene_interface(my_scene)
 		if(this.scene.terminate_flag)
 			return 0;
 		
+		var new_fun_array=new Array();
+		var old_fun_array=this.scene.routine_object.before_draw_scene_routine_array;
+		for(var i=0,ni=old_fun_array.length;i<ni;i++)
+			if(typeof(old_fun_array[i])=="function")
+				if(old_fun_array[i](this.scene))
+					new_fun_array.push(old_fun_array[i]);
+		this.scene.routine_object.before_draw_scene_routine_array=new_fun_array;
+
 		this.scene.scene_id=scene_id;
 		this.scene.vertex_data_downloader.process_buffer_head_request_queue(this.scene);
 		
@@ -98,11 +106,14 @@ function construct_scene_interface(my_scene)
 	{
 		if(this.scene.terminate_flag)
 			return 0;
-		var fun_array=this.scene.routine_array;
-		this.scene.routine_array=new Array();
-		for(var i=0,ni=fun_array.length;i<ni;i++)
-			if(typeof(fun_array[i])=="function")
-				if(fun_array[i](this.scene))
-					this.scene.routine_array.push(fun_array[i]);
+		var new_fun_array=new Array();
+		var old_fun_array=this.scene.routine_object.after_draw_scene_routine_array;
+		
+		for(var i=0,ni=old_fun_array.length;i<ni;i++)
+			if(typeof(old_fun_array[i])=="function")
+				if(old_fun_array[i](this.scene))
+					new_fun_array.push(old_fun_array[i]);
+
+		this.scene.routine_object.after_draw_scene_routine_array=new_fun_array;
 	}
 }

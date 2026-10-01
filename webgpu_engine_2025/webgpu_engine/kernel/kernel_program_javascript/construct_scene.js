@@ -51,7 +51,12 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 
 	this.render_buffer_array		=new Array();
 	
-	this.routine_array				=new Array();
+	this.routine_object				={
+		before_draw_scene_routine_array				:	new Array(),
+		after_draw_scene_routine_array				:	new Array(),
+		before_fetch_response_data_routine_array	:	new Array(),
+		after_fetch_response_data_routine_array		:	new Array(),
+	};
 	
 	this.view=
 	{
@@ -180,6 +185,7 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 					execute_delete_function(pp,name+"/"+key);
 			}
 		}
+		
 		if(this.terminate_flag)
 			return;
 		this.terminate_flag=true;
@@ -188,8 +194,20 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 
 		execute_delete_function (this,"");
 	};
-	this.append_routine_function=function(my_routine_function)
+	this.append_before_draw_scene_routine_function=function(my_routine_function)
 	{
-		return this.routine_array.push(my_routine_function)-1;
+		return this.routine_object.before_draw_scene_routine_array.push(my_routine_function)-1;
+	};
+	this.append_after_draw_scene_routine_function=function(my_routine_function)
+	{
+		return this.routine_object.after_draw_scene_routine_array.push(my_routine_function)-1;
+	};
+	this.append_before_fetch_response_data_routine_function=function(my_routine_function)
+	{
+		return this.routine_object.before_fetch_response_data_routine_array.push(my_routine_function)-1;
+	};
+	this.append_after_fetch_response_data_routine_function=function(my_routine_function)
+	{
+		return this.routine_object.after_fetch_response_data_routine_array.push(my_routine_function)-1;
 	};
 };

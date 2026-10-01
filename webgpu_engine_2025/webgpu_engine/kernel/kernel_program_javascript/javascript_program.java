@@ -37,23 +37,26 @@ public class javascript_program
 	}
 	public javascript_program(system_parameter my_system_par)
 	{
+		long t;
+		
 		system_par=new system_parameter(my_system_par);
+		last_modified_time=system_par.last_modified_time;
 		
 		default_fetch_parameter_filename =system_par.parameter_directory;
 		default_fetch_parameter_filename+="network_parameter/fetch_parameter.txt";
 		default_fetch_parameter_filename =file_directory.
 				replace_special_char(default_fetch_parameter_filename);
 		
-		long t1=new File(default_fetch_parameter_filename).lastModified();
+		if(last_modified_time<(t=new File(default_fetch_parameter_filename).lastModified()))
+			last_modified_time=t;
 		
 		default_draw_process_bar_filename =system_par.parameter_directory;
 		default_draw_process_bar_filename+="javascript_program/draw_process_bar.txt";
 		default_draw_process_bar_filename =file_directory.
 				replace_special_char(default_draw_process_bar_filename);
 		
-		long t2=new File(default_draw_process_bar_filename).lastModified();
-		
-		last_modified_time=(t1>t2)?t1:t2;
+		if(last_modified_time<(t=new File(default_draw_process_bar_filename).lastModified()))
+			last_modified_time=t;
 		
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
 			common_reader cr=class_file_reader.get_reader(
@@ -64,7 +67,7 @@ public class javascript_program
 				cr.close();
 				continue;
 			}
-			if(cr.lastModified_time>last_modified_time)
+			if(last_modified_time<cr.lastModified_time)
 				last_modified_time=cr.lastModified_time;
 			cr.close();
 		}
@@ -80,12 +83,13 @@ public class javascript_program
 			String url=request_response.implementor.get_url();
 			url+="?channel=javascript&function_date="+last_modified_time;
 			request_response.implementor.redirect_url(url);
+			
 			return null;
 		}
 
 		String request_modified_str;
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
-			if(system_par.http_date_str.parse(request_modified_str)>=last_modified_time){
+			if(last_modified_time<=system_par.http_date_str.parse(request_modified_str)){
 				request_response.implementor.response_not_modify("javascript_program response_not_modify()");
 				return null;
 			}
@@ -147,6 +151,7 @@ public class javascript_program
 			request_response.println(str[i]);
 		
 		request_response.set_content_type("application/javascript");
+		
 		return new scene_call_result(last_modified_time);
 	}
 }

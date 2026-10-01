@@ -256,11 +256,34 @@ async function request_render_data(scene)
 	for(var start_time=0;!(scene.terminate_flag);){
 		var current_time=(new Date()).getTime();
 		var sleep_time_length=start_time+scene.parameter.delay_time_length-current_time;
-		if(sleep_time_length>0)
+		if(sleep_time_length>0){
 			await new Promise((resolve)=>{setTimeout(resolve,sleep_time_length);});
-		else if(await fetch_web_server_response_data(create_request_url(scene),scene))
+			continue;
+		}
+		
+		var new_fun_array=new Array();
+		var old_fun_array=scene.routine_object.before_fetch_response_data_routine_array;
+
+		for(var i=0,ni=old_fun_array.length;i<ni;i++)
+			if(typeof(old_fun_array[i])=="function")
+				if(old_fun_array[i](scene))
+					new_fun_array.push(old_fun_array[i]);
+
+		scene.routine_object.before_fetch_response_data_routine_array=new_fun_array;
+		
+		if(await fetch_web_server_response_data(create_request_url(scene),scene))
 			break;
-		else
-			start_time=current_time;
+		
+		var new_fun_array=new Array();
+		var old_fun_array=scene.routine_object.after_fetch_response_data_routine_array;
+
+		for(var i=0,ni=old_fun_array.length;i<ni;i++)
+			if(typeof(old_fun_array[i])=="function")
+				if(old_fun_array[i](scene))
+					new_fun_array.push(old_fun_array[i]);
+
+		scene.routine_object.after_fetch_response_data_routine_array=new_fun_array;
+		
+		start_time=current_time;
 	}
 }
