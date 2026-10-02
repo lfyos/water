@@ -4,7 +4,7 @@ function extract_driver_create_data(
 {
 	var my_component_create_data=new Array();
 	for(var i=0,ni=sorted_component_name_id_and_create_data.length;i<ni;i++)
-		my_component_create_data[my_component_id]=new Array();
+		my_component_create_data[i]=new Array();
 	for(var i=0,ni=sorted_component_name_id_and_create_data.length;i<ni;i++){
 		var my_component_id=sorted_component_name_id_and_create_data[i][1];
 		my_component_create_data[my_component_id]=sorted_component_name_id_and_create_data[i].pop();
@@ -27,8 +27,8 @@ function extract_driver_create_data(
 		}
 		part_component_id_and_driver_id_and_create_data[i].length=part_component_id_and_driver_id_and_create_data[i].length/2;
 	}
-	
-	return {
+
+	return	{
 				component_create_data	:	my_component_create_data,
 				render_create_data		:	my_render_create_data
 			};

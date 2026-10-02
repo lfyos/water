@@ -30,28 +30,28 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 		mouse	:
 		{
 			component_name	:	null,
-			function_id	:	0
+			function_id		:	0
 		},
 		touch	:
 		{
 			component_name	:	null,
-			function_id	:	0
+			function_id		:	0
 		},
 		keyboard	:
 		{
 			component_name	:	null,
-			function_id	:	0
+			function_id		:	0
 		},
 		touch	:
 		{
 			component_name	:	null,
-			function_id	:	0
+			function_id		:	0
 		}
 	};
 
-	this.render_buffer_array		=new Array();
+	this.render_buffer_array=new Array();
 	
-	this.routine_object				={
+	this.routine_object={
 		before_draw_scene_routine_array				:	new Array(),
 		after_draw_scene_routine_array				:	new Array(),
 		before_fetch_response_data_routine_array	:	new Array(),
@@ -60,12 +60,12 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 	
 	this.view=
 	{
-		x							:	-10.0,
-		y							:	-10.0,
-		main_target_x				:	-10.0,
-		main_target_y				:	-10.0,
+		x					:	-10.0,
+		y					:	-10.0,
+		main_target_x		:	-10.0,
+		main_target_y		:	-10.0,
 		
-		mouse_down_flag				:	false
+		mouse_down_flag		:	false
 	};
 	this.view_bak=
 	{
@@ -92,50 +92,49 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 		value				:	[-2,-2,-2]
 	};
 
-	this.caller						=new construct_server_caller(this);
+	this.caller				=new construct_server_caller(this);
 	
-	this.event_listener				=new Array(this.webgpu.canvas.length);
+	this.event_listener		=new Array(this.webgpu.canvas.length);
 	for(var i=0,ni=this.event_listener.length;i<ni;i++)
 		this.event_listener[i]=new construct_event_listener(i,this);
 
-    this.computer					=new construct_computation_object();
+    this.computer			=new construct_computation_object();
    	
-	this.render_driver				=new Array(this.parameter.render_number);
-	this.part_driver				=new Array(this.parameter.render_number);
-	this.part_array					=new Array(this.parameter.render_number);
+	this.render_driver		=new Array(this.parameter.render_number);
+	this.part_driver		=new Array(this.parameter.render_number);
+	this.part_array			=new Array(this.parameter.render_number);
 	
 	for(var i=0;i<this.parameter.render_number;i++){
-		this.render_driver[i]		=null;
-		this.part_driver[i]			=new Array();
-		this.part_array[i]			=new Array();
+		this.render_driver[i]=null;
+		this.part_driver[i]	 =new Array();
+		this.part_array[i]	 =new Array();
 	}
 	
-	this.component_location_data	=new construct_component_location_object(
-						this.parameter.component_number,this.computer,this.webgpu);
-	this.component_render_data		=new construct_component_render_parameter();
-	this.modifier_time_parameter	=new construct_modifier_time_parameter(this.parameter.modifier_container_number);
-	this.vertex_data_downloader		=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
-	this.camera						=new construct_camera_object(this.parameter.camera_number,this.component_location_data);
-	this.operate_component			=new construct_operate_component(this);
-	this.collector_loader			=new construct_collector_loader_object(this);
-	this.scene_interface			=new construct_scene_interface(this);
-	this.system_buffer				=null;
+	this.component_location_data=new construct_component_location_object(
+				this.parameter.component_number,this.computer,this.webgpu);
+	this.component_render_data	=new construct_component_render_parameter();
+	this.modifier_time_parameter=new construct_modifier_time_parameter(this.parameter.modifier_container_number);
+	this.vertex_data_downloader	=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
+	this.camera					=new construct_camera_object(this.parameter.camera_number,this.component_location_data);
+	this.operate_component		=new construct_operate_component(this);
+	this.collector_loader		=new construct_collector_loader_object(this);
+	this.scene_interface		=new construct_scene_interface(this);
+	this.system_buffer			=null;
 	
-	this.pickup						=new construct_pickup_object();
-	this.pickup_array				=[
+	this.pickup					=new construct_pickup_object();
+	this.pickup_array			=[
 		this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),
 		this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork()
 	];
-	this.highlight					=this.pickup.fork();
+	this.highlight				=this.pickup.fork();
 	
-	this.current_time				=0;
-	this.modifier_current_time		=new Array(this.parameter.modifier_container_number);
+	this.current_time			=0;
+	this.modifier_current_time	=new Array(this.parameter.modifier_container_number);
 	for(var i=0;i<this.parameter.modifier_container_number;i++)
 		this.modifier_current_time[i]=0;
-	this.browser_current_time		=0;
+	this.browser_current_time	=0;
 	
-	this.collector_stack_version	=0;
-	this.web_server_render_data_version=0; 
+	this.collector_stack_version=0;
 
 	this.terminate_flag=false;
 	

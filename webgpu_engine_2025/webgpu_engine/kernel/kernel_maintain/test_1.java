@@ -7,7 +7,7 @@ import kernel_file_manager.travel_through_directory;
 public class test_1 extends travel_through_directory
 {
 	private static final String mode_string[]= {
-		"append_routine_function"
+		"web_server_render_data_version"
 	};
 	
 	public void operate_file(String file_name)
@@ -23,14 +23,16 @@ public class test_1 extends travel_through_directory
 	{
 		super(new String[]
 		{
-//			"F:\\water_all\\.git"
+			"G:\\water_all\\.git",
+			"G:\\water_all\\webgpu_engine_2025\\.metadata",
+			"G:\\water_all\\webgpu_engine_2025\\webgpu_engine\\build"
 		});
 	}
 	public static void main(String args[])
 	{
 		String path_name[]={
-//				"E:\\project_data",
-				"G:\\water_all\\data"
+				"G:\\water_all",
+				"E:\\project_data"
 		};
 		
 		debug_information.println("start search");

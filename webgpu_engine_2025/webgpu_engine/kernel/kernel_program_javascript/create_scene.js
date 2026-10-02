@@ -11,9 +11,7 @@ async function create_scene_routine(my_webgpu,my_draw_canvas_id,my_create_parame
 	if(typeof(user_process_bar_function)!="function")
 		user_process_bar_function=default_user_process_bar_function;
 
-	if(typeof(my_create_parameter)!="object")
-		my_create_parameter={};
-	else if(my_create_parameter==null)
+	if((typeof(my_create_parameter)!="object")||(my_create_parameter==null))
 		my_create_parameter={};
 		
 	my_create_parameter.user_name	=(typeof(my_create_parameter.user_name)	!="string")	?"NoName"	:(my_create_parameter.user_name.trim());
@@ -69,7 +67,7 @@ async function create_scene_routine(my_webgpu,my_draw_canvas_id,my_create_parame
 			my_create_parameter.pass_word,
 			my_create_parameter.language,
 			my_default_fetch_parameter);
-	
+
 	process_bar_object.mark_terminated_flag=true;
 	
 	return scene;
