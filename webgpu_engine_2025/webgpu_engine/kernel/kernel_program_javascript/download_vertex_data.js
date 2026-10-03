@@ -305,34 +305,23 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		var render_driver=scene.render_driver[render_id];
 		var part_object=scene.part_array[render_id][part_id];
 		
-		var p=scene.init_data.part_init_data[render_id];
-		var part_init_data=p[part_id];
-		p[part_id]=null;
-		
-		var p=scene.create_data.render_create_data[render_id].part_create_data;
-		var part_create_data=p[part_id];
-		p[part_id]=null;
+		var part_init_data	=scene.init_data.	part_init_data		[render_id][part_id];
+		var part_create_data=scene.create_data.	render_create_data	[render_id].part_create_data[part_id];
 		
 		var part_driver=new render_driver.new_part_driver(
 				part_init_data,part_create_data,part_object,render_driver,scene);
 		scene.part_driver[render_id][part_id]=part_driver;
 
 		for(var i=0,ni=part_object.part_component_id_and_driver_id.length;i<ni;i++){
-			var my_component_ids=part_object.part_component_id_and_driver_id[i];
-			
-			var p=scene.init_data.component_init_data[my_component_ids.component_id];
-			var my_init_data=p[my_component_ids.driver_id];
-			p[my_component_ids.driver_id]=null;
-			
-			var p=scene.create_data.component_create_data[my_component_ids.component_id];
-			var my_create_data=p[my_component_ids.driver_id];
-			p[my_component_ids.driver_id]=null;
-
+			var my_component_id	=part_object.part_component_id_and_driver_id[i].component_id;
+			var my_driver_id	=part_object.part_component_id_and_driver_id[i].driver_id;
 			part_object.component_driver_array[i]=new part_driver.new_component_driver(
-					my_component_ids,my_init_data,my_create_data,
-					part_object,part_driver,render_driver,scene);
+				part_object.part_component_id_and_driver_id[i],
+				scene.init_data.	component_init_data		[my_component_id][my_driver_id],
+				scene.create_data.	component_create_data	[my_component_id][my_driver_id],
+				part_object,part_driver,render_driver,scene);
 		}
-		
+
 		this.request_render_part_id.push([render_id,part_id,
 				part_head_data.data.max_buffer_object_data_length,
 				part_file_proxy_url,part_affiliated_data]);

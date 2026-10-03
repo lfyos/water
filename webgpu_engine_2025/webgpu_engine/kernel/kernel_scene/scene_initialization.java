@@ -319,7 +319,7 @@ public class scene_initialization
 			int driver_number=my_component.driver_array.size();
 			for(int driver_id=0;driver_id<driver_number;driver_id++) {
 				var comp_driver=my_component.driver_array.get(driver_id);
-				if(comp_driver!=null) {
+				if(comp_driver!=null){
 					long output_length=fw.output_data_length;
 					comp_driver.create_component_driver_initialization_data(
 							fw,my_component,driver_id,sk,request_response);
@@ -347,65 +347,77 @@ public class scene_initialization
 	private void output_part_and_render_initialization_data(file_writer fw,scene_kernel sk,
 			client_request_response request_response,client_process_bar process_bar)
 	{
+		int total_part_number=0,current_part_number=0;
+		int id[][][][]=sk.component_cont.part_component_id_and_driver_id;
+		for(int render_id=0,render_number=id.length;render_id<render_number;render_id++)
+			total_part_number+=id[render_id].length;
+
+		process_bar.set_process_bar(true,"file_initialization_2","",current_part_number,total_part_number);
+		
 		fw.println("[");
-		{
-			int id[][][][]=sk.component_cont.part_component_id_and_driver_id;
-			process_bar.set_process_bar(true,"file_initialization_2","",0, id.length);
-			for(int render_id=0,render_number=id.length;render_id<render_number;render_id++){
-				render r=sk.render_cont.renders.get(render_id);
-				process_bar.set_process_bar(false,"file_initialization_2",r.render_name,render_id,render_number);
-				fw.println("\t[");
-				for(int part_id=0,part_number=id[render_id].length;part_id<part_number;part_id++){
-					fw.println("\t\t[");
-					for(int i=0,ni=id[render_id][part_id].length;i<ni;i++) {
-						int component_id=id[render_id][part_id][i][0];
-						int driver_id	=id[render_id][part_id][i][1];
-						fw.print  ("\t\t\t[",component_id);
-						fw.print  (",",driver_id);
-						fw.println((i==(ni-1))?"]":"],");
-					}
-					fw.println("\t\t],");
-					
-					part my_part;
-					if((my_part=r.parts.get(part_id))!=null) 
-						if(my_part.driver!=null){
-							long output_length=fw.output_data_length;
-							my_part.driver.create_part_driver_initialization_data(fw,my_part,sk,request_response);
-							if(fw.output_data_length>output_length) {
-								if(part_id<(part_number-1))
-									fw.println(",");
-								else
-									fw.println();
-								continue;
-							}
-						}
-					if(part_id<(part_number-1))
-						fw.println("\t\tnull,");
-					else
-						fw.println("\t\tnull");
+		for(int render_id=0,render_number=id.length;render_id<render_number;render_id++){
+			render r=sk.render_cont.renders.get(render_id);
+			fw.println("\t[");
+			for(int part_id=0,part_number=id[render_id].length;part_id<part_number;part_id++){
+				fw.println("\t\t[");
+				for(int i=0,ni=id[render_id][part_id].length;i<ni;i++) {
+					int component_id=id[render_id][part_id][i][0];
+					int driver_id	=id[render_id][part_id][i][1];
+					fw.print  ("\t\t\t[",component_id);
+					fw.print  (",",driver_id);
+					fw.println((i==(ni-1))?"]":"],");
 				}
-				fw.println("\t],");
+				fw.println("\t\t],");
 				
-				if(r.driver!=null) {
-					long output_length=fw.output_data_length;
-					r.driver.create_render_driver_initialization_data(fw,r,sk,request_response);
-					if(fw.output_data_length>output_length){
-						if(render_id<(render_number-1))
-							fw.println(",");
-						else
-							fw.println();
-						continue;
+				part my_part;
+				if((my_part=r.parts.get(part_id))==null) 
+					process_bar.set_process_bar(false,"file_initialization_2",
+							"",current_part_number++,total_part_number);
+				else{
+					process_bar.set_process_bar(false,"file_initialization_2",
+							my_part.user_name,current_part_number++,total_part_number);
+					if(my_part.driver!=null){
+						long output_length=fw.output_data_length;
+						my_part.driver.create_part_driver_initialization_data(fw,my_part,sk,request_response);
+						if(fw.output_data_length>output_length) {
+							if(part_id<(part_number-1))
+								fw.println(",");
+							else
+								fw.println();
+							continue;
+						}
 					}
 				}
-				if(render_id<(render_number-1))
-					fw.println("\tnull,");
+				if(part_id<(part_number-1))
+					fw.println("\t\tnull,");
 				else
-					fw.println("\tnull");
+					fw.println("\t\tnull");
 			}
-			process_bar.set_process_bar(false,"file_initialization_2","",id.length, id.length);
+			fw.println("\t],");
+			
+			if(r.driver!=null) {
+				long output_length=fw.output_data_length;
+				r.driver.create_render_driver_initialization_data(fw,r,sk,request_response);
+				if(fw.output_data_length>output_length){
+					if(render_id<(render_number-1))
+						fw.println(",");
+					else
+						fw.println();
+					continue;
+				}
+			}
+			if(render_id<(render_number-1))
+				fw.println("\tnull,");
+			else
+				fw.println("\tnull");
 		}
 		
 		fw.println("],").println().println();
+		
+		process_bar.set_process_bar(false,"file_initialization_2",
+				"",total_part_number,total_part_number);
+
+		return;
 	}
 	private void output_component_initialization_program(file_writer fw,
 			ArrayList<component> init_comp,ArrayList<component_initialization>init_init,
@@ -458,7 +470,7 @@ public class scene_initialization
 					fw.println("		[");
 				else{
 					fw.println("function(render_id,render_name,");
-					fw.println("	init_data,create_data,shader_code,text_array,render)");
+					fw.println("	init_data,create_data,shader_code,text_array,scene)");
 					fw.println("{");
 				}				
 				for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
@@ -487,12 +499,12 @@ public class scene_initialization
 					fw.print  ("		]");
 				else{
 					fw.println("	return new new_render_driver(render_id,render_name,");
-					fw.println("		init_data,create_data,shader_code,text_array,render);");
+					fw.println("		init_data,create_data,shader_code,text_array,scene);");
 					fw.print  ("}");
 				}
 			}
 			fw.println().println().println();
-			fw.println((render_id<(render_number-1))?"	],":"	]");				
+			fw.println((render_id<(render_number-1))?"	],":"	]");
 		}				
 		process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 

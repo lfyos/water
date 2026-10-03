@@ -273,10 +273,13 @@ public class common_writer
 	}
 	public common_writer write(byte data[],int offset,int length)
 	{
-		if(length>0){
-			output_data_length+=length;
-			write_routine(data,offset,length);
-		}
+		if((data==null)||(length<=0))
+			return this;
+		if(length>data.length)
+			length=data.length;
+		output_data_length+=length;
+		write_routine(data,offset,length);
+		
 		return this;
 	}
 	public common_writer write(byte data[])

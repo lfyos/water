@@ -23,23 +23,16 @@ function init_ids_of_part_and_component(
 		
 		if(typeof(scene.component_object[my_component_name])!="undefined")
 			console.log("several components have same component name:	"+my_component_name);
-			
+
 		scene.component_object[my_component_name]=p;
 	};
+	for(var i=0;i<component_number;i++)
+		for(var p=scene.component_array_sorted_by_id[i],j=0,nj=p.component_children.length;j<nj;j++)
+			p.component_children[j]=scene.component_array_sorted_by_id[p.component_children[j]];
 
-	for(var i=0;i<component_number;i++){
-		var p=scene.component_array_sorted_by_id[i];
-		var my_component_children=new Array(p.component_children.length);
-		for(var j=0,nj=my_component_children.length;j<nj;j++)
-			my_component_children[j]=scene.component_array_sorted_by_id[p.component_children[j]];
-		p.component_children=my_component_children;
-	};
-	
-	for(var i=0;i<component_number;i++){
-		var p=scene.component_array_sorted_by_id[i];
-		for(var j=0,nj=p.component_children.length;j<nj;j++)
+	for(var i=0;i<component_number;i++)
+		for(var p=scene.component_array_sorted_by_id[i],j=0,nj=p.component_children.length;j<nj;j++)
 			p.component_children[j].component_parent=p;
-	};
 	
 	var system_bindgroup_id=new Array();
 	
@@ -51,10 +44,10 @@ function init_ids_of_part_and_component(
 			var data_buffer_number=id_array.length;
 			for(var data_buffer_id=0;data_buffer_id<data_buffer_number;data_buffer_id++){				
 				var my_component_id			=id_array[data_buffer_id][0];
-				var my_driver_id			=id_array[data_buffer_id][1];				
+				var my_driver_id			=id_array[data_buffer_id][1];
 				var my_system_bindgroup_id	=system_bindgroup_id.length;
 				
-				system_bindgroup_id[my_system_bindgroup_id]={
+				var p={
 					render_id			:	render_id,
 					part_id				:	part_id,
 					data_buffer_id		:	data_buffer_id,
@@ -64,9 +57,10 @@ function init_ids_of_part_and_component(
 						
 					system_bindgroup_id	:	my_system_bindgroup_id
 				}
-				id_array[data_buffer_id]=system_bindgroup_id[my_system_bindgroup_id];
-				scene.component_array_sorted_by_id[my_component_id].
-					component_ids[my_driver_id]=id_array[data_buffer_id];
+				
+				id_array[data_buffer_id]=p;
+				system_bindgroup_id[my_system_bindgroup_id]=p;
+				scene.component_array_sorted_by_id[my_component_id].component_ids[my_driver_id]=p;
 			}
 		};
 	};

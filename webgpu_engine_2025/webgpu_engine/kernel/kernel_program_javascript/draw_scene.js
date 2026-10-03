@@ -1,6 +1,6 @@
 function set_system_buffer_and_compute_component_location_routine(scene)
 {
-	scene.system_buffer.set_system_buffer(scene);
+	scene.system_buffer.set_system_buffer();
 	scene.component_location_data.compute_component_location();
 }
 function get_target_number_routine(scene)
@@ -95,7 +95,7 @@ function scene_target_begin_routine(target_id,scene_target_array,scene)
 	if(render_data.target_id_from>=0)
 		render_data_from=scene.render_buffer_array[render_data.target_id_from];
 	render_data.project_matrix=scene.camera.compute_camera_data(render_data,render_data_from);
-	scene.system_buffer.set_target_buffer(render_data,render_data_from,scene);
+	scene.system_buffer.set_target_buffer(render_data,render_data_from);
 
 	return true;
 }
@@ -204,8 +204,8 @@ function draw_scene_target_routine(target_id,scene_target_array,pass_id,scene)
 					var component_driver=part_object.component_driver_array[data_buffer_id];
 					var component_ids	=part_object.part_component_id_and_driver_id[data_buffer_id];
 
-					scene.system_buffer.set_system_bindgroup(target_id,method_array[i].method_id,
-								component_ids.component_id,component_ids.driver_id,scene);
+					scene.system_buffer.set_system_bindgroup(target_id,
+						method_array[i].method_id,component_ids.component_id,component_ids.driver_id);
 
 					component_driver.draw_component(method_array[i],render_parameter,
 						target_render_data,part_object,part_driver,render_driver,scene);

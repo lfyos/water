@@ -13,7 +13,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	{
 		if(this.box_component_id>=0){
 			scene.system_buffer.set_system_bindgroup(
-				target_data.target_id,method_data.method_id,this.box_component_id,-1,scene);
+				target_data.target_id,method_data.method_id,this.box_component_id,-1);
 
 			var rpe	=scene.webgpu.render_pass_encoder;
 			rpe.setPipeline(render_driver.pipeline);

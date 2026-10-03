@@ -124,13 +124,13 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			display_value_id		:	 buffer_data_item[2],
 			effective_selected_flag	:	(buffer_data_item[3]>0)?true:false
 		}
-		scene.system_buffer.set_system_bindgroup_data(
+		scene.system_buffer.set_id_information_data(
 			[
 				this.display_parameter.transparency_value,
 				this.display_parameter.close_clip_plane_number,
 				this.display_parameter.display_value_id,
 				this.display_parameter.effective_selected_flag?1:0
 			],
-			this.component_ids.component_id,this.component_ids.driver_id,scene);
+			this.component_ids.component_id,this.component_ids.driver_id);
 	};
 };

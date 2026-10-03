@@ -92,10 +92,8 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 			sorted_component_name_id_and_create_data,
 			part_component_id_and_driver_id_and_create_data);
 	
-	scene.system_buffer=new construct_system_buffer(
-		scene.init_parameter.max_target_number,
-		scene.init_parameter.max_method_number,
-		scene);
+	scene.system_buffer=new construct_system_buffer(scene,
+		scene.init_parameter.max_target_number,scene.init_parameter.max_method_number);
 	
 	scene.component_location_data.do_component_location_initialization(
 			scene.component_array_sorted_by_id,
@@ -144,17 +142,11 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		for(var i=0,ni=my_shader_program.length;i<ni;i++)
 			combined_shader_program+=my_shader_program[i];
 		
-		var p=scene.init_data.render_init_data;
-		var my_init_data=p[render_id];
-		p[render_id]=null;
-		
-		var p=scene.create_data.render_create_data;
-		var my_create_data=p[render_id].render_create_data;
-		p[render_id].render_create_data=null;
-		
 		scene.render_driver[render_id]=my_render_driver_function(render_id,my_render_name,
-			my_init_data,my_create_data,combined_shader_program,my_text_array,scene);
-
+			scene.init_data.	render_init_data	[render_id],
+			scene.create_data.	render_create_data	[render_id].render_create_data,
+			combined_shader_program,my_text_array,scene);
+		
 		if(Array.isArray(scene.render_driver[render_id].method_render_flag)){
 			for(var i=0,ni=scene.render_driver[render_id].method_render_flag.length;i<ni;i++)
 				if(typeof(scene.render_driver[render_id].method_render_flag[i])!="boolean")
