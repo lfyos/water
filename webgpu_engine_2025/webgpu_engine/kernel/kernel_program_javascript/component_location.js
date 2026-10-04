@@ -42,15 +42,14 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	this.set_component_location_flag=function(component_id,new_caculate_location_flag)
 	{
 		if((component_id>=0)&&(component_id<this.component.length)){
-			this.component[component_id].move_version_id=this.version_id++;
-				
 			var old_caculate_location_flag=this.component[component_id].caculate_location_flag;
 			this.component[component_id].caculate_location_flag=new_caculate_location_flag;
-			if(old_caculate_location_flag^new_caculate_location_flag)
-				this.webgpu.device.queue.writeBuffer(
-					this.component_location_flag_buffer,
+			if(old_caculate_location_flag^new_caculate_location_flag){
+				this.component[component_id].move_version_id=this.version_id++;
+				this.webgpu.device.queue.writeBuffer(this.component_location_flag_buffer,
 					Int32Array.BYTES_PER_ELEMENT*component_id,
 					new Int32Array([new_caculate_location_flag?1:0]));
+			}
 		}
 	};
 	this.decode_location=function(data)
@@ -77,14 +76,14 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	{
 		var identify_matrix_length=Float32Array.BYTES_PER_ELEMENT*this.identify_matrix.length;
 		for(var i=0,ni=component_loca_buffer.length,my_version_id=this.version_id++;i<ni;i++){
-			var component_id									=component_loca_buffer[i][0];
-			var old_caculate_location_flag						=this.component[component_id].caculate_location_flag;
-			var new_caculate_location_flag						=(component_loca_buffer[i][1]>0)?true:false;
-			this.component[component_id].caculate_location_flag	=new_caculate_location_flag;
-			this.component[component_id].move_matrix			=this.decode_location(component_loca_buffer[i][2]);
+			var component_id				=component_loca_buffer[i][0];
+			var old_caculate_location_flag	=this.component[component_id].caculate_location_flag;
+			var new_caculate_location_flag	=(component_loca_buffer[i][1]>0)?true:false;
+			this.component[component_id].caculate_location_flag=new_caculate_location_flag;
+			this.component[component_id].move_matrix=this.decode_location(component_loca_buffer[i][2]);
 			if(component_loca_buffer[i].length>3)
 				this.component[component_id].relative_matrix=this.decode_location(component_loca_buffer[i][3]);
-			
+
 			this.component[component_id].move_version_id=my_version_id;
 			
 			var buffer_position=identify_matrix_length*component_id;
@@ -95,10 +94,8 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				this.webgpu.device.queue.writeBuffer(this.component_relative_buffer,buffer_position,
 					new Float32Array(this.component[component_id].relative_matrix));
 			if(old_caculate_location_flag^new_caculate_location_flag)
-				this.webgpu.device.queue.writeBuffer(
-					this.component_location_flag_buffer,
-					Int32Array.BYTES_PER_ELEMENT*component_id,
-					new Int32Array([new_caculate_location_flag?1:0]));
+				this.webgpu.device.queue.writeBuffer(this.component_location_flag_buffer,
+					Int32Array.BYTES_PER_ELEMENT*component_id,new Int32Array([new_caculate_location_flag?1:0]));
 		}
 	};
 	this.get_component_move_location=function(component_id)
@@ -189,11 +186,11 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 			});
 
-		var my_parent_id_array		=new Array(this.component_number);
-		var my_location_flag_array	=new Array(this.component_number);
+		var my_parent_id_array		 =new Array(this.component_number);
+		var my_location_flag_array	 =new Array(this.component_number);
 		for(var i=0,ni=this.component_number;i<ni;i++){
-			my_parent_id_array[i]		=this.component[i].parent_id;
-			my_location_flag_array[i]	=0;
+			my_parent_id_array[i]	 =this.component[i].parent_id;
+			my_location_flag_array[i]=0;
 		}
 		this.webgpu.device.queue.writeBuffer(
 				this.component_parent_id_buffer,	0,new Int32Array(my_parent_id_array));
@@ -206,7 +203,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"storage"
+					type	:	"storage"
 				}
 			},
 			{	//absolute_matrix
@@ -214,7 +211,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"storage"
+					type	:	"storage"
 				}
 			},
 			{	//camera_information
@@ -222,7 +219,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"storage"
+					type	:	"storage"
 				}
 			},
 			{	//relative_matrix
@@ -230,7 +227,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"read-only-storage"
+					type	:	"read-only-storage"
 				}
 			},
 			{	//move_matrix
@@ -238,7 +235,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"read-only-storage"
+					type	:	"read-only-storage"
 				}
 			},
 			{	//parent_id
@@ -246,7 +243,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"read-only-storage"
+					type	:	"read-only-storage"
 				}
 			},
 			{
@@ -255,7 +252,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"read-only-storage"
+					type	:	"read-only-storage"
 				}
 			}
 		];
@@ -330,12 +327,18 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				code:common_shader_data_structure+location_shader_program
 			});
 			
-		this.component_workgroup_size=Math.ceil(Math.exp(Math.log(this.component_number)/3.0));
-		while((this.component_workgroup_size*this.component_workgroup_size*this.component_workgroup_size)<this.component_number)
-			this.component_workgroup_size++;
-		this.system_id_workgroup_size=Math.ceil(Math.exp(Math.log(system_id_number)/3.0));
-		while((this.system_id_workgroup_size*this.system_id_workgroup_size*this.system_id_workgroup_size)<system_id_number)
-			this.system_id_workgroup_size++;
+		var p;
+		p=Math.ceil(Math.exp(Math.log(this.component_number)/3.0));
+		while((p*p*p)<this.component_number)
+			p++;
+		this.component_workgroup_size=p;
+		
+		p=Math.ceil(Math.exp(Math.log(system_id_number)/3.0));
+		while((p*p*p)<system_id_number)
+			p++;
+		while((p*p*p)<camera_number)
+			p++;
+		this.system_id_workgroup_size=p;
 
 		this.compute_location_pipeline=this.webgpu.device.createComputePipeline(
 		{
@@ -376,7 +379,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		encoder.setPipeline(this.compute_location_pipeline);
 		encoder.dispatchWorkgroups(this.component_workgroup_size,
 			this.component_workgroup_size,this.component_workgroup_size);	
-		
+
 		encoder.setPipeline(this.set_location_pipeline);
 		encoder.dispatchWorkgroups(this.system_id_workgroup_size,
 			this.system_id_workgroup_size,this.system_id_workgroup_size);

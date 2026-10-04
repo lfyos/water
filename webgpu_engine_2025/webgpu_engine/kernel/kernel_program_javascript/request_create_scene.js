@@ -138,7 +138,6 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		var combined_shader_program="const scene_camera_number=";
 		combined_shader_program+=scene.camera.camera_number.toString();
 		combined_shader_program+=";\n"+common_shader_code+"\n";
-
 		for(var i=0,ni=my_shader_program.length;i<ni;i++)
 			combined_shader_program+=my_shader_program[i];
 		
@@ -146,7 +145,7 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 			scene.init_data.	render_init_data	[render_id],
 			scene.create_data.	render_create_data	[render_id].render_create_data,
 			combined_shader_program,my_text_array,scene);
-		
+
 		if(Array.isArray(scene.render_driver[render_id].method_render_flag)){
 			for(var i=0,ni=scene.render_driver[render_id].method_render_flag.length;i<ni;i++)
 				if(typeof(scene.render_driver[render_id].method_render_flag[i])!="boolean")

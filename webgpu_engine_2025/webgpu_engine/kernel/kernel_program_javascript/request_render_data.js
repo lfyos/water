@@ -111,7 +111,6 @@ async function request_render_data(scene)
 
 		return request_url;
 	};
-
 	function parse_target_parameter(response_data,scene)
 	{
 		for(var i=0,ni=scene.render_buffer_array.length;i<ni;i++)
@@ -137,21 +136,25 @@ async function request_render_data(scene)
 				default:
 					break;
 				case 0:
-					p.target_id_from		=my_data[j++];
+					p.target_id_from			=my_data[j++];
 					break;
 				case 1:
-					p.target_or_bundle_flag=true;
+					p.target_or_bundle_flag		=true;
 					break;
 				case 2:
-					p.target_or_bundle_flag=false;
+					p.target_or_bundle_flag		=false;
 					break;
 				case 3:
 					var my_target_component_id	=my_data[j++];
 					var my_target_driver_id		=my_data[j++];
 					p.target_texture_id			=my_data[j++];
 					p.target_name				=my_data[j++];
-					p.target_ids=scene.component_array_sorted_by_id[my_target_component_id];
-					p.target_ids=p.target_ids.component_ids[my_target_driver_id];
+
+					var my_ids=scene.component_array_sorted_by_id;
+					my_ids=my_ids[my_target_component_id];
+					my_ids=my_ids.component_ids[my_target_driver_id];
+					p.target_ids=my_ids;
+		
 					break;
 				case 4:
 					p.camera_id=my_data[j++];
@@ -203,7 +206,6 @@ async function request_render_data(scene)
 		}
 		return;
 	}
-	
 	async function fetch_web_server_response_data(request_url,scene)
 	{
 		var fetch_start_time=(new Date()).getTime();
@@ -250,7 +252,7 @@ async function request_render_data(scene)
 		
 		return false;
 	};
-
+	
 	for(var start_time=0;!(scene.terminate_flag);){
 		var current_time=(new Date()).getTime();
 		var sleep_time_length=start_time+scene.parameter.delay_time_length-current_time;
@@ -258,7 +260,7 @@ async function request_render_data(scene)
 			await new Promise((resolve)=>{setTimeout(resolve,sleep_time_length);});
 			continue;
 		}
-		
+
 		var new_fun_array=new Array();
 		var old_fun_array=scene.routine_object.before_fetch_response_data_routine_array;
 

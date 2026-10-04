@@ -52,10 +52,11 @@ override system_id_workgroup_size	:	i32;
 		var my_component_id	=camera_info[id_index_id].component_id;
 		var my_matrix		=absolute_matrix[my_component_id];
 		var my_eye_point	=my_matrix*vec4(0.0,0.0,camera_info[id_index_id].distance,1.0);
+		var my_distance		=camera_info[id_index_id].distance;
 
 		camera_info[id_index_id].matrix		=my_matrix;
 		camera_info[id_index_id].eye_point	=my_eye_point/my_eye_point.w;
-		camera_info[id_index_id].near_value	=camera_info[id_index_id].near_value_ratio	*camera_info[id_index_id].distance;
-		camera_info[id_index_id].far_value	=camera_info[id_index_id].far_value_ratio	*camera_info[id_index_id].distance;
+		camera_info[id_index_id].near_value	=camera_info[id_index_id].near_value_ratio*my_distance;
+		camera_info[id_index_id].far_value	=camera_info[id_index_id].far_value_ratio *my_distance;
 	}
 }
