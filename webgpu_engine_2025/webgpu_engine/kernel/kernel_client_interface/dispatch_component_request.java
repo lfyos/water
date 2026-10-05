@@ -6,7 +6,6 @@ import kernel_component.component;
 import kernel_scene.client_information;
 import kernel_common_class.debug_information;
 import kernel_driver.component_instance_driver;
-import kernel_render.response_render_component_request;
 
 public class dispatch_component_request
 {
@@ -25,14 +24,6 @@ public class dispatch_component_request
 		default:
 			debug_information.println(
 				"unknown method is in component_request_dispatch of dispatch_component_request\t:\t",str);
-			return null;
-		case "update_render":
-			ci.parameter.get_call_parameter(sk,ci);
-			
-			for(int i=0,ni=sk.modifier_cont.length;i<ni;i++)
-				sk.modifier_cont[i].process(sk,ci,false);
-			
-			response_render_component_request.do_render(sk,ci,delay_time_length);
 			return null;
 		case "event":
 			for(int i=0,ni=sk.modifier_cont.length;i<ni;i++)

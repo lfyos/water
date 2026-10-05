@@ -6,6 +6,7 @@ import kernel_scene.scene_kernel;
 import kernel_scene.scene_call_result;
 import kernel_scene.client_information;
 import kernel_common_class.debug_information;
+import kernel_render.response_render_component_request;
 
 public class dispatch_request_main
 {
@@ -24,6 +25,12 @@ public class dispatch_request_main
 			return null;
 		}
 		switch(str){
+		case "update":
+			ci.parameter.get_call_parameter(sk,ci);
+			for(int i=0,ni=sk.modifier_cont.length;i<ni;i++)
+				sk.modifier_cont[i].process(sk,ci,false);
+			response_render_component_request.do_render(sk,ci,delay_time_length);
+			return null;
 		case "creation":
 			dispatch_create_scene_request.do_dispatch(sk,ci);
 			return null;

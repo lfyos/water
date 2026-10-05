@@ -4,7 +4,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	this.max_loading_number					=my_max_loading_number;
 	
 	this.request_render_part_id				=new Array();
-	this.buffer_head_request_queue			=new Array();
+	this.load_package_request_queue			=new Array();
 	
 	this.current_loading_mesh_number		=0;
 	
@@ -35,13 +35,18 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		}	
 		my_item_number=Math.floor(buffer_object_data.region_data.length/my_item_size);
 		
+		var my_data_buffer_size		=buffer_object_data.region_data.length;
+		var my_data_buffer_data		=new Float32Array(buffer_object_data.region_data);
+		var my_data_buffer_object	={
+					size	:	my_data_buffer_size*Float32Array.BYTES_PER_ELEMENT,
+					usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
+				};
+		var my_data_buffer=this.webgpu.device.createBuffer(my_data_buffer_object);
+		this.webgpu.device.queue.writeBuffer(my_data_buffer,0,my_data_buffer_data);
+		
 		object_pointer.region_data.push(
 			{
-				buffer		:	this.webgpu.device.createBuffer(
-					{
-						size	:	buffer_object_data.region_data.length*Float32Array.BYTES_PER_ELEMENT,
-						usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
-					}),
+				buffer		:	my_data_buffer,
 				material_id	:	my_material_id,
 
 				item_size	:	my_item_size,
@@ -50,10 +55,6 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				region_box	:	buffer_object_data.region_box,
 				private_data:	buffer_object_data.private_data
 			});
-			
-		this.webgpu.device.queue.writeBuffer(
-				object_pointer.region_data[object_pointer.region_data.length-1].buffer,
-				0,new Float32Array(buffer_object_data.region_data));
 
 		for(var i=object_pointer.region_data.length-2;i>=0;i--){
 			var p0=object_pointer.region_data[i+0];
@@ -334,8 +335,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		if(scene.terminate_flag)
 			return;
 		this.current_loading_mesh_number++;
-		var head_promise=await fetch(package_proxy_url,
-					scene.fetch_parameter.load_part_package);
+		var head_promise=await fetch(package_proxy_url,scene.fetch_parameter.load_part_package);
 		this.current_loading_mesh_number--;
 		if(scene.terminate_flag)
 			return;
@@ -360,30 +360,32 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		this.loaded_buffer_object_file_number++;
 		this.loaded_buffer_object_data_length+=package_length;
 		
-		for(var i=0,ni=package_data_head.length;(i<ni)&&(!(scene.terminate_flag));i++){
+		for(var i=0,ni=package_data_head.length;i<ni;i++){
+			if(scene.terminate_flag)
+				break;
 			var render_id					=package_data_head[i][0];
 			var part_id						=package_data_head[i][1];
 			var part_package_sequence_id	=package_data_head[i][2];
 			var part_file_proxy_url			=package_data_head[i][3];
 			
-			if((part_package_sequence_id<0)||(part_package_sequence_id>=package_data_array.length)){
+			if((part_package_sequence_id>=0)&&(part_package_sequence_id<package_data_array.length)){
+				var part_head_data		=package_data_array[part_package_sequence_id].shift();
+				var part_affiliated_data=package_data_array[part_package_sequence_id];
+
+				this.create_part_array_and_vertex_data_request(render_id,part_id,
+						part_file_proxy_url,part_head_data,part_affiliated_data,scene);
+			}else{
 				console.log("package_proxy_url: "			+package_proxy_url);
 				console.log("render_id: "					+render_id.toString()+
 							",part_id: "					+part_id.toString());
 				console.log("part_package_sequence_id: "	+part_package_sequence_id+
 							",package_data_array.length:"	+package_data_array.length);
 				console.log();
-			}else{
-				var part_head_data		=package_data_array[part_package_sequence_id].shift();
-				var part_affiliated_data=package_data_array[part_package_sequence_id];
-		
-				this.create_part_array_and_vertex_data_request(render_id,part_id,
-					part_file_proxy_url,part_head_data,part_affiliated_data,scene);
 			}
 		}
 	};
 	
-	this.process_buffer_head_request_queue=function(scene)
+	this.process_load_package_request_queue=function(scene)
 	{
 		do{
 			if(scene.terminate_flag)
@@ -392,9 +394,9 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			for(var i=this.current_loading_mesh_number,ni=this.max_loading_number;i<ni;)
 				i+=this.request_buffer_object_data(scene);
 			
-			if((this.test_busy()<=0)||(this.buffer_head_request_queue.length<=0))
+			if((this.test_busy()<=0)||(this.load_package_request_queue.length<=0))
 				break;
-			var p=this.buffer_head_request_queue.shift();
+			var p=this.load_package_request_queue.shift();
 			var package_proxy_url	=p[0];
 			var package_length		=p[1];
 			var package_data_head	=p[2];

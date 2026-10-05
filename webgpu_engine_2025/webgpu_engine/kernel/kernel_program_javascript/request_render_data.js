@@ -2,7 +2,7 @@ async function request_render_data(scene)
 {
 	function create_request_url(scene)
 	{
-		var request_url=scene.url_with_channel+"&command=component&method=update_render";
+		var request_url=scene.url_with_channel+"&command=update";
 
 		var min_value=scene.computer.min_value();
 		if(Math.abs(scene.view_bak.x-scene.view.x)>min_value){
@@ -94,7 +94,7 @@ async function request_render_data(scene)
 
 			requesting_number =scene.vertex_data_downloader.current_loading_mesh_number;
 			requesting_number+=scene.vertex_data_downloader.request_render_part_id.length;
-			requesting_number+=scene.vertex_data_downloader.buffer_head_request_queue.length;
+			requesting_number+=scene.vertex_data_downloader.load_package_request_queue.length;
 			request_url+="&requesting_number="+requesting_number+"_"+max_request_number;
 		};
 		
@@ -248,7 +248,7 @@ async function request_render_data(scene)
 		scene.camera.modify_camera_data(response_data[5]);
 		scene.component_location_data.set_component_location(response_data[6]);
 		for(var p=response_data[7],i=0,ni=p.length;i<ni;i++)
-			scene.vertex_data_downloader.buffer_head_request_queue.push(p[i]);
+			scene.vertex_data_downloader.load_package_request_queue.push(p[i]);
 		
 		return false;
 	};

@@ -115,12 +115,11 @@ public class response_render_component_request
 		}
 		ci.request_response.print("]");
 	}
-	private static int response_buffer_object_request(part p,scene_kernel sk,client_information ci)
+	private static int response_part_buffer_data_request(part p,scene_kernel sk,client_information ci)
 	{
 		String directory_name=file_directory.part_temporary_directory(p,sk.system_par,sk.scene_par)+"mesh.";
 		String url_directory=ci.request_url_header+"&command=buffer&method=buffer_data"
 								+"&render="+(p.render_id)+"&part="+(p.part_id)+"&data_file=";
-		
 		int ret_val=0;
 		String type_str[]={"face","edge","point"};
 
@@ -146,14 +145,15 @@ public class response_render_component_request
 		}
 		return ret_val;
 	}
-	private static void response_buffer_object_request(
+	private static void response_package_request(
 		scene_kernel sk,client_information ci,int current_loading_number,int max_loading_number)
 	{
 		ci.request_response.print(",[");
 		for(int request_package[],i=current_loading_number;i<max_loading_number;i++){
 			if((request_package=ci.render_buffer.mesh_loader.get_request_package(sk.process_part_sequence))==null)
 				break;
-			int part_type_id=request_package[0],part_package_id=request_package[1];
+			int part_type_id	=request_package[0];
+			int part_package_id	=request_package[1];
 
 			String package_file_name;
 			ArrayList<int[]> package_render_part_id;
@@ -197,7 +197,7 @@ public class response_render_component_request
 									print(",",				p.part_id).
 									print(",",				p.part_package_sequence_id);
 				ci.request_response.print(",[");
-				i+=response_buffer_object_request(p,sk,ci);
+				i+=response_part_buffer_data_request(p,sk,ci);
 				ci.request_response.print("]]");
 			}
 			ci.request_response.print("]]");
@@ -283,7 +283,7 @@ public class response_render_component_request
 		response_component_buffer_parameter.response_buffer_parameter(rcacr_list,sk,ci,rcc);
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,sk.camera_cont);
 		ci.render_buffer.location_buffer.response_location(sk,ci,rcc);
-		response_buffer_object_request(sk,ci,current_loading_number,max_loading_number);
+		response_package_request(sk,ci,current_loading_number,max_loading_number);
 		
 		ci.request_response.print("]");
 
