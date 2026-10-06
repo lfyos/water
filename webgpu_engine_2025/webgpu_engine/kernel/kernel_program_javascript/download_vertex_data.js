@@ -69,6 +69,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	this.process_buffer_object_data=function(render_id,part_id,request_str,
 		response_data,object_pointer,max_buffer_object_data_length,request_file_id,scene)		
 	{
+		object_pointer.loaded_number--;
+		
 		var p=object_pointer.server_region_data[request_file_id];
 		var my_material_id	=p.material_id;
 		var my_region_box	=p.region_box;
@@ -158,8 +160,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		
 		this.loaded_buffer_object_file_number++;
 		this.loaded_buffer_object_data_length+=buffer_data_length;
-		
-		object_pointer.loaded_number--;
+
 		this.process_buffer_object_data(render_id,part_id,request_str,response_data,
 			object_pointer,max_buffer_object_data_length,request_file_id,scene);
 		return;
@@ -212,7 +213,6 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				part_affiliated_data[i]=part_affiliated_data[ni-1];
 				part_affiliated_data.pop();
 				
-				object_pointer.loaded_number--;
 				this.process_buffer_object_data(
 						render_id,part_id,request_str,my_data,
 						object_pointer,max_buffer_object_data_length,
@@ -383,11 +383,9 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	{
 		do{
 			if(scene.terminate_flag)
-				break;
-				
+				return;
 			for(var i=this.current_loading_mesh_number,ni=this.max_loading_number;i<ni;)
 				i+=this.request_buffer_object_data(scene);
-			
 			if((this.test_busy()<=0)||(this.load_package_request_queue.length<=0))
 				break;
 			var p=this.load_package_request_queue.shift();
@@ -399,7 +397,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 					package_data_length,package_part_information,scene);
 		}while(true);
 		
-		for(;this.loading_render_part_id.length>0;this.loading_render_part_id.shift()){
+		while(this.loading_render_part_id.length>0){
 			var p=this.loading_render_part_id[0];
 			var render_id=p[0],part_id=p[1];
 			p=scene.part_array[render_id][part_id].buffer_object;
@@ -408,6 +406,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				this.loading_part_id	=part_id;
 				return;
 			}
+			this.loading_render_part_id.shift();
 		}
 		this.loading_render_id	=-1;
 		this.loading_part_id	=-1;
