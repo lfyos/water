@@ -78,22 +78,25 @@ async function request_render_data(scene)
 			request_url+="_"		+(new Number(scene.pickup.value[1])).toPrecision(6);
 			request_url+="_"		+(new Number(scene.pickup.value[2])).toPrecision(6);
 		};
-		if(scene.vertex_data_downloader.acknowledge_render_part_id!=null){
-			request_url+="&acknowledge="+scene.vertex_data_downloader.acknowledge_render_part_id;
-			scene.vertex_data_downloader.acknowledge_render_part_id=null;
-		};
-		if((scene.vertex_data_downloader.response_loaded_length)!=(scene.vertex_data_downloader.loaded_buffer_object_data_length)){
-			scene.vertex_data_downloader.response_loaded_length=scene.vertex_data_downloader.loaded_buffer_object_data_length;
-			request_url+="&loaded_length="+	scene.vertex_data_downloader.loaded_buffer_object_file_number.toString();
-			request_url+="_"+ 				scene.vertex_data_downloader.loaded_buffer_object_data_length.toString();
-			request_url+="_"+				scene.vertex_data_downloader.current_loading_render_part_id;
+		var downloader=scene.vertex_data_downloader;
+		var len1=downloader.response_loaded_length;
+		var len2=downloader.loaded_buffer_object_data_length;
+		if((downloader.acknowledge_render_part_id!=null)||(len1!=len2)){	
+			request_url+="&acknowledge="+downloader.loaded_buffer_object_file_number;
+			request_url+="_"			+downloader.loaded_buffer_object_data_length;
+			request_url+="_"			+downloader.current_loading_render_part_id;
+			if(downloader.acknowledge_render_part_id!=null){
+				request_url+="_"		+downloader.acknowledge_render_part_id;
+				downloader.acknowledge_render_part_id=null;
+			}
+			downloader.response_loaded_length=downloader.loaded_buffer_object_data_length;
 		};
 		{
-			var requesting_number,max_request_number=scene.vertex_data_downloader.max_loading_number;
+			var requesting_number,max_request_number=downloader.max_loading_number;
 
-			requesting_number =scene.vertex_data_downloader.current_loading_mesh_number;
-			requesting_number+=scene.vertex_data_downloader.request_render_part_id.length;
-			requesting_number+=scene.vertex_data_downloader.load_package_request_queue.length;
+			requesting_number =downloader.current_loading_mesh_number;
+			requesting_number+=downloader.request_render_part_id.length;
+			requesting_number+=downloader.load_package_request_queue.length;
 			request_url+="&requesting_number="+requesting_number+"_"+max_request_number;
 		};
 		

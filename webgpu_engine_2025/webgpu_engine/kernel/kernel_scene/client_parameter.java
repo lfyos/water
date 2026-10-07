@@ -46,7 +46,7 @@ public class client_parameter
 
 		comp=null;
 	}
-	public void get_call_parameter(scene_kernel sk,client_information ci)
+	public void get_client_parameter(scene_kernel sk,client_information ci)
 	{		
 		String str;
 		int index_id;
@@ -117,28 +117,6 @@ public class client_parameter
 		}
 		if((str=ci.request_response.get_parameter("length"))!=null)
 			request_length=Integer.decode(str);
-		
-		if((str=ci.request_response.get_parameter("acknowledge"))!=null) 
-			for(int render_id,part_id;str.length()>0;){
-				if((index_id=str.indexOf('_'))<0)
-					break;
-				render_id=Integer.parseInt(str.substring(0,index_id));
-				str=str.substring(index_id+1);		
-				if((index_id=str.indexOf('_'))<0) {
-					part_id=Integer.parseInt(str);
-					str="";
-				}else {
-					part_id=Integer.parseInt(str.substring(0,index_id));
-					str=str.substring(index_id+1);
-				}
-				if((render_id<0)||(part_id<0))
-					continue;
-				if(render_id>=ci.acknowledged_part_load_flag.length)
-					continue;
-				if(part_id>=ci.acknowledged_part_load_flag[render_id].length)
-					continue;
-				ci.acknowledged_part_load_flag[render_id][part_id]=true;
-			}
 
 		str=ci.request_response.get_parameter("precision");
 		switch((str==null)?"":(str.toLowerCase())) {

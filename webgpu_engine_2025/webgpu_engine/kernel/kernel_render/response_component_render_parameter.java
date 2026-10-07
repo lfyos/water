@@ -23,7 +23,7 @@ public class response_component_render_parameter
 		
 		for(int i=0,ni=pps.length;i<ni;i++){
 			int render_id=pps[i][0],part_id=pps[i][1];
-			if(ci.acknowledged_part_load_flag[render_id][part_id])
+			if(ci.acknowledgement.acknowledged_part_load_flag[render_id][part_id])
 				for(render_collector_and_camera_result rcacr:rcacr_list) {
 					component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
 							render_id,part_id,rcacr.cam_result.target.target_id,pcd[render_id][part_id].length);
@@ -84,7 +84,7 @@ public class response_component_render_parameter
 		
 		for(int i=0,ni=pps.length;i<ni;i++){
 			int render_id=pps[i][0],part_id=pps[i][1];
-			if(ci.acknowledged_part_load_flag[render_id][part_id])
+			if(ci.acknowledgement.acknowledged_part_load_flag[render_id][part_id])
 				for(render_collector_and_camera_result rcacr:rcacr_list) {
 					component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
 							render_id,part_id,rcacr.cam_result.target.target_id,pcd[render_id][part_id].length);

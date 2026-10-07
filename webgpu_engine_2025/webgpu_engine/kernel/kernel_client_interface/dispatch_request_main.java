@@ -26,7 +26,8 @@ public class dispatch_request_main
 		}
 		switch(str){
 		case "update":
-			ci.parameter.get_call_parameter(sk,ci);
+			ci.parameter.get_client_parameter(sk,ci);
+			ci.acknowledgement.get_client_parameter(sk,ci);
 			for(int i=0,ni=sk.modifier_cont.length;i<ni;i++)
 				sk.modifier_cont[i].process(sk,ci,false);
 			response_render_component_request.do_render(sk,ci,delay_time_length);

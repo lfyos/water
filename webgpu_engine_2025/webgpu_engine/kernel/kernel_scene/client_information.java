@@ -18,8 +18,6 @@ import kernel_driver.component_instance_driver_container;
 
 public class client_information 
 {
-	public boolean								acknowledged_part_load_flag[][];
-	
 	public buffer_container						render_buffer;
 
 	public render_target_container				target_container;
@@ -35,6 +33,7 @@ public class client_information
 	public String								channel_id;
 	
 	public client_parameter						parameter;
+	public client_acknowledge_information		acknowledgement;
 	public client_request_response 				request_response;
 	
 	public render_instance_driver_container		render_instance_driver_cont;
@@ -50,9 +49,6 @@ public class client_information
 	
 	public void destroy()
 	{
-		if(acknowledged_part_load_flag!=null) 
-			acknowledged_part_load_flag=null;
-		
 		if(render_buffer!=null) {
 			render_buffer.destroy();
 			render_buffer=null;
@@ -95,6 +91,10 @@ public class client_information
 		if(parameter!=null) {
 			parameter.destroy();
 			parameter=null;
+		}
+		if(acknowledgement!=null) {
+			acknowledgement.destroy();
+			acknowledgement=null;
 		}
 		if(request_response!=null)
 			request_response=null;
@@ -190,13 +190,6 @@ public class client_information
 	}
 	public client_information(client_request_response my_request_response,scene_kernel sk)
 	{
-		acknowledged_part_load_flag=new boolean[sk.render_cont.renders.size()][];
-		for(int i=0,ni=acknowledged_part_load_flag.length;i<ni;i++) {
-			acknowledged_part_load_flag[i]=new boolean[sk.render_cont.renders.get(i).parts.size()];
-			for(int j=0,nj=acknowledged_part_load_flag[i].length;j<nj;j++)
-				acknowledged_part_load_flag[i][j]=false;
-		}
-
 		render_buffer					=new buffer_container(sk);
 		target_container				=new render_target_container();
 		
@@ -217,6 +210,7 @@ public class client_information
 		channel_id						=Long.toString(system_channel_id++);
 		
 		parameter						=new client_parameter();
+		acknowledgement					=new client_acknowledge_information(sk);
 		
 		request_response				=my_request_response;
 
