@@ -4,19 +4,17 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	this.max_loading_number					=my_max_loading_number;
 	
 	this.request_render_part_id				=new Array();
-	this.loading_render_part_id				=new Array();
 	this.load_package_request_queue			=new Array();
 	
 	this.current_loading_mesh_number		=0;
-	
-	this.loading_render_id					=-1;
-	this.loading_part_id					=-1;
+
 	this.loaded_buffer_object_file_number	=0;
 	this.loaded_buffer_object_data_length	=0;
 	
 	this.response_loaded_length				=0;
 	
 	this.acknowledge_render_part_id			=null; 
+	this.current_loading_render_part_id		="-1_-1"; 
 	
 	this.save_data_into_buffer_object=function(my_material_id,object_pointer,buffer_object_data)
 	{
@@ -199,6 +197,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			this.request_render_part_id.shift();
 			return 0;
 		}
+		this.current_loading_render_part_id=render_id+"_"+part_id;
 		
 		object_pointer.file_number--;
 		
@@ -315,7 +314,6 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				component_ids,init_data,create_data,part_object,part_driver,render_driver,scene);
 		}
 		
-		this.loading_render_part_id.push([render_id,part_id]);
 		this.request_render_part_id.push([render_id,part_id,
 				part_head_data.data.max_buffer_object_data_length,
 				part_buffer_file_download_url,part_affiliated_data]);
@@ -362,20 +360,11 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var part_package_sequence_id		=package_part_information[i][2];
 			var part_buffer_file_download_url	=package_part_information[i][3];
 			
-			if((part_package_sequence_id>=0)&&(part_package_sequence_id<package_data_array.length)){
-				var part_head_data		=package_data_array[part_package_sequence_id].shift();
-				var part_affiliated_data=package_data_array[part_package_sequence_id];
+			var part_head_data		=package_data_array[part_package_sequence_id].shift();
+			var part_affiliated_data=package_data_array[part_package_sequence_id];
 
-				this.create_part_array_and_vertex_data_request(render_id,part_id,
-						part_buffer_file_download_url,part_head_data,part_affiliated_data,scene);
-			}else{
-				console.log("package_download_url: "		+package_download_url);
-				console.log("render_id: "					+render_id.toString()+
-							",part_id: "					+part_id.toString());
-				console.log("part_package_sequence_id: "	+part_package_sequence_id+
-							",package_data_array.length:"	+package_data_array.length);
-				console.log();
-			}
+			this.create_part_array_and_vertex_data_request(render_id,part_id,
+					part_buffer_file_download_url,part_head_data,part_affiliated_data,scene);
 		}
 	};
 	
@@ -396,23 +385,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			this.request_part_package(package_download_url,
 					package_data_length,package_part_information,scene);
 		}while(true);
-		
-		while(this.loading_render_part_id.length>0){
-			var p=this.loading_render_part_id[0];
-			var render_id=p[0],part_id=p[1];
-			p=scene.part_array[render_id][part_id].buffer_object;
-			if((p.face.loaded_number>0)||(p.edge.loaded_number>0)||(p.point.loaded_number>0)){
-				this.loading_render_id	=render_id;
-				this.loading_part_id	=part_id;
-				return;
-			}
-			this.loading_render_part_id.shift();
-		}
-		this.loading_render_id	=-1;
-		this.loading_part_id	=-1;
-		return;
 	};
-	
+
 	this.test_busy=function()
 	{
 		return this.max_loading_number-this.current_loading_mesh_number;

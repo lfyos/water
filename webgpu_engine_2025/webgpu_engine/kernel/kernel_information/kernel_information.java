@@ -25,8 +25,6 @@ public class kernel_information extends jason_creator
 		print("original_part_number",					sk.component_cont.original_part_number);
 		print("effective_part_number",					sk.process_part_sequence.process_parts_sequence.length);
 		
-		print("loaded_file_number",						ci.loaded_file_number);
-		print("loaded_data_length",						ci.loaded_data_length);
 		print("total_file_number",						sk.process_part_sequence.total_file_number);
 		print("total_data_length",						sk.process_part_sequence.total_data_length);
 		

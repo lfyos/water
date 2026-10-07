@@ -18,8 +18,8 @@
 
 /*	file_read_write_buffer_size								*/		65536
 
-/*	engine_expire_time_length		unit:nanosecond			*/		60000000000
-/*	engine_touch_time_length		unit:nanosecond			*/		10000000000
+/*	scene_expire_time_length		unit:nanosecond			*/		60000000000
+/*	scene_touch_time_length			unit:nanosecond			*/		10000000000
 /*	part_load_sleep_time_length		unit:millisecond		*/		100
 
 /*	create_scene_concurrent_number							*/		5
@@ -35,8 +35,8 @@
 /*	max_client_container_number								*/		20
 /*	max_client_interface_number								*/		10
 
-/*	max_engine_kernel_number								*/		300
-/*	max_engine_component_number								*/		3000000
+/*	max_scene_kernel_number									*/		300
+/*	max_scene_component_number								*/		3000000
 
 /*	max_file_response_length								*/		256
 /*	min_compress_response_length							*/		1024

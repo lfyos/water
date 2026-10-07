@@ -133,11 +133,11 @@ public class client_parameter
 				}
 				if((render_id<0)||(part_id<0))
 					continue;
-				if(render_id>=ci.not_acknowledge_render_part_id.length)
+				if(render_id>=ci.acknowledged_part_load_flag.length)
 					continue;
-				if(part_id>=ci.not_acknowledge_render_part_id[render_id].length)
+				if(part_id>=ci.acknowledged_part_load_flag[render_id].length)
 					continue;
-				ci.not_acknowledge_render_part_id[render_id][part_id]=false;
+				ci.acknowledged_part_load_flag[render_id][part_id]=true;
 			}
 
 		str=ci.request_response.get_parameter("precision");

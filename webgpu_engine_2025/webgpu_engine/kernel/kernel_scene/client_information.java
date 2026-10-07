@@ -18,9 +18,7 @@ import kernel_driver.component_instance_driver_container;
 
 public class client_information 
 {
-	public boolean								not_acknowledge_render_part_id[][];
-	public int 									loaded_file_number;
-	public long 								loaded_data_length;
+	public boolean								acknowledged_part_load_flag[][];
 	
 	public buffer_container						render_buffer;
 
@@ -52,7 +50,8 @@ public class client_information
 	
 	public void destroy()
 	{
-		not_acknowledge_render_part_id=null;
+		if(acknowledged_part_load_flag!=null) 
+			acknowledged_part_load_flag=null;
 		
 		if(render_buffer!=null) {
 			render_buffer.destroy();
@@ -191,15 +190,12 @@ public class client_information
 	}
 	public client_information(client_request_response my_request_response,scene_kernel sk)
 	{
-		not_acknowledge_render_part_id=new boolean[sk.render_cont.renders.size()][];
-		for(int i=0,ni=not_acknowledge_render_part_id.length;i<ni;i++) {
-			not_acknowledge_render_part_id[i]=new boolean[sk.render_cont.renders.get(i).parts.size()];
-			for(int j=0,nj=not_acknowledge_render_part_id[i].length;j<nj;j++)
-				not_acknowledge_render_part_id[i][j]=true;
+		acknowledged_part_load_flag=new boolean[sk.render_cont.renders.size()][];
+		for(int i=0,ni=acknowledged_part_load_flag.length;i<ni;i++) {
+			acknowledged_part_load_flag[i]=new boolean[sk.render_cont.renders.get(i).parts.size()];
+			for(int j=0,nj=acknowledged_part_load_flag[i].length;j<nj;j++)
+				acknowledged_part_load_flag[i][j]=false;
 		}
-		
-		loaded_file_number				=0;
-		loaded_data_length				=0;
 
 		render_buffer					=new buffer_container(sk);
 		target_container				=new render_target_container();

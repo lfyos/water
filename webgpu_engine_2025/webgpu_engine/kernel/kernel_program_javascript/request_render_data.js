@@ -86,8 +86,7 @@ async function request_render_data(scene)
 			scene.vertex_data_downloader.response_loaded_length=scene.vertex_data_downloader.loaded_buffer_object_data_length;
 			request_url+="&loaded_length="+	scene.vertex_data_downloader.loaded_buffer_object_file_number.toString();
 			request_url+="_"+ 				scene.vertex_data_downloader.loaded_buffer_object_data_length.toString();
-			request_url+="_"+				scene.vertex_data_downloader.loading_render_id.toString();
-			request_url+="_"+				scene.vertex_data_downloader.loading_part_id.toString();
+			request_url+="_"+				scene.vertex_data_downloader.current_loading_render_part_id;
 		};
 		{
 			var requesting_number,max_request_number=scene.vertex_data_downloader.max_loading_number;
@@ -270,7 +269,7 @@ async function request_render_data(scene)
 					new_fun_array.push(old_fun_array[i]);
 
 		scene.routine_object.before_fetch_response_data_routine_array=new_fun_array;
-		
+	
 		if(await fetch_web_server_response_data(create_request_url(scene),scene))
 			break;
 		

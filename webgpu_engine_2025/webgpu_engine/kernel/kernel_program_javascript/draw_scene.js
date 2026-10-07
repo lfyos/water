@@ -31,9 +31,9 @@ function front_process_scene_routine(scene_id,scene)
 			if(old_fun_array[i](scene))
 				new_fun_array.push(old_fun_array[i]);
 	scene.routine_object.before_draw_scene_routine_array=new_fun_array;
-
-	scene.vertex_data_downloader.process_load_package_request_queue(scene);
 	
+	scene.vertex_data_downloader.process_load_package_request_queue(scene);
+
 	var start_time=(new Date()).getTime();
 	if(scene.browser_current_time>0){
 		var pass_time=(start_time-scene.browser_current_time)*1000*1000;

@@ -211,43 +211,45 @@ public class response_render_component_request
 
 		if((str=ci.request_response.get_parameter("loaded_length"))==null)
 			return;
+		
 		int index_id;
 		if((index_id=str.indexOf("_"))<0)
 			return;
-		ci.loaded_file_number=Integer.decode(str.substring(0,index_id));
-		str=str.substring(index_id+1);
 		
-		if((index_id=str.indexOf("_"))<0)
+		int loaded_file_number=Integer.decode(str.substring(0,index_id));
+		
+		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))<0)
 			return;
-		ci.loaded_data_length=Long.decode(str.substring(0,index_id));
-		str=str.substring(index_id+1);
-
+		long loaded_data_length	=Long.decode(str.substring(0,index_id));
+		
+		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))<0)
+			return;
+		int loading_render_id	=Integer.parseInt(str.substring(0,index_id));
+		int loading_part_id		=Integer.parseInt(str.substring(index_id+1));
+		long total_data_length	=sk.process_part_sequence.total_data_length;
+		
+		if((total_data_length<=0)||(loaded_data_length>=total_data_length)){
+			ci.message_display.set_display_message("",-1);
+			return;
+		}
+		
 		String display_message=sk.system_par.language_change_name.search_change_name(
 				"load+"+ci.request_response.language_str,"Load");
 		
-		if(sk.process_part_sequence.total_data_length>0){
-			display_message+="["+ci.loaded_file_number+":"+sk.process_part_sequence.total_file_number;
-			display_message+="/"+(ci.loaded_data_length/1024)+"K:";
-			display_message+=(sk.process_part_sequence.total_data_length/1024)+"K/";
-			double value=ci.loaded_data_length*100.0/sk.process_part_sequence.total_data_length;
-			display_message+=((int)(Math.round(value)))+"%]";
-		}
+		int total_file_number	=sk.process_part_sequence.total_file_number;
 		
-		int loading_render_id,loading_part_id;
-		if((index_id=str.indexOf("_"))>0){
-			loading_render_id=Integer.decode(str.substring(0,index_id  ));
-			loading_part_id  =Integer.decode(str.substring(  index_id+1));
-			if((loading_render_id>=0)&&(loading_render_id<sk.render_cont.renders.size())) {
-				render r=sk.render_cont.renders.get(loading_render_id);
-				if((loading_part_id>=0)&&(loading_part_id<r.parts.size())) {
-					part p=r.parts.get(loading_part_id);
-					if(p!=null)
-						display_message+=":"+p.user_name;
-				}
-			}
+		
+		display_message+="["+loaded_file_number+"/"+total_file_number;
+		display_message+=":"+(loaded_data_length/1024)+"K/"+(total_data_length/1024)+"K";
+		display_message+=":"+((int)(Math.round(100.0*loaded_data_length/total_data_length)))+"%]";
+
+		if((loading_render_id>=0)&&(loading_render_id<sk.render_cont.renders.size())) {
+			render my_render=sk.render_cont.renders.get(loading_render_id);
+			if((loading_part_id>=0)&&(loading_part_id<my_render.parts.size()))
+				display_message+=my_render.parts.get(loading_part_id).user_name;
 		}
-		ci.message_display.set_display_message(display_message,
-			(ci.loaded_data_length>=sk.process_part_sequence.total_data_length)?1000*1000*1000*10:-1);
+		ci.message_display.set_display_message(display_message,1000*1000*1000*10);
+		return;
 	}
 	public static void do_render(scene_kernel sk,client_information ci,long delay_time_length)
 	{

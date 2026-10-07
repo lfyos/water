@@ -530,7 +530,7 @@ public class scene_initialization
 		
 		fw.print  ("	scene_touch_time_length	:	",sk.system_par.scene_touch_time_length).	println(",");
 		fw.print  ("	max_target_number		:	",sk.scene_par.max_target_number).			println(",");
-		fw.print  ("	max_method_number		:	",sk.system_par.max_method_number);
+		fw.print  ("	max_method_number		:	",sk.system_par.max_method_number).			println();
 		
 		fw.println("}");
 	}

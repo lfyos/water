@@ -16,11 +16,11 @@ public class display_message
 	}
 	public void set_display_message(String new_display_message,long my_message_time_length)
 	{
+		display_message=new_display_message;
 		if(my_message_time_length>0)
 			set_display_message_time=nanosecond_timer.absolute_nanoseconds()+my_message_time_length;
 		else
 			set_display_message_time=-1;
-		display_message=new_display_message;
 	}
 	public display_message()
 	{
