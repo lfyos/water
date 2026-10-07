@@ -252,95 +252,95 @@ function construct_system_buffer(my_scene,my_max_target_number,my_max_method_num
 			}
 	};
 	
-	this.set_target_buffer=function(render_data,render_data_from)
+	this.set_target_buffer=function(target_render_data,target_render_data_from)
 	{
-		if(render_data_from==null)
-			render_data_from=render_data;
+		if(target_render_data_from==null)
+			target_render_data_from=target_render_data;
 		
 		var int_data=[
-			render_data.target_view_parameter.view_x0,
-			render_data.target_view_parameter.view_y0,
-			render_data.target_view_parameter.view_width,
-			render_data.target_view_parameter.view_height,
-			render_data.target_view_parameter.whole_view_width,
-			render_data.target_view_parameter.whole_view_height,
-			render_data.main_display_target_flag?1:0,
+			target_render_data.target_view_parameter.view_x0,
+			target_render_data.target_view_parameter.view_y0,
+			target_render_data.target_view_parameter.view_width,
+			target_render_data.target_view_parameter.view_height,
+			target_render_data.target_view_parameter.whole_view_width,
+			target_render_data.target_view_parameter.whole_view_height,
+			target_render_data.main_display_target_flag?1:0,
 
-			render_data_from.target_view_parameter.view_x0,
-			render_data_from.target_view_parameter.view_y0,
-			render_data_from.target_view_parameter.view_width,
-			render_data_from.target_view_parameter.view_height,
-			render_data_from.target_view_parameter.whole_view_width,
-			render_data_from.target_view_parameter.whole_view_height,
-			render_data_from.main_display_target_flag?1:0,
+			target_render_data_from.target_view_parameter.view_x0,
+			target_render_data_from.target_view_parameter.view_y0,
+			target_render_data_from.target_view_parameter.view_width,
+			target_render_data_from.target_view_parameter.view_height,
+			target_render_data_from.target_view_parameter.whole_view_width,
+			target_render_data_from.target_view_parameter.whole_view_height,
+			target_render_data_from.main_display_target_flag?1:0,
 
 			this.scene.scene_id,
-			render_data.camera_id
+			target_render_data.camera_id
 		];
 		var matrix_array=[
-			render_data.project_matrix.matrix,
-			render_data.project_matrix.negative_matrix,
-			render_data.project_matrix.projection_type_flag
-				?(render_data.project_matrix.orthographic_matrix)
-				:(render_data.project_matrix.frustem_matrix),
-			render_data.project_matrix.projection_type_flag
-				?(render_data.project_matrix.negative_orthographic_matrix)
-				:(render_data.project_matrix.negative_frustem_matrix),
+			target_render_data.project_matrix.matrix,
+			target_render_data.project_matrix.negative_matrix,
+			target_render_data.project_matrix.projection_type_flag
+				?(target_render_data.project_matrix.orthographic_matrix)
+				:(target_render_data.project_matrix.frustem_matrix),
+			target_render_data.project_matrix.projection_type_flag
+				?(target_render_data.project_matrix.negative_orthographic_matrix)
+				:(target_render_data.project_matrix.negative_frustem_matrix),
 				
-			render_data.project_matrix.screen_move_matrix,
-			render_data.project_matrix.negative_screen_move_matrix,
-			render_data.project_matrix.screen_move_matrix_from,
-			render_data.project_matrix.negative_screen_move_matrix_from,
+			target_render_data.project_matrix.screen_move_matrix,
+			target_render_data.project_matrix.negative_screen_move_matrix,
+			target_render_data.project_matrix.screen_move_matrix_from,
+			target_render_data.project_matrix.negative_screen_move_matrix_from,
 			
-			render_data.project_matrix.lookat_matrix,
-			render_data.project_matrix.negative_lookat_matrix,
+			target_render_data.project_matrix.lookat_matrix,
+			target_render_data.project_matrix.negative_lookat_matrix,
 			
-			render_data.project_matrix.camera_location,
+			target_render_data.project_matrix.camera_location,
 			
-			render_data.project_matrix.clip_plane_matrix
+			target_render_data.project_matrix.clip_plane_matrix
 		];
 		var vector_array=[
-			render_data.project_matrix.left_plane,	
-			render_data.project_matrix.right_plane,
-			render_data.project_matrix.up_plane,
-			render_data.project_matrix.down_plane,
-			render_data.project_matrix.near_plane,
-			render_data.project_matrix.far_plane,
-			render_data.project_matrix.center_plane,
+			target_render_data.project_matrix.left_plane,	
+			target_render_data.project_matrix.right_plane,
+			target_render_data.project_matrix.up_plane,
+			target_render_data.project_matrix.down_plane,
+			target_render_data.project_matrix.near_plane,
+			target_render_data.project_matrix.far_plane,
+			target_render_data.project_matrix.center_plane,
 			
-			render_data.project_matrix.clip_plane,
+			target_render_data.project_matrix.clip_plane,
 			
-			render_data.project_matrix.original_far_center_point,
-			render_data.project_matrix.original_center_point,
-			render_data.project_matrix.original_near_center_point,
-			render_data.project_matrix.original_eye_point,
+			target_render_data.project_matrix.original_far_center_point,
+			target_render_data.project_matrix.original_center_point,
+			target_render_data.project_matrix.original_near_center_point,
+			target_render_data.project_matrix.original_eye_point,
 			
-			render_data.project_matrix.far_center_point,
-			render_data.project_matrix.center_point,
-			render_data.project_matrix.near_center_point,
-			render_data.project_matrix.eye_point,
+			target_render_data.project_matrix.far_center_point,
+			target_render_data.project_matrix.center_point,
+			target_render_data.project_matrix.near_center_point,
+			target_render_data.project_matrix.eye_point,
 			
-			render_data.project_matrix.left_down_near_point,
-			render_data.project_matrix.left_up_near_point,
-			render_data.project_matrix.right_down_near_point,
-			render_data.project_matrix.right_up_near_point,
+			target_render_data.project_matrix.left_down_near_point,
+			target_render_data.project_matrix.left_up_near_point,
+			target_render_data.project_matrix.right_down_near_point,
+			target_render_data.project_matrix.right_up_near_point,
 			
-			render_data.project_matrix.left_down_center_point,
-			render_data.project_matrix.left_up_center_point,
-			render_data.project_matrix.right_down_center_point,
-			render_data.project_matrix.right_up_center_point,
+			target_render_data.project_matrix.left_down_center_point,
+			target_render_data.project_matrix.left_up_center_point,
+			target_render_data.project_matrix.right_down_center_point,
+			target_render_data.project_matrix.right_up_center_point,
 			
-			render_data.project_matrix.left_down_far_point,
-			render_data.project_matrix.left_up_far_point,
-			render_data.project_matrix.right_down_far_point,
-			render_data.project_matrix.right_up_far_point,
+			target_render_data.project_matrix.left_down_far_point,
+			target_render_data.project_matrix.left_up_far_point,
+			target_render_data.project_matrix.right_down_far_point,
+			target_render_data.project_matrix.right_up_far_point,
 			
-			render_data.project_matrix.to_right_direction,
-			render_data.project_matrix.to_up_direction,
-			render_data.project_matrix.to_me_direction,
+			target_render_data.project_matrix.to_right_direction,
+			target_render_data.project_matrix.to_up_direction,
+			target_render_data.project_matrix.to_me_direction,
 			
-			render_data.project_matrix.view_volume_box[0],
-			render_data.project_matrix.view_volume_box[1]
+			target_render_data.project_matrix.view_volume_box[0],
+			target_render_data.project_matrix.view_volume_box[1]
 		];
 		
 		var float_data=new Array();
@@ -358,7 +358,7 @@ function construct_system_buffer(my_scene,my_max_target_number,my_max_method_num
 			else
 				float_data.push(p[0],p[1],p[2],p[3]);
 		
-		var offset=this.target_buffer_stride*render_data.target_id;
+		var offset=this.target_buffer_stride*target_render_data.target_id;
 		this.scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Float32Array(float_data));
 		offset+=float_data.length*Float32Array.BYTES_PER_ELEMENT;
 		this.scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Int32Array(int_data));
@@ -415,7 +415,7 @@ function construct_system_buffer(my_scene,my_max_target_number,my_max_method_num
 	};
 	this.set_system_bindgroup=function(target_id,method_id,component_id,driver_id)
 	{
-		if((target_id<0)||(target_id>=this.scene.render_buffer_array.length))
+		if((target_id<0)||(target_id>=this.scene.render_target_array.length))
 			return;
 		if((component_id<0)||(component_id>=this.scene.component_array_sorted_by_id.length))
 			return;

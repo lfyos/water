@@ -7,7 +7,7 @@ import kernel_file_manager.travel_through_directory;
 public class test_1 extends travel_through_directory
 {
 	private static final String mode_string[]= {
-		"web_server_render_data_version"
+		"render_buffer_array"
 	};
 	
 	public void operate_file(String file_name)

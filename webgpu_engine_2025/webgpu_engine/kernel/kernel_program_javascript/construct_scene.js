@@ -49,7 +49,7 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 		}
 	};
 
-	this.render_buffer_array=new Array();
+	this.render_target_array=new Array();
 	
 	this.routine_object={
 		before_draw_scene_routine_array				:	new Array(),

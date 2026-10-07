@@ -75,7 +75,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 
 	this.caculate_view_volume_box=function(my_target_id,main_target_id,scene)
 	{
-		var my_render_data=scene.render_buffer_array[my_target_id];
+		var my_render_data=scene.render_target_array[my_target_id];
 		
 		my_render_data.target_view_parameter.view_x0			=0;
 		my_render_data.target_view_parameter.view_y0			=0;
@@ -84,7 +84,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		my_render_data.target_view_parameter.whole_view_width	=1;
 		my_render_data.target_view_parameter.whole_view_height	=1;
 		
-		var p=scene.render_buffer_array[main_target_id].target_view_parameter;
+		var p=scene.render_target_array[main_target_id].target_view_parameter;
 		
 		var view_x=0.5*(scene.view.x+1.0)*p.whole_view_width;
 		var view_y=0.5*(scene.view.y+1.0)*p.whole_view_height;

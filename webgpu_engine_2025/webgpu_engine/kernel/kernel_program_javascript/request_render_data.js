@@ -115,21 +115,21 @@ async function request_render_data(scene)
 	};
 	function parse_target_parameter(response_data,scene)
 	{
-		for(var i=0,ni=scene.render_buffer_array.length;i<ni;i++)
-			scene.render_buffer_array[i].do_render_flag=false;
+		for(var i=0,ni=scene.render_target_array.length;i<ni;i++)
+			scene.render_target_array[i].do_render_flag=false;
 
 		for(var i=0,ni=response_data.length;i<ni;){
 			var my_target_id	=response_data[i++];
 			var my_data			=response_data[i++];
 
-			while(my_target_id>=scene.render_buffer_array.length)
-				scene.render_buffer_array.push(
+			while(my_target_id>=scene.render_target_array.length)
+				scene.render_target_array.push(
 					{
 						do_render_flag	:	false,
 						project_matrix	:	null
 					});
 
-			var p=scene.render_buffer_array[my_target_id];
+			var p=scene.render_target_array[my_target_id];
 			p.do_render_flag=true;
 			p.target_id		=my_target_id;
 
