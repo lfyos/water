@@ -47,7 +47,7 @@ public class extended_component_instance_driver extends component_instance_drive
 						pickup_target_width,pickup_target_width),				//render_target_view
 			cr.target.target_view.caculate_view_box(
 						ci.parameter.x,ci.parameter.y,pickup_target_width),		//view_volume_box
-			cr.target.clip_plane);												//clip_plane,mirror_plane									
+			cr.target.clip_plane,null);											//clip_plane,mirror_plane									
 		ci.target_container.register_target(rt);
 		return false;
 	}

@@ -80,7 +80,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				target_par,rtp.render_target_name,
 				comp.component_id,driver_id,i+i+(ci.parameter.high_or_low_precision_flag?0:1),
 				new component[] {sk.component_cont.root_component},rtp.camera_id,
-				rtp.parameter_channel_id,rtv,view_volume_box,ci.clip_plane);
+				rtp.parameter_channel_id,rtv,view_volume_box,ci.clip_plane,null);
 
 			if(ci.parameter.current_canvas_id==rtp.canvas_id) {
 				double view_x=(ci.parameter.x+1.0)/2.0;

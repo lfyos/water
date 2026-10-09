@@ -136,6 +136,29 @@ public class target_parameter_buffer
 								print(",",	rt.target_view.whole_view_width).
 								print(",",	rt.target_view.whole_view_height);
 		}while(false);
+		
+		do{
+			if(old_rt!=null){
+				boolean flag=true;
+				for(int i=0,ni=rt.view_parameter.length;i<ni;i++) {
+					double old_value=old_rt.view_parameter[i];
+					double new_value=rt.view_parameter[i];
+					if(Math.abs(new_value-old_value)>const_value.min_value) {
+						flag=false;
+						break;
+					}
+				}
+				if(flag)
+					break;
+			}
+			client_interface.	print(((print_number++)<=0)?"11":",11").
+								print(",",	rt.view_parameter[0]).
+								print(",",	rt.view_parameter[1]).
+								print(",",	rt.view_parameter[2]).
+								print(",",	rt.view_parameter[3]).
+								print(",",	rt.view_parameter[4]).
+								print(",",	rt.view_parameter[5]);
+		}while(false);
 
 		client_interface.print("]");
 	}

@@ -193,6 +193,12 @@ async function request_render_data(scene)
 					p.target_view_parameter.whole_view_height	=my_data[j++];
 
 					break;
+				case 11:
+					p.view_parameter=[
+						my_data[j++],my_data[j++],my_data[j++],
+						my_data[j++],my_data[j++],my_data[j++]
+					];
+					break;
 				}
 		}
 		return;

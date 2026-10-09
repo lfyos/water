@@ -42,10 +42,10 @@ function construct_computation_object()
 	};
 	this.create_move_rotate_matrix=function(mx,my,mz,rx,ry,rz)
 	{
-		if(rx==0)
-			if(ry==0)
-				if(rz==0)
-					return [
+		var my_min_value=this.min_value();
+		
+		if((Math.abs(rx)<my_min_value)&&(Math.abs(ry)<my_min_value)&&(Math.abs(rz)<my_min_value))
+			return [
 						1,	0,	0,	0,
 						0,	1,	0,	0,
 						0,	0,	1,	0,
@@ -125,7 +125,7 @@ function construct_computation_object()
 	};
 	this.min_value=function()
 	{
-		return 0.001*0.001*0.001;
+		return (0.00001*0.00001);
 	};
 	this.min_value2=function()
 	{

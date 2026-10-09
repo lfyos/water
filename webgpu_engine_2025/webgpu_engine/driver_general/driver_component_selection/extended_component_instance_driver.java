@@ -101,7 +101,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		render_target cam_target=new render_target(-1,
 				render_target_parameter.create_selection_parameter(((function_id%2)==0)?true:false),
 				null,comp.component_id,driver_id,0,new component[]{sk.component_cont.root_component},
-				t.camera_id,t.parameter_channel_id,null,view_volume_box,ci.clip_plane);
+				t.camera_id,t.parameter_channel_id,null,view_volume_box,ci.clip_plane,null);
 	
 		if(cam_target.view_volume_box.distance2()<const_value.min_value2)
 			return ;

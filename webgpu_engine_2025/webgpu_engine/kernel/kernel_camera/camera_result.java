@@ -73,8 +73,15 @@ public class camera_result
 	
 	private void basic_init()
 	{
-		camera_absolute_matrix=cam.eye_component.absolute_location;
-		location negative_lookat_matrix	=camera_absolute_matrix.multiply(location.move_rotate(0,0,cam.parameter.distance,0,0,0));
+		camera_absolute_matrix			=cam.eye_component.absolute_location.multiply(
+					location.move_rotate(	target.view_parameter[0]*cam.parameter.distance,
+											target.view_parameter[1]*cam.parameter.distance,
+											target.view_parameter[2]*cam.parameter.distance,
+											target.view_parameter[3],
+											target.view_parameter[4],
+											target.view_parameter[5]));
+		location negative_lookat_matrix	=camera_absolute_matrix.multiply(
+					location.move_rotate(0,0,cam.parameter.distance,0,0,0));
 		location lookat_matrix			=negative_lookat_matrix.negative();
 
 		screen_move_matrix 		smm	=new screen_move_matrix(target.view_volume_box);

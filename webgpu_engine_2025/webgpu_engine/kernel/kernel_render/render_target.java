@@ -22,6 +22,8 @@ public class render_target
 	public plane clip_plane;
 	
 	public render_target_parameter parameter;
+	
+	public double view_parameter[];
 
 	public render_target(render_target rt)
 	{
@@ -50,13 +52,23 @@ public class render_target
 		view_volume_box	=(rt.view_volume_box==null)?null:(new box(rt.view_volume_box));
 
 		clip_plane		=(rt.clip_plane==null)?null:(new plane(rt.clip_plane));
-		parameter=rt.parameter;
+		
+		parameter		=rt.parameter;
+		
+		view_parameter=new double[] {0,0,0,0,0,0};
+		if(rt.view_parameter!=null) {
+			int ni1=view_parameter.length;
+			int ni2=rt.view_parameter.length;
+			for(int i=0,ni=(ni1<ni2)?ni1:ni2;i<ni;i++)
+				view_parameter[i]=rt.view_parameter[i];
+		}
 	}
 	public render_target(int my_target_id_from,
 			render_target_parameter 				my_parameter,					String my_target_name,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_camera_id,				int my_parameter_channel_id,
-			render_target_view my_target_view,		box my_view_volume_box,			plane my_clip_plane)
+			render_target_view my_target_view,		box my_view_volume_box,			plane my_clip_plane,
+			double my_view_parameter[])
 	{
 		target_id				=0;
 		target_id_from			=my_target_id_from;
@@ -81,5 +93,13 @@ public class render_target
 		clip_plane		=my_clip_plane;
 
 		parameter		=my_parameter;
+		
+		view_parameter=new double[] {0,0,0,0,0,0};
+		if(my_view_parameter!=null) {
+			int ni1=view_parameter.length;
+			int ni2=my_view_parameter.length;
+			for(int i=0,ni=(ni1<ni2)?ni1:ni2;i<ni;i++)
+				view_parameter[i]=my_view_parameter[i];
+		}
 	}
 }

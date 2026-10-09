@@ -199,7 +199,7 @@ public class client_information
 		render_target rt=new render_target(-1,
 				render_target_parameter.create_client_information_parameter(),
 				null,sk.component_cont.root_component.component_id,0,0,
-				new component[]{sk.component_cont.root_component},0,0,null,null,null);
+				new component[]{sk.component_cont.root_component},0,0,null,null,null,null);
 		camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
 
 		display_camera_result			=cr;
