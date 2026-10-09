@@ -14,7 +14,7 @@ struct target_information
 	lookat_matrix							:	mat4x4<f32>,
 	negative_lookat_matrix					:	mat4x4<f32>,
 	
-	camera_location							:	mat4x4<f32>,
+	camera_absolute_matrix					:	mat4x4<f32>,
 	clip_plane_matrix						:	mat4x4<f32>,
 
 	left_plane								:	vec4<f32>,

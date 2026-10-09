@@ -295,7 +295,7 @@ function construct_system_buffer(my_scene,my_max_target_number,my_max_method_num
 			target_render_data.project_matrix.lookat_matrix,
 			target_render_data.project_matrix.negative_lookat_matrix,
 			
-			target_render_data.project_matrix.camera_location,
+			target_render_data.project_matrix.camera_absolute_matrix,
 			
 			target_render_data.project_matrix.clip_plane_matrix
 		];

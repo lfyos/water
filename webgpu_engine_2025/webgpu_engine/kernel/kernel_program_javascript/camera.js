@@ -218,22 +218,23 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 
 	this.compute_lookat_matrix=function(target_parameter,my_computer)
 	{
-		var camera_id			=target_parameter.camera_id;
-		var camera_component_id	=this.camera_object_parameter[camera_id].component_id;
-		var camera_location		=this.component_location_data.get_component_location(camera_component_id);
-		var camera_distance		=this.camera_object_parameter[camera_id].distance;
-		var lookat_matrix		=target_parameter.camera_transformation_matrix;
-		lookat_matrix			=my_computer.matrix_multiplication(lookat_matrix,camera_location);
-		lookat_matrix			=my_computer.matrix_multiplication(lookat_matrix,[
-										1,	0,	0,					0,
-										0,	1,	0,					0,
-										0,	0,	1,					0,
-										0,	0,	camera_distance,	1
-								]);
+		var camera_id				=target_parameter.camera_id;
+		var camera_distance			=this.camera_object_parameter[camera_id].distance;
+		var camera_component_id		=this.camera_object_parameter[camera_id].component_id;
+		var camera_absolute_matrix	=my_computer.matrix_multiplication(
+					this.component_location_data.get_component_location(camera_component_id),
+					target_parameter.camera_transformation_matrix);
+		var lookat_matrix			=my_computer.matrix_multiplication(camera_absolute_matrix,
+					[
+							1,	0,	0,					0,
+							0,	1,	0,					0,
+							0,	0,	1,					0,
+							0,	0,	camera_distance,	1
+					]);
 		return {
-			matrix			:	my_computer.matrix_negative(lookat_matrix),
-			negative_matrix	:	lookat_matrix,
-			camera_location	:	camera_location
+			matrix					:	my_computer.matrix_negative(lookat_matrix),
+			negative_matrix			:	lookat_matrix,
+			camera_absolute_matrix	:	camera_absolute_matrix
 		};
 	};
 
@@ -269,10 +270,10 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		project_matrix.screen_move_matrix_from			=screen_move_matrix_from.matrix;
 		project_matrix.negative_screen_move_matrix_from	=screen_move_matrix_from.negative_matrix;
 		
-		project_matrix.lookat_matrix		=lookat_matrix.matrix;
+		project_matrix.lookat_matrix		 =lookat_matrix.matrix;
 		project_matrix.negative_lookat_matrix=lookat_matrix.negative_matrix;
 		
-		project_matrix.camera_location		=lookat_matrix.camera_location;
+		project_matrix.camera_absolute_matrix=lookat_matrix.camera_absolute_matrix;
 				
 		project_matrix.frustem_matrix=my_computer.matrix_multiplication(
 				screen_move_matrix.matrix,frustem_projection_matrix.matrix);
@@ -302,10 +303,10 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 			project_matrix.negative_matrix	=project_matrix.negative_orthographic_matrix;
 		}
 
-		project_matrix.original_far_center_point =my_computer.caculate_coordinate(project_matrix.camera_location,0,0,project_matrix.distance-project_matrix.far_value);
-		project_matrix.original_center_point	 =my_computer.caculate_coordinate(project_matrix.camera_location,0,0,0);
-		project_matrix.original_near_center_point=my_computer.caculate_coordinate(project_matrix.camera_location,0,0,project_matrix.distance-project_matrix.near_value);
-		project_matrix.original_eye_point		 =my_computer.caculate_coordinate(project_matrix.camera_location,0,0,project_matrix.distance);
+		project_matrix.original_far_center_point =my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance-project_matrix.far_value);
+		project_matrix.original_center_point	 =my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,0);
+		project_matrix.original_near_center_point=my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance-project_matrix.near_value);
+		project_matrix.original_eye_point		 =my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance);
 
 		project_matrix.far_center_point			=my_computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,-(project_matrix.far_value));
 		project_matrix.center_point				=my_computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,-(project_matrix.distance));

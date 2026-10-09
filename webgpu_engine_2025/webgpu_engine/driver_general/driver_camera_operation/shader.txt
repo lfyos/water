@@ -32,11 +32,11 @@ fn vertex_main(
 	var par_depth_start		=my_depth_par.x;
 	var par_depth_end		=my_depth_par.y;
 	
-	var p=target_info.camera_location*vec4(0.0,0.0,0.0,1.0);
+	var p=target_info.camera_absolute_matrix*vec4(0.0,0.0,0.0,1.0);
 	p=target_info.projection_matrix*vec4(p.xyz/p.w+my_coord.xyz*par_scale,1.0);
 	
-	var p0=target_info.projection_matrix*(target_info.camera_location*vec4(0.0,	0.0,	 par_view_distance/2.0,	1.0));
-	var p1=target_info.projection_matrix*(target_info.camera_location*vec4(0.0,	0.0,	-par_view_distance/2.0,	1.0));
+	var p0=target_info.projection_matrix*(target_info.camera_absolute_matrix*vec4(0.0,	0.0,	 par_view_distance/2.0,	1.0));
+	var p1=target_info.projection_matrix*(target_info.camera_absolute_matrix*vec4(0.0,	0.0,	-par_view_distance/2.0,	1.0));
 
 	if(primitive_type==0){
 		p =target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p );
