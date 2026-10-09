@@ -108,41 +108,15 @@ public class target_parameter_buffer
 									print(",",	rt.clip_plane.C).
 									print(",",	rt.clip_plane.D);
 		}while(false);
-		
-		do{
-			if(old_rt!=null) {
-				if(!((old_rt.camera_transformation_matrix!=null)^(rt.camera_transformation_matrix!=null))){
-					if(rt.camera_transformation_matrix==null)
-						break;
-					double old_data[]=old_rt.camera_transformation_matrix.get_location_data();
-					double new_data[]=    rt.camera_transformation_matrix.get_location_data();
-					double sum=0,diff;
-					for(int i=0,ni=old_data.length;i<ni;i++) {
-						diff=new_data[i]-old_data[i];
-						sum+=diff*diff;
-					}
-					if(sum<const_value.min_value2)
-						break;
-				}
-			}
-			if(rt.camera_transformation_matrix==null)
-				client_interface.print(((print_number++)<=0)?"8":",8");
-			else{
-				client_interface.print(((print_number++)<=0)?"9":",9");
-				double new_data[]=rt.camera_transformation_matrix.get_location_data();
-				for(int i=0,ni=new_data.length;i<ni;i++)
-					client_interface.print(",",new_data[i]);
-			}
-		}while(false);
 
 		do{
 			if(old_rt!=null)
 				if(!((old_rt.main_display_target_flag)^(rt.main_display_target_flag)))
 					break;
 			if(rt.main_display_target_flag)
-				client_interface.	print(((print_number++)<=0)?"10":",10");
+				client_interface.	print(((print_number++)<=0)?"8":",8");
 			else
-				client_interface.	print(((print_number++)<=0)?"11":",11");
+				client_interface.	print(((print_number++)<=0)?"9":",9");
 		}while(false);
 		
 		do{
@@ -154,7 +128,7 @@ public class target_parameter_buffer
 								if(old_rt.target_view.whole_view_width==rt.target_view.whole_view_width)
 									if(old_rt.target_view.whole_view_height==rt.target_view.whole_view_height)
 										break;
-			client_interface.	print(((print_number++)<=0)?"12":",12").
+			client_interface.	print(((print_number++)<=0)?"10":",10").
 								print(",",	rt.target_view.view_x0).
 								print(",",	rt.target_view.view_y0).
 								print(",",	rt.target_view.view_width).

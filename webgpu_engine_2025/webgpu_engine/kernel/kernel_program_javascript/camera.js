@@ -221,9 +221,7 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		var camera_id				=target_parameter.camera_id;
 		var camera_distance			=this.camera_object_parameter[camera_id].distance;
 		var camera_component_id		=this.camera_object_parameter[camera_id].component_id;
-		var camera_absolute_matrix	=my_computer.matrix_multiplication(
-					this.component_location_data.get_component_location(camera_component_id),
-					target_parameter.camera_transformation_matrix);
+		var camera_absolute_matrix	=this.component_location_data.get_component_location(camera_component_id);
 		var lookat_matrix			=my_computer.matrix_multiplication(camera_absolute_matrix,
 					[
 							1,	0,	0,					0,

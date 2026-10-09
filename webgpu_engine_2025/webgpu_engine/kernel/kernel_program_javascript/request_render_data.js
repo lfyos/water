@@ -177,23 +177,12 @@ async function request_render_data(scene)
 						p.clip_plane[0],p.clip_plane[1],p.clip_plane[2],p.clip_plane[3],1.0);
 					break;
 				case 8:
-					p.camera_transformation_matrix=scene.computer.identity_matrix;
-					break;
-				case 9:
-					p.camera_transformation_matrix=[
-							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
-							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
-							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
-							my_data[j++],my_data[j++],my_data[j++],my_data[j++]
-						];
-					break;
-				case 10:
 					p.main_display_target_flag=true;
 					break;
-				case 11:
+				case 9:
 					p.main_display_target_flag=false;
 					break;
-				case 12:
+				case 10:
 					p.target_view_parameter=new Object();
 					
 					p.target_view_parameter.view_x0				=my_data[j++];

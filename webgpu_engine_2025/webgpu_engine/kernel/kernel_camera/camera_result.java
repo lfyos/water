@@ -74,9 +74,6 @@ public class camera_result
 	private void basic_init()
 	{
 		camera_absolute_matrix=cam.eye_component.absolute_location;
-		if(target.camera_transformation_matrix!=null)
-			camera_absolute_matrix=camera_absolute_matrix.multiply(target.camera_transformation_matrix);
-		
 		location negative_lookat_matrix	=camera_absolute_matrix.multiply(location.move_rotate(0,0,cam.parameter.distance,0,0,0));
 		location lookat_matrix			=negative_lookat_matrix.negative();
 
