@@ -44,7 +44,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			print_number=response_selection_coordinate(print_number,my_comp.children.get(i),ci);
 		return print_number;
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)

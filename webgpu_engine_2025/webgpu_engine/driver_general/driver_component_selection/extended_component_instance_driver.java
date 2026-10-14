@@ -37,7 +37,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		modifier_container_id			=my_modifier_container_id;
 		change_type_flag				=true;
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print(screen_rectangle_component_id);
 	}

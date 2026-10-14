@@ -104,7 +104,7 @@ public class component_instance_driver
 		
 		display_parameter			=new instance_display_parameter();
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)

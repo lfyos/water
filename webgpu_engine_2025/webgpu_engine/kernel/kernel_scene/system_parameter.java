@@ -43,7 +43,7 @@ public class system_parameter
 	public long max_buffer_object_head_package_length;
 	public long max_file_response_length,min_compress_response_length;
 	
-	public int max_process_component_load_number,max_process_modifier_number;
+	public int max_process_component_load_number;
 	
 	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
 
@@ -137,7 +137,6 @@ public class system_parameter
 		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
 		
 		max_process_component_load_number	=sp.max_process_component_load_number;
-		max_process_modifier_number			=sp.max_process_modifier_number;
 		
 		box_distance_difference_scale		=sp.box_distance_difference_scale;
 		buffer_data_length_difference_scale	=sp.buffer_data_length_difference_scale;
@@ -275,7 +274,6 @@ public class system_parameter
 		max_buffer_object_head_package_length	=f.get_long();
 		
 		max_process_component_load_number		=f.get_int();
-		max_process_modifier_number				=f.get_int();
 		
 		box_distance_difference_scale			=f.get_double();
 		buffer_data_length_difference_scale		=f.get_double();

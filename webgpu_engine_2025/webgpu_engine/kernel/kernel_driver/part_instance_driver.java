@@ -15,7 +15,7 @@ public class part_instance_driver
 	public void destroy()
 	{
 	}
-	public void response_init_part_data(part p,scene_kernel sk,client_information ci)
+	public void response_initialization_part_data(part p,scene_kernel sk,client_information ci)
 	{
 	}
 	public String[] response_part_event(part p,scene_kernel sk,client_information ci)

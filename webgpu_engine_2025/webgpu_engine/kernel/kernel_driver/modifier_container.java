@@ -9,8 +9,19 @@ import kernel_common_class.tree_search_container;
 
 public class modifier_container
 {
+	class modifier_driver_holder 
+	{
+		public long sequence_id;
+		public modifier_driver md;
+		
+		public modifier_driver_holder(modifier_driver my_md,long my_sequence_id)
+		{
+			md=my_md;
+			sequence_id=my_sequence_id;
+		}
+	}
 	private modifier_container_timer timer;
-	private ArrayList<modifier_driver_holder> modifier_driver_execute_list;
+	private ArrayList<modifier_driver_holder>modifier_driver_execute_list;
 	private ArrayList<modifier_driver_holder>modifier_driver_insert_list;
 	private long modifier_driver_sequence_id;
 	
@@ -26,28 +37,22 @@ public class modifier_container
 			timer=null;
 
 		if(modifier_driver_execute_list!=null) {
-			for(int i=0, ni=modifier_driver_execute_list.size();i<ni;i++) {
-				modifier_driver_holder p=modifier_driver_execute_list.get(i);
-				if(p!=null){
+			for(var p:modifier_driver_execute_list)
+				if(p!=null)
 					if(p.md!=null){
 						p.md.destroy();
 						p.md=null;
 					}
-				}
-			}
 			modifier_driver_execute_list.clear();
 			modifier_driver_execute_list=null;
 		}
 		if(modifier_driver_insert_list!=null) {
-			for(int i=0, ni=modifier_driver_insert_list.size();i<ni;i++) {
-				modifier_driver_holder p=modifier_driver_insert_list.get(i);
-				if(p!=null){
+			for(var p:modifier_driver_insert_list)
+				if(p!=null)
 					if(p.md!=null){
 						p.md.destroy();
 						p.md=null;
 					}
-				}
-			}
 			modifier_driver_insert_list.clear();
 			modifier_driver_insert_list=null;
 		}
@@ -55,7 +60,7 @@ public class modifier_container
 	private int adjust_heap(int modifier_id)
 	{
 		int modifier_number=modifier_driver_execute_list.size();
-		if((modifier_driver_execute_list.size()<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
+		if((modifier_number<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
 			return modifier_id;
 
 		modifier_driver_holder p=modifier_driver_execute_list.get(modifier_id);
@@ -72,25 +77,21 @@ public class modifier_container
 		
 		int ret_val=modifier_id;
 		
-		while(true){
-			int left_child=modifier_id+modifier_id+1;
-			int right_child=left_child+1;
-			if(left_child>=modifier_number)
-				break;
-			modifier_driver_holder left_p=modifier_driver_execute_list.get(left_child);
-			if(right_child<modifier_number){
-				modifier_driver_holder right_p=modifier_driver_execute_list.get(right_child);
-				if(right_p.md.start_time<left_p.md.start_time){
-					left_child=right_child;
-					left_p=right_p;
+		for(int my_child,other_child;(my_child=modifier_id+modifier_id+1)<modifier_number;) {
+			modifier_driver_holder my_child_p=modifier_driver_execute_list.get(my_child);
+			if((other_child=my_child+1)<modifier_number){
+				modifier_driver_holder other_child_p=modifier_driver_execute_list.get(other_child);
+				if(other_child_p.md.start_time<my_child_p.md.start_time){
+					my_child	=other_child;
+					my_child_p	=other_child_p;
 				}
 			}
-			if(p.md.start_time<=left_p.md.start_time)
+			if(p.md.start_time<=my_child_p.md.start_time)
 				break;
 			
-			modifier_driver_execute_list.set(modifier_id,left_p);
-			modifier_driver_execute_list.set(left_child,p);
-			modifier_id=left_child;
+			modifier_driver_execute_list.set(modifier_id,my_child_p);
+			modifier_driver_execute_list.set(my_child,p);
+			modifier_id=my_child;
 		}
 		
 		return ret_val;
@@ -99,34 +100,36 @@ public class modifier_container
 			ArrayList<modifier_driver_holder> delete_modify_driver_list,
 			long my_current_time,scene_kernel sk,client_information ci)
 	{
-		while(true){
-			int modifier_number=modifier_driver_execute_list.size();
-			if((modifier_number<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
-				return modifier_id;
+		for(int modifier_number;(modifier_number=modifier_driver_execute_list.size())>0;) {
+			if((modifier_id<0)||(modifier_id>=modifier_number))
+				break;
 			modifier_driver_holder p=modifier_driver_execute_list.get(modifier_id);
 			if(my_current_time<p.md.start_time)
-				return modifier_id;
+				break;
 			if(my_current_time<p.md.terminate_time){
-				int left_id=recurse_collect_delete_modifiers(modifier_id+modifier_id+1,
+				int left_id =recurse_collect_delete_modifiers(modifier_id+modifier_id+1,
 						delete_modify_driver_list,my_current_time,sk,ci);
 				int right_id=recurse_collect_delete_modifiers(modifier_id+modifier_id+2,
 						delete_modify_driver_list,my_current_time,sk,ci);
-				if(left_id>right_id)
-					left_id=right_id;
-				if(left_id>modifier_id)
-					return modifier_id;
-				modifier_id=left_id;
-			}else {
+				if(left_id<=right_id) {
+					if(modifier_id<left_id)
+						break;
+					modifier_id=left_id;
+				}else{
+					if(modifier_id<right_id)
+						break;
+					modifier_id=right_id;
+				}
+			}else{
 				delete_modify_driver_list.add(delete_modify_driver_list.size(),p);
 				p=modifier_driver_execute_list.remove(modifier_number-1);
-				if(modifier_id<(modifier_number-1)) {
+				if(modifier_id<(modifier_number-1)){
 					modifier_driver_execute_list.set(modifier_id,p);
-					int new_modifier_id=adjust_heap(modifier_id);
-					if(new_modifier_id<modifier_id)
-						modifier_id=new_modifier_id;
+					modifier_id=adjust_heap(modifier_id);
 				}
 			}
 		}
+		return modifier_id;
 	}
 	private void recurse_execute_modifier_modify(
 			int modifier_id,long my_current_time,scene_kernel sk,client_information ci)
@@ -145,9 +148,7 @@ public class modifier_container
 			int modifier_id,long my_current_time,scene_kernel sk,client_information ci)
 	{
 		int modifier_number=modifier_driver_execute_list.size();
-		if(modifier_number<=0)
-			return false;
-		if(modifier_id>=modifier_number)
+		if((modifier_number<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
 			return false;
 		modifier_driver_holder p=modifier_driver_execute_list.get(modifier_id);
 		if(my_current_time<p.md.start_time)
@@ -158,7 +159,8 @@ public class modifier_container
 		return my_ret_val||left_ret_val||right_ret_val;
 	}
 	private ArrayList<modifier_driver_holder> sort_modifier_driver_list(
-			ArrayList<modifier_driver_holder> modifier_driver_list)
+			ArrayList<modifier_driver_holder> modifier_driver_holder_list_1,
+			ArrayList<modifier_driver_holder> modifier_driver_holder_list_2)
 	{
 		class modifier_driver_list_comparator implements Comparator<modifier_driver_holder>
 		{
@@ -182,72 +184,67 @@ public class modifier_container
 			{
 				super(new modifier_driver_list_comparator());
 				
-				if(modifier_driver_list!=null)
-					for(var my_modifier_driver_holder:modifier_driver_list)
-						add(my_modifier_driver_holder,my_modifier_driver_holder);
+				if(modifier_driver_holder_list_1!=null)
+					for(var p:modifier_driver_holder_list_1)
+						add(p,p);
+				if(modifier_driver_holder_list_2!=null)
+					for(var p:modifier_driver_holder_list_2)
+						add(p,p);
 			}
 		}
 		return new modifier_driver_list_sorter().tree_get_value_list();
+	}
+	private void process_routine(scene_kernel sk,client_information ci)
+	{
+		long my_current_time=timer.get_current_time();
+		
+		int modifier_number;
+		if((modifier_number=modifier_driver_execute_list.size())<=0){
+			modifier_driver_sequence_id=0;
+			modifier_number=0;
+		}
+		for(var p:modifier_driver_insert_list)
+			if(p!=null)
+				if(p.md!=null){
+					modifier_driver_execute_list.add(modifier_number,p);
+					adjust_heap(modifier_number++);
+				}
+		modifier_driver_insert_list.clear();
+		
+		if(test_can_not_start(0,my_current_time,sk,ci)){
+			timer.modify_current_time(my_current_time,sk.current_time);
+			return;
+		}
+		var delete_modify_driver_list=new ArrayList<modifier_driver_holder>();
+		recurse_collect_delete_modifiers(0,delete_modify_driver_list,my_current_time,sk,ci);
+		for(var p:sort_modifier_driver_list(delete_modify_driver_list,null))
+			if(p!=null)
+				if(p.md!=null){
+					p.md.last_modify(my_current_time,sk,ci,true);
+					p.md.destroy();
+					p.md=null;
+				}
+		recurse_execute_modifier_modify(0,my_current_time,sk,ci);
+		timer.caculate_current_time(sk.current_time);
+		return;	
 	}
 	public void process(scene_kernel sk,client_information ci,boolean my_clear_modifier_flag)
 	{
 		clear_modifier_flag|=my_clear_modifier_flag;
 		process_routine(sk,ci);
 		if(clear_modifier_flag){
-			ArrayList<modifier_driver_holder> p_array=sort_modifier_driver_list(modifier_driver_execute_list);
+			clear_modifier_flag=false;
 			long my_current_time=timer.caculate_current_time(sk.current_time);
-			
-			for(int i=0,ni=p_array.size();i<ni;i++)
-				p_array.get(i).md.last_modify(my_current_time,sk,ci,false);
-			for(int i=0,ni=p_array.size();i<ni;i++){
-				modifier_driver_holder p=p_array.get(i);
-				p.md.destroy();
-				p.md=null;
-			}
+			for(var p:sort_modifier_driver_list(modifier_driver_execute_list,modifier_driver_insert_list))
+				if(p!=null)
+					if(p.md!=null){
+						p.md.last_modify(my_current_time,sk,ci,false);
+						p.md.destroy();
+						p.md=null;
+					}
 			modifier_driver_execute_list.clear();
-		}
-		clear_modifier_flag=false;
-	}
-	private void process_routine(scene_kernel sk,client_information ci)
-	{
-		modifier_driver_holder p;
-		long my_current_time=timer.get_current_time();
-		
-		for(int i=0,ni=sk.system_par.max_process_modifier_number;i<ni;i++){
-			int modifier_number=modifier_driver_execute_list.size();
-			if(modifier_number<=0){
-				modifier_driver_sequence_id=0;
-				modifier_number=0;
-			}
-			for(int j=0,nj=modifier_driver_insert_list.size();j<nj;j++)
-				if((p=modifier_driver_insert_list.get(j))!=null){
-					modifier_driver_execute_list.add(modifier_number,p);
-					adjust_heap(modifier_number++);
-				}
 			modifier_driver_insert_list.clear();
-			
-			if(test_can_not_start(0,my_current_time,sk,ci)) {
-				timer.modify_current_time(my_current_time,sk.current_time);
-				return;
-			}
-			ArrayList<modifier_driver_holder> delete_modify_driver_list=new ArrayList<modifier_driver_holder>();
-			recurse_collect_delete_modifiers(0,delete_modify_driver_list,my_current_time,sk,ci);
-		
-			ArrayList<modifier_driver_holder> p_array=sort_modifier_driver_list(delete_modify_driver_list);
-			
-			for(int j=0,nj=p_array.size();j<nj;j++)
-				p_array.get(j).md.last_modify(my_current_time,sk,ci,true);
-			for(int j=0,nj=p_array.size();j<nj;j++) {
-				p=p_array.get(j);
-				p.md.destroy();
-				p.md=null;
-			}
-			if(modifier_driver_insert_list.size()<=0)
-				break;
 		}
-		recurse_execute_modifier_modify(0,my_current_time,sk,ci);
-		timer.caculate_current_time(sk.current_time);
-		return;	
 	}
 	public void add_modifier(modifier_driver new_modifier)
 	{

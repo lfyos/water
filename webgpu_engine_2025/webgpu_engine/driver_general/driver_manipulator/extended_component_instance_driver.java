@@ -37,7 +37,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				if(audio_comp.driver_array.get(0) instanceof driver_audio_player.extended_component_driver)
 					audio_component_id=audio_comp.component_id;
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)

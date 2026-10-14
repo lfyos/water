@@ -17,7 +17,7 @@ import kernel_scene.scene_kernel;
 
 public class dispatch_create_scene_request
 {
-	static private void do_response_init_render_data(scene_kernel sk,client_information ci)
+	static private void do_response_initialization_render_data(scene_kernel sk,client_information ci)
 	{
 		debug_information.println();
 		debug_information.println("Begin render response_init_data");
@@ -35,7 +35,7 @@ public class dispatch_create_scene_request
 				continue;
 			long old_length=ci.request_response.output_data_length;
 			try {
-				r_i_driver.response_init_render_data(r,sk,ci);
+				r_i_driver.response_initialization_render_data(r,sk,ci);
 			}catch(Exception e){
 				e.printStackTrace();
 				
@@ -51,7 +51,7 @@ public class dispatch_create_scene_request
 		ci.request_response.print("0]");
 		debug_information.println("End render response_init_data: ",render_initialize_number);
 	}
-	static private void do_response_init_part_data(scene_kernel sk,client_information ci)
+	static private void do_response_initialization_part_data(scene_kernel sk,client_information ci)
 	{
 		debug_information.println();
 		debug_information.println("Begin part response_init_data");
@@ -67,7 +67,7 @@ public class dispatch_create_scene_request
 				part_instance_driver  my_part_instance_driver=ci.part_instance_driver_cont.get_part_instance_driver(my_p);
 				if(my_part_instance_driver!=null)
 				try {
-					my_part_instance_driver.response_init_part_data(my_p,sk,ci);
+					my_part_instance_driver.response_initialization_part_data(my_p,sk,ci);
 				}catch(Exception e){
 					e.printStackTrace();
 					
@@ -91,7 +91,7 @@ public class dispatch_create_scene_request
 		ci.request_response.print("0]");
 		debug_information.println("End part response_init_data: ",part_initialize_number);
 	}
-	static private void do_response_init_component_data(scene_kernel sk,client_information ci)
+	static private void do_response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 		debug_information.println();
 		debug_information.println("Begin component response_init_data");
@@ -113,11 +113,11 @@ public class dispatch_create_scene_request
 				long old_length=ci.request_response.output_data_length;
 					
 				try {
-					i_d.response_init_component_data(sk, ci);
+					i_d.response_initialization_component_data(sk, ci);
 				}catch(Exception e) {
 					e.printStackTrace();
 					
-					debug_information.println("response_init_component_data fail:	",e.toString());
+					debug_information.println("response_initialization_component_data fail:	",e.toString());
 					debug_information.println("component_name:",my_component.component_name);
 					debug_information.println("component file:",
 							my_component.component_directory_name+my_component.component_file_name);
@@ -143,13 +143,13 @@ public class dispatch_create_scene_request
 	{
 		ci.request_response.print("[");
 		
-		do_response_init_render_data(sk,ci);									//parameter	0
+		do_response_initialization_render_data(sk,ci);									//parameter	0
 		ci.request_response.print(",");
 		
-		do_response_init_part_data(sk,ci);										//parameter	1
+		do_response_initialization_part_data(sk,ci);										//parameter	1
 		ci.request_response.print(",");
 		
-		do_response_init_component_data(sk,ci);									//parameter	2
+		do_response_initialization_component_data(sk,ci);									//parameter	2
 		ci.request_response.print(",");
 		
 		String initialization_url=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";

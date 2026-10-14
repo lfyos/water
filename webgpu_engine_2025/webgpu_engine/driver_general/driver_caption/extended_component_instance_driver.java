@@ -28,7 +28,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		max_time_length=my_max_time_length;
 		display_information="";
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 	}
 	private String pickup_string(client_information ci,int display_precision)

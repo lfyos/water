@@ -18,7 +18,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 		part p=comp.driver_array.get(driver_id).component_part;
 		for(file_reader f=new file_reader(p.directory_name+p.material_file_name,p.file_charset);;){

@@ -22,7 +22,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		position=my_position;
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.	
 			print("[",position[0]).print(",",position[1]).

@@ -102,7 +102,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			ci.target_container.register_target(rt);
 		}
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[");
 		for(int i=0,ni=target_parameter_list.size();i<ni;i++) {

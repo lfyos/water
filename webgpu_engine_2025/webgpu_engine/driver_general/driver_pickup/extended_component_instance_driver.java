@@ -27,7 +27,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		pickup_target_name	=my_pickup_target_name;
 		pickup_target_width	=my_pickup_target_width;
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 		
 	}

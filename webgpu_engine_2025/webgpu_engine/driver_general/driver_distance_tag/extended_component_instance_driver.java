@@ -25,7 +25,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		tag_list=my_tag_array;
 		front_show_flag=false;
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)

@@ -12,7 +12,7 @@ public class render_instance_driver
 	public void destroy()
 	{
 	}
-	public void response_init_render_data(render r,scene_kernel sk,client_information ci)
+	public void response_initialization_render_data(render r,scene_kernel sk,client_information ci)
 	{
 	}
 	public String[] response_render_event(render r,scene_kernel sk,client_information ci)

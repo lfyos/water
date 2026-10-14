@@ -24,7 +24,7 @@ public class extended_part_instance_driver extends part_instance_driver
 	{
 		super.destroy();
 	}
-	public void response_init_part_data(part p,scene_kernel sk,client_information ci)
+	public void response_initialization_part_data(part p,scene_kernel sk,client_information ci)
 	{
 		double my_box_distance,box_distance=1.0;
 		if(p.part_mesh.part_box!=null)

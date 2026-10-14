@@ -16,6 +16,9 @@ import kernel_component.component_load_source_container;
 
 public class part_driver
 {
+	public part_driver()
+	{
+	}
 	public void destroy()
 	{
 	}
@@ -25,9 +28,6 @@ public class part_driver
 	}
 	public void create_part_driver_initialization_data(file_writer fw,
 			part p,scene_kernel sk,client_request_response request_response)
-	{
-	}
-	public part_driver()
 	{
 	}
 	public part_driver clone(part parent,part p,

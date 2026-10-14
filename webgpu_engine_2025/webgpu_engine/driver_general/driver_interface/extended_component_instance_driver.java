@@ -41,7 +41,7 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		hide_show_flag=true;
 	}
-	public void response_init_component_data(scene_kernel sk,client_information ci)
+	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 		String url=ci.get_component_request_url_header_by_component_id(
 							comp.component_id,Integer.toString(driver_id));
