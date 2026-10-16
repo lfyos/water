@@ -21,6 +21,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			component my_comp,int my_driver_id,int my_mode,String my_directory_name)
 	{
 		super(my_comp,my_driver_id);
+
 		mode=my_mode;
 		directory_name=my_directory_name;
 	}

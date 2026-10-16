@@ -503,8 +503,7 @@ public class scene_initialization
 					fw.print  ("}");
 				}
 			}
-			fw.println().println().println();
-			fw.println((render_id<(render_number-1))?"	],":"	]");
+			fw.println().println((render_id<(render_number-1))?"	],":"	]");
 		}				
 		process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 

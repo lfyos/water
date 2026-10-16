@@ -128,12 +128,10 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 	
 	var common_shader_code=common_shader_data_structure+common_shader_variable_declaration;
 	for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
-		var my_render_name				=program_data[render_id][0];
-		var my_render_driver_function	=program_data[render_id][1];
-		var my_shader_program			=program_data[render_id][2];
-		var my_text_array				=program_data[render_id][3];
-		for(var i=4,ni=program_data[render_id].length;i<ni;i++)
-			my_text_array=my_text_array.concat(program_data[render_id][i]);
+		var my_render_name				=program_data[render_id].shift();
+		var my_render_driver_function	=program_data[render_id].shift();
+		var my_shader_program			=program_data[render_id].shift();
+		var my_text_array				=program_data[render_id];
 		
 		var combined_shader_program="const scene_camera_number=";
 		combined_shader_program+=scene.camera.camera_number.toString();
