@@ -112,7 +112,7 @@ public class extended_component_driver  extends component_driver
 			camera cam=sk.camera_cont.get(cam_id);
 			locate_camera loca_cam=new locate_camera(cam);
 			
-			loca=loca_cam.locate(my_box,loca);
+			loca=loca_cam.box_locate(my_box,loca);
 			cam.eye_component.set_component_move_location(loca,sk.component_cont);
 			
 			loca_cam.scale(Math.abs(cam.parameter.scale_value));

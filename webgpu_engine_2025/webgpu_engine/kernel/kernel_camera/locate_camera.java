@@ -33,35 +33,37 @@ public class locate_camera
 	private location caculate_rotate_right_modify_location(point direction,
 			point rotate_point,point start_point,point end_point,location absolute_location)
 	{
-		if(direction!=null){
-			location loca	=(new plane(rotate_point,rotate_point.add(direction))).project_to_plane_location();
-			start_point		=loca.multiply(start_point);
-			end_point		=loca.multiply(end_point);
-		}
-		if(start_point.sub(rotate_point).distance2()<const_value.min_value2)
+		if(direction!=null)
+			if(direction.distance2()>const_value.min_value2){
+				plane rotate_plane=new plane(rotate_point,rotate_point.add(direction));
+				location plane_project_loca=rotate_plane.project_to_plane_location();
+				start_point	=plane_project_loca.multiply(start_point);
+				end_point	=plane_project_loca.multiply(end_point);
+			}
+		point start_direction=start_point.sub(rotate_point);
+		if(start_direction.distance2()<const_value.min_value2)
 			return new location();
-		if(end_point.sub(rotate_point).distance2()<const_value.min_value2)
-			return new location();
-		start_point	=start_point.sub(rotate_point).expand(1.0).add(rotate_point);
-		end_point	=  end_point.sub(rotate_point).expand(1.0).add(rotate_point);
+		start_direction=start_direction.expand(1.0);
 		
-		point aix_point=start_point.sub(rotate_point).cross(end_point.sub(rotate_point));
-		if(aix_point.distance2()<const_value.min_value2)
+		point end_direction=end_point.sub(rotate_point);
+		if(end_direction.distance2()<const_value.min_value2)
 			return new location();
-		aix_point=aix_point.expand(1.0).add(rotate_point);
+		end_direction=end_direction.expand(1.0);
 		
-		point start_t=start_point.sub(rotate_point).cross(aix_point.sub(rotate_point));
-		if(start_t.distance2()<const_value.min_value2)
+		point aix_direction=start_direction.cross(end_direction);
+		if(aix_direction.distance2()<const_value.min_value2)
 			return new location();
-		start_t=start_t.expand(1.0).add(rotate_point);
+		aix_direction=aix_direction.expand(1.0);
 		
-		point end_t=end_point.sub(rotate_point).cross(aix_point.sub(rotate_point));
-		if(end_t.distance2()<const_value.min_value2)
-			return new location();
-		end_t=end_t.expand(1.0).add(rotate_point);
+		start_point		=rotate_point.add(start_direction);
+		end_point		=rotate_point.add(end_direction);
+		point aix_point	=rotate_point.add(aix_direction);
+		
+		point start_terminated_point=rotate_point.add(start_direction.cross(aix_direction).expand(1.0));
+		point end_terminated_point	=rotate_point.add(end_direction.  cross(aix_direction).expand(1.0));
 
-		location start_loca				=new location(rotate_point,	aix_point,	start_point,start_t);
-		location end_loca				=new location(rotate_point,	aix_point,	end_point,	end_t);
+		location start_loca	=new location(rotate_point,aix_point,start_point,start_terminated_point);
+		location end_loca	=new location(rotate_point,aix_point,end_point,  end_terminated_point);
 	
 		location left_modify_location	=end_loca.multiply(start_loca.negative());
 		location new_absolute_location	=left_modify_location.multiply(absolute_location);
@@ -74,92 +76,112 @@ public class locate_camera
 		location loca;
 
 		if(direction_type_flag){
-			if(coordinate_location!=null)
-				direction=coordinate_location.multiply(direction).sub(coordinate_location.multiply(new point(0,0,0)));
+			if(coordinate_location!=null) {
+				point origin_point	 =coordinate_location.multiply(new point(0,0,0));
+				point direction_point=coordinate_location.multiply(direction);
+				direction=direction_point.sub(origin_point);
+			}
 			point rotate_point	=cam.eye_component.absolute_location.multiply(new point(0,0,0));
 			point start_point	=cam.eye_component.absolute_location.multiply(new point(0,0,1));
 			point end_point		=rotate_point.add(direction);
 			loca=caculate_rotate_right_modify_location(null,
 					rotate_point,start_point,end_point,cam.eye_component.absolute_location);
 		}else{
-			point d_y=new point(0.0,1.0,0.0);
-			point d_z=direction.expand(1.0);
+			point d_y=new point(0,1,0);
+			point d_z=direction.expand(1);
 			point d_x=d_y.cross(d_z);
 		
 			if(d_x.distance2()<(const_value.min_value2)){
-				d_x=new point(1.0,0.0,0.0);
-				d_y=d_z.cross(d_x).expand(1.0);
-				d_x=d_y.cross(d_z).expand(1.0);
+				d_x=new point(1,0,0);
+				d_y=d_z.cross(d_x).expand(1);
+				d_x=d_y.cross(d_z).expand(1);
 			}else{
-				d_x=d_x.expand(1.0);		
-				d_y=d_z.cross(d_x).expand(1.0);
+				d_x=d_x.expand(1);		
+				d_y=d_z.cross(d_x).expand(1);
 			}
 			if(coordinate_location!=null){
 				point p0=coordinate_location.multiply(new point(0,0,0));
-				d_x=coordinate_location.multiply(d_x).sub(p0).expand(1.0);
-				d_y=coordinate_location.multiply(d_y).sub(p0).expand(1.0);
-				d_z=coordinate_location.multiply(d_z).sub(p0).expand(1.0);
+				d_x=coordinate_location.multiply(d_x).sub(p0).expand(1);
+				d_y=coordinate_location.multiply(d_y).sub(p0).expand(1);
+				d_z=coordinate_location.multiply(d_z).sub(p0).expand(1);
 			}
-			
 			point p0=cam.eye_component.absolute_location.multiply(new point(0,0,0));
-			loca=new location(p0,p0.add(d_x),p0.add(d_y),p0.add(d_z)).multiply(location.standard_negative);
+			loca=new location(p0,p0.add(d_x),p0.add(d_y),p0.add(d_z));
+			loca=loca.multiply(location.standard_negative);
 			loca=cam.eye_component.caculate_negative_absolute_location().multiply(loca);
 		}
 		return cam.eye_component.move_location.multiply(loca);
 	}	
-	public location rotation_locate(point start_direction,point end_direction,location coordinate_location)
+	public location rotation_locate(
+				point start_direction,point end_direction,
+				location coordinate_location)
 	{
-		if((start_direction.distance2()<=const_value.min_value2)||(end_direction.distance2()<=const_value.min_value2))
-			return new location(cam.eye_component.move_location);
+		if(  (start_direction.distance2()<=const_value.min_value2)
+		   ||(end_direction.  distance2()<=const_value.min_value2))
+				return new location(cam.eye_component.move_location);
 		if(coordinate_location!=null){
 			point p0=coordinate_location.multiply(new point(0,0,0));
 			start_direction=coordinate_location.multiply(start_direction).sub(p0);
-			end_direction=coordinate_location.multiply(end_direction).sub(p0);
+			end_direction  =coordinate_location.multiply(end_direction  ).sub(p0);
 		}
 		location absolute_location=cam.eye_component.absolute_location;
 		point p0=absolute_location.multiply(new point(0,0,0));
 		location loca=caculate_rotate_right_modify_location(null,
 				p0,p0.add(start_direction),p0.add(end_direction),absolute_location);
-		
+
 		return cam.eye_component.move_location.multiply(loca);
 	}
 	public location rotation_locate(point direction,double alf,location coordinate_location)
 	{
-		if(coordinate_location!=null)
-			direction=coordinate_location.multiply(direction).sub(coordinate_location.multiply(new point(0,0,0)));
+		if(coordinate_location!=null){
+			point p0=coordinate_location.multiply(new point(0,0,0));
+			direction=coordinate_location.multiply(direction).sub(p0);
+		}
+		
+		if(direction.distance2()<const_value.min_value2)
+			return new location(cam.eye_component.move_location);
+
+		point direction_z=direction.expand(1.0);
 
 		location loca=cam.eye_component.absolute_location;
-		point p0=loca.multiply(new point(0,0,0));
-		point px=loca.multiply(new point(1,0,0));
-		point py=loca.multiply(new point(0,1,0));
-		point pz=loca.multiply(new point(0,0,1));
+		point point_0=loca.multiply(new point(0,0,0));
+		point point_x=loca.multiply(new point(1,0,0));
+		point point_y=loca.multiply(new point(0,1,0));
+		point point_z=loca.multiply(new point(0,0,1));
 	
-		loca =(new plane(p0,p0.add(direction))).project_to_plane_location();
-		px=loca.multiply(px);
-		py=loca.multiply(py);
-		pz=loca.multiply(pz);
-		double dx2=px.sub(p0).distance2();
-		double dy2=py.sub(p0).distance2();
-		double dz2=pz.sub(p0).distance2();
+		loca =(new plane(point_0,point_0.add(direction_z))).project_to_plane_location();
+		point_x=loca.multiply(point_x);
+		point_y=loca.multiply(point_y);
+		point_z=loca.multiply(point_z);
+		double dx2=point_x.sub(point_0).distance2();
+		double dy2=point_y.sub(point_0).distance2();
+		double dz2=point_z.sub(point_0).distance2();
 		
-		if((dz2>=dx2)&&(dz2>=dy2))
-			px=pz;
-		else if((dy2>=dx2)&&(dy2>=dz2))
-			px=py;
-		px=px.sub(p0).expand(1.0).add(p0);
-		pz=direction.expand(1.0).add(p0);
-		py=pz.sub(p0).cross(px.sub(p0)).expand(1.0).add(p0);
-		loca=(new location(p0,px,py,pz)).multiply(location.standard_negative);
+		if((dy2>=dx2)&&(dy2>=dz2))
+			point_x=point_y;
+		else if((dz2>=dx2)&&(dz2>=dy2))
+			point_x=point_z;
+
+		point direction_x=point_x.sub(point_0).expand(1.0);
+		point_x=point_0.add(direction_x);
 		
-		px=new point(1,0,0);
-		point start_direction=loca.multiply(px).sub(p0);
+		point_z=point_0.add(direction_z);
+		
+		point direction_y=direction_z.cross(direction_x).expand(1.0);
+		point_y=point_0.add(direction_y);
+		
+		loca=new location(point_0,point_x,point_y,point_z);
+		loca=loca.multiply(location.standard_negative);
+		
+		point_x=new point(1,0,0);
+		point start_direction=loca.multiply(point_x).sub(point_0);
 		loca=loca.multiply(location.move_rotate(0,0,0,0,0,alf));
-		point end_direction=loca.multiply(px).sub(p0);
+		point end_direction=loca.multiply(point_x).sub(point_0);
 		
 		return rotation_locate(start_direction,end_direction,null);
 	}
 	
-	public location locate(point center_point,location direction_loca)
+	private location point_locate(point center_point,location direction_loca)
 	{
 		locate_box=null;
 		
@@ -179,35 +201,11 @@ public class locate_camera
 
 		return move_location;
 	}
-	public location locate(box my_locate_box,location direction_loca)
+	public location box_locate(box my_locate_box,location direction_loca)
 	{
-		location ret_val=locate(my_locate_box.center(),direction_loca);
+		location ret_val=point_locate(my_locate_box.center(),direction_loca);
 		locate_box=my_locate_box;
 		return ret_val;
-	}
-	private location locate(
-			component_container component_cont,camera_result display_camera_result,
-			client_parameter par,location dir,point p0,point p1)
-	{
-		box my_box;
-		if(par!=null)
-			if(par.comp!=null){
-				for(int i=0,n=par.comp.driver_array.size();i<n;i++){
-					part my_part=par.comp.driver_array.get(i).component_part;
-					if((my_box=my_part.secure_caculate_part_box(par.comp,i,par.body_id,par.face_id,
-							par.primitive_id,par.vertex_id,par.loop_id,par.edge_id,p0,p1))!=null)
-								return locate(par.comp.absolute_location.multiply(my_box),dir);
-				}
-				if((my_box=par.comp.get_component_box(false))==null)
-					if((my_box=par.comp.get_component_box(true))==null)
-						return locate(par.comp.absolute_location.multiply(new point(0,0,0)),dir);
-				return locate(my_box,dir);
-			}
-		if(display_camera_result.target!=null)
-			if((my_box=component_cont.get_effective_box(
-					display_camera_result.target.parameter_channel_id))!=null)
-				return locate(my_box,dir);
-		return null;
 	}
 	public void scale(double scale_value)
 	{
@@ -220,7 +218,7 @@ public class locate_camera
 				}
 		return;
 	}
-	private boolean locate_on_components(modifier_container modifier_cont,
+	private boolean push_camera_modifier(modifier_container modifier_cont,
 			boolean switch_camera_flag,boolean mandatory_movement_flag,boolean mandatory_scale_flag)
 	{
 		if(switch_camera_flag&&(cam.parameter.movement_flag|mandatory_movement_flag)){
@@ -262,19 +260,49 @@ public class locate_camera
 			if(!(comp.uniparameter.effective_selected_flag))
 				return false;
 		}
-		locate(comp.absolute_location.multiply(new point(0,0,0)),null);
-		return locate_on_components(modifier_cont,
+		point_locate(comp.absolute_location.multiply(new point(0,0,0)),null);
+		return push_camera_modifier(modifier_cont,
 					switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
 	}
-	public boolean locate_on_components(
+	public boolean locate_on_box_and_scale(
 			modifier_container modifier_cont,box my_box,location dir,double my_scale_value,
 			boolean switch_camera_flag,boolean mandatory_movement_flag,boolean mandatory_scale_flag)
 	{
 		if(my_box==null)
 			return false;
-		locate(my_box,dir);
+		box_locate(my_box,dir);
 		scale(my_scale_value);
-		return locate_on_components(modifier_cont,switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
+		return push_camera_modifier(modifier_cont,
+				switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
+	}
+	private location client_parameter_locate(component_container component_cont,
+			client_parameter par,location dir,point p0,point p1)
+	{
+		box my_box;
+		if(par!=null)
+			if(par.comp!=null){
+				for(int i=0,n=par.comp.driver_array.size();i<n;i++){
+					part my_part=par.comp.driver_array.get(i).component_part;
+					if((my_box=my_part.secure_caculate_part_box(par.comp,i,par.body_id,par.face_id,
+							par.primitive_id,par.vertex_id,par.loop_id,par.edge_id,p0,p1))!=null)
+								return box_locate(par.comp.absolute_location.multiply(my_box),dir);
+				}
+				if((my_box=par.comp.get_component_box(false))==null)
+					if((my_box=par.comp.get_component_box(true))==null)
+						return point_locate(par.comp.absolute_location.multiply(new point(0,0,0)),dir);
+				return box_locate(my_box,dir);
+			}
+		return null;
+	}
+	private location camera_result_locate(component_container component_cont,
+			camera_result display_camera_result,location dir)
+	{
+		box my_box;
+		if(display_camera_result.target!=null)
+			if((my_box=component_cont.get_effective_box(
+					display_camera_result.target.parameter_channel_id))!=null)
+				return box_locate(my_box,dir);
+		return null;
 	}
 	public void locate_on_components(
 			modifier_container modifier_cont,component_container component_cont,
@@ -283,9 +311,11 @@ public class locate_camera
 			boolean switch_camera_flag,	boolean mandatory_movement_flag,boolean mandatory_scale_flag,
 			point p0,point p1)
 	{
-		if(locate(component_cont,display_camera_result,par,dir,p0,p1)==null)
-			return;
+		if(client_parameter_locate(component_cont,par,dir,p0,p1)==null)
+			if(camera_result_locate(component_cont,display_camera_result,dir)==null)
+				return;
 		scale(my_scale_value);
-		locate_on_components(modifier_cont,switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
+		push_camera_modifier(modifier_cont,
+				switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
 	}
 }

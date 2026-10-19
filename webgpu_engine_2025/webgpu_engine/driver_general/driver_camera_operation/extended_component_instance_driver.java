@@ -137,6 +137,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		location loca=lc.direction_locate(
 			new point(x,y,z),get_component_location(sk,ci),
 			ci.request_response.get_boolean("type", false));
+		
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
 			sk.modifier_cont[modifier_container_id],true,
@@ -276,7 +277,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				}
 			}while(false);
 			
-			lc.locate_on_components(sk.modifier_cont[modifier_container_id],
+			lc.locate_on_box_and_scale(sk.modifier_cont[modifier_container_id],
 				my_box,null,scale_value,true,mandatory_movement_flag,mandatory_scale_flag);
 			return;
 		}
@@ -332,17 +333,17 @@ public class extended_component_instance_driver extends component_instance_drive
 				ci.display_camera_result.cam.parameter.projection_type_flag=(str.compareTo("frustum")==0)?true:false;
 			return null;
 		case "view_move":
-			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk,ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null)
 				ci.display_camera_result.cam.parameter.movement_flag=(str.compareTo("true")==0)?true:false;
 			return null;
 		case "view_direct":
-			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk,ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null)
 				ci.display_camera_result.cam.parameter.direction_flag=(str.compareTo("true")==0)?true:false;
 			return null;
 		case "view_scale":
-			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk,ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null){
 				double scale_value=Math.abs(ci.display_camera_result.cam.parameter.scale_value);
 				scale_value=(str.compareTo("true")==0)?scale_value:(-scale_value);
@@ -353,7 +354,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		{
 			if(sk.component_cont.root_component==null)
 				return null;
-			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk,ci,true);
 			boolean new_change_type_flag=ci.request_response.get_boolean("value",
 							ci.display_camera_result.cam.parameter.change_type_flag);
 			if(!(ci.display_camera_result.cam.parameter.change_type_flag^new_change_type_flag))
@@ -378,7 +379,6 @@ public class extended_component_instance_driver extends component_instance_drive
 			return null;
 		}
 		case "show_hide":
-			update_component_parameter_version(0);
 			if((str=ci.request_response.get_parameter("show_hide"))!=null){
 				switch(str.toLowerCase()){
 				case "yes":

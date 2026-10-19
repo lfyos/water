@@ -121,7 +121,7 @@ public class operate_part_list
 		if(ci.display_camera_result.cam.parameter.movement_flag)
 			if(comp_con.comp_list.size()>0)
 				if(select_type_id!=2)
-					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
+					(new locate_camera(ci.display_camera_result.cam)).locate_on_box_and_scale(
 						sk.modifier_cont[modifier_container_id],comp_con.get_box(),null,
 						ci.display_camera_result.cam.parameter.scale_value,true,true,false);
 		return;

@@ -70,9 +70,9 @@ public class camera
 			restore_stack_pointer++;
 			restore_stack_pointer%=max_camera_return_stack_number;
 			if(switch_camera_flag){
-				camera_modifier cm=new camera_modifier(this,
-						terminate_location,terminate_parameter,
-						modifier_cont.get_timer().get_current_time());
+				long current_time=modifier_cont.get_timer().get_current_time();
+				camera_modifier cm=new camera_modifier(
+					this,terminate_location,terminate_parameter,current_time);
 				modifier_cont.add_modifier(cm);
 			}
 			return true;
@@ -93,11 +93,12 @@ public class camera
 		camera_parameter my_parameter=start_parameter[restore_stack_pointer];
 		start_parameter[restore_stack_pointer]=null;
 		
-		if(my_location!=null){
-			camera_modifier cm=new camera_modifier(this,my_location,my_parameter,
-					modifier_cont.get_timer().get_current_time());
-			modifier_cont.add_modifier(cm);
+		if((my_location==null)||(my_parameter==null))
 			return;
-		}
+		
+		long current_time=modifier_cont.get_timer().get_current_time();
+		var c_m=new camera_modifier(this,my_location,my_parameter,current_time);
+		modifier_cont.add_modifier(c_m);
+		return;
 	}
 }

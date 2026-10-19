@@ -130,7 +130,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			box my_box;
 			if((comp_cont=collector.get_component_array())!=null)
 				if((my_box=comp_cont.get_box())!=null)
-					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
+					(new locate_camera(ci.display_camera_result.cam)).locate_on_box_and_scale(
 							sk.modifier_cont[modifier_container_id],my_box,null,
 							ci.display_camera_result.cam.parameter.scale_value,true,true,true);
 			break;

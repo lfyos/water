@@ -178,7 +178,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			case "locate":
 				new locate_camera(sk.camera_cont.get(ci.display_camera_result.target.camera_id)).
-						locate_on_components(sk.modifier_cont[modifier_container_id],
+						locate_on_box_and_scale(sk.modifier_cont[modifier_container_id],
 							new box(operate_comp.absolute_location.multiply(
 									operate_cm.marker_x,operate_cm.marker_y,operate_cm.marker_z)),
 							null,-1.0,true,false,false);

@@ -182,7 +182,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 			for(int i=0,n=sk.camera_cont.size();i<n;i++) {
 				camera cam=sk.camera_cont.get(i);
 				if(cam.parameter.movement_flag)
-					(new locate_camera(cam)).locate_on_components(
+					(new locate_camera(cam)).locate_on_box_and_scale(
 						sk.modifier_cont[camera_modifier_container_id],
 						b,cam.parameter.direction_flag?dir:null,
 						(cam.parameter.scale_value<const_value.min_value)?-1.0:scale_value,

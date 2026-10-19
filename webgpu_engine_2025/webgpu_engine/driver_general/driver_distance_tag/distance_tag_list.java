@@ -328,7 +328,7 @@ public class distance_tag_list
 				b=b0.add(bx);
 		}
 		var lc=new locate_camera(sk.camera_cont.get(ci.display_camera_result.target.camera_id));
-		lc.locate_on_components(sk.modifier_cont[modifier_container_id],b,null,-1.0,true,false,false);
+		lc.locate_on_box_and_scale(sk.modifier_cont[modifier_container_id],b,null,-1.0,true,false,false);
 		return;
 	}
 	public boolean set_distance_tag_type(scene_kernel sk,client_information ci)

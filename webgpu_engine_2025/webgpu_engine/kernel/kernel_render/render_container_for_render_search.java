@@ -26,10 +26,9 @@ public class render_container_for_render_search
 		render_tree=new tree_string_search_container<render>(null);
 		for(var my_render:my_render_list)
 			render_tree.add(my_render.render_name,my_render);
-		int number;
 		for(var my_tree_node:render_tree.tree_get_node_collection())
-			if((number=my_tree_node.list.size())>1)
+			if(my_tree_node.list.size()>1)
 				debug_information.println("Find same name render:	",
-					my_tree_node.list.get(0).render_name+"	number:	"+number);
+					my_tree_node.list.get(0).render_name+"	number:	"+my_tree_node.list.size());
 	}
 }
