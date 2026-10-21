@@ -4,6 +4,7 @@ function construct_event_listener()
 	
 	this.caculate_angle=function(event)
 	{
+		var angle_scale=event.shiftKey?1.0:-1.0;
 		if(this.alf.length>3)
 			this.alf=this.alf.substring(this.alf.length-3);
 		while((this.alf.length>1)&&(this.alf.charAt(0)=='0'))
@@ -11,14 +12,14 @@ function construct_event_listener()
 		
 		if(event.ctrlKey)
 			if(event.altKey)
-				return parseFloat(this.alf)/1000.0;
+				return angle_scale*parseFloat(this.alf)/1000.0;
 			else
-				return parseFloat(this.alf)/100.0;
+				return angle_scale*parseFloat(this.alf)/100.0;
 		else
 			if(event.altKey)
-				return parseFloat(this.alf)/10.0;
+				return angle_scale*parseFloat(this.alf)/10.0;
 			else
-				return parseFloat(this.alf);
+				return angle_scale*parseFloat(this.alf);
 	}
 
 	this.pickupcontextmenu=function(event,component_id,scene)
@@ -55,8 +56,7 @@ function construct_event_listener()
 			break;
 		case 2:
 			scene.caller.call_server_component(component_id,"all",
-				[["operation","body_face_rotate"],["coordinate","global"],
-				 ["type",event.shiftKey?"true":"false"],["alf",alf]]);
+				[["operation","body_face_rotate"],["coordinate","global"],["alf",alf]]);
 			break;
 		}
 		return true;
@@ -64,7 +64,7 @@ function construct_event_listener()
 	this.pickupkeyup=function(event,component_id,scene)
 	{
 		var alf=this.caculate_angle(event)*Math.PI/180.0;
-
+	
 		switch(event.keyCode){
 		case 48:	//	0-9
 		case 49:

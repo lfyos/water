@@ -73,7 +73,7 @@ public class locate_camera
 
 		return right_modify_location;
 	}
-	public location direction_locate(point direction,location coordinate_location,boolean direction_type_flag)
+	private location direction_locate(point direction,location coordinate_location,boolean direction_type_flag)
 	{
 		location loca;
 
@@ -113,8 +113,15 @@ public class locate_camera
 			loca=cam.eye_component.caculate_negative_absolute_location().multiply(loca);
 		}
 		return cam.eye_component.move_location.multiply(loca);
-	}	
-	public location rotation_locate(point start_direction,point end_direction,location coordinate_location)
+	}
+	public void direction_locate(modifier_container modifier_cont,boolean switch_camera_flag,
+			point direction,location coordinate_location,boolean direction_type_flag)
+	{
+		location loca=direction_locate(direction,coordinate_location,direction_type_flag);
+		cam.mark_restore_stack();
+		cam.push_restore_stack(modifier_cont,switch_camera_flag,loca,cam.parameter);
+	}
+	private location rotation_locate(point start_direction,point end_direction,location coordinate_location)
 	{
 		if(  (start_direction.distance2()<=const_value.min_value2)
 		   ||(end_direction.  distance2()<=const_value.min_value2))
@@ -131,7 +138,14 @@ public class locate_camera
 
 		return cam.eye_component.move_location.multiply(loca);
 	}
-	public location rotation_locate(point direction,double alf,location coordinate_location)
+	public void rotation_locate(modifier_container modifier_cont,boolean switch_camera_flag,
+			point start_direction,point end_direction,location coordinate_location)
+	{
+		location loca=rotation_locate(start_direction,end_direction,coordinate_location);
+		cam.mark_restore_stack();
+		cam.push_restore_stack(modifier_cont,switch_camera_flag,loca,cam.parameter);
+	}
+	private location rotation_locate(point direction,double alf,location coordinate_location)
 	{
 		if(coordinate_location!=null){
 			point p0=coordinate_location.multiply(new point(0,0,0));
@@ -180,8 +194,14 @@ public class locate_camera
 		
 		return rotation_locate(start_direction,end_direction,null);
 	}
-	
-	public location point_locate(point center_point,location direction_loca)
+	public void rotation_locate(modifier_container modifier_cont,boolean switch_camera_flag,
+			point direction,double alf,location coordinate_location)
+	{
+		location loca=rotation_locate(direction,alf,coordinate_location);
+		cam.mark_restore_stack();
+		cam.push_restore_stack(modifier_cont,switch_camera_flag,loca,cam.parameter);
+	}
+	private location point_locate(point center_point,location direction_loca)
 	{
 		locate_box=null;
 		
@@ -314,7 +334,8 @@ public class locate_camera
 			modifier_container modifier_cont,component_container component_cont,
 			camera_result display_camera_result,client_parameter par,location dir,
 			double my_scale_value,long start_time,boolean switch_camera_flag,
-			boolean mandatory_movement_flag,boolean mandatory_scale_flag,point p0,point p1)
+			boolean mandatory_movement_flag,boolean mandatory_scale_flag,
+			point p0,point p1)
 	{
 		if(client_parameter_locate(component_cont,par,dir,p0,p1)==null)
 			if(camera_result_locate(component_cont,display_camera_result,dir)==null)

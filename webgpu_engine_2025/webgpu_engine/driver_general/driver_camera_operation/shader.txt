@@ -8,6 +8,7 @@ struct vertex_to_fragment_struct
 
 struct id_target_struct
 {
+	@builtin(frag_depth)	depth	:	f32,
 	@location(0) 			id_0	:	vec4<i32>,
 	@location(1) 			id_1	:	vec4<i32>
 };
@@ -33,10 +34,11 @@ fn vertex_main(
 	var par_depth_end		=my_depth_par.y;
 	
 	var p=target_info.camera_absolute_matrix*vec4(0.0,0.0,0.0,1.0);
-	p=target_info.projection_matrix*vec4(p.xyz/p.w+my_coord.xyz*par_scale,1.0);
-	
-	var p0=target_info.projection_matrix*(target_info.camera_absolute_matrix*vec4(0.0,	0.0,	 par_view_distance/2.0,	1.0));
-	var p1=target_info.projection_matrix*(target_info.camera_absolute_matrix*vec4(0.0,	0.0,	-par_view_distance/2.0,	1.0));
+		p=target_info.projection_matrix*vec4(p.xyz/p.w+my_coord.xyz*par_scale,1.0);
+	var p0=target_info.camera_absolute_matrix*vec4(0.0,0.0, par_view_distance/2.0,1.0);
+		p0=target_info.projection_matrix*p0;
+	var p1=target_info.camera_absolute_matrix*vec4(0.0,0.0,-par_view_distance/2.0,1.0);
+		p1=target_info.projection_matrix*p1;
 
 	if(primitive_type==0){
 		p =target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p );
@@ -44,7 +46,10 @@ fn vertex_main(
 		p1=target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p1);
 	}
 	
-	p.z=par_depth_start+(par_depth_end-par_depth_start)*(p.z/p.w-p0.z/p0.w)/(p1.z/p1.w-p0.z/p0.w);
+	p.z=(p.z/p.w-p0.z/p0.w)/(p1.z/p1.w-p0.z/p0.w);
+	p.z=(par_depth_end-par_depth_start)*p.z;
+	p.z=par_depth_start+p.z;
+
 	p=vec4(p.xy/p.w+my_position_par.xy,p.z,1.0);
 
 	if(primitive_type==0){
@@ -66,7 +71,7 @@ fn fragment_id_fun(vf:vertex_to_fragment_struct) -> id_target_struct
 	ret_val.id_0=vec4(id_info.component_system_id,
 		i32(vf.vertex_id.x),i32(vf.vertex_id.y),(target_info.scene_id<<4)+0);
 	ret_val.id_1=vec4(-1,-1,i32(vf.vertex_id.z),i32(vf.vertex_id.w));
-	
+	ret_val.depth=vf.vertex_position.z;
 	return ret_val;
 }
 

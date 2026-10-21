@@ -102,19 +102,15 @@ public class extended_component_instance_driver extends component_instance_drive
 		location loca=get_component_location(sk,ci);
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
 		
-		if(direct_rotate_flag) 
-			loca=lc.direction_locate(direction,loca,ci.request_response.get_boolean("type",false));
+		if(direct_rotate_flag)
+			lc.direction_locate(sk.modifier_cont[modifier_container_id],true,
+					direction,loca,ci.request_response.get_boolean("type",false));
 		else{
 			String str;
-			if((str=ci.request_response.get_parameter("alf"))==null)
-				return;
-			double alf=(ci.request_response.get_boolean("type",false)?-1.0:1.0)*Double.parseDouble(str);
-			loca=lc.rotation_locate(direction,alf,loca);
+			if((str=ci.request_response.get_parameter("alf"))!=null)
+				lc.rotation_locate(sk.modifier_cont[modifier_container_id],true,direction,
+					Double.parseDouble(str),loca);
 		}
-		ci.display_camera_result.cam.mark_restore_stack();
-		ci.display_camera_result.cam.push_restore_stack(
-			sk.modifier_cont[modifier_container_id],true,
-			loca,ci.display_camera_result.cam.parameter);
 	}
 	private void camera_direct(scene_kernel sk,client_information ci)
 	{
@@ -132,14 +128,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		double z=Double.parseDouble(str);
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
-		location loca=lc.direction_locate(
+		lc.direction_locate(sk.modifier_cont[modifier_container_id],true,
 			new point(x,y,z),get_component_location(sk,ci),
 			ci.request_response.get_boolean("type", false));
-		
-		ci.display_camera_result.cam.mark_restore_stack();
-		ci.display_camera_result.cam.push_restore_stack(
-			sk.modifier_cont[modifier_container_id],true,
-			loca,ci.display_camera_result.cam.parameter);
 	}
 	private void camera_rotate(scene_kernel sk,client_information ci)
 	{
@@ -170,16 +161,10 @@ public class extended_component_instance_driver extends component_instance_drive
 		double z1=Double.parseDouble(str);
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
-		location loca=lc.rotation_locate(
-				new point(x0,y0,z0),new point(x1,y1,z1),
-				get_component_location(sk,ci));
-		
-		ci.display_camera_result.cam.mark_restore_stack();
-		ci.display_camera_result.cam.push_restore_stack(
-			sk.modifier_cont[modifier_container_id],true,
-			loca,ci.display_camera_result.cam.parameter);
+		lc.rotation_locate(sk.modifier_cont[modifier_container_id],true,
+				new point(x0,y0,z0),new point(x1,y1,z1),get_component_location(sk,ci));
 	}
-	private void locate(scene_kernel sk,client_information ci)
+	private void camera_locate(scene_kernel sk,client_information ci)
 	{
 		String str;
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
@@ -299,7 +284,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		lc.locate_on_components(sk.modifier_cont[modifier_container_id],
 				sk.component_cont,ci.display_camera_result,ci.parameter,null,scale_value,
-				sk.modifier_cont[modifier_container_id].get_timer().get_current_time(),true,true,true,p0,p1);
+				sk.modifier_cont[modifier_container_id].get_timer().get_current_time(),
+				true,true,true,p0,p1);
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
@@ -321,7 +307,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			camera_rotate(sk,ci);
 			return null;
 		case "locate":
-			locate(sk,ci);
+			camera_locate(sk,ci);
 			return null;
 		case "retreat":
 			ci.display_camera_result.cam.pop_restore_stack(sk.modifier_cont[modifier_container_id]);
