@@ -247,6 +247,7 @@ public class component_render
 				ci.request_response.print(data_buffer_id).
 									print(",",my_instance_id).
 									print(",");
+				long old_length=ci.request_response.output_data_length;
 				try{
 					instance_driver.create_render_parameter(sk,ci,cam_result);
 				}catch(Exception e){
@@ -258,9 +259,8 @@ public class component_render
 					debug_information.println("Part user name:	",	my_part.user_name);
 					debug_information.println("Part system name:",	my_part.system_name);
 					debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
-					
 				}
-				ci.request_response.print("]");
+				ci.request_response.print((ci.request_response.output_data_length==old_length)?"0]":"]");
 
 				instance_driver.update_component_render_version(cam_result.target.target_id,
 						p.comp.driver_array.get(p.driver_id).get_component_render_version());

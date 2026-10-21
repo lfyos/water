@@ -59,6 +59,7 @@ public class response_component_buffer_parameter
 			int data_buffer_id=cll.comp.driver_array.get(cll.driver_id).same_part_component_driver_id;
 			ci.request_response.print(data_buffer_id).print(",");
 			
+			long old_length=ci.request_response.output_data_length;
 			try{
 				my_instance_driver.create_component_parameter(sk,ci);
 			}catch(Exception e){
@@ -73,8 +74,8 @@ public class response_component_buffer_parameter
 				debug_information.println("Part system name:",	p.system_name);
 				debug_information.println("Mesh file name:	",	p.directory_name+p.mesh_file_name);
 			}
-			ci.request_response.print("]");
-			
+			ci.request_response.print((ci.request_response.output_data_length==old_length)?"0]":"]");
+
 			rcc.update_component_parameter_number++;
 			my_instance_driver.update_component_parameter_version(
 					cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version());

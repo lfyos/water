@@ -42,11 +42,9 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(0);
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
-		ci.request_response.print(0);
 	}
 	private location get_component_location(scene_kernel sk,client_information ci)
 	{

@@ -32,6 +32,7 @@ public class extended_component_driver  extends component_driver
 			int my_modifier_container_id,change_name my_title_change_name)
 	{
 		super(my_component_part);
+
 		modifier_container_id=my_modifier_container_id;
 		title_change_name=my_title_change_name;
 	}
