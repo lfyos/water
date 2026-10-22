@@ -1,18 +1,14 @@
-override primitive_type	: i32;
-
 struct vertex_to_fragment_struct
 {
 	@builtin(position)	vertex_position		:	vec4<f32>,
 	@location(1)		vertex_id			:	vec4<f32>
 };
-
 struct id_target_struct
 {
 	@builtin(frag_depth)	depth	:	f32,
 	@location(0) 			id_0	:	vec4<i32>,
 	@location(1) 			id_1	:	vec4<i32>
 };
-
 struct color_target_struct
 {
 	@builtin(frag_depth)	depth	:	f32,
@@ -35,26 +31,24 @@ fn vertex_main(
 	
 	var p=target_info.camera_absolute_matrix*vec4(0.0,0.0,0.0,1.0);
 		p=target_info.projection_matrix*vec4(p.xyz/p.w+my_coord.xyz*par_scale,1.0);
+		p=target_info.negative_screen_move_matrix*p;
+		p=target_info.screen_move_matrix_from*p;
 	var p0=target_info.camera_absolute_matrix*vec4(0.0,0.0, par_view_distance/2.0,1.0);
 		p0=target_info.projection_matrix*p0;
+		p0=target_info.negative_screen_move_matrix*p0;
+		p0=target_info.screen_move_matrix_from*p0;
 	var p1=target_info.camera_absolute_matrix*vec4(0.0,0.0,-par_view_distance/2.0,1.0);
 		p1=target_info.projection_matrix*p1;
-
-	if(primitive_type==0){
-		p =target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p );
-		p0=target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p0);
-		p1=target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p1);
-	}
+		p1=target_info.negative_screen_move_matrix*p1;
+		p1=target_info.screen_move_matrix_from*p1;
 	
 	p.z=(p.z/p.w-p0.z/p0.w)/(p1.z/p1.w-p0.z/p0.w);
-	p.z=(par_depth_end-par_depth_start)*p.z;
-	p.z=par_depth_start+p.z;
+	p.z=par_depth_start+(par_depth_end-par_depth_start)*p.z;
 
-	p=vec4(p.xy/p.w+my_position_par.xy,p.z,1.0);
+	p=vec4(p.xy/p.w+par_x0y0,p.z,1.0);
 
-	if(primitive_type==0){
-		p=target_info.screen_move_matrix*(target_info.negative_screen_move_matrix_from*p);
-	}
+	p=target_info.negative_screen_move_matrix_from*p;
+	p=target_info.screen_move_matrix*p;
 
 	var vf:vertex_to_fragment_struct;
 	
@@ -78,30 +72,32 @@ fn fragment_id_fun(vf:vertex_to_fragment_struct) -> id_target_struct
 @fragment
 fn fragment_face_fun(vf:vertex_to_fragment_struct) -> color_target_struct
 {
-	var cts:color_target_struct;
+	var ret_val:color_target_struct;
 	
-	cts.color=vec4<f32>(0.25,0.25,0.25,1.0);
-	cts.depth=vf.vertex_position.z;
+	ret_val.color=vec4<f32>(0.25,0.25,0.25,1.0);
+	ret_val.depth=vf.vertex_position.z;
 	
-	return cts;
+	return ret_val;
 }
 @fragment
 fn fragment_edge_fun(vf:vertex_to_fragment_struct) -> color_target_struct
 {
-	var cts:color_target_struct;
+	var ret_val:color_target_struct;
 	
-	cts.color=vec4<f32>(0.0,1.0,0.0,1.0);
-	cts.depth=vf.vertex_position.z-0.001;
+	ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
+	ret_val.depth=vf.vertex_position.z-0.001;
+	if(ret_val.depth<0.0)
+		{ret_val.depth=0.0;}
 	
 	if(system_info.pickup_component_id==id_info.component_id){
 		if(system_info.pickup_driver_id==id_info.driver_id){
 			if(system_info.pickup_body_id==i32(vf.vertex_id.x)){
 				if(system_info.pickup_face_id==i32(vf.vertex_id.y)){
-					cts.color=vec4<f32>(1.0,0.0,0.0,1.0);
-					cts.depth=0.0;
+					ret_val.color=vec4<f32>(1.0,0.0,0.0,1.0);
+					ret_val.depth=0.0;
 				}
 			}
 		}
 	}
-	return cts;
+	return ret_val;
 }

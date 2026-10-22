@@ -54,7 +54,7 @@ function new_render_driver(render_id,render_name,init_data,create_data,shader_co
 			
 	var pipeline_descr=
 	{
-		layout: scene.webgpu.device.createPipelineLayout(
+		layout			:	scene.webgpu.device.createPipelineLayout(
 		{
 			bindGroupLayouts:
 			[
@@ -62,7 +62,7 @@ function new_render_driver(render_id,render_name,init_data,create_data,shader_co
 				this.texture_bindgroup_layout
 			]
 		}),
-		vertex:
+		vertex			:
 		{
 			module		:	my_module,
 			entryPoint	:	"vertex_main",

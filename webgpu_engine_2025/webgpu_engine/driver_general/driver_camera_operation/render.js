@@ -8,7 +8,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 	{
 		layout: scene.webgpu.device.createPipelineLayout(
 		{
-			bindGroupLayouts:
+			bindGroupLayouts	:
 			[
 				scene.system_buffer.system_bindgroup_layout
 			]
@@ -18,10 +18,6 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		{
 			module		:	my_module,
 			entryPoint	:	"vertex_main",
-			constants	:
-			{
-				primitive_type	:	0
-			},
 			buffers		:
 			[
 				{
@@ -64,7 +60,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		{
 			module		:	my_module,
 			entryPoint	:	"fragment_id_fun",
-			targets	: 
+			targets		: 
 			[
 				{
 					format		:	"rgba32sint"
@@ -76,35 +72,36 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		},
 		primitive	:
 		{
-			topology:"triangle-list",
+			topology			:	"triangle-list",
 		},
-		depthStencil	:
+		multisample	:
+		{
+			count				:	1
+		},
+		depthStencil:
 		{
 			format				:	"depth24plus-stencil8",
 			depthWriteEnabled	:	true,
-    		depthCompare		:	"less-equal",
+			depthCompare		:	"less-equal",
 
-   			stencilFront		:	{},
-    		stencilBack			:	{},
+			stencilFront		:	{},
+			stencilBack			:	{},
 
- 			stencilReadMask		:	0xFFFFFFFF,
+			stencilReadMask		:	0xFFFFFFFF,
 			stencilWriteMask	:	0xFFFFFFFF,
 		}
 	};
 	
 	this.id_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
+	pipeline_descr.multisample.count				=scene.parameter.multisample;	
 	pipeline_descr.fragment.targets.length			=1;
 	pipeline_descr.fragment.targets[0].format		=scene.webgpu.gpu.getPreferredCanvasFormat();
-	
-	pipeline_descr.multisample={count:scene.parameter.multisample};
 
 	pipeline_descr.fragment.entryPoint				="fragment_face_fun";
-	pipeline_descr.vertex.constants.primitive_type	=1;
 	this.face_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.entryPoint				="fragment_edge_fun";
-	pipeline_descr.vertex.constants.primitive_type	=2;
 	pipeline_descr.primitive.topology				="line-list";
 	this.edge_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
