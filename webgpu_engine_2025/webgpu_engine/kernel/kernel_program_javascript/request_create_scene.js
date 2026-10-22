@@ -5,7 +5,7 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 {
 	var create_data;
 
-	for(var start_time=new Date().getTime;;){
+	for(var start_time=new Date().getTime();;){
 		var engine_promise=await fetch(request_url,my_default_fetch_parameter.request_create_scene);
 		if(!(engine_promise.ok)){
 			alert("Web server error when create scene,fetch fail:"+engine_promise.status);
@@ -23,7 +23,7 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		}
 		if(create_data.length>0)
 			break;
-		if((new Date().getTime-start_time)>create_scene_max_sleep_time_length){
+		if((new Date().getTime()-start_time)>create_scene_max_sleep_time_length){
 			alert("Web server create scene fail:	try creation timeout!");
 			return null;
 		}

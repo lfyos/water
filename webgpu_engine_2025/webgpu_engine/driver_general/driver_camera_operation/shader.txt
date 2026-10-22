@@ -15,39 +15,64 @@ struct color_target_struct
 	@location(0) 			color	:	vec4<f32>
 };
 
+fn caculate_view_volume_distance()->f32
+{
+	var positive_matrix=target_info.projection_matrix;
+		positive_matrix=target_info.negative_screen_move_matrix*positive_matrix;
+		positive_matrix=target_info.screen_move_matrix_from*positive_matrix;
+	
+	var negative_matrix=target_info.negative_projection_matrix;
+		negative_matrix=negative_matrix*target_info.screen_move_matrix;
+		negative_matrix=negative_matrix*target_info.negative_screen_move_matrix_from;
+	
+	var center_point=vec4(0.0,0.0,0.0,1.0);
+		center_point=target_info.camera_absolute_matrix*center_point;
+		center_point=positive_matrix*center_point;
+		center_point=center_point/center_point.w;
+	
+	var left_down_center_point=negative_matrix*vec4(-1.0,-1.0,center_point.z,1.0);
+	var right_up_center_point =negative_matrix*vec4( 1.0, 1.0,center_point.z,1.0);
+	
+	left_down_center_point	=left_down_center_point/left_down_center_point.w;
+	right_up_center_point	=right_up_center_point /right_up_center_point.w;
+
+	return distance(right_up_center_point.xyz,left_down_center_point.xyz);
+}
+
 @vertex
 fn vertex_main(
 		@location(0) my_coord			:	vec4<f32>,
-		@location(1) my_id				:	vec4<f32>,
-		@location(2) my_position_par	:	vec4<f32>,
-		@location(3) my_depth_par		:	vec4<f32>
+		@location(1) my_id				:	vec4<f32>
 	)->vertex_to_fragment_struct
 {
-	var par_x0y0			=my_position_par.xy;
-	var par_view_distance	=my_position_par.z;
-	var par_scale			=my_position_par.w;
-	var par_depth_start		=my_depth_par.x;
-	var par_depth_end		=my_depth_par.y;
+	var par_depth_start		=id_info.data[0].x;
+	var par_depth_end		=id_info.data[0].y;
+	var par_size			=id_info.data[0].z;
+	var par_box_distance	=id_info.data[0].w;
+	var position_par		=id_info.data[1];
+	
+	var world_coordinate_distance=caculate_view_volume_distance()*par_size;
+	var model_scale_factor		 =world_coordinate_distance/par_box_distance;
 	
 	var p=target_info.camera_absolute_matrix*vec4(0.0,0.0,0.0,1.0);
-		p=target_info.projection_matrix*vec4(p.xyz/p.w+my_coord.xyz*par_scale,1.0);
+		p=target_info.projection_matrix*vec4(p.xyz/p.w+my_coord.xyz*model_scale_factor,1.0);
 		p=target_info.negative_screen_move_matrix*p;
 		p=target_info.screen_move_matrix_from*p;
-	var p0=target_info.camera_absolute_matrix*vec4(0.0,0.0, par_view_distance/2.0,1.0);
+		p=p/p.w;
+	var p0=target_info.camera_absolute_matrix*vec4(0.0,0.0, world_coordinate_distance/2.0,1.0);
 		p0=target_info.projection_matrix*p0;
 		p0=target_info.negative_screen_move_matrix*p0;
 		p0=target_info.screen_move_matrix_from*p0;
-	var p1=target_info.camera_absolute_matrix*vec4(0.0,0.0,-par_view_distance/2.0,1.0);
+		p0=p0/p0.w;
+	var p1=target_info.camera_absolute_matrix*vec4(0.0,0.0,-world_coordinate_distance/2.0,1.0);
 		p1=target_info.projection_matrix*p1;
 		p1=target_info.negative_screen_move_matrix*p1;
 		p1=target_info.screen_move_matrix_from*p1;
-	
-	p.z=(p.z/p.w-p0.z/p0.w)/(p1.z/p1.w-p0.z/p0.w);
-	p.z=par_depth_start+(par_depth_end-par_depth_start)*p.z;
+		p1=p1/p1.w;
 
-	p=vec4(p.xy/p.w+par_x0y0,p.z,1.0);
+	var depth=par_depth_start+(par_depth_end-par_depth_start)*((p.z-p0.z)/(p1.z-p0.z));
 
-	p=target_info.negative_screen_move_matrix_from*p;
+	p=target_info.negative_screen_move_matrix_from*vec4(p.xy+position_par.xy,depth,1.0);
 	p=target_info.screen_move_matrix*p;
 
 	var vf:vertex_to_fragment_struct;

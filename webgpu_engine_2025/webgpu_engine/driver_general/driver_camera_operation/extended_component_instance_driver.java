@@ -2,6 +2,7 @@ package driver_camera_operation;
 
 import kernel_part.body;
 import kernel_part.face;
+import kernel_part.part;
 import kernel_part.part_rude;
 import kernel_scene.scene_kernel;
 import kernel_transformation.box;
@@ -19,22 +20,50 @@ public class extended_component_instance_driver extends component_instance_drive
 {
 	private boolean show_flag;
 	private int modifier_container_id;
+	private double depth_start,depth_end;
+	private double size;
+	private double x0,y0;
 	
 	public void destroy()
 	{
 		super.destroy();
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
-			int my_modifier_container_id,String my_body_title,String my_face_title)
+			String my_body_title,String my_face_title,int my_modifier_container_id,
+			double my_depth_start,double my_depth_end,double my_size,double my_x0,double my_y0)
 	{
 		super(my_comp,my_driver_id);
-		modifier_container_id		=my_modifier_container_id;
+		
+		show_flag=true;
+		
 		display_parameter.body_title="  "+my_body_title;
 		display_parameter.face_title="  "+my_face_title;
-		show_flag=true;
+		
+		modifier_container_id	=my_modifier_container_id;
+		depth_start				=my_depth_start;
+		depth_end				=my_depth_end;
+		size					=my_size;
+		x0						=my_x0;
+		y0						=my_y0;
 	}
 	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
+		part my_part;
+		component_driver my_driver;
+		double box_distance=1,my_box_distance;
+		
+		if((my_driver=comp.driver_array.get(driver_id))!=null)
+			if((my_part=my_driver.component_part)!=null)
+				if(my_part.part_mesh.part_box!=null)
+					if((my_box_distance=my_part.part_mesh.part_box.distance())>const_value.min_value) 
+						box_distance=my_box_distance;
+
+		ci.request_response.
+			print("[",depth_start).		print(",",depth_end).
+			print(",",size).			print(",",box_distance).
+			print(",",x0).				print(",",y0).
+			print("]");
+		return;
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{

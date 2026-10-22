@@ -21,7 +21,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 			buffers		:
 			[
 				{
-					arrayStride	:	80,
+					arrayStride	:	Float32Array.BYTES_PER_ELEMENT*20,
 					stepMode	:	"vertex",
 					attributes	:
 					[
@@ -32,25 +32,8 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 						},
 						{	//ID
 							format			:	"float32x4",
-							offset			:	48,
+							offset			:	Float32Array.BYTES_PER_ELEMENT*12,
 							shaderLocation	:	1
-						}
-					]
-				},
-				{
-					arrayStride	:	32,
-					stepMode	:	"instance",
-					attributes	:
-					[
-						{
-							format			:	"float32x4",
-							offset			:	0,
-							shaderLocation	:	2
-						},
-						{
-							format			:	"float32x4",
-							offset			:	16,
-							shaderLocation	:	3
 						}
 					]
 				}

@@ -19,22 +19,33 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_driver  extends component_driver
 {
-	private int modifier_container_id;
 	private change_name title_change_name;
+	private int modifier_container_id;
+	private double depth_start,depth_end;
+	private double size;
+	private double x0,y0;
 	
 	public void destroy()
 	{
 		super.destroy();
+
 		if(title_change_name!=null)
 			title_change_name=null;
 	}
 	public extended_component_driver(part my_component_part,
-			int my_modifier_container_id,change_name my_title_change_name)
+			change_name my_title_change_name,file_reader fr)
 	{
 		super(my_component_part);
 
-		modifier_container_id=my_modifier_container_id;
-		title_change_name=my_title_change_name;
+		title_change_name		=my_title_change_name;
+		
+		modifier_container_id	=fr.get_int();
+		depth_start				=fr.get_double();
+		depth_end				=fr.get_double();
+		size					=fr.get_double();
+		x0						=fr.get_double();
+		y0						=fr.get_double();
+		
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
@@ -135,10 +146,12 @@ public class extended_component_driver  extends component_driver
 			scene_kernel sk,client_request_response request_response)
 	{
 		String camera_body_title=title_change_name.search_change_name(
-				"camera_body_title+"+request_response.language_str,"body");
+					"camera_body_title+"+request_response.language_str,"body");
 		String camera_face_title=title_change_name.search_change_name(
-				"camera_face_title+"+request_response.language_str,"face");
-		return new extended_component_instance_driver(comp,driver_id,
-					modifier_container_id,camera_body_title,camera_face_title);
+					"camera_face_title+"+request_response.language_str,"face");
+
+		return new extended_component_instance_driver(
+						comp,driver_id,camera_body_title,camera_face_title,
+						modifier_container_id,depth_start,depth_end,size,x0,y0);
 	}
 }

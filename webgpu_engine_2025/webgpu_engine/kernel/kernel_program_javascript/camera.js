@@ -267,10 +267,10 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		project_matrix.bak_half_fovy_tanl	=this.camera_object_parameter[camera_id].bak_half_fovy_tanl;
 		project_matrix.near_value_ratio		=this.camera_object_parameter[camera_id].near_value_ratio;
 		project_matrix.far_value_ratio		=this.camera_object_parameter[camera_id].far_value_ratio;
-				
+
 		project_matrix.distance				=this.camera_object_parameter[camera_id].distance;
-		project_matrix.near_value			=(project_matrix.near_value_ratio)*(project_matrix.distance);
-		project_matrix.far_value			=(project_matrix.far_value_ratio)*(project_matrix.distance);
+		project_matrix.near_value			=project_matrix.distance*project_matrix.near_value_ratio;
+		project_matrix.far_value			=project_matrix.distance*project_matrix.far_value_ratio;
 		
 		project_matrix.screen_move_matrix				=screen_move_matrix.matrix;
 		project_matrix.negative_screen_move_matrix		=screen_move_matrix.negative_matrix;
@@ -371,7 +371,7 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		project_matrix.clip_plane_matrix	=target_parameter.clip_plane_matrix;
 		
 		project_matrix.view_volume_box		=target_parameter.view_volume_box;
-
+		
 		return project_matrix;
 	};
 };

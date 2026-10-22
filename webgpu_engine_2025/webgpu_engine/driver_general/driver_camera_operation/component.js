@@ -169,46 +169,15 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		ep=Object.assign(old_ep,ep);
 	scene.component_event_processor[component_ids.component_id]=ep;
 	
-	this.component_ids=component_ids;
-	this.main_target_id=0;
-	this.parameter_buffer=scene.webgpu.device.createBuffer(
-		{
-			size	:	Float32Array.BYTES_PER_ELEMENT*8*scene.system_buffer.max_target_number,
-			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX
-		});
-
-	this.save_buffer_data=function(target_id,project_matrix,part_object,part_driver,scene)
-	{
-		var x0				=part_driver.init_data[0];
-		var y0				=part_driver.init_data[1];
-		var size			=part_driver.init_data[2];
-		var depth_start		=part_driver.init_data[3];
-		var depth_end		=part_driver.init_data[4];
-		var box_distance	=part_driver.init_data[5];
-		
-		var view_distance	=scene.computer.sub_operation(
-					project_matrix.right_up_center_point,project_matrix.left_down_center_point);
-			view_distance	=scene.computer.distance(view_distance)*size;
-		
-		var buffer_place	=8*target_id*Float32Array.BYTES_PER_ELEMENT;
-		var buffer_data		=[x0,y0,view_distance,view_distance/box_distance,depth_start,depth_end,0,1];
-		scene.webgpu.device.queue.writeBuffer(
-			this.parameter_buffer,buffer_place,new Float32Array(buffer_data));
-	}
+	scene.system_buffer.set_id_information_data(init_data,component_ids.component_id,component_ids.driver_id);
+	
 	this.draw_component=function(method_data,render_parameter,
-			target_data,part_object,part_driver,render_driver,scene)	
+			target_data,part_object,part_driver,render_driver,scene)
 	{
 		var p,rpe=scene.webgpu.render_pass_encoder;
 		
-		if(target_data.main_display_target_flag)
-			this.main_target_id=target_data.target_id;
-
 		switch(method_data.method_id){
-		case 0:	
-			rpe.setVertexBuffer(1,this.parameter_buffer,
-					Float32Array.BYTES_PER_ELEMENT*8*this.main_target_id,
-					Float32Array.BYTES_PER_ELEMENT*8);
-					
+		case 0:
 			rpe.setPipeline(render_driver.id_pipeline);
 			p=part_object.buffer_object.face.region_data;
 			for(var i=0,ni=p.length;i<ni;i++){
@@ -217,27 +186,19 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			}
 			break;
 		case 2:
-			this.save_buffer_data(target_data.target_id,
-				target_data.project_matrix,part_object,part_driver,scene);
-				
-			rpe.setVertexBuffer(1,this.parameter_buffer,
-					Float32Array.BYTES_PER_ELEMENT*8*target_data.target_id,
-					Float32Array.BYTES_PER_ELEMENT*8);
-			
 			rpe.setPipeline(render_driver.face_pipeline);
 			p=part_object.buffer_object.face.region_data;
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			};
-
+			
 			rpe.setPipeline(render_driver.edge_pipeline);
 			p=part_object.buffer_object.edge.region_data;
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			}
-
 			break;
 		default:
 			break;
@@ -248,9 +209,5 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	}
 	this.destroy=function()
 	{
-		if(this.parameter_buffer!=null){
-			this.parameter_buffer.destroy();
-			this.parameter_buffer=null;
-		}
 	}
 };

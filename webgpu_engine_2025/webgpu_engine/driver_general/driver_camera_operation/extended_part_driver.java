@@ -19,24 +19,12 @@ import kernel_component.component_load_source_container;
 public class extended_part_driver extends part_driver
 {
 	private change_name title_change_name;
-	
-	private double x0,y0,size,depth_start,depth_end;
-	private int modifier_container_id;
-	
-	public extended_part_driver(part p,change_name my_title_change_name,
-				double my_x0,double my_y0,double my_size,
-				double my_depth_start,double my_depth_end,int my_modifier_container_id)
+
+	public extended_part_driver(part p,change_name my_title_change_name)
 	{
 		super();
 		
 		title_change_name		=my_title_change_name;
-
-		x0						=my_x0;
-		y0						=my_y0;
-		size					=my_size;
-		depth_start				=my_depth_start;
-		depth_end				=my_depth_end;
-		modifier_container_id	=my_modifier_container_id;
 	}
 	public void destroy()
 	{	
@@ -59,8 +47,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,
-						title_change_name,x0,y0,size,depth_start,depth_end,modifier_container_id);
+		return new extended_part_driver(p,title_change_name);
 	}
 	public int caculate_material_id(part p,String type_str,
 			int body_id,int face_id,int loop_id,int edge_id,String material[])
@@ -88,11 +75,11 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,modifier_container_id,title_change_name);
+		return new extended_component_driver(my_component_part,title_change_name,fr);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_part_instance_driver(x0,y0,size,depth_start,depth_end);
+		return new extended_part_instance_driver();
 	}
 }

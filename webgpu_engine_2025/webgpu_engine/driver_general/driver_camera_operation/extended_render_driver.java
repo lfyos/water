@@ -85,12 +85,7 @@ public class extended_render_driver extends render_driver
 			fr.close();
 			title_change_name=new change_name(new String[] {file_name},null,fr.get_charset());
 		}
-
-		return new extended_part_driver(p,title_change_name,
-							part_fr.get_double(),part_fr.get_double(),part_fr.get_double(),
-							//x0,y0,size
-							part_fr.get_double(),part_fr.get_double(),part_fr.get_int());
-							//depth_start,depth_end,modifier_container_id
+		return new extended_part_driver(p,title_change_name);
 	}
 	public render_instance_driver create_render_instance_driver(render ren,
 			scene_kernel sk,client_request_response request_response)
