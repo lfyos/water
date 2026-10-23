@@ -55,7 +55,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		},
 		primitive	:
 		{
-			topology			:	"triangle-list",
+			topology			:	"triangle-list"
 		},
 		multisample	:
 		{
@@ -71,7 +71,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 			stencilBack			:	{},
 
 			stencilReadMask		:	0xFFFFFFFF,
-			stencilWriteMask	:	0xFFFFFFFF,
+			stencilWriteMask	:	0xFFFFFFFF
 		}
 	};
 	

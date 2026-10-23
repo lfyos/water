@@ -95,16 +95,12 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		boolean no_time_length_flag=true;
-		
 		String new_display_information;
 		if((new_display_information=pickup_string(ci,sk.scene_par.display_precision)).isEmpty())
 			if((new_display_information=ci.message_display.get_display_message()).isEmpty())
 				if(sk.collector_stack.get_top_collector()!=null)
 					if((new_display_information=sk.collector_stack.get_top_collector().description)==null)
 						new_display_information="";
-					else
-						no_time_length_flag=false;
 		if(new_display_information.isEmpty()) {
 			display_information=new_display_information;
 			return true;
@@ -114,14 +110,10 @@ public class extended_component_instance_driver extends component_instance_drive
 			update_component_parameter_version(0);
 			last_time=new Date().getTime();
 		}
-		if(no_time_length_flag)
-			if((new Date().getTime()-last_time)>max_time_length)
-				return true;
-		return false;
+		return ((new Date().getTime()-last_time)>max_time_length)?true:false;
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(0);
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{

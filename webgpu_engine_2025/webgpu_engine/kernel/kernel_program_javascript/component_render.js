@@ -42,7 +42,8 @@ function construct_component_render_parameter()
 					break;
 				}
 			}
-    	    var render_parameter=scene.part_array[render_id][part_id].component_render_parameter; 
+			var part_object			=scene.part_array[render_id][part_id];
+			var render_parameter	=part_object.component_render_parameter; 
     		while(render_parameter.length<=target_id)
     			render_parameter.push(new Array());
 			render_parameter=render_parameter[target_id];

@@ -67,18 +67,6 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 							shaderLocation	:	2
 						}
 					]
-				},
-				{
-					arrayStride	:	16,
-					stepMode	:	"instance",
-					attributes	:
-					[
-						{	//parameter
-							format			:	"float32x4",
-							offset			:	0,
-							shaderLocation	:	3
-						}
-					]
 				}
 			]
 		},
@@ -95,7 +83,11 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		},
 		primitive		:
 		{
-			topology	:	"triangle-list",
+			topology	:	"triangle-list"
+		},
+		multisample		:
+		{
+			count		:	scene.parameter.multisample
 		},
 		depthStencil	:
 		{
@@ -107,11 +99,9 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
     		stencilBack			:	{},
 
  			stencilReadMask		:	0xFFFFFFFF,
-			stencilWriteMask	:	0xFFFFFFFF,
+			stencilWriteMask	:	0xFFFFFFFF
 		}
 	};
-	
-	pipeline_descr.multisample={count:scene.parameter.multisample};
 		
 	this.pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	

@@ -18,36 +18,31 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 							|GPUTextureUsage.COPY_DST
 							|GPUTextureUsage.RENDER_ATTACHMENT
 		 });
-	var resource_entries=[
-		{	//texture
-			binding		:	0,
-			resource	:	this.texture.createView()
-		},
-		{
-			//sampler
-			binding		:	1,
-			resource	:	scene.webgpu.device.createSampler(
-			{
-				addressModeU	:	"repeat",
-				addressModeV	:	"repeat",
-				magFilter		:	"linear",
-				minFilter		:	"linear",
-				mipmapFilter	:	"linear"
-			})
-		}
-	];
+	this.sampler=scene.webgpu.device.createSampler(
+		 {
+		 	addressModeU	:	"repeat",
+		 	addressModeV	:	"repeat",
+		 	magFilter		:	"linear",
+		 	minFilter		:	"linear",
+		 	mipmapFilter	:	"linear"
+		 });
+
 	this.texture_bindgroup=scene.webgpu.device.createBindGroup(
 		{
 			layout		:	render_driver.texture_bindgroup_layout,
-			entries		:	resource_entries
+			entries		:	[
+				{	//texture
+					binding		:	0,
+					resource	:	this.texture.createView()
+				},
+				{
+					//sampler
+					binding		:	1,
+					resource	:	this.sampler
+				}
+			]
 		});
 		
-	this.vertex_buffer=scene.webgpu.device.createBuffer(
-		{
-			size	:	16,
-			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX 
-		});
-
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		var my_texture_width	=part_object.material[0].texture_width;
@@ -82,8 +77,10 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				width	:	my_texture_width,
 				height	:	my_texture_height
 			});
-		scene.webgpu.device.queue.writeBuffer(this.vertex_buffer,0,
-				new Float32Array([0,my_canvas_width/my_texture_width,0,1]));
+		
+		scene.system_buffer.set_id_information_data(
+				[0,my_canvas_width/my_texture_width,0,1],
+				this.component_ids.component_id,this.component_ids.driver_id);
 	};
 	
 	this.draw_component=function(method_data,render_parameter,
@@ -93,15 +90,16 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		var my_canvas_width		=part_object.material[0].canvas_width;
 		if(this.parameter.display_width>my_canvas_width){
 			var time_diff=(new Date()).getTime()-this.parameter.start_time;
-			var texture_diff=part_object.material[0].texture_speed*time_diff-1.0;	
-			scene.webgpu.device.queue.writeBuffer(this.vertex_buffer,0,
-				new Float32Array([
+			var texture_diff=part_object.material[0].texture_speed*time_diff-1.0;
+			scene.system_buffer.set_id_information_data(
+				[
 					texture_diff*my_canvas_width/my_texture_width,
-					my_canvas_width/my_texture_width,0,1]));
+					my_canvas_width/my_texture_width,0,1
+				],
+				this.component_ids.component_id,this.component_ids.driver_id);
 		}
 		var rpe	=scene.webgpu.render_pass_encoder;
 		rpe.setPipeline(render_driver.pipeline);
-		rpe.setVertexBuffer(1,this.vertex_buffer);
 		rpe.setBindGroup(1,this.texture_bindgroup);
 		
 		var p=part_object.buffer_object.face.region_data;
@@ -117,9 +115,8 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			this.texture.destroy();
 			this.texture=null;
 		}
-		if(this.vertex_buffer!=null){
-			this.vertex_buffer.destroy();
-			this.vertex_buffer=null;
+		if(this.sampler!=null){
+			this.sampler=null;
 		}
 	}
 };
