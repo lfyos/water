@@ -25,8 +25,9 @@ public class extended_component_driver  extends component_driver
 			cmc=null;
 		}
 	}
-	public extended_component_driver(part my_component_part,
-			int my_modifier_container_id,boolean my_global_private_flag,boolean my_pickup_flag,
+	public extended_component_driver(
+			part my_component_part,int my_modifier_container_id,
+			boolean my_global_private_flag,boolean my_pickup_flag,
 			String my_directory_comp_name,String my_file_name)
 	{
 		super(my_component_part);

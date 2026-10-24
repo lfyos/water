@@ -31,8 +31,9 @@ fn vertex_main(
 @fragment
 fn fragment_main(vf	:	vertex_to_fragment_struct) ->  fragment_to_target_struct
 {	
-	var vertex_parameter=id_info.data[0];
-	var texture_x=vertex_parameter.x+vertex_parameter.y*vf.vertex_texture.x;
+	var texture_x_shift=id_info.data[0].x;
+	var texture_x_scale=id_info.data[0].y;
+	var texture_x=(texture_x_shift+vf.vertex_texture.x)*texture_x_scale;
 	var texture_y=vf.vertex_texture.y;
 	
 	var ft:fragment_to_target_struct;

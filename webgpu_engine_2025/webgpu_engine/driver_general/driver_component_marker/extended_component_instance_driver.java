@@ -63,42 +63,37 @@ public class extended_component_instance_driver extends component_instance_drive
 			return false;
 		}
 		for(int i=cmc.component_marker_list.size()-1;i>=0;i--) {
-			component my_comp;
-			component_marker my_cm;
-			if((my_cm=cmc.component_marker_list.get(i))!=null)
-				if((my_comp=sk.component_cont.get_component(my_cm.marker_component_id))!=null) {
+			component_marker my_cm=cmc.component_marker_list.get(i);
+			if(my_cm!=null){
+				component my_comp=sk.component_cont.get_component(my_cm.marker_component_id);
+				if(my_comp!=null){
 					ci.render_buffer.location_buffer.put_in_list(my_comp,sk);
 					continue;
 				}
+			}
 			cmc.component_marker_list.remove(i);
 		}
 		return (cmc.component_marker_list.size()<=0);
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(0);
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
-		component_marker my_cm;
 		component my_comp;
-		String pre_str="[";
+		component_marker my_cm;
 		
 		ci.request_response.print("[");
-		for(int i=0,ni=cmc.component_marker_list.size();i<ni;i++) {
-			if((my_cm=cmc.component_marker_list.get(i))==null)
-				continue;
-			if((my_comp=sk.component_cont.get_component(my_cm.marker_component_id))==null)
-				continue;
-			ci.request_response.
-				print(pre_str,	my_comp.component_id).
-				print(",",		my_cm.marker_x).
-				print(",",		my_cm.marker_y).
-				print(",",		my_cm.marker_z).
-				print(",",		jason_string.change_string(my_cm.marker_text.trim())).
-				print(			cmc.pickup_flag?",true]":",false]");
-			pre_str=",[";
-		}
+		for(int pre_str_flag=0,i=0,ni=cmc.component_marker_list.size();i<ni;i++)
+			if((my_cm=cmc.component_marker_list.get(i))!=null)
+				if((my_comp=sk.component_cont.get_component(my_cm.marker_component_id))!=null)
+					ci.request_response.
+						print(((pre_str_flag++)==0)?"[":",[",my_comp.component_id).
+						print(",",		my_cm.marker_x).
+						print(",",		my_cm.marker_y).
+						print(",",		my_cm.marker_z).
+						print(",",		jason_string.change_string(my_cm.marker_text.trim())).
+						print(",",		cmc.pickup_flag?"true]":"false]");
 		ci.request_response.print("]");
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
@@ -112,7 +107,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			break;
 		case "jason":
 			ci.request_response.println("[");
-			
+
 			for(int i=0,ni=cmc.component_marker_list.size();i<ni;i++) {
 				component_marker my_cm;
 				if((my_cm=cmc.component_marker_list.get(i))==null)
@@ -177,7 +172,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				new component_selection(sk).switch_selected_flag(operate_comp);
 				break;
 			case "locate":
-				new locate_camera(sk.camera_cont.get(ci.display_camera_result.target.camera_id)).
+				(new locate_camera(sk.camera_cont.get(ci.display_camera_result.target.camera_id))).
 						locate_on_box_and_scale(sk.modifier_cont[modifier_container_id],
 							new box(operate_comp.absolute_location.multiply(
 									operate_cm.marker_x,operate_cm.marker_y,operate_cm.marker_z)),

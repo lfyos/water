@@ -45,9 +45,9 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		var my_texture_width	=part_object.material[0].texture_width;
-		var my_texture_height	=part_object.material[0].texture_height;
-		var my_canvas_width		=part_object.material[0].canvas_width;
+		var my_texture_width		=part_object.material[0].texture_width;
+		var my_texture_height		=part_object.material[0].texture_height;
+		var my_texture_width_scale	=part_object.material[0].texture_width_scale;
 
 		scene.webgpu.canvas_2d.width	=my_texture_width;
 		scene.webgpu.canvas_2d.height	=my_texture_height;
@@ -77,25 +77,21 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				width	:	my_texture_width,
 				height	:	my_texture_height
 			});
-		
-		scene.system_buffer.set_id_information_data(
-				[0,my_canvas_width/my_texture_width,0,1],
+
+		scene.system_buffer.set_id_information_data([0,my_texture_width_scale,0,1],
 				this.component_ids.component_id,this.component_ids.driver_id);
 	};
 	
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
-		var my_texture_width	=part_object.material[0].texture_width;
-		var my_canvas_width		=part_object.material[0].canvas_width;
-		if(this.parameter.display_width>my_canvas_width){
+		var my_texture_width		=part_object.material[0].texture_width;
+		var my_texture_width_scale	=part_object.material[0].texture_width_scale;
+		var my_texture_speed		=part_object.material[0].texture_speed;
+		if(this.parameter.display_width>(my_texture_width*my_texture_width_scale)){
 			var time_diff=(new Date()).getTime()-this.parameter.start_time;
-			var texture_diff=part_object.material[0].texture_speed*time_diff-1.0;
-			scene.system_buffer.set_id_information_data(
-				[
-					texture_diff*my_canvas_width/my_texture_width,
-					my_canvas_width/my_texture_width,0,1
-				],
+			var texture_x_shift=my_texture_speed*time_diff-1.0;
+			scene.system_buffer.set_id_information_data([texture_x_shift],
 				this.component_ids.component_id,this.component_ids.driver_id);
 		}
 		var rpe	=scene.webgpu.render_pass_encoder;

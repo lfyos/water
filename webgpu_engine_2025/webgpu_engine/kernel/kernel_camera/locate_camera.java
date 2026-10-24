@@ -311,10 +311,9 @@ public class locate_camera
 						if((my_box=my_part.secure_caculate_part_box(par.comp,i,
 								par.body_id,par.face_id,par.primitive_id,
 								par.vertex_id,par.loop_id,par.edge_id,p0,p1))!=null)
-							if(my_box.distance2()>const_value.min_value2)
-								return box_locate(par.comp.absolute_location.multiply(my_box),dir);
+							return box_locate(par.comp.absolute_location.multiply(my_box),dir);
 				if((my_box=par.comp.get_component_box(false))==null)
-					if((my_box=par.comp.get_component_box(true))==null)
+					if((my_box=par.comp.get_component_box(true))==null) 
 						return point_locate(par.comp.absolute_location.multiply(new point(0,0,0)),dir);
 				return box_locate(my_box,dir);
 			}

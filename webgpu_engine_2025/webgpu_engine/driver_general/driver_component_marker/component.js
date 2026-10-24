@@ -5,14 +5,16 @@ function init_component_event_processor()
 	this.mouseup=function(event,component_id,scene)
 	{
 		var value;
+		
 		if(scene.pickup.component_id<0)
 			return true;
 		if((value=prompt("输入标注文字"))==null)
 			return true;
 		if((value=value.trim()).length<=0)
 			return true;
-		scene.caller.call_server_component(component_id,"all",[["operation","append"],
-				["value",encodeURIComponent(encodeURIComponent(value))]]);
+		scene.caller.call_server_component(component_id,"all",
+			[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
+		
 		return true;
 	};
 	this.pickupkeydown=function(event,component_id,scene)
@@ -77,13 +79,6 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 					rpe.setVertexBuffer(0,p[j].buffer);
 					rpe.draw(p[j].item_number);
 				}
-				
-				rpe.setPipeline(render_driver.point_id_pipeline);
-				p=part_object.buffer_object.point.region_data;
-				for(var j=0,nj=p.length;j<nj;j++){
-					rpe.setVertexBuffer(0,p[j].buffer);
-					rpe.draw(6,p[j].item_number);
-				}
 				break;
 			case 2:
 				rpe.setPipeline(render_driver.face_pipeline);
@@ -110,7 +105,8 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			}
 		}
 	}
-	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
+	this.append_component_parameter=function(
+			buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
 			this.marker_array[i].buffer.destroy();
@@ -120,6 +116,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			this.marker_array[i].bindgroup	=null;
 			this.marker_array[i]=null;
 		}
+
 		this.marker_array=new Array();
 		for(var i=0,ni=buffer_data_item.length;i<ni;i++){
 			var my_marker_component_id				=buffer_data_item[i][0];
@@ -210,8 +207,10 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 						size	:	my_buffer_size,
 						usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 					});
-			scene.webgpu.device.queue.writeBuffer(my_buffer,0,						new Int32Array(integer_buffer_data));
-			scene.webgpu.device.queue.writeBuffer(my_buffer,my_buffer_integer_size,new Float32Array(float_buffer_data));
+			scene.webgpu.device.queue.writeBuffer(my_buffer,0,						
+				new Int32Array(integer_buffer_data));
+			scene.webgpu.device.queue.writeBuffer(my_buffer,my_buffer_integer_size,
+				new Float32Array(float_buffer_data));
 			
 			var resource_entries=[
 					{	//buffer
@@ -253,6 +252,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			};
 		};
 	};
+
 	this.destroy=function()
 	{
 		if(this.marker_array!=null){
@@ -266,7 +266,9 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 						this.marker_array[i].texture.destroy();
 						this.marker_array[i].texture=null;
 					}
+					this.marker_array[i]=null;
 				}
+			this.marker_array=null;
 		}
 	}
 };

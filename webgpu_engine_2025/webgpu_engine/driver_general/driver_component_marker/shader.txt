@@ -25,6 +25,7 @@ struct marker_information
 	marker_face_x_scale		:	f32,
 	marker_face_y_scale		:	f32,
 	marker_edge_y_scale		:	f32,
+	
 	point_size				:	f32
 };
 
@@ -68,26 +69,26 @@ fn vertex_main(
 	var projection_matrix	:	mat4x4<f32>;
 	
 	switch(primitive_type){
-	default:	//id
+	default:	//id	render
 		{
 			width	=target_info.target_view_width_from;
 			height	=target_info.target_view_height_from;
-			
+				
 			projection_matrix=target_info.projection_matrix;
 			projection_matrix=target_info.negative_screen_move_matrix*projection_matrix;
 			projection_matrix=target_info.screen_move_matrix_from*projection_matrix;
-			break;
+			break;		
 		}
-	case 2,3,4:		//render
+	case 1,2,3:		//face,edge,point render
 		{
 			width	=target_info.target_view_width;
 			height	=target_info.target_view_height;
-			
 			projection_matrix=target_info.projection_matrix;
 			break;
 		}
 	}
-	vf.vertex_position=projection_matrix*(id_info.matrix*marker_info.marker_position);
+	vf.vertex_position=id_info.matrix*marker_info.marker_position;
+	vf.vertex_position=projection_matrix*vf.vertex_position;
 	vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
 	
 	var face_width	=marker_info.marker_face_x_scale/f32(width);
@@ -100,9 +101,8 @@ fn vertex_main(
 			edge_height=0.0;
 			if(vf.vertex_position.y+face_height>1.0){
 				face_height=1.0-vf.vertex_position.y;
-				if(face_height<0.0){
-					face_height=0.0;
-				}
+				if(face_height<0.0)
+					{face_height=0.0;}
 			}
 		}
 	}
@@ -117,26 +117,18 @@ fn vertex_main(
 			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
 			break;
 		}
-	case 1:	//point id
-		{
-			vf.vertex_texture=point_texture_position[my_vertex_index%6];
-			var pp=vf.vertex_texture*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0);
-			vf.vertex_position=vf.vertex_position+marker_info.point_size*pp;
-				
-			vf.vertex_position=target_info.negative_screen_move_matrix_from*vf.vertex_position;
-			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
-		}
-	case 2:		//face
+	case 1:		//face
 		{
 			vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
 			vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
+			break;
 		}
-	case 3:		//edge
+	case 2:		//edge
 		{
 			vf.vertex_position.y=vf.vertex_position.y+my_coord.y*edge_height;
 			break;
 		}
-	case 4:		//point
+	case 3:		//point
 		{
 			vf.vertex_texture=point_texture_position[my_vertex_index%6];
 			var pp=vf.vertex_texture*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0);
@@ -158,29 +150,6 @@ fn fragment_face_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 	
 	return ret_val;
 }
-@fragment
-fn fragment_point_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
-{
-	var ret_val	:	id_target_struct;
-	
-	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
-
-	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
-		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
-		&&(system_info.pickup_body_id==marker_info.marker_body_id))
-	{
-		ret_val.depth=0.0;
-	}
-	
-	ret_val.id_0=vec4(marker_info.marker_system_id,marker_info.marker_body_id,0,2);
-	ret_val.id_1=vec4(0,0,0,0);
-	
-	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0){
-		discard;
-	}
-	return ret_val;
-}
-
 @fragment
 fn fragment_face_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 {
@@ -204,9 +173,10 @@ fn fragment_edge_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 {
 	var ret_val	:	color_target_struct;
 	
-	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
 	if(marker_info.pickup_flag>0)
 		{ret_val.depth=0.0;}
+	else
+		{ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;}
 	
 	ret_val.color=marker_info.edge_normal_color;
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
@@ -224,10 +194,10 @@ fn fragment_point_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 {
 	var ret_val	:	color_target_struct;
 
-	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
-	if(marker_info.pickup_flag>0){
-		ret_val.depth=0.0;
-	}
+	if(marker_info.pickup_flag>0)
+		{ret_val.depth=0.0;}
+	else
+		{ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;}
 
 	ret_val.color=marker_info.point_normal_color;
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
@@ -236,10 +206,8 @@ fn fragment_point_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 	{
 		ret_val.depth=0.0;
 		ret_val.color=marker_info.point_pickup_color;
-		if(system_info.millisecond>500){
-			discard;
-		}
 	}
+
 	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
 		{discard;}
 	

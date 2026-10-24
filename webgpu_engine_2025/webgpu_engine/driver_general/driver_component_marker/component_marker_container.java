@@ -16,13 +16,11 @@ public class component_marker_container
 	
 	public void destroy()
 	{
-		component_marker cm;
-		
 		file_name=null;
 		file_charset=null;
 		if(component_marker_list!=null){
-			for(int i=0,ni=component_marker_list.size();i<ni;i++)
-				if((cm=component_marker_list.get(i))!=null)
+			for(component_marker cm:component_marker_list)
+				if(cm!=null)
 					cm.destroy();
 			component_marker_list.clear();
 			component_marker_list=null;
@@ -30,15 +28,14 @@ public class component_marker_container
 	}
 	private void write(scene_kernel sk)
 	{
-		component_marker cm;
 		component operate_comp;
 		
 		if((file_name==null)||(file_charset==null)||(!global_private_flag))
 			return;
 		file_writer fw=new file_writer(file_name,file_charset);
 		
-		for(int i=0,ni=component_marker_list.size();i<ni;i++) {
-			if((cm=component_marker_list.get(i))==null)
+		for(component_marker cm:component_marker_list){
+			if(cm==null)
 				continue;
 			if((operate_comp=sk.component_cont.get_component(cm.marker_component_id))==null)
 				continue;
@@ -72,21 +69,22 @@ public class component_marker_container
 	{
 		if(index_id>=0)
 			if(index_id<component_marker_list.size()) {
-				component_marker_list.remove(index_id);
+				component_marker cm;
+				if((cm=component_marker_list.remove(index_id))!=null)
+					cm.destroy();
 				write(sk);
 			}
 	}
 	public void clear_all_component_marker(scene_kernel sk,boolean write_flag)
 	{
-		component_marker cm;
-		for(int i=component_marker_list.size()-1;i>=0;i--)
-			if((cm=component_marker_list.get(i))!=null)
+		for(component_marker cm:component_marker_list)
+			if(cm!=null)
 				cm.destroy();
 		component_marker_list.clear();
 		if(write_flag)
 			write(sk);
 	}
-	public long  append_component_marker(scene_kernel sk,
+	public long append_component_marker(scene_kernel sk,
 			component my_mark_comp,String my_marker_text,
 			double my_marker_x,double my_marker_y,double my_marker_z)
 	{
@@ -98,6 +96,7 @@ public class component_marker_container
 			my_mark_comp,my_marker_text,my_marker_x,my_marker_y,my_marker_z);
 		component_marker_list.add(cm);
 		write(sk);
+
 		return cm.marker_id;
 	}
 	public component_marker_container(boolean my_pickup_flag)
@@ -110,7 +109,8 @@ public class component_marker_container
 		return;
 	}
 	public component_marker_container(
-			String my_directory_comp_name,String my_file_name,component_container component_cont)
+			String my_directory_comp_name,String my_file_name,
+			component_container component_cont)
 	{
 		component directory_comp,mark_comp;
 		global_private_flag=true;
@@ -129,7 +129,9 @@ public class component_marker_container
 		file_charset=directory_comp.component_charset;
 		
 		for(file_reader fr=new file_reader(file_name,file_charset);;){
-			double marker_x=fr.get_double(),marker_y=fr.get_double(),marker_z=fr.get_double();
+			double marker_x=fr.get_double();
+			double marker_y=fr.get_double();
+			double marker_z=fr.get_double();
 			String marker_component_name=fr.get_string();
 			if(fr.eof()){
 				fr.close();
@@ -142,8 +144,8 @@ public class component_marker_container
 				continue;
 			if((mark_comp=component_cont.search_component(marker_component_name))==null)
 				continue;
-			var cm=new component_marker(mark_comp,marker_text,marker_x,marker_y,marker_z);
-			component_marker_list.add(cm);
+			component_marker_list.add(
+				new component_marker(mark_comp,marker_text,marker_x,marker_y,marker_z));
 		}
 	}
 }

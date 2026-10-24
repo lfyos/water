@@ -1,11 +1,11 @@
-@group(0) @binding(0)	var<storage,read_write> id_info			:	array<id_information>;
-@group(0) @binding(1)	var<storage,read_write> absolute_matrix	:	array<mat4x4<f32>>;
-@group(0) @binding(2)	var<storage,read_write> camera_info		:	array<camera_information>;
+@group(0) @binding(0)	var<storage,read_write> id_info				:	array<id_information>;
+@group(0) @binding(1)	var<storage,read_write> absolute_matrix		:	array<mat4x4<f32>>;
+@group(0) @binding(2)	var<storage,read_write> camera_info			:	array<camera_information>;
 
-@group(0) @binding(3)	var<storage,read> 		move_matrix		:	array<mat4x4<f32>>;
-@group(0) @binding(4)	var<storage,read> 		relative_matrix	:	array<mat4x4<f32>>; 
-@group(0) @binding(5)	var<storage,read> 		parent_id		:	array<i32>;
-@group(0) @binding(6)	var<storage,read> 		location_flag	:	array<i32>;
+@group(0) @binding(3)	var<storage,read> 		move_matrix			:	array<mat4x4<f32>>;
+@group(0) @binding(4)	var<storage,read> 		relative_matrix		:	array<mat4x4<f32>>; 
+@group(0) @binding(5)	var<storage,read> 		parent_id			:	array<i32>;
+@group(0) @binding(6)	var<storage,read> 		location_flag		:	array<i32>;
 
 override component_number			:	i32;
 override system_id_number			:	i32;
@@ -36,6 +36,7 @@ override system_id_workgroup_size	:	i32;
 		}
 	}
 }
+
 @compute @workgroup_size(1)	fn set_location_main(@builtin(global_invocation_id)global_id: vec3<u32>)
 {
 	var id_index_id		:	i32;
@@ -48,6 +49,7 @@ override system_id_workgroup_size	:	i32;
 		var my_component_id=id_info[id_index_id].component_id;
 		id_info[id_index_id].matrix=absolute_matrix[my_component_id];
 	}
+
 	if(id_index_id<camera_number){
 		var my_component_id	=camera_info[id_index_id].component_id;
 		var my_matrix		=absolute_matrix[my_component_id];

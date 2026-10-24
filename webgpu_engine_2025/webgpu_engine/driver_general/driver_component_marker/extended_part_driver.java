@@ -67,8 +67,8 @@ public class extended_part_driver extends part_driver
 	{
 		int modifier_container_id=fr.get_int();
 		
-		String str;
-		switch(((str=fr.get_string())==null)?"global":(str.toLowerCase())){
+		String type_str;
+		switch(((type_str=fr.get_string())==null)?"global":(type_str.toLowerCase())){
 		case "global":
 			return new extended_component_driver(my_component_part,
 					modifier_container_id,true,false,fr.get_string(),fr.get_string());
