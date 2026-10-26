@@ -8,11 +8,9 @@ import kernel_transformation.point;
 import kernel_camera.locate_camera;
 import kernel_render.render_target;
 import kernel_driver.component_driver;
-import kernel_common_class.const_value;
 import kernel_scene.client_information;
 import kernel_component.component_array;
 import kernel_component.component_collector;
-import kernel_component.component_link_list;
 import kernel_component.component_selection;
 import kernel_render.render_target_parameter;
 import kernel_driver.component_instance_driver;
@@ -63,21 +61,20 @@ public class extended_component_instance_driver extends component_instance_drive
 	private void select_many_component(int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
-		
 		if((str=ci.request_response.get_parameter("function"))==null)
-			return ;
+			return;
 		int function_id=Integer.decode(str);
 		if((str=ci.request_response.get_parameter("x0"))==null)
-			return ;
+			return;
 		double my_x0=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y0"))==null)
-			return ;
+			return;
 		double my_y0=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("x1"))==null)
-			return ;
+			return;
 		double my_x1=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y1"))==null)
-			return ;
+			return;
 		double my_y1=Double.parseDouble(str);
 		
 		if(my_x0>my_x1) 
@@ -85,87 +82,68 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(my_y0>my_y1) 
 			{double p=my_y0;my_y0=my_y1;my_y1=p;}
 		
-		render_target t=ci.display_camera_result.target;
-		double local_xy[]=t.target_view.caculate_view_local_xy(my_x0, my_y0);
-		my_x0=local_xy[0];	my_y0=local_xy[1];
-		
-		local_xy=t.target_view.caculate_view_local_xy(my_x1, my_y1);
-		my_x1=local_xy[0];	my_y1=local_xy[1];
-		
-		box view_volume_box=t.view_volume_box;
-		point center=view_volume_box.center(),diff=view_volume_box.p[1].sub(center);
+		render_target my_target=ci.display_camera_result.target;
+		box view_volume_box=my_target.view_volume_box;
+		point center=view_volume_box.center();
+		point diff=view_volume_box.p[1].sub(center);
 		view_volume_box=new box(
-				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
-				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
-
+			center.x+diff.x*my_x0,	center.y+diff.y*my_y0,	view_volume_box.p[0].z,
+			center.x+diff.x*my_x1,	center.y+diff.y*my_y1,	view_volume_box.p[1].z);
+		render_target_parameter my_target_parameter=render_target_parameter.
+				create_selection_parameter(((function_id%2)==0)?true:false);
 		render_target cam_target=new render_target(-1,
-				render_target_parameter.create_selection_parameter(((function_id%2)==0)?true:false),
-				null,comp.component_id,driver_id,0,new component[]{sk.component_cont.root_component},
-				t.camera_id,t.parameter_channel_id,null,view_volume_box,ci.clip_plane,null);
-	
-		if(cam_target.view_volume_box.distance2()<const_value.min_value2)
-			return ;
-		
-		component_collector collector=(new list_component_on_collector(
-			sk,ci,new camera_result(ci.display_camera_result.cam,cam_target,sk.component_cont))).collector;
-		
+				my_target_parameter,null,comp.component_id,driver_id,0,
+				new component[]{sk.component_cont.root_component},
+				my_target.camera_id,my_target.parameter_channel_id,null,
+				view_volume_box,ci.clip_plane,null);
+		camera_result camera_result=new camera_result(
+				ci.display_camera_result.cam,cam_target,sk.component_cont);
+		var collector=new list_component_on_collector(sk,ci,camera_result).collector;
+		if(collector==null)
+			return;
 		if(collector.component_number<=0)
 			return;
-
 		switch(function_id){
 		default:
 			return;
 		case 0:
 		case 1:
-			component_selection cs=new component_selection(sk); 
-			for(int i=0,ni=collector.component_collector.length;i<ni;i++)
-				if(collector.component_collector[i]!=null)
-					for(int j=0,nj=collector.component_collector[i].length;j<nj;j++)
-						for(component_link_list p=collector.component_collector[i][j];p!=null;p=p.next_list_item)
-							cs.set_selected_flag(p.comp);
+			new component_selection(sk).set_collector_selected(collector);
 			break;
 		case 2:
 		case 3:
 			component_array comp_cont;
+			if((comp_cont=collector.get_component_array())==null)
+				break;
 			box my_box;
-			if((comp_cont=collector.get_component_array())!=null)
-				if((my_box=comp_cont.get_box())!=null)
-					(new locate_camera(ci.display_camera_result.cam)).locate_on_box_and_scale(
-							sk.modifier_cont[modifier_container_id],my_box,null,
-							ci.display_camera_result.cam.parameter.scale_value,true,true,true);
+			if((my_box=comp_cont.get_box())==null)
+				break;
+			double my_scale_value=ci.display_camera_result.cam.parameter.scale_value;
+			locate_camera lc=new locate_camera(ci.display_camera_result.cam);
+			lc.locate_on_box_and_scale(sk.modifier_cont[modifier_container_id],
+					my_box,null,my_scale_value,true,true,true);
 			break;
 		}
-		if(control_code==0) 
+		if(control_code==0)
 			return;
-		
 		sk.collector_stack.push_collector(true,
-			sk.system_par,sk.scene_par,collector,sk.component_cont,sk.render_cont.renders);
+			sk.system_par,sk.scene_par,collector,
+			sk.component_cont,sk.render_cont.renders);
 		collector.title=Long.toString(collector.list_id);
-		
 		return;
 	}
-	
 	private void select_single_component(int control_code,scene_kernel sk,client_information ci)
 	{
-		String str;
-
-		if((str=ci.request_response.get_parameter("function"))==null)
+		String function_str;
+		if((function_str=ci.request_response.get_parameter("function"))==null)
 			return;
-		
-		driver_audio_player.extended_component_driver acd=null;
-		component_driver cd=sk.component_cont.get_component(audio_component_id).driver_array.get(0);
-		if(cd!=null)
-			acd=(driver_audio_player.extended_component_driver)cd;
-		
-		switch(Integer.decode(str)){
+
+		switch(Integer.decode(function_str)){
 		default:
 			break;
 		case 0:
 		case 1:
-			if(acd!=null)
-				acd.set_audio(null,false);
 			component_selection cs=new component_selection(sk);
-			
 			if(ci.parameter.comp==null)
 				cs.clear_selected_flag(sk.component_cont.root_component);
 			else
@@ -187,25 +165,27 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		if(ci.parameter.comp.driver_array.size()<=0)
 			return;
+		do{
+			component comp;
+			if((comp=sk.collector_stack.get_top_collector_onlyone_component())!=null)
+				if(comp.component_id==ci.parameter.comp.component_id)
+					break;
+			sk.collector_stack.push_component_component(true,sk.system_par,
+					sk.scene_par,ci.parameter.comp,sk.component_cont,sk.render_cont.renders);
+		}while(false);
 		
-		component_array comp_array=new component_array();
-		component_collector collector=sk.collector_stack.get_top_collector();
+		component_driver cd;
+		if((cd=sk.component_cont.get_component(audio_component_id).driver_array.get(0))==null)
+			return;
+		if(!(cd instanceof driver_audio_player.extended_component_driver))
+			return;
+			
+		var acd=(driver_audio_player.extended_component_driver)cd;
+		acd.set_audio(null,false);
 		
-		if(collector!=null)
-			if(collector.component_number==1){
-				comp_array.add_collector(collector);
-				if(comp_array.comp_list.get(0).component_id==ci.parameter.comp.component_id){
-					if(acd!=null)
-						acd.set_audio(collector.audio_file_name,true);
-					return;
-				}
-			}
-		comp_array.clear_compoment();
-		comp_array.add_component(ci.parameter.comp);
-		sk.collector_stack.push_component_array(true,sk.system_par,
-			sk.scene_par,comp_array,sk.component_cont,sk.render_cont.renders);
-		if((collector=sk.collector_stack.get_top_collector())!=null)							
-			if(acd!=null)
+		component_collector collector;
+		if((collector=sk.collector_stack.get_top_collector())!=null)
+			if(collector.audio_file_name!=null)
 				acd.set_audio(collector.audio_file_name,true);
 		return;
 	}

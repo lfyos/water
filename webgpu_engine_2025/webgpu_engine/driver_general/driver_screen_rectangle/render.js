@@ -63,7 +63,11 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		},
 		primitive	:
 		{
-			topology:"line-list",
+			topology	:"line-list",
+		},
+		multisample	:
+		{
+			count		:	scene.parameter.multisample
 		},
 		depthStencil	:
 		{
@@ -78,9 +82,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 			stencilWriteMask	:	0xFFFFFFFF,
 		}
 	};
-	
-	pipeline_descr.multisample={count:scene.parameter.multisample};
-		
+
 	this.pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	this.new_part_driver=construct_part_driver;
 	

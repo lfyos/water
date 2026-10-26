@@ -89,15 +89,16 @@ function init_component_event_processor(screen_rectangle_component_id,scene)
 			return true;
 		
 		var p=scene.camera.camera_object_parameter[ep.camera_id];
-	
-		if(ep.change_type_flag)
-			p.distance		/=Math.exp(mouse_wheel_number/2000);
-		else
+		if(ep.change_type_flag){
+			p.distance/=Math.exp(mouse_wheel_number/2000);
+			scene.caller.call_server_component(component_id,0,[["operation","scale"],	
+				["distance",p.distance],ep.control_code(event)]);
+		}else{
 			p.half_fovy_tanl/=Math.exp(mouse_wheel_number/2000);
+			scene.caller.call_server_component(component_id,0,[["operation","scale"],	
+				["half_fovy_tanl",p.half_fovy_tanl],ep.control_code(event)]);
+		}
 		p.should_update_buffer_data_flag=true;
-
-		scene.caller.call_server_component(component_id,0,[["operation","scale"],	
-			["distance",p.distance],["half_fovy_tanl",p.half_fovy_tanl],ep.control_code(event)]);
 		
 		return true;			
 	};

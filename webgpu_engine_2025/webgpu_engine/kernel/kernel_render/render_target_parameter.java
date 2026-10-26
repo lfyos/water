@@ -32,16 +32,19 @@ public class render_target_parameter
 	{
 		return new render_target_parameter(false,false,false,false,false,1.0);
 	}
-	public static render_target_parameter create_selection_parameter(boolean my_discard_cross_clip_plane_flag)
+	public static render_target_parameter create_selection_parameter(
+					boolean my_discard_cross_clip_plane_flag)
 	{
-		return new render_target_parameter(false,false,true,my_discard_cross_clip_plane_flag,false,1.0);
+		return new render_target_parameter(
+					false,false,true,my_discard_cross_clip_plane_flag,false,1.0);
 	}
 	public static render_target_parameter create_pickup_parameter()
 	{
 		return new render_target_parameter(false,false,false,false,true,1.0);
 	}
 	public static render_target_parameter create_render_parameter(
-			boolean my_do_discard_lod_flag,boolean my_do_selection_lod_flag,double	my_lod_precision_scale)
+			boolean my_do_discard_lod_flag,boolean my_do_selection_lod_flag,
+			double	my_lod_precision_scale)
 	{
 		return new render_target_parameter(
 						my_do_discard_lod_flag,my_do_selection_lod_flag,

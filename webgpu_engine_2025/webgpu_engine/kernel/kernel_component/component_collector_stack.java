@@ -62,37 +62,50 @@ public class component_collector_stack
 						for(component_link_list p=my_collector.component_collector[i][j];p!=null;p=p.next_list_item)
 							set_hide_flag(p.comp,hide_flag,component_cont);
 	}
+	private void set_part_information(component_collector push_collector,
+			system_parameter system_par,scene_parameter scene_par)
+	{
+		if(push_collector.part_number!=1)
+			return;
+		int render_number=push_collector.component_collector.length;
+		for(int render_id=0;render_id<render_number;render_id++) {
+			if(push_collector.component_collector[render_id]==null)
+				continue;
+			int part_number=push_collector.component_collector[render_id].length;
+			for(int part_id=0;part_id<part_number;part_id++) {
+				component_link_list cll=push_collector.component_collector[render_id][part_id];
+				for(;cll!=null;cll=cll.next_list_item)
+					for(int i=0,ni=cll.comp.driver_array.size();i<ni;i++) {
+						part my_part;
+						if((my_part=cll.comp.driver_array.get(i).component_part)==null)
+							continue;
+						if(cll.comp.uniparameter.display_part_name_or_component_name_flag)
+							push_collector.title=my_part.user_name;
+						else
+							push_collector.title=cll.comp.component_name;
+								
+						push_collector.description=my_part.user_name;
+						if(my_part.description_file_name!=null) {
+							String my_file_name=my_part.directory_name+my_part.description_file_name;
+							if(file_reader.is_exist(my_file_name))
+								push_collector.description=file_reader.
+									get_text(my_file_name,my_part.file_charset);
+						}
+						push_collector.audio_file_name=file_directory.
+								part_temporary_directory(my_part,system_par,scene_par)+"audio.mp3";
+						return;
+					}
+			}
+		}
+	}
 	public component_collector push_collector(
 			boolean set_part_information_flag,system_parameter system_par,scene_parameter scene_par,
 			component_collector push_collector,component_container component_cont,ArrayList<render> renders)
 	{
-		part p;
-		
 		push_collector.sort_component_list(scene_par.component_sort_type,scene_par.component_sort_min_distance);
-		
-		if(set_part_information_flag&&(push_collector.part_number==1))
-			for(int render_id=0,exit_flag=1;(exit_flag>0)&&(render_id<push_collector.component_collector.length);render_id++)
-				if(push_collector.component_collector[render_id]!=null)
-					for(int part_id=0;(exit_flag>0)&&(part_id<push_collector.component_collector[render_id].length);part_id++)
-						for(component_link_list cll=push_collector.component_collector[render_id][part_id];(exit_flag>0)&&(cll!=null);cll=cll.next_list_item)
-							for(int i=0,ni=cll.comp.driver_array.size();(exit_flag>0)&&(i<ni);i++)
-								if((p=cll.comp.driver_array.get(i).component_part)!=null){
-									String root_directory=file_directory.part_temporary_directory(p,system_par,scene_par);
-									
-									if(cll.comp.uniparameter.display_part_name_or_component_name_flag)
-										push_collector.title=p.user_name;
-									else
-										push_collector.title=cll.comp.component_name;
-									
-									push_collector.description=p.user_name;
-									if(p.description_file_name!=null)
-										if(file_reader.is_exist(p.directory_name+p.description_file_name))
-											push_collector.description=file_reader.get_text(
-													p.directory_name+p.description_file_name,p.file_charset);
 
-									push_collector.audio_file_name=root_directory+"audio.mp3";
-									exit_flag=0;
-								}
+		if(set_part_information_flag) 
+			set_part_information(push_collector,system_par,scene_par);
 
 		set_hide_flag(get_top_collector(),true,component_cont);
 		
@@ -112,6 +125,30 @@ public class component_collector_stack
 		component_collector push_collector=new component_collector(renders);
 		push_collector.register_component(comp_array);
 		return push_collector(true,system_par,scene_par,push_collector,component_cont,renders);
+	}
+	public component_collector push_component_component(boolean part_list_flag_effective_flag,
+			system_parameter system_par,scene_parameter scene_par,
+			component comp,component_container component_cont,ArrayList<render>renders)
+	{
+		component_array comp_array=new component_array();
+		comp_array.add_component(comp);
+		return push_component_array(part_list_flag_effective_flag,
+				system_par,scene_par,comp_array,component_cont,renders);
+	}
+	public component get_top_collector_onlyone_component()
+	{
+		component_collector collector;
+		if((collector=get_top_collector())==null)
+			return null;
+		if(collector.component_number!=1)
+			return null;
+		for(component_link_list cll_array[]:collector.component_collector)
+			if(cll_array!=null)
+				for(component_link_list cll:cll_array)
+					for(;cll!=null;cll=cll.next_list_item)
+						if(cll.comp!=null)
+							return cll.comp;
+		return null;				
 	}
 	public component_collector pop(component_container component_cont,boolean pop_all_flag)
 	{

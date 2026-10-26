@@ -7,7 +7,7 @@ import kernel_file_manager.travel_through_directory;
 public class test_1 extends travel_through_directory
 {
 	private static final String mode_string[]= {
-		"body_face_rotate"
+		"root.assemble"
 	};
 	
 	public void operate_file(String file_name)

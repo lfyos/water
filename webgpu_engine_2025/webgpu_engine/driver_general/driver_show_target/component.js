@@ -69,7 +69,6 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	};
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		
 	};
 	this.destroy=function()
 	{

@@ -1,6 +1,5 @@
 package driver_screen_rectangle;
 
-
 import kernel_part.part;
 import kernel_scene.scene_kernel;
 import kernel_scene.client_information;

@@ -9,7 +9,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	}
 	
 	this.ep.data		=[0,0,0,0];
-	this.ep.data_bak	=[-10000000,-10000000,10000000,10000000];
+	this.ep.data_bak	=[-1,-1,1,1];
 	
 	this.buffer=scene.webgpu.device.createBuffer(
 		{
@@ -19,10 +19,10 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
-		var diff=scene.computer.min_value;
-		diff-=Math.abs(this.ep.data[2]-this.ep.data[0]);
-		diff-=Math.abs(this.ep.data[3]-this.ep.data[1]);
-		if(diff>=0)
+		var diff=0;
+		diff+=Math.abs(this.ep.data[2]-this.ep.data[0]);
+		diff+=Math.abs(this.ep.data[3]-this.ep.data[1]);
+		if(diff<scene.computer.min_value)
 			return;
 		for(var i=0,ni=this.ep.data.length;i<ni;i++)
 			if(this.ep.data[i]!=this.ep.data_bak[i]){
@@ -42,6 +42,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
+		
 	}
 	this.destroy=function()
 	{

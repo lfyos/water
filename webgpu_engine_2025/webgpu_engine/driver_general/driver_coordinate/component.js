@@ -18,7 +18,8 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 					?(target_data.project_matrix.camera_component_id)
 					:(this.coordinate_component_id[i]),-1,scene);
 			rpe.setVertexBuffer(1,this.coodinate_buffer,
-					Float32Array.BYTES_PER_ELEMENT*4*i,Float32Array.BYTES_PER_ELEMENT*4);
+					Float32Array.BYTES_PER_ELEMENT*4*i,
+					Float32Array.BYTES_PER_ELEMENT*4);
 			
 			var p=part_object.buffer_object.edge.region_data;
 			for(var j=0,nj=p.length;j<nj;j++){

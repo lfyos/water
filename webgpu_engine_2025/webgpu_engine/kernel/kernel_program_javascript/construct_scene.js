@@ -71,11 +71,9 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 	{
 		x					:	-2,
 		y					:	-2,
-		main_target_x		:	-2,
-		main_target_y		:	-2,
 		
 		canvas_id			:	-2,
-					
+
 		component			:	-2,
 		driver				:	-2,
 		

@@ -133,11 +133,13 @@ public class component_selection
 	{
 		if(collector!=null)
 			for(int i=0,ni=collector.component_collector.length;i<ni;i++)
-				for(int j=0,nj=collector.component_collector[i].length;j<nj;j++)
-					for(component_link_list p=collector.component_collector[i][j];p!=null;p=p.next_list_item) {
-						do_clear_selected_flag(p.comp);
-						do_set_selected_flag(p.comp);
+				for(int j=0,nj=collector.component_collector[i].length;j<nj;j++) {
+					component_link_list cll=collector.component_collector[i][j];
+					for(;cll!=null;cll=cll.next_list_item) {
+						do_clear_selected_flag(cll.comp);
+						do_set_selected_flag(cll.comp);
 					}
+				}
 	}
 	public void set_component_container_selected(component_array comp_cont)
 	{

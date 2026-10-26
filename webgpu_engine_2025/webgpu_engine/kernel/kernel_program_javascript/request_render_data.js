@@ -14,15 +14,6 @@ async function request_render_data(scene)
 			request_url+="&y="+(scene.view.y.toString());
 		};
 		
-		if(Math.abs(scene.view_bak.main_target_x-scene.view.main_target_x)>min_value){
-			scene.view_bak.main_target_x=scene.view.main_target_x;
-			request_url+="&mtx="+(scene.view.main_target_x.toString());
-		};
-		if(Math.abs(scene.view_bak.main_target_y-scene.view.main_target_y)>min_value){
-			scene.view_bak.main_target_y=scene.view.main_target_y;
-			request_url+="&mty="+(scene.view.main_target_y.toString());
-		};
-		
 		var id,value;
 
 		if(scene.view_bak.canvas_id!=scene.webgpu.current_canvas_id){
