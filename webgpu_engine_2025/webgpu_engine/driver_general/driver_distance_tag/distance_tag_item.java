@@ -62,7 +62,7 @@ public class distance_tag_item
 		p0_component_id			=my_p0_component_id;
 		px_component_id			=my_px_component_id;
 		coordinate_component_id	=my_coordinate_component_id;
-		type_id					=get_tag_parameter(my_type_id)[0];
+		type_id					=(new distance_tag_parameter(my_type_id)).type_id;
 		p0						=new point(p0_x,p0_y,p0_z);
 		px						=new point(px_x,px_y,px_z);
 		py						=new point(py_x,py_y,py_z);
@@ -117,7 +117,7 @@ public class distance_tag_item
 		p0						=new point(my_point);
 		px						=new point(my_point);
 		py						=new point(my_point);
-		type_id					=get_tag_parameter("")[0];
+		type_id					=(new distance_tag_parameter(null)).type_id;
 		location_version_p0		=0;
 		location_version_px		=0;
 		location_version_tag	=0;
@@ -176,77 +176,14 @@ public class distance_tag_item
 		
 		return true;
 	}
-	private static String[]get_tag_parameter(String my_tag_parameter_name)
-	{
-		final String tag_parameter_array[][]={
-		//		name,					extra_distance_tag			tag_component		title	direction		caculate method
-		
-		/*00*/	{"absolute_distance",	"no_extra_distance_tag",	"root_component",	"",		"0","0","0",	""	},
-		/*01*/	{"projection_distance",	"extra_distance_tag",		"root_component",	"line",	"0","0","0",	""	},
-		/*02*/	{"projection_angle",	"extra_distance_tag",		"root_component",	"angle","0","0","0",	""	},
-					
-		/*03*/	{"global_direction_x",	"no_extra_distance_tag",	"root_component",	"X",	"1","0","0",	"plane_direction_distance"},
-		/*04*/	{"global_direction_y",	"no_extra_distance_tag",	"root_component",	"Y",	"0","1","0",	"plane_direction_distance"},
-		/*05*/	{"global_direction_z",	"no_extra_distance_tag",	"root_component",	"Z",	"0","0","1",	"plane_direction_distance"},
-					
-		/*06*/	{"local_direction_x",	"no_extra_distance_tag",	"search_component",	"LX",	"1","0","0",	"plane_direction_distance"},
-		/*07*/	{"local_direction_y",	"no_extra_distance_tag",	"search_component",	"LY",	"0","1","0",	"plane_direction_distance"},
-		/*08*/	{"local_direction_z",	"no_extra_distance_tag",	"search_component",	"LZ",	"0","0","1",	"plane_direction_distance"},
-					
-		/*09*/	{"view_direction_x",	"no_extra_distance_tag",	"view_component",	"VX",	"1","0","0",	"plane_direction_distance"},
-		/*10*/	{"view_direction_y",	"no_extra_distance_tag",	"view_component",	"VY",	"0","1","0",	"plane_direction_distance"},
-		/*11*/	{"view_direction_z",	"no_extra_distance_tag",	"view_component",	"VZ",	"0","0","1",	"plane_direction_distance"},
-					
-		/*12*/	{"global_plane_yz",		"no_extra_distance_tag",	"root_component",	"YZ",	"1","0","0",	"in_plane_distance"},
-		/*13*/	{"global_plane_zx",		"no_extra_distance_tag",	"root_component",	"ZX",	"0","1","0",	"in_plane_distance"},
-		/*14*/	{"global_plane_xy",		"no_extra_distance_tag",	"root_component",	"XY",	"0","0","1",	"in_plane_distance"},
-					
-		/*15*/	{"local_plane_yz",		"no_extra_distance_tag",	"search_component",	"LYZ",	"1","0","0",	"in_plane_distance"},
-		/*16*/	{"local_plane_zx",		"no_extra_distance_tag",	"search_component",	"LZX",	"0","1","0",	"in_plane_distance"},
-		/*17*/	{"local_plane_xy",		"no_extra_distance_tag",	"search_component",	"LXY",	"0","0","1",	"in_plane_distance"},
-					
-		/*18*/	{"view_plane_yz",		"no_extra_distance_tag",	"view_component",	"VYZ",	"1","0","0",	"in_plane_distance"},
-		/*19*/	{"view_plane_zx",		"no_extra_distance_tag",	"view_component",	"VZX",	"0","1","0",	"in_plane_distance"},
-		/*20*/	{"view_plane_xy",		"no_extra_distance_tag",	"view_component",	"VXY",	"0","0","1",	"in_plane_distance"},
-					
-		/*21*/	{"global_angle_x",		"no_extra_distance_tag",	"root_component",	"AX",	"1","0","0",	"global_angle"},
-		/*22*/	{"global_angle_y",		"no_extra_distance_tag",	"root_component",	"AY",	"0","0","0",	"global_angle"},
-		/*23*/	{"global_angle_z",		"no_extra_distance_tag",	"root_component",	"AZ",	"0","1","1",	"global_angle"},
-					
-		/*24*/	{"local_angle_x",		"no_extra_distance_tag",	"search_component",	"ALX",	"1","0","0",	"global_angle"},
-		/*25*/	{"local_angle_y",		"no_extra_distance_tag",	"search_component",	"ALY",	"0","1","0",	"global_angle"},
-		/*26*/	{"local_angle_z",		"no_extra_distance_tag",	"search_component",	"ALZ",	"0","0","1",	"global_angle"},
-					
-		/*27*/	{"view_angle_x"	,		"no_extra_distance_tag",	"view_component",	"AVX",	"1","0","0",	"global_angle"},
-		/*28*/	{"view_angle_y",		"no_extra_distance_tag",	"view_component",	"AVY",	"0","1","0",	"global_angle"},
-		/*29*/	{"view_angle_z",		"no_extra_distance_tag",	"view_component",	"AVZ",	"0","0","1",	"global_angle"},
-							
-		/*30*/	{"global_angle_yz",		"extra_distance_tag",		"root_component",	"AYZ",	"1","0","0",	"plane_angle"},
-		/*31*/	{"global_angle_zx",		"extra_distance_tag",		"root_component",	"AZX",	"0","1","0",	"plane_angle"},
-		/*32*/	{"global_angle_xy",		"extra_distance_tag",		"root_component",	"AXY",	"0","0","1",	"plane_angle"},
-					
-		/*33*/	{"local_angle_yz",		"extra_distance_tag",		"search_component",	"ALYZ",	"1","0","0",	"plane_angle"},
-		/*34*/	{"local_angle_zx",		"extra_distance_tag",		"search_component",	"ALZX",	"0","1","0",	"plane_angle"},
-		/*35*/	{"local_angle_xy",		"extra_distance_tag",		"search_component",	"ALXY",	"0","0","1",	"plane_angle"},
-					
-		/*36*/	{"view_angle_yz",		"extra_distance_tag",		"view_component",	"AVYZ",	"1","0","0",	"plane_angle"},
-		/*37*/	{"view_angle_zx",		"extra_distance_tag",		"view_component",	"AVYZ",	"0","1","0",	"plane_angle"},
-		/*38*/	{"view_angle_xy",		"extra_distance_tag",		"view_component",	"AVYZ",	"0","0","1",	"plane_angle"},
-		};
-
-		for(int i=0,ni=tag_parameter_array.length;i<ni;i++)
-			if(tag_parameter_array[i][0].compareTo(my_tag_parameter_name)==0)
-				return tag_parameter_array[i];
-		return tag_parameter_array[0];
-	}
 	public void set_distance_tag_type(
 			String new_type_id,distance_tag_item my_ex_distance_tag,
 			scene_kernel sk,client_information ci)
 	{
-		String tag_parameter[]=get_tag_parameter(new_type_id);
-		type_id=tag_parameter[0];
+		var tag_parameter=new distance_tag_parameter(new_type_id);
+		type_id=tag_parameter.type_id;
 		
-		switch(tag_parameter[1]){
+		switch(tag_parameter.extra_distance_tag){
 		case "extra_distance_tag":
 			extra_distance_tag=(my_ex_distance_tag==null)
 				?null:new distance_tag_item(my_ex_distance_tag);
@@ -259,7 +196,7 @@ public class distance_tag_item
 		
 		component comp;
 		int old_coordinate_component_id=coordinate_component_id;
-		switch(tag_parameter[2]) {
+		switch(tag_parameter.tag_component) {
 		case "root_component":
 			coordinate_component_id=sk.component_cont.root_component.component_id;
 			break;
@@ -275,7 +212,7 @@ public class distance_tag_item
 			location_version_tag=0;
 		return;
 	}
-	public String get_tag_str(int display_precision,scene_kernel sk,client_information ci)
+	public String get_tag_string(int display_precision,scene_kernel sk,client_information ci)
 	{
 		component comp;
 		comp=sk.component_cont.get_component(p0_component_id);
@@ -294,13 +231,13 @@ public class distance_tag_item
 			extra_global_px=comp.absolute_location.multiply(extra_distance_tag.px);
 		}
 
-		String tag_parameter[]=get_tag_parameter(type_id);
-		String my_tag_title=tag_title+tag_parameter[3];
+		var tag_parameter=new distance_tag_parameter(type_id);
+		String my_tag_title=tag_title+tag_parameter.title;
 
 		double value=0;
 		point dir_0,dir_1;
 		
-		switch(tag_parameter[0]){
+		switch(tag_parameter.type_id){
 		case "absolute_distance":
 			value=global_px.sub(global_p0).distance();
 			break;
@@ -319,12 +256,11 @@ public class distance_tag_item
 				return jason_string.change_string("tag_component error:"+coordinate_component_id);
 			
 			point coordinate_p0=comp.absolute_location.multiply(0,0,0);
-			point coordinate_p1=comp.absolute_location.multiply(Double.parseDouble(tag_parameter[4]),
-						Double.parseDouble(tag_parameter[5]),	Double.parseDouble(tag_parameter[6]));
+			point coordinate_p1=comp.absolute_location.multiply(tag_parameter.direction);
 			plane p_l=new plane(coordinate_p0,coordinate_p1);
 			location loca=p_l.project_to_plane_location();
 			
-			switch(tag_parameter[7]){
+			switch(tag_parameter.caculate_method){
 			case "plane_direction_distance":
 				value=Math.abs(p_l.test(global_px)-p_l.test(global_p0));
 				break;

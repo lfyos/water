@@ -76,7 +76,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				distance_comp=sk.component_cont.get_component(p.px_component_id);
 				point dx=distance_comp.absolute_location.multiply(p.px).sub(p0);
 				ci.request_response.
-					print(pre_str,p.get_tag_str(tag_list.display_precision,sk,ci)).
+					print(pre_str,p.get_tag_string(tag_list.display_precision,sk,ci)).
 					print(",",p0.x).print(",",p0.y).print(",",p0.z).
 					print(",",dx.x).print(",",dx.y).print(",",dx.z).
 					print(",",dy.x).print(",",dy.y).print(",",dy.z).

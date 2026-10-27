@@ -163,8 +163,8 @@ public class distance_tag_list
 	}
 	public boolean modify_distance_tag(scene_kernel sk,client_information ci)
 	{
-		for(int i=0,ni=distance_tag_list.size();i<ni;i++)
-			switch(distance_tag_list.get(i).state){
+		for(var p:distance_tag_list)
+			switch(p.state){
 			default:
 			case "begin":
 			case "process":
