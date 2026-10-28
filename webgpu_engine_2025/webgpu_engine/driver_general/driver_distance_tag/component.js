@@ -34,16 +34,14 @@ function init_component_event_processor(component_id,create_data,scene)
 			case 0:				
 				switch((event.ctrlKey?1:0)+(event.shiftKey?2:0)){
 				case 0:	
-					switch(ep.tag_point_id){
+					switch((ep.tag_point_id++)%3){
 					case 0:				
 						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","point"],["p0","true"]]);
-						ep.tag_point_id++;
 						break;
 					case 1:
 						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","point"],["px","true"]]);
-						ep.tag_point_id++;
 						break;
 					default:
 						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
@@ -53,16 +51,14 @@ function init_component_event_processor(component_id,create_data,scene)
 					}
 					break;	
 				case 1:
-					switch(ep.tag_point_id){
+					switch((ep.tag_point_id++)%3){
 					case 0:				
 						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","component"],["p0","true"]]);
-						ep.tag_point_id++;
 						break;
 					case 1:
 						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","component"],["px","true"]]);
-						ep.tag_point_id++;
 						break;
 					default:
 						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
@@ -72,22 +68,36 @@ function init_component_event_processor(component_id,create_data,scene)
 					}
 					break;
 				case 2:
-					scene.caller.call_server_component(component_id,"all",
-						[["operation","swap_component"],["id",pickup_tag_id],["p0","true"]]).
-					then(
-						function(response_data)
-						{
-							scene.system_call_processor.update_coordinate_display();
-						});
-					break;
-				case 3:
-					scene.caller.call_server_component(component_id,"all",
-						[["operation","swap_component"],["id",pickup_tag_id],["px","true"]]).
-					then(
-						function(response_data)
-						{
-							scene.system_call_processor.update_coordinate_display();
-						});
+					switch((ep.tag_point_id++)%3){
+					case 0:
+						scene.caller.call_server_component(component_id,"all",
+							[["operation","swap_component"],["id",pickup_tag_id],["p0","true"]]).
+						then(
+							function(response_data)
+							{
+								scene.system_call_processor.update_coordinate_display();
+							});
+						break;
+					case 1:
+						scene.caller.call_server_component(component_id,"all",
+							[["operation","swap_component"],["id",pickup_tag_id],["px","true"]]).
+						then(
+							function(response_data)
+							{
+								scene.system_call_processor.update_coordinate_display();
+							});
+						break;
+					default:
+						scene.caller.call_server_component(component_id,"all",
+							[["operation","swap_component"],["id",pickup_tag_id],["p0","true"],["px","true"]]).
+						then(
+							function(response_data)
+							{
+								scene.system_call_processor.update_coordinate_display();
+							});
+						ep.tag_point_id=0;
+						break;
+					}
 					break;
 				}
 				break;
@@ -170,6 +180,8 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		}
 		var rpe=scene.webgpu.render_pass_encoder;
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){
+			if((typeof(this.tag_array[i])!="object")||(render_parameter[i]<=0))
+				continue;
 			rpe.setBindGroup(1,this.tag_array[i].bindgroup);
 			switch(method_data.method_id){
 			case 0:
@@ -209,15 +221,20 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  	
 	{
-		for(var i=0,ni=this.tag_array.length;i<ni;i++){
-			this.tag_array[i].buffer.destroy();
-			this.tag_array[i].texture.destroy();
-			this.tag_array[i].buffer	=null;
-			this.tag_array[i].texture	=null;
-			this.tag_array[i].bindgroup	=null;
-		}
+		for(var i=0,ni=this.tag_array.length;i<ni;i++)
+			if(typeof(this.tag_array[i])=="object"){
+				this.tag_array[i].buffer.destroy();
+				this.tag_array[i].texture.destroy();
+				this.tag_array[i].buffer	=null;
+				this.tag_array[i].texture	=null;
+				this.tag_array[i].bindgroup	=null;
+			}
 		this.tag_array=new Array();
 		for(var i=0,ni=buffer_data_item.length;i<ni;i++){
+			if(buffer_data_item[i].length==0){
+				this.tag_array[i]=true;
+				continue;
+			}
 			var my_tag_text							=buffer_data_item[i][ 0].trim();
 			var my_p0_x								=buffer_data_item[i][ 1];
 			var my_p0_y								=buffer_data_item[i][ 2];

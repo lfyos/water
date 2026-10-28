@@ -19,7 +19,6 @@ import kernel_common_class.debug_information;
 public class distance_tag_list
 {
 	private String directory_component_name,distance_tag_file_name;
-	private double min_view_distance;
 
 	public ArrayList<distance_tag_item>distance_tag_list;
 	private distance_tag_item ex_distance_tag;
@@ -28,11 +27,10 @@ public class distance_tag_list
 
 	public distance_tag_list(
 			String my_directory_component_name,String my_distance_tag_file_name,
-			int my_display_precision,double my_min_view_distance,int my_modifier_container_id)
+			int my_display_precision,int my_modifier_container_id)
 	{
 		directory_component_name=my_directory_component_name;
 		distance_tag_file_name=file_directory.replace_special_char(my_distance_tag_file_name);
-		min_view_distance=my_min_view_distance;
 
 		distance_tag_list=new ArrayList<distance_tag_item>();
 		ex_distance_tag=null;
@@ -396,7 +394,7 @@ public class distance_tag_list
 				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
 				view_px=ci.display_camera_result.matrix.multiply(global_px);
 				view_p0.z=view_px.z;
-				if(view_px.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+				if(view_px.sub(view_p0).distance2()<const_value.min_value2)
 					return true;
 				
 				global_py=ci.display_camera_result.to_me_direct.cross(global_px.sub(global_p0));
@@ -457,7 +455,7 @@ public class distance_tag_list
 				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
 				view_py=ci.display_camera_result.matrix.multiply(global_py);
 				view_p0.z=view_py.z;
-				if(view_py.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+				if(view_py.sub(view_p0).distance2()<const_value.min_value2)
 					return true;
 
 				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
@@ -495,7 +493,7 @@ public class distance_tag_list
 				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
 				view_px=ci.display_camera_result.matrix.multiply(global_px);
 				view_p0.z=view_px.z;
-				if(view_px.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+				if(view_px.sub(view_p0).distance2()<const_value.min_value2)
 					return true;
 				
 				p.px_component_id=ci.parameter.comp.component_id;
@@ -514,7 +512,7 @@ public class distance_tag_list
 				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
 				view_py=ci.display_camera_result.matrix.multiply(global_py);
 				view_p0.z=view_py.z;
-				if(view_py.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+				if(view_py.sub(view_p0).distance2()<const_value.min_value2)
 					return true;
 				p.state="end";
 				return false;

@@ -30,9 +30,7 @@ public class extended_component_driver  extends component_driver
 	{
 		super(my_component_part);
 		tag_root_menu_component_name=fr.get_string();	
-		tag_list=new distance_tag_list(
-			fr.get_string(),	fr.get_string(),
-			fr.get_int(),		fr.get_double(),	fr.get_int());
+		tag_list=new distance_tag_list(fr.get_string(),fr.get_string(),fr.get_int(),fr.get_int());
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

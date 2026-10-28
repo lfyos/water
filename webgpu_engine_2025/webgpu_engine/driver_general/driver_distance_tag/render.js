@@ -138,7 +138,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 	pipeline_descr.fragment.entryPoint				="fragment_edge_fun";
 	this.edge_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.vertex.constants.primitive_type	=0;
+	pipeline_descr.vertex.constants.primitive_type	=3;
 	pipeline_descr.primitive.topology				="triangle-list";
 	pipeline_descr.fragment.entryPoint				="fragment_point_fun";
 	pipeline_descr.vertex.buffers[0].stepMode		="instance";

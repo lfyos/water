@@ -1,21 +1,30 @@
 package driver_distance_tag;
 
+import java.util.ArrayList;
+
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_transformation.point;
 import kernel_scene.client_information;
+import kernel_component.component_container;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
 	private distance_tag_list tag_list;
 	private boolean front_show_flag;
+	private ArrayList<boolean[]>visible_flag_list;
 
 	public void destroy()
 	{
 		super.destroy();
-		tag_list=null;
+		
+		if(tag_list!=null) {
+			tag_list.destroy();
+			tag_list=null;
+		}
+		visible_flag_list=null;
 	}
 	public extended_component_instance_driver(
 			component my_comp,int my_driver_id,distance_tag_list my_tag_array)
@@ -24,40 +33,75 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		tag_list=my_tag_array;
 		front_show_flag=false;
+		visible_flag_list=new ArrayList<boolean[]>();
 	}
 	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
 	}
+	private boolean test_not_visible(component comp,
+			int parameter_channel_id,component_container component_cont)
+	{
+		for(;comp!=null;comp=component_cont.get_component(comp.parent_component_id))
+			if(!(comp.multiparameter[parameter_channel_id].effective_display_flag))
+				return true;
+		return false;
+	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		if(tag_list.test_location_modify(sk,ci))
-			comp.driver_array.get(driver_id).update_component_parameter_version();
+		if(cr.target.main_display_target_flag)
+			if(tag_list.test_location_modify(sk,ci))
+				comp.driver_array.get(driver_id).update_component_parameter_version();
+		for(int index_id;(index_id=visible_flag_list.size())<=cr.target.target_id;)
+			visible_flag_list.add(index_id,new boolean[0]);
 		
-		int display_number=0;
-		for(int i=0,ni=tag_list.distance_tag_list.size();i<ni;i++){
+		int display_number=0,number=tag_list.distance_tag_list.size();
+		boolean old_visible_flag[]=visible_flag_list.get(cr.target.target_id);
+		boolean new_visible_flag[]=new boolean[number];
+		for(int i=0;i<number;i++){
+			component distance_comp;
+			new_visible_flag[i]=false;
 			distance_tag_item p=tag_list.distance_tag_list.get(i);
-			var distance_comp=sk.component_cont.get_component(p.p0_component_id);
-			if(distance_comp!=null) {
-				var my_par=distance_comp.multiparameter[cr.target.parameter_channel_id];
-				if(my_par.effective_display_flag)
-					if((distance_comp=sk.component_cont.get_component(p.px_component_id))!=null) {
-						my_par=distance_comp.multiparameter[cr.target.parameter_channel_id];
-						if(my_par.effective_display_flag)
-							switch(p.state){
-							case "begin":
-							case "process":
-							case "end":
-								display_number++;
-								break;
-							}
-					}
+			if((distance_comp=sk.component_cont.get_component(p.p0_component_id))==null)
+				continue;
+			if(test_not_visible(distance_comp,cr.target.parameter_channel_id,sk.component_cont))
+				continue;
+			if((distance_comp=sk.component_cont.get_component(p.px_component_id))==null)
+				continue;
+			if(test_not_visible(distance_comp,cr.target.parameter_channel_id,sk.component_cont))
+				continue;
+			switch(p.state){
+			case "begin":
+			case "process":
+			case "end":
+				new_visible_flag[i]=true;
+				display_number++;
+				break;
 			}
 		}
-		return (display_number<=0);
+		
+		if(old_visible_flag.length!=number) {
+			visible_flag_list.set(cr.target.target_id,new_visible_flag);
+			update_component_render_version(cr.target.target_id,0);
+		}else {
+			for(int i=0;i<number;i++)
+				if(old_visible_flag[i]!=new_visible_flag[i]){
+					visible_flag_list.set(cr.target.target_id,new_visible_flag);
+					update_component_render_version(cr.target.target_id,0);
+					break;
+				}
+		}	
+		return (display_number<=0)?true:false;
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(0);
+		boolean visible_flag[]=visible_flag_list.get(cr.target.target_id);
+		int number=visible_flag.length;
+		ci.request_response.print("[");
+		if(number>0)
+			ci.request_response.print(visible_flag[0]?"1":"0");
+		for(int i=1;i<number;i++)
+			ci.request_response.print(visible_flag[i]?",1":",0");
+		ci.request_response.print("]");
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
@@ -65,7 +109,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		distance_tag_item p;
 		
 		ci.request_response.print("[");
-		for(int i=0,ni=tag_list.distance_tag_list.size();i<ni;i++)
+		for(int i=0,ni=tag_list.distance_tag_list.size();i<ni;i++) {
 			switch((p=tag_list.distance_tag_list.get(i)).state){
 			case "begin":
 			case "process":
@@ -81,9 +125,13 @@ public class extended_component_instance_driver extends component_instance_drive
 					print(",",dx.x).print(",",dx.y).print(",",dx.z).
 					print(",",dy.x).print(",",dy.y).print(",",dy.z).
 					print((p.state.compareTo("end")==0)?",1":",0",front_show_flag?",1]":",0]");
-				pre_str=",[";
 				break;
-			}	
+			default:
+				ci.request_response.print(pre_str,"]");
+				break;
+			}
+			pre_str=",[";
+		}
 		ci.request_response.print("]");
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
