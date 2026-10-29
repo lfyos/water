@@ -41,8 +41,10 @@ public class extended_component_instance_driver extends component_instance_drive
 	private boolean test_not_visible(component comp,
 			int parameter_channel_id,component_container component_cont)
 	{
-		for(;comp!=null;comp=component_cont.get_component(comp.parent_component_id))
-			if(!(comp.multiparameter[parameter_channel_id].effective_display_flag))
+		while(comp!=null)
+			if(comp.multiparameter[parameter_channel_id].effective_display_flag)
+				comp=component_cont.get_component(comp.parent_component_id);
+			else
 				return true;
 		return false;
 	}
@@ -96,20 +98,21 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		boolean visible_flag[]=visible_flag_list.get(cr.target.target_id);
 		int number=visible_flag.length;
-		ci.request_response.print("[");
-		if(number>0)
-			ci.request_response.print(visible_flag[0]?"1":"0");
-		for(int i=1;i<number;i++)
-			ci.request_response.print(visible_flag[i]?",1":",0");
-		ci.request_response.print("]");
+		if(number<=0)
+			ci.request_response.print("[]");
+		else {
+			ci.request_response.print(visible_flag[0]?"[1":"[0");
+			for(int i=1;i<number;i++)
+				ci.request_response.print(visible_flag[i]?",1":",0");
+			ci.request_response.print("]");
+		}
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
-		String pre_str="[";
 		distance_tag_item p;
 		
 		ci.request_response.print("[");
-		for(int i=0,ni=tag_list.distance_tag_list.size();i<ni;i++) {
+		for(int i=0,ni=tag_list.distance_tag_list.size();i<ni;i++) 
 			switch((p=tag_list.distance_tag_list.get(i)).state){
 			case "begin":
 			case "process":
@@ -120,18 +123,17 @@ public class extended_component_instance_driver extends component_instance_drive
 				distance_comp=sk.component_cont.get_component(p.px_component_id);
 				point dx=distance_comp.absolute_location.multiply(p.px).sub(p0);
 				ci.request_response.
-					print(pre_str,p.get_tag_string(tag_list.display_precision,sk,ci)).
+					print((i<=0)?"[":",[",p.get_tag_string(tag_list.display_precision,sk,ci)).
 					print(",",p0.x).print(",",p0.y).print(",",p0.z).
 					print(",",dx.x).print(",",dx.y).print(",",dx.z).
 					print(",",dy.x).print(",",dy.y).print(",",dy.z).
-					print((p.state.compareTo("end")==0)?",1":",0",front_show_flag?",1]":",0]");
+					print((p.state.compareTo("end")==0)	?",1":",0").
+					print(front_show_flag				?",1]":",0]");
 				break;
 			default:
-				ci.request_response.print(pre_str,"]");
+				ci.request_response.print((i<=0)?"[]":",[]");
 				break;
 			}
-			pre_str=",[";
-		}
 		ci.request_response.print("]");
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
