@@ -8,7 +8,7 @@ public class test_1 extends travel_through_directory
 {
 	private int number;
 	private static final String mode_string[]= {
-		"update_flag"
+		"tag_root_menu_component"
 	};
 	
 	public void operate_file(String file_name)
@@ -38,7 +38,7 @@ public class test_1 extends travel_through_directory
 		String path_name[]={
 //				"G:\\water_all",
 //				"E:\\project_data"
-				"G:\\water_all\\data\\shaders\\driver_general\\interface"
+				"G:\\water_all\\data"
 		};
 		
 		debug_information.println("start search");
