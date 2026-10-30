@@ -6,8 +6,9 @@ import kernel_file_manager.travel_through_directory;
 
 public class test_1 extends travel_through_directory
 {
+	private int number;
 	private static final String mode_string[]= {
-		"root.assemble"
+		"update_flag"
 	};
 	
 	public void operate_file(String file_name)
@@ -15,8 +16,11 @@ public class test_1 extends travel_through_directory
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null)
 			for(String my_mode_str:mode_string)
-				if(str.indexOf(my_mode_str)>=0)
-					debug_information.println(my_mode_str+":	",file_name);
+				if(str.indexOf(my_mode_str)>=0) {
+					debug_information.println((++number)+":	"+my_mode_str+":	"+file_name);
+					break;
+				}
+					
 	}
 	
 	public test_1()
@@ -27,12 +31,14 @@ public class test_1 extends travel_through_directory
 			"G:\\water_all\\webgpu_engine_2025\\.metadata",
 			"G:\\water_all\\webgpu_engine_2025\\webgpu_engine\\build"
 		});
+		number=0;
 	}
 	public static void main(String args[])
 	{
 		String path_name[]={
-				"G:\\water_all",
-				"E:\\project_data"
+//				"G:\\water_all",
+//				"E:\\project_data"
+				"G:\\water_all\\data\\shaders\\driver_general\\interface"
 		};
 		
 		debug_information.println("start search");

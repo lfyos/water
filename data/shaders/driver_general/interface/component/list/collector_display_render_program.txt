@@ -7,7 +7,7 @@ function(component_name,component_id,scene)
 		collector_list_object	:	new Array(),
 		request_array			:	new Array(),
 		item_number				:	1,
-		update_flag				:	false,
+		update_flag				:	true,
 
 		update_canvas_texture	:	function(
 				canvas_2d,context_2d,text_format,component_id,scene)
@@ -40,7 +40,7 @@ function(component_name,component_id,scene)
 					{
 						if(response_data.done_flag){
 							ep.collector_list_object=response_data.collector_data;
-							ep.update_flag=false;
+							ep.update_flag=true;
 							ep.id_base=0;
 						}else
 							ep.collector_stack_version=old_collector_stack_version;
@@ -48,18 +48,11 @@ function(component_name,component_id,scene)
 				return false;
 			}
 			
-			if(ep.update_flag)
-				return false;
-			ep.update_flag=true;
-			
 			ep.request_array=new Array();
 			
 			var  str,p,list_type_flag=true;
 			ep.item_number	=text_format.canvas_height/text_format.canvas_step;
 
-			canvas_2d.width			=text_format.canvas_width;
-			canvas_2d.height		=text_format.canvas_height;
-		
 			context_2d.fillStyle	=text_format.backgroundStyle;
 			context_2d.fillRect(0,0,canvas_2d.width,canvas_2d.height);
 					

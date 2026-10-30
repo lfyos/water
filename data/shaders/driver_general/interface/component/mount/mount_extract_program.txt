@@ -1,7 +1,7 @@
 function(component_name,component_id,scene)
 {
 	scene.component_event_processor[component_id]={
-		update_flag			:	false,
+		update_flag			:	true,
 		
 		extract_data		:
 		{
@@ -13,7 +13,7 @@ function(component_name,component_id,scene)
 		{
 			var ep=scene.component_event_processor[component_id];
 			if((ep.extract_data=response_data).movement.length>0){
-				ep.update_flag=false;
+				ep.update_flag=true;
 				scene.system_call_processor.set_menu_show(component_id,[["operation","show"],
 						["center","center"],["dy",ep.extract_data.movement.length*0.1]]);
 			}
@@ -50,12 +50,8 @@ function(component_name,component_id,scene)
 		
 		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,scene)
 		{
-			var ep=scene.component_event_processor[component_id];	
-			
-			if(ep.update_flag)
-				return false;
-			ep.update_flag=true;
-			
+			var ep=scene.component_event_processor[component_id];
+
 			canvas_2d.width			=text_format.canvas_width;
 			canvas_2d.height		=text_format.canvas_step*ep.extract_data.movement.length;
 		

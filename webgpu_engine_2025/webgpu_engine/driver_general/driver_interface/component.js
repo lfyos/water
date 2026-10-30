@@ -1,11 +1,12 @@
 function create_component_object(my_create_data,scene)
 {
-	this.interface_data=my_create_data;
+	this.interface_data	=my_create_data;
 	
-	this.show_x 	=0;
-	this.show_y 	=0;
+	this.do_response_location_flag=false;
+	this.show_x 		=0;
+	this.show_y 		=0;
 
-	this.hightlight	=[-1,-1,-1,-1];
+	this.hightlight		=[-1,-1,-1,-1];
 	
 	this.mousedown_flag	=false;
 	this.mouse_x 		=scene.view.main_target_x;
@@ -13,17 +14,17 @@ function create_component_object(my_create_data,scene)
 	this.mousedown_x	=scene.view.main_target_x;
 	this.mousedown_y	=scene.view.main_target_y;
 
-	this.x			=0;
-	this.y			=0;
-	this.id_base	=0;
-	this.update_flag=false;
+	this.x				=0;
+	this.y				=0;
+	this.id_base		=0;
+	this.update_flag	=true;
 	
-	this.parameter_bak={
-		x			:	this.show_x,
-		y			:	this.show_y,
-		dx			:	this.interface_data.dx,
-		dy			:	this.interface_data.dy,
-		hightlight	:	[0,0,0,0]
+	this.parameter_bak	={
+		x				:	this.show_x,
+		y				:	this.show_y,
+		dx				:	this.interface_data.dx,
+		dy				:	this.interface_data.dy,
+		hightlight		:	[0,0,0,0]
 	}
 	this.write_buffer_flag=true;
 
@@ -31,15 +32,14 @@ function create_component_object(my_create_data,scene)
 	{
 		if(scene.terminate_flag)
 			return true;
-			
+
 		switch(event.button){
 		case 0:
-			this.mousedown_flag=true;
-			this.mousedown_x=scene.view.main_target_x;
-			this.mousedown_y=scene.view.main_target_y;			
-			this.mouse_x 	=scene.view.main_target_x;
-			this.mouse_y 	=scene.view.main_target_y;
-			
+			this.mousedown_flag	=true;
+			this.mousedown_x	=scene.view.main_target_x;
+			this.mousedown_y	=scene.view.main_target_y;			
+			this.mouse_x 		=scene.view.main_target_x;
+			this.mouse_y 		=scene.view.main_target_y;
 			break;
 		case 2:
 			scene.caller.call_server_component(component_id,"all",[["operation","hide"]]);
@@ -47,6 +47,7 @@ function create_component_object(my_create_data,scene)
 		default:
 			break;
 		}
+
 		return true;
 	};
 	this.pickupmousemove=function(event,component_id,scene)
@@ -56,6 +57,7 @@ function create_component_object(my_create_data,scene)
 		switch(event.button){
 		case 0:
 			if(this.mousedown_flag){
+				this.do_response_location_flag=true;
 				this.show_x+=scene.view.main_target_x-this.mouse_x;
 				this.show_y+=scene.view.main_target_y-this.mouse_y;
 				this.mouse_x=scene.view.main_target_x;
@@ -115,7 +117,7 @@ function create_component_object(my_create_data,scene)
 		this.id_base-=mouse_wheel_number*skip_array[(event.ctrlKey?1:0)+(event.altKey?2:0)];
 		this.id_base =(event.shiftKey||(this.id_base<0))?0:Math.round(this.id_base);
 		
-		this.update_flag=false;
+		this.update_flag=true;
 
 		return true;
 	};
@@ -182,7 +184,7 @@ function create_bind_group(init_data,create_data,render_driver,scene)
 					width	:	my_imageBitmap.width,
 					height	:	my_imageBitmap.height
 				});
-		}
+		};
 			
 		this.buffer_size=Float32Array.BYTES_PER_ELEMENT*16;
 		this.buffer=scene.webgpu.device.createBuffer(
@@ -260,11 +262,14 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	
 	this.update_image_bind_group=function(ep,scene)
 	{
-		if(ep.interface_data.type)
-			if(typeof(ep.update_canvas_texture)=="function")
-				if(ep.update_canvas_texture(
-						scene.webgpu.canvas_2d,scene.webgpu.context_2d,
-						ep.interface_data.canvas,this.component_ids.component_id,scene))
+		if((ep.interface_data.type)&&(ep.update_flag)){
+			ep.update_flag=false;
+			if(typeof(ep.update_canvas_texture)=="function"){
+				scene.webgpu.canvas_2d.width =ep.interface_data.canvas.canvas_width;
+				scene.webgpu.canvas_2d.height=ep.interface_data.canvas.canvas_height;
+				if(ep.update_canvas_texture(scene.webgpu.canvas_2d,scene.webgpu.context_2d,
+							ep.interface_data.canvas,this.component_ids.component_id,scene))
+				{
 					scene.webgpu.device.queue.copyExternalImageToTexture(
 						{
 							source	:	scene.webgpu.canvas_2d
@@ -276,17 +281,28 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 							width	:	ep.interface_data.canvas.canvas_width,
 							height	:	ep.interface_data.canvas.canvas_height
 						});
+				}
+			}
+		}
+		
 		if(	  (ep.parameter_bak.x !=ep.show_x)
 			||(ep.parameter_bak.y !=ep.show_y)
 			||(ep.parameter_bak.dx!=ep.interface_data.dx)
 			||(ep.parameter_bak.dy!=ep.interface_data.dy))
 		{
+			ep.parameter_bak.x =ep.show_x;
+			ep.parameter_bak.y =ep.show_y;
+			ep.parameter_bak.dx=ep.interface_data.dx;
+			ep.parameter_bak.dy=ep.interface_data.dy;
+			
 			ep.write_buffer_flag=true;
-			scene.caller.call_server_component(this.component_ids.component_id,"all",[["operation","parameter"],
-				 ["x0",ep.parameter_bak.x =ep.show_x],
-				 ["y0",ep.parameter_bak.y =ep.show_y],
-				 ["dx",ep.parameter_bak.dx=ep.interface_data.dx],
-				 ["dy",ep.parameter_bak.dy=ep.interface_data.dy]]);
+			if(ep.do_response_location_flag){
+				scene.caller.call_server_component(this.component_ids.component_id,"all",
+					[["operation",	"parameter"],
+					 ["x0",			ep.show_x],			["y0",			ep.show_y],
+					 ["dx",ep.		interface_data.dx],	["dy",ep.interface_data.dy]]);
+				ep.do_response_location_flag=false;
+			}
 		}
 	
 		for(var i=0;i<4;i++)
@@ -310,8 +326,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 					(ep.hightlight[1]>ep.hightlight[3])?ep.hightlight[1]:ep.hightlight[3]
 				]));
 		}
-	}
-	
+	};
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
@@ -324,7 +339,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 
 		var rpe=scene.webgpu.render_pass_encoder;
 		rpe.setPipeline((method_data.method_id==0)
-				?(render_driver.id_pipeline):(render_driver.color_pipeline));		
+				?(render_driver.id_pipeline):(render_driver.color_pipeline));
 		rpe.setBindGroup(1,this.image_bind_group.bindgroup);
 		var p=part_object.buffer_object.face.region_data;
 		for(var i=0,ni=p.length;i<ni;i++){
@@ -335,6 +350,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		var ep=scene.component_event_processor[this.component_ids.component_id];
+		ep.do_response_location_flag=false;
 		ep.show_x			=buffer_data_item[0];
 		ep.show_y			=buffer_data_item[1];
 		ep.interface_data.dx=buffer_data_item[2];

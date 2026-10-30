@@ -1,7 +1,7 @@
 function(component_name,component_id,scene)
 {
 	scene.component_event_processor[component_id]={
-		update_flag					:	false,
+		update_flag					:	true,
 		type_flag					:	true,
 		movement_data				:	null,
 		text_format					:	null,
@@ -23,7 +23,7 @@ function(component_name,component_id,scene)
 						
 					ep.id_base					=0;
 					ep.type_flag				=my_type_flag;
-					ep.update_flag				=false;
+					ep.update_flag				=true;
 					ep.movement_data			=response_data;
 
 					scene.system_call_processor.set_menu_show(component_id);
@@ -49,7 +49,7 @@ function(component_name,component_id,scene)
 						function(response_data)
 						{
 							ep.movement_data=response_data;
-							ep.update_flag=false;
+							ep.update_flag=true;
 							ep.id_base=0;
 						});
 				return;
@@ -67,7 +67,7 @@ function(component_name,component_id,scene)
 					then(
 						function(response_data)
 						{
-							ep.update_flag=false;
+							ep.update_flag=true;
 							ep.movement_data=response_data;
 						});
 				}
@@ -84,7 +84,7 @@ function(component_name,component_id,scene)
 						function(response_data)
 						{
 							ep.movement_data=response_data;
-							ep.update_flag=false;
+							ep.update_flag=true;
 							ep.id_base=0;
 						});
 				return;
@@ -106,14 +106,7 @@ function(component_name,component_id,scene)
 		{
 			var ep=scene.component_event_processor[component_id];
 			
-			if(ep.update_flag)
-				return false;
-			ep.update_flag=true;
-			
 			ep.text_format			=text_format;
-			
-			canvas_2d.width			=ep.text_format.canvas_width;
-			canvas_2d.height		=ep.text_format.canvas_height;
 		
 			context_2d.fillStyle	=ep.text_format.backgroundStyle;
 			context_2d.fillRect(0,0,canvas_2d.width,canvas_2d.height);

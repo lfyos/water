@@ -29,9 +29,9 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		}
 	];
 	this.bindgroup_layout=scene.webgpu.device.createBindGroupLayout(
-		{
-			entries	:layout_entries
-		});
+			{
+				entries	:layout_entries
+			});
 	var my_module=scene.webgpu.device.createShaderModule(
 			{
 				code: shader_code
@@ -89,6 +89,10 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		{
 			topology	:	"triangle-list",
 		},
+		multisample		:
+		{	
+			count		:		1
+		},
 		depthStencil	:
 		{
 			format				:	"depth24plus-stencil8",
@@ -99,10 +103,10 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 	
 	this.id_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.fragment.entryPoint			="fragment_color_fun";
 	pipeline_descr.fragment.targets.length		=1;
 	pipeline_descr.fragment.targets[0].format	=scene.webgpu.gpu.getPreferredCanvasFormat();
-	pipeline_descr.multisample					={count:scene.parameter.multisample};
+	pipeline_descr.multisample.count			=scene.parameter.multisample;
+	pipeline_descr.fragment.entryPoint			="fragment_color_fun";
 	this.color_pipeline							=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.new_part_driver=construct_part_driver;
