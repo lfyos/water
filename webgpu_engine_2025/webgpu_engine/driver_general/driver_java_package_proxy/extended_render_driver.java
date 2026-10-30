@@ -17,8 +17,10 @@ public class extended_render_driver extends render_driver
 {
 	private render_driver real_render_driver;
 	
-	private render_driver creat_render_driver(String jar_file_name,String jar_class_name,
-				file_reader shader_fr,render ren,client_request_response request_response,
+	private render_driver creat_render_driver(
+				String jar_file_name,String jar_class_name,
+				file_reader shader_fr,render ren,
+				client_request_response request_response,
 				system_parameter system_par,scene_parameter scene_par)
 	{
 		File jar_f=new File(jar_file_name);
@@ -44,7 +46,12 @@ public class extended_render_driver extends render_driver
 				newInstance(shader_fr,ren,request_response,system_par,scene_par);
 		}catch(Exception e) {
 			render_driver_object=null;
-		}		
+		}
+		try {
+			jar_loader.close();
+		}catch(Exception e) {
+			;
+		}
 		if(render_driver_object!=null) 
 			if(render_driver_object instanceof render_driver)
 				return (render_driver)render_driver_object;	
@@ -55,6 +62,7 @@ public class extended_render_driver extends render_driver
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		super(shader_fr,ren,request_response,system_par,scene_par);
+		
 		String jar_file_directory[],sub_jar_file_directory="jar_package_directory"+File.separatorChar;
 		
 		if(scene_par==null)
@@ -71,14 +79,25 @@ public class extended_render_driver extends render_driver
 				scene_par.extra_directory_name	+sub_jar_file_directory,
 				system_par.parameter_directory	+sub_jar_file_directory
 			};
-		String jar_file_name,jar_class_name;
-		jar_file_name	=file_directory.replace_special_char(shader_fr.get_string());
-		jar_class_name	=shader_fr.get_string();
-
-		for(int i=0,ni=jar_file_directory.length;i<ni;i++)
-			if((real_render_driver=creat_render_driver(jar_file_directory[i]+jar_file_name,
-				jar_class_name,shader_fr,ren,request_response,system_par,scene_par))!=null) 
+		
+		String jar_file_name=shader_fr.get_string();
+		String jar_class_name=shader_fr.get_string();
+		do {
+			if((jar_file_name==null)||(jar_class_name==null))
+				break;
+			jar_file_name=file_directory.replace_special_char(jar_file_name).trim();
+			if(jar_file_name.isEmpty())
+				break;
+			if((jar_class_name=jar_class_name.trim()).isEmpty())
+				break;
+			for(int i=0,ni=jar_file_directory.length;i<ni;i++) {
+				real_render_driver=creat_render_driver(jar_file_directory[i]+jar_file_name,
+					jar_class_name,shader_fr,ren,request_response,system_par,scene_par);
+				if(real_render_driver!=null) 
 					return;
+			}
+		}while(false);
+
 		real_render_driver=null;
 		debug_information.println("create jar render driver fail");
 		debug_information.println("shader file is	",			
