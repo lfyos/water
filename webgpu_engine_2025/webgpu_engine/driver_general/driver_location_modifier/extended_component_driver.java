@@ -55,6 +55,8 @@ public class extended_component_driver  extends component_driver
 	
 	public void clear_location_modifier()
 	{
+		if(first!=null)
+			first.destroy();
 		first=new location_modification_data(get_component_parameter_version());
 		update_component_parameter_version();
 	}
@@ -77,18 +79,16 @@ public class extended_component_driver  extends component_driver
 			}
 		}
 	}
-	public void register_location_modifier(scene_kernel sk,	int my_component_id,long time_length,
+	public void register_location_modifier(scene_kernel sk,	int my_component_id,
+			long my_start_time,				long my_terminate_time,
 			location my_start_location,		location my_terminate_location,
 			int my_follow_component_id[],	location my_follow_component_location[])
 	{
-		long current_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
-		
 		first=new location_modification_data(
 				first,get_component_parameter_version(),
-				my_component_id,current_time,current_time+time_length,
+				my_component_id,my_start_time,my_terminate_time,
 				my_start_location,my_terminate_location,
 				my_follow_component_id,my_follow_component_location);
-		
 		update_component_parameter_version();
 	}
 }

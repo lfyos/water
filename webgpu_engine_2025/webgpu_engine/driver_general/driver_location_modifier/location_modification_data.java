@@ -19,19 +19,19 @@ public class location_modification_data
 	
 	public void destroy()
 	{
-		if(next!=null) {
-			next.destroy();
+		var p_next=this;
+		for(var p=this;p!=null;p=p_next) {
+			p_next=next;
 			next=null;
-		}
+			p.start_location=null;
+			p.terminate_location=null;
 		
-		start_location=null;
-		terminate_location=null;
-		
-		follow_component_id=null;
-		if(follow_component_location!=null) {
-			for(int i=0,ni=follow_component_location.length;i<ni;i++)
-				follow_component_location[i]=null;
-			follow_component_location=null;
+			p.follow_component_id=null;
+			if(p.follow_component_location!=null) {
+				for(int i=0,ni=p.follow_component_location.length;i<ni;i++)
+					p.follow_component_location[i]=null;
+				p.follow_component_location=null;
+			}
 		}
 	}
 	public location_modification_data(long my_parameter_version)

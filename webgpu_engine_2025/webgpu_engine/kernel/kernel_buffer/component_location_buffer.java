@@ -89,8 +89,8 @@ public class component_location_buffer
 							}
 		}
 	}
-	private static void response_location_data(location loca,
-			client_request_response request_response)
+	public static void response_location_data(
+			location loca,client_request_response request_response)
 	{
 		double parameter[]=loca.caculate_translation_rotation(true);
 		int code=0,number=0;
@@ -103,6 +103,7 @@ public class component_location_buffer
 		}
 		request_response.print((number<=0)?"[]":(","+code+"]"));
 	}
+	
 	public void response_location(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
 		if(sk.camera_cont!=null)
