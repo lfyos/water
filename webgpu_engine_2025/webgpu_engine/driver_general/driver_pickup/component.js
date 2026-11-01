@@ -75,14 +75,14 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 
 	this.caculate_view_volume_box=function(my_target_id,main_target_id,scene)
 	{
-		var my_render_data=scene.render_target_array[my_target_id];
+		var my_target_data=scene.render_target_array[my_target_id];
 		
-		my_render_data.target_view_parameter.view_x0			=0;
-		my_render_data.target_view_parameter.view_y0			=0;
-		my_render_data.target_view_parameter.view_width			=1;
-		my_render_data.target_view_parameter.view_height		=1;
-		my_render_data.target_view_parameter.whole_view_width	=1;
-		my_render_data.target_view_parameter.whole_view_height	=1;
+		my_target_data.target_view_parameter.view_x0			=0;
+		my_target_data.target_view_parameter.view_y0			=0;
+		my_target_data.target_view_parameter.view_width			=1;
+		my_target_data.target_view_parameter.view_height		=1;
+		my_target_data.target_view_parameter.whole_view_width	=1;
+		my_target_data.target_view_parameter.whole_view_height	=1;
 		
 		var p=scene.render_target_array[main_target_id].target_view_parameter;
 		
@@ -96,19 +96,19 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		var aspect_value=p.view_width/p.view_height;
 		var diff_value	=0.5/p.view_height;
 		
-		my_render_data.view_volume_box=[
+		my_target_data.view_volume_box=[
 			[aspect_value*pos_x-diff_value,	pos_y-diff_value,	-1,	1],
 			[aspect_value*pos_x+diff_value,	pos_y+diff_value,	 1,	1]
 		];
 	}
 
-	this.begin_scene_target=function(scene_target_array,render_data,
+	this.scene_target_begin=function(scene_target_array,target_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{
 		if(this.main_target_id<0)
 			return false;
 			
-		this.caculate_view_volume_box(render_data.target_id,this.main_target_id,scene);
+		this.caculate_view_volume_box(target_data.target_id,this.main_target_id,scene);
 		
 		if(scene_target_array.length>1)
 			return true;
@@ -144,7 +144,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		   			stencilStoreOp		:	"store"
 				}
 			};
-			
+
 			scene_target_array[0]={
 				pass_descriptor	:	my_pass_descriptor,
 				
@@ -156,6 +156,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				]
 			};
 		}
+
 		if((typeof(scene_target_array[1])!="object")||(scene_target_array[1]==null)){
 			my_pass_descriptor=
 			{
@@ -192,7 +193,8 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		};
 		return true;
 	}
-	this.end_scene_target=function(scene_target_array,render_data,
+
+	this.scene_target_end=function(scene_target_array,target_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{	
 		scene.webgpu.command_encoder.copyTextureToBuffer(
@@ -251,7 +253,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			});
 	}
 
-	this.scene_target_complete=async function(render_data,
+	this.scene_target_complete=async function(target_data,
 		target_part_object,target_part_driver,target_render_driver,scene)
 	{
 		if(scene.terminate_flag)
@@ -362,15 +364,14 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		
 		return;
 	}
-	
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
-		
+		if(target_data.main_display_target_flag)
+			this.main_target_id	=target_data.target_id;	
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		this.main_target_id	=buffer_data_item;
 	}
 	this.destroy=function()
 	{

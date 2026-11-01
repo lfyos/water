@@ -42,13 +42,13 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		this.clear_color=buffer_data_item;
 	}
 	
-	this.begin_scene_target=function(scene_target_array,render_data,
+	this.scene_target_begin=function(scene_target_array,target_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{
 		if((typeof(scene_target_array[0])=="object")&&(scene_target_array[0]!=null))
 			return true;
 		
-		var my_target_texture_id=Math.floor(render_data.target_texture_id/2.0);
+		var my_target_texture_id=Math.floor(target_data.target_texture_id/2.0);
 		if((my_target_texture_id<0)||(my_target_texture_id>=this.target_parameter.length))
 			return true;
 		

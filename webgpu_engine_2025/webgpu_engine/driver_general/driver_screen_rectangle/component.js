@@ -2,14 +2,14 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 {
 	this.component_ids	=component_ids;
 	
-	this.ep=scene.component_event_processor[component_ids.component_id];
-	if((typeof(this.ep)!="object")||(this.ep==null)){
-		this.ep=new Object();
-		scene.component_event_processor[component_ids.component_id]=this.ep;
+	var ep=scene.component_event_processor[component_ids.component_id];
+	if((typeof(ep)!="object")||(ep==null)){
+		ep=new Object();
+		scene.component_event_processor[component_ids.component_id]=ep;
 	}
 	
-	this.ep.data		=[0,0,0,0];
-	this.ep.data_bak	=[-1,-1,1,1];
+	ep.data		=[0,0,0,0];
+	ep.data_bak	=[-1,-1,1,1];
 	
 	this.buffer=scene.webgpu.device.createBuffer(
 		{
@@ -19,18 +19,19 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
-		var diff=0;
-		diff+=Math.abs(this.ep.data[2]-this.ep.data[0]);
-		diff+=Math.abs(this.ep.data[3]-this.ep.data[1]);
+		var diff=0,ep=scene.component_event_processor[component_ids.component_id];
+		
+		diff+=Math.abs(ep.data[2]-ep.data[0]);
+		diff+=Math.abs(ep.data[3]-ep.data[1]);
 		if(diff<scene.computer.min_value)
 			return;
-		for(var i=0,ni=this.ep.data.length;i<ni;i++)
-			if(this.ep.data[i]!=this.ep.data_bak[i]){
-				this.ep.data_bak=this.ep.data;
-				scene.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(this.ep.data));
+		for(var i=0,ni=ep.data.length;i<ni;i++)
+			if(ep.data[i]!=ep.data_bak[i]){
+				ep.data_bak=ep.data;
+				scene.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(ep.data));
 				break;
 			}
-		var rpe	=scene.webgpu.render_pass_encoder;
+		var rpe=scene.webgpu.render_pass_encoder;
 		rpe.setPipeline(render_driver.pipeline);
 		rpe.setVertexBuffer(1,this.buffer);
 
@@ -41,8 +42,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		}
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
-	{
-		
+	{	
 	}
 	this.destroy=function()
 	{

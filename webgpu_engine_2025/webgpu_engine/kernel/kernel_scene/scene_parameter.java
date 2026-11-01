@@ -378,9 +378,22 @@ public class scene_parameter
 		
 		if((max_target_number=extra_parameter_fr.get_int())<1)
 			max_target_number=1;
+		
 		if((multisample_number=extra_parameter_fr.get_int())<1)
 			multisample_number=1;
-		
+		String multisample_str;
+		if((multisample_str=request_response.get_parameter("multisample_number"))!=null){
+			if((multisample_str=multisample_str.trim()).isEmpty())
+				debug_information.println("Empty client multisample_number");
+			else
+				try{
+					int client_multisample_number=Integer.parseInt(multisample_str);
+					if(client_multisample_number>0)
+						multisample_number=client_multisample_number;
+				}catch(Exception e){
+					debug_information.println("Error client multisample_number:	",multisample_str);
+				}
+		}
 		create_top_part_assembly_precision2		=extra_parameter_fr.get_double();
 		create_top_part_assembly_precision2		*=create_top_part_assembly_precision2;
 		create_top_part_discard_precision2		=extra_parameter_fr.get_double();

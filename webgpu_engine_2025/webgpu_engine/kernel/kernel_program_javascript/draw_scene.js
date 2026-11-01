@@ -86,9 +86,9 @@ function scene_target_begin_routine(target_id,scene_target_array,scene)
 	var target_component_driver	=target_part_object.component_driver_array[data_buffer_id];
 	if((typeof(target_component_driver)!="object")||(target_component_driver==null))
 		return false;
-	if(typeof(target_component_driver.begin_scene_target)!="function")
+	if(typeof(target_component_driver.scene_target_begin)!="function")
 		return false;
-	if(!(target_component_driver.begin_scene_target(scene_target_array,
+	if(!(target_component_driver.scene_target_begin(scene_target_array,
 		target_render_data,target_part_object,target_part_driver,target_render_driver,scene)))
 			return false;
 		
@@ -118,9 +118,9 @@ function scene_target_end_routine(target_id,scene_target_array,scene)
 	var target_component_driver	=target_part_object.component_driver_array[data_buffer_id];
 	if((typeof(target_component_driver)!="object")||(target_component_driver==null))
 		return;
-	if(typeof(target_component_driver.end_scene_target)!="function")
+	if(typeof(target_component_driver.scene_target_end)!="function")
 		return;
-	target_component_driver.end_scene_target(scene_target_array,target_render_data,
+	target_component_driver.scene_target_end(scene_target_array,target_render_data,
 		target_part_object,target_part_driver,target_render_driver,scene);
 	return;
 }

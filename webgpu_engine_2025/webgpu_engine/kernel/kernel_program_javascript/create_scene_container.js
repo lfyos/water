@@ -19,19 +19,19 @@ function create_scene_container_main(my_webgpu)
 			var scene_pass_array=new Array();
 
 			for(var j=0,nj=p.length;j<nj;j++)
-				do_render_flag[j]=p[j].scene_object.scene_interface.	
+				do_render_flag[j]=p[j].scene_object.scene_interface.
 					scene_target_begin(p[j].target_id,scene_pass_array);
-			
+
 			for(var pass_id=0,pass_number=scene_pass_array.length;pass_id<pass_number;pass_id++){
 				if((typeof(scene_pass_array[pass_id])!="object")||(scene_pass_array[pass_id]==null))
 					continue;
-				
+
 				var my_pass_descriptor=scene_pass_array[pass_id].pass_descriptor;
 				if(my_collector_flag)
 					this.webgpu.render_pass_encoder=this.webgpu.device.createRenderBundleEncoder(my_pass_descriptor);
 				else
 					this.webgpu.render_pass_encoder=this.webgpu.command_encoder.beginRenderPass(my_pass_descriptor);
-					
+
 				if((typeof(this.webgpu.render_pass_encoder)!="object")||(this.webgpu.render_pass_encoder==null))
 					continue;
 				for(var j=0,nj=p.length;j<nj;j++)
@@ -47,7 +47,7 @@ function create_scene_container_main(my_webgpu)
 				}
 				this.webgpu.render_pass_encoder=null;
 			}
-			
+
 			for(var j=0,nj=p.length;j<nj;j++)
 				p[j].scene_object.scene_interface.scene_target_end(p[j].target_id,scene_pass_array);
 		}
@@ -153,21 +153,21 @@ function create_scene_container_main(my_webgpu)
 		}
 	}	
 	this.create_scene=async function(create_scene_program,
-		my_event_scene_name,create_parameter,my_draw_canvas_id,user_process_bar_function)
+		my_create_scene_name,create_parameter,my_draw_canvas_id,user_process_bar_function)
 	{
-		var old_scene=this.scene_object[my_event_scene_name];
+		var old_scene=this.scene_object[my_create_scene_name];
 		if((typeof(old_scene)!="object")||(old_scene==null)){
 			var new_scene=await create_scene_program.create_scene(this.webgpu,
 					my_draw_canvas_id,create_parameter,user_process_bar_function);
-			old_scene=this.scene_object[my_event_scene_name];
-			if((typeof(old_scene)!="object")||(old_scene==null))
-				this.scene_object[my_event_scene_name]=new_scene;
+			var new_old_scene=this.scene_object[my_create_scene_name];
+			if((typeof(new_old_scene)!="object")||(new_old_scene==null))
+				this.scene_object[my_create_scene_name]=new_scene;
 			else
 				new_scene.destroy();
 		}
 		if(this.event_scene_name==null)
-			this.event_scene_name=my_event_scene_name;
-		return this.scene_object[my_event_scene_name];
+			this.event_scene_name=my_create_scene_name;
+		return this.scene_object[my_create_scene_name];
 	}
 	this.set_event_scene_name=function(my_event_scene_name)
 	{

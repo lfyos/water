@@ -76,5 +76,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			this.buffer.destroy();
 			this.buffer=null;
 		};
+		this.bindgroup=null;
+		this.sampler=null;
 	}	
 };
