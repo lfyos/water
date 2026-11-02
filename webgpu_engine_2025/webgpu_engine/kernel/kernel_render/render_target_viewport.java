@@ -2,11 +2,11 @@ package kernel_render;
 
 import kernel_transformation.box;
 
-public class render_target_view 
+public class render_target_viewport 
 {
 	public int view_x0,view_y0,view_width,view_height,whole_view_width,whole_view_height;
 	
-	public render_target_view()
+	public render_target_viewport()
 	{
 		view_x0				=0;
 		view_y0				=0;
@@ -15,7 +15,7 @@ public class render_target_view
 		whole_view_width	=1;
 		whole_view_height	=1;
 	}
-	public render_target_view(
+	public render_target_viewport(
 		int my_view_x0,			int my_view_y0,
 		int my_view_width,		int my_view_height,
 		int my_whole_view_width,int my_whole_view_height)
@@ -27,7 +27,7 @@ public class render_target_view
 		whole_view_width	=(my_whole_view_width<1)	?1:my_whole_view_width;
 		whole_view_height	=(my_whole_view_height<1)	?1:my_whole_view_height;
 	}
-	public render_target_view(render_target_view rtv)
+	public render_target_viewport(render_target_viewport rtv)
 	{
 		view_x0				=rtv.view_x0;
 		view_y0				=rtv.view_y0;

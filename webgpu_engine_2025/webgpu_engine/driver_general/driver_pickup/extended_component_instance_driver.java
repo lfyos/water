@@ -5,8 +5,8 @@ import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_render.render_target;
 import kernel_scene.client_information;
-import kernel_render.render_target_view;
 import kernel_render.render_target_flag;
+import kernel_render.render_target_viewport;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -40,9 +40,9 @@ public class extended_component_instance_driver extends component_instance_drive
 			render_target_flag.create_pickup_flag(),							//render_target_parameter
 			pickup_target_name,comp.component_id,driver_id,0,					//target IDS,components
 			cr.target.comp,cr.target.camera_id,cr.target.parameter_channel_id,	//camera_id,parameter_channel_id
-			new render_target_view(0,0,pickup_target_width,pickup_target_width,
+			new render_target_viewport(0,0,pickup_target_width,pickup_target_width,
 						pickup_target_width,pickup_target_width),				//render_target_view
-			cr.target.target_view.caculate_view_box(
+			cr.target.target_viewport.caculate_view_box(
 						ci.parameter.x,ci.parameter.y,pickup_target_width),		//view_volume_box
 			cr.target.clip_plane,null);											//clip_plane,mirror_plane
 		ci.target_container.register_target(rt);

@@ -437,7 +437,7 @@ public class distance_tag_list
 						p_pl=(p_pl_up_dot>=p_pl_right_dot)?p_pl_up:p_pl_right;
 					}
 				
-				var tv=ci.display_camera_result.target.target_view;
+				var tv=ci.display_camera_result.target.target_viewport;
 				double local_xy[]=tv.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 				global_py=p_pl.insection_point(
 						ci.display_camera_result.negative_matrix.multiply(

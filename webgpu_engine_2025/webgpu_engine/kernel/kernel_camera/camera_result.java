@@ -195,7 +195,7 @@ public class camera_result
 		if((p=parameter.comp.driver_array.get(parameter.driver_id).component_part)==null)
 			return null;
 	
-		double local_xy[]=target.target_view.caculate_view_local_xy(parameter.x,parameter.y);
+		double local_xy[]=target.target_viewport.caculate_view_local_xy(parameter.x,parameter.y);
 		location comp_negative_loca=parameter.comp.caculate_negative_absolute_location();
 		point p0=comp_negative_loca.multiply(negative_matrix.multiply(
 					new point(local_xy[0],local_xy[1],parameter.depth+0.0)));

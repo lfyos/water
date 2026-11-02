@@ -17,7 +17,7 @@ public class render_target
 	
 	public int camera_id,parameter_channel_id;
 	public box view_volume_box;
-	public render_target_view target_view;
+	public render_target_viewport target_viewport;
 	
 	public plane clip_plane;
 	
@@ -48,7 +48,7 @@ public class render_target
 		camera_id			=rt.camera_id;
 		parameter_channel_id=rt.parameter_channel_id;
 		
-		target_view		=(rt.target_view==null)?null:(new render_target_view(rt.target_view));
+		target_viewport	=(rt.target_viewport==null)?null:(new render_target_viewport(rt.target_viewport));
 		view_volume_box	=(rt.view_volume_box==null)?null:(new box(rt.view_volume_box));
 
 		clip_plane		=(rt.clip_plane==null)?null:(new plane(rt.clip_plane));
@@ -67,7 +67,7 @@ public class render_target
 			int my_target_id_from,					render_target_flag 	my_flag,	String my_target_name,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_camera_id,				int my_parameter_channel_id,
-			render_target_view my_target_view,		box my_view_volume_box,			plane my_clip_plane,
+			render_target_viewport my_target_viewport,box my_view_volume_box,		plane my_clip_plane,
 			double my_adjust_eye_position_parameter[])
 	{
 		target_id				=0;
@@ -87,8 +87,10 @@ public class render_target
 		camera_id			=my_camera_id;
 		parameter_channel_id=my_parameter_channel_id;
 		
-		target_view		=(my_target_view==null)?new render_target_view():new render_target_view(my_target_view);
-		view_volume_box	=(my_view_volume_box==null)?new box(-1,-1,-1,1,1,1):new box(my_view_volume_box);
+		target_viewport	=(my_target_viewport==null)
+				?new render_target_viewport():new render_target_viewport(my_target_viewport);
+		view_volume_box	=(my_view_volume_box==null)
+				?new box(-1,-1,-1,1,1,1):new box(my_view_volume_box);
 
 		clip_plane		=my_clip_plane;
 

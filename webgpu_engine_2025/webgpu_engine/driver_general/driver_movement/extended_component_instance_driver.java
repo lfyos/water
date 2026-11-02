@@ -39,8 +39,8 @@ public class extended_component_instance_driver extends component_instance_drive
 						my_component_box=follow_mouse_comp.get_component_box(true);
 					
 					if(my_component_box!=null) {
-						double local_xy[]=ci.display_camera_result.target.target_view.
-								caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
+						double local_xy[]=ci.display_camera_result.target.target_viewport.
+									caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 					
 						location loca=follow_mouse_comp.caculate_negative_absolute_location();
 						point p0=my_component_box.center();

@@ -8,7 +8,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	for(var i=0,j=0,ni=init_data.length;i<ni;j++){
 		this.clear_color		[j]=[0,0,0,1];
 		this.target_parameter	[j]={
-			canvas_id		:	init_data[i++],
+			canvas_id		:	(init_data[i++]),
 			load_operation	:	(init_data[i++]>0)?"clear":"load"
 		};
 	}	
@@ -31,7 +31,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			}
 			var par=[
 						["operation",		"width_height"],
-						["width_height",	width_height_str]
+						["width_height",	 width_height_str]
 					];
 			scene.caller.call_server_component(
 				this.component_ids.component_id,this.component_ids.driver_id,par);

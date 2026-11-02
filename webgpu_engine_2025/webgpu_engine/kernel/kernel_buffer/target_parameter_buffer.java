@@ -121,20 +121,20 @@ public class target_parameter_buffer
 		
 		do{
 			if(old_rt!=null)
-				if(old_rt.target_view.view_x0==rt.target_view.view_x0)
-					if(old_rt.target_view.view_y0==rt.target_view.view_y0)
-						if(old_rt.target_view.view_width==rt.target_view.view_width)
-							if(old_rt.target_view.view_height==rt.target_view.view_height)
-								if(old_rt.target_view.whole_view_width==rt.target_view.whole_view_width)
-									if(old_rt.target_view.whole_view_height==rt.target_view.whole_view_height)
+				if(old_rt.target_viewport.view_x0==rt.target_viewport.view_x0)
+					if(old_rt.target_viewport.view_y0==rt.target_viewport.view_y0)
+						if(old_rt.target_viewport.view_width==rt.target_viewport.view_width)
+							if(old_rt.target_viewport.view_height==rt.target_viewport.view_height)
+								if(old_rt.target_viewport.whole_view_width==rt.target_viewport.whole_view_width)
+									if(old_rt.target_viewport.whole_view_height==rt.target_viewport.whole_view_height)
 										break;
 			client_interface.	print(((print_number++)<=0)?"10":",10").
-								print(",",	rt.target_view.view_x0).
-								print(",",	rt.target_view.view_y0).
-								print(",",	rt.target_view.view_width).
-								print(",",	rt.target_view.view_height).
-								print(",",	rt.target_view.whole_view_width).
-								print(",",	rt.target_view.whole_view_height);
+								print(",",	rt.target_viewport.view_x0).
+								print(",",	rt.target_viewport.view_y0).
+								print(",",	rt.target_viewport.view_width).
+								print(",",	rt.target_viewport.view_height).
+								print(",",	rt.target_viewport.whole_view_width).
+								print(",",	rt.target_viewport.whole_view_height);
 		}while(false);
 		
 		do{

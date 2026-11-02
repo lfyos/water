@@ -5,7 +5,6 @@ import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_scene.client_information;
 import kernel_common_class.const_value;
-import kernel_render.render_target_view;
 import kernel_common_class.jason_string;
 import kernel_driver.component_instance_driver;
 
@@ -72,8 +71,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		if((str=ci.request_response.get_parameter("y0"))!=null)
 			y0=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("center"))!=null) {
-			render_target_view tv=ci.display_camera_result.target.target_view;
-			double p[]=tv.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
+			double p[]=ci.display_camera_result.target.target_viewport.
+				caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 			x0=p[0]-dx/2.0;
 			y0=p[1]-dy/2.0;
 		}

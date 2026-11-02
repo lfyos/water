@@ -10,15 +10,15 @@ import kernel_camera.camera_result;
 import kernel_render.render_target;
 import kernel_scene.client_information;
 import kernel_common_class.const_value;
-import kernel_render.render_target_view;
 import kernel_render.render_target_flag;
+import kernel_render.render_target_viewport;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
 	private int main_target_id;
 	private ArrayList<int[]>canvas_width_height;
-	private ArrayList<register_target_parameter> target_parameter_list;
+	private ArrayList<register_target_parameter>target_parameter_list;
 	
 	private boolean do_discard_lod_flag,do_selection_lod_flag;
 
@@ -38,9 +38,10 @@ public class extended_component_instance_driver extends component_instance_drive
 		canvas_width_height=new ArrayList<int[]>();
 		canvas_width_height.add(new int[]{1,1});
 
-		part p=comp.driver_array.get(driver_id).component_part;
-		String file_name=p.directory_name+p.material_file_name;
-		target_parameter_list=register_target_parameter.load_parameter(file_name,p.file_charset);
+		part my_part=comp.driver_array.get(driver_id).component_part;
+		String file_name=my_part.directory_name+my_part.material_file_name;
+		target_parameter_list=register_target_parameter.
+				load_parameter(file_name,my_part.file_charset);
 
 		do_discard_lod_flag		=true;
 		do_selection_lod_flag	=true;
@@ -53,15 +54,15 @@ public class extended_component_instance_driver extends component_instance_drive
 			int i=j%target_number;
 			register_target_parameter rtp=target_parameter_list.get(i);
 			int my_canvas_width_height[]=canvas_width_height.get(rtp.canvas_id);
-
-			int view_x0		=(int)(Math.round(rtp.target_x0		*my_canvas_width_height[0]));
-			int view_y0		=(int)(Math.round(rtp.target_y0		*my_canvas_width_height[1]));
-			int view_width	=(int)(Math.round(rtp.target_width	*my_canvas_width_height[0]));
-			int view_height	=(int)(Math.round(rtp.target_height	*my_canvas_width_height[1]));
+			int my_canvas_width	=my_canvas_width_height[0];
+			int my_canvas_height=my_canvas_width_height[1];
+			int my_view_x0		=(int)(Math.round(rtp.target_x0		*my_canvas_width));
+			int my_view_y0		=(int)(Math.round(rtp.target_y0		*my_canvas_height));
+			int my_view_width	=(int)(Math.round(rtp.target_width	*my_canvas_width));
+			int my_view_height	=(int)(Math.round(rtp.target_height	*my_canvas_height));
 			
-			render_target_view my_target_view=new render_target_view(
-					view_x0,view_y0,view_width,view_height,
-					my_canvas_width_height[0],my_canvas_width_height[1]);
+			render_target_viewport my_target_view=new render_target_viewport(my_view_x0,my_view_y0,
+										my_view_width,my_view_height,my_canvas_width,my_canvas_height);
 			
 			double aspect_value	=(double)(my_target_view.view_width)/(double)(my_target_view.view_height);
 			box view_volume_box=new box(-aspect_value,-1,-1,aspect_value,1,1);
@@ -167,7 +168,9 @@ public class extended_component_instance_driver extends component_instance_drive
 					height=Integer.parseInt(str.substring(0,index_id));
 					str=str.substring(index_id+1);
 				}
-				canvas_width_height.add(new int[]{width,height});
+				canvas_width_height.add(
+						canvas_width_height.size(),
+						new int[]{width,height});
 			}
 			break;
 		}
