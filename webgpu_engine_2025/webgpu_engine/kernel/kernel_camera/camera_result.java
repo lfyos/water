@@ -13,7 +13,7 @@ import kernel_transformation.location;
 import kernel_transformation.tetrahedron;
 import kernel_component.component_container;
 import kernel_transformation.projection_matrix;
-import kernel_transformation.screen_move_matrix;
+import kernel_transformation.caculate_screen_move_matrix;
 
 public class camera_result
 {
@@ -73,27 +73,36 @@ public class camera_result
 	
 	private void basic_init()
 	{
-		camera_absolute_matrix			=cam.eye_component.absolute_location.multiply(
-					location.move_rotate(	target.view_parameter[0]*cam.parameter.distance,
-											target.view_parameter[1]*cam.parameter.distance,
-											target.view_parameter[2]*cam.parameter.distance,
-											target.view_parameter[3],
-											target.view_parameter[4],
-											target.view_parameter[5]));
-		location negative_lookat_matrix	=camera_absolute_matrix.multiply(
+		camera_absolute_matrix		=cam.eye_component.absolute_location.multiply(
+				location.move_rotate(	target.view_parameter[0]*cam.parameter.distance,
+										target.view_parameter[1]*cam.parameter.distance,
+										target.view_parameter[2]*cam.parameter.distance,
+										target.view_parameter[3],
+										target.view_parameter[4],
+										target.view_parameter[5]));
+		var negative_lookat_matrix	=camera_absolute_matrix.multiply(
 					location.move_rotate(0,0,cam.parameter.distance,0,0,0));
-		location lookat_matrix			=negative_lookat_matrix.negative();
+		var lookat_matrix			=negative_lookat_matrix.negative();
 
-		screen_move_matrix 		smm	=new screen_move_matrix(target.view_volume_box);
-		screen_move_matrix			=smm.screen_move_matrix;
-		negative_screen_move_matrix	=smm.negative_screen_move_matrix;
+		var						csmm=new caculate_screen_move_matrix(target.view_volume_box);
+		screen_move_matrix			=csmm.screen_move_matrix;
+		negative_screen_move_matrix	=csmm.negative_screen_move_matrix;
 
-		projection_matrix 		pm	=new projection_matrix(cam.parameter.near_ratio,cam.parameter.far_ratio,
-												cam.parameter.half_fovy_tanl,cam.parameter.distance);
-		frustem_matrix				=screen_move_matrix.multiply(pm.frustem_matrix).multiply(lookat_matrix);
-		negative_frustem_matrix		=negative_lookat_matrix.multiply(pm.negative_frustem_matrix).multiply(negative_screen_move_matrix);
-		orthographic_matrix			=screen_move_matrix.multiply(pm.orthographic_matrix).multiply(lookat_matrix);
-		negative_orthographic_matrix=negative_lookat_matrix.multiply(pm.negative_orthographic_matrix).multiply(negative_screen_move_matrix);
+		var project_matrix			=new projection_matrix(
+										cam.parameter.near_ratio,cam.parameter.far_ratio,
+										cam.parameter.half_fovy_tanl,cam.parameter.distance);
+		frustem_matrix				=screen_move_matrix.
+										multiply(project_matrix.frustem_matrix).
+										multiply(lookat_matrix);
+		negative_frustem_matrix		=negative_lookat_matrix.
+										multiply(project_matrix.negative_frustem_matrix).
+										multiply(negative_screen_move_matrix);
+		orthographic_matrix			=screen_move_matrix.
+										multiply(project_matrix.orthographic_matrix).
+										multiply(lookat_matrix);
+		negative_orthographic_matrix=negative_lookat_matrix.
+										multiply(project_matrix.negative_orthographic_matrix).
+										multiply(negative_screen_move_matrix);
 
 		matrix			=cam.parameter.projection_type_flag?frustem_matrix			:orthographic_matrix;
 		negative_matrix	=cam.parameter.projection_type_flag?negative_frustem_matrix	:negative_orthographic_matrix;
@@ -251,7 +260,7 @@ public class camera_result
 			for(;p!=null;p=p.next)
 				undecided_box=p.clip_tetrahedron(comp.clip.clip_plane.get(i),undecided_box);
 		}
-		
+
 		if(undecided_box!=null)
 			return false;
 		

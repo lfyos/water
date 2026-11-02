@@ -65,7 +65,8 @@ public class extended_component_instance_driver extends component_instance_drive
 			int view_height	=(int)(Math.round(rtp.target_height	*my_canvas_width_height[1]));
 			
 			render_target_view rtv=new render_target_view(
-				view_x0,view_y0,view_width,view_height,my_canvas_width_height[0],my_canvas_width_height[1]);
+					view_x0,view_y0,view_width,view_height,
+					my_canvas_width_height[0],my_canvas_width_height[1]);
 			
 			double aspect_value	=(double)(rtv.view_width)/(double)(rtv.view_height);
 			box view_volume_box=new box(-aspect_value,-1,-1,aspect_value,1,1);
