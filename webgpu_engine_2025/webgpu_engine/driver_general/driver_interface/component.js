@@ -285,9 +285,6 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	}
 	this.redraw_interface_canvas_texture=function(ep,scene)
 	{
-		if(!(ep.update_flag))
-			return;
-		ep.update_flag=false;
 		if(!(ep.interface_data.type))
 			return;
 		if(typeof(ep.update_canvas_texture)!="function")

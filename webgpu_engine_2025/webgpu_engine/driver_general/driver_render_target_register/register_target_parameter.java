@@ -10,9 +10,11 @@ public class register_target_parameter
 	public int camera_id,parameter_channel_id,canvas_id;
 	public boolean load_operation_flag;
 	public double target_x0,target_y0,target_width,target_height;
+	public double clear_color[];
 	
 	private register_target_parameter()
 	{
+		 clear_color=new double[] {0,0,0,1};
 	}
 	private static register_target_parameter load_parameter(file_reader fr)
 	{
@@ -55,12 +57,10 @@ public class register_target_parameter
 	public static ArrayList<register_target_parameter> load_parameter(String file_name,String file_charset)
 	{
 		ArrayList<register_target_parameter> rtp_list=new ArrayList<register_target_parameter>();
-		
 		file_reader fr=new file_reader(file_name,file_charset);
 		for(register_target_parameter rtp;(rtp=register_target_parameter.load_parameter(fr))!=null;)
 			rtp_list.add(rtp_list.size(),rtp);
 		fr.close();
-		
 		return rtp_list;
 	}
 }

@@ -12,7 +12,7 @@ import kernel_scene.client_information;
 import kernel_component.component_array;
 import kernel_component.component_collector;
 import kernel_component.component_selection;
-import kernel_render.render_target_parameter;
+import kernel_render.render_target_flag;
 import kernel_driver.component_instance_driver;
 import kernel_render.list_component_on_collector;
 
@@ -89,8 +89,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		view_volume_box=new box(
 			center.x+diff.x*my_x0,	center.y+diff.y*my_y0,	view_volume_box.p[0].z,
 			center.x+diff.x*my_x1,	center.y+diff.y*my_y1,	view_volume_box.p[1].z);
-		render_target_parameter my_target_parameter=render_target_parameter.
-				create_selection_parameter(((function_id%2)==0)?true:false);
+		render_target_flag my_target_parameter=render_target_flag.
+				create_selection_flag(((function_id%2)==0)?true:false);
 		render_target cam_target=new render_target(-1,
 				my_target_parameter,null,comp.component_id,driver_id,0,
 				new component[]{sk.component_cont.root_component},

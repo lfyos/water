@@ -6,7 +6,7 @@ import kernel_camera.camera_result;
 import kernel_render.render_target;
 import kernel_scene.client_information;
 import kernel_render.render_target_view;
-import kernel_render.render_target_parameter;
+import kernel_render.render_target_flag;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -37,7 +37,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(!(cr.target.main_display_target_flag))
 			return false;
 		render_target rt=new render_target(cr.target.target_id,
-			render_target_parameter.create_pickup_parameter(),					//render_target_parameter
+			render_target_flag.create_pickup_flag(),							//render_target_parameter
 			pickup_target_name,comp.component_id,driver_id,0,					//target IDS,components
 			cr.target.comp,cr.target.camera_id,cr.target.parameter_channel_id,	//camera_id,parameter_channel_id
 			new render_target_view(0,0,pickup_target_width,pickup_target_width,

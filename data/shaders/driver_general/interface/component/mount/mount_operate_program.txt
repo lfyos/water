@@ -407,6 +407,10 @@ function(component_name,component_id,scene)
 		{
 			var ep=scene.component_event_processor[component_id];
 			
+			if(!(ep.update_flag))
+				return false;
+			ep.update_flag=false;
+			
 			ep.text_format=text_format;
 		
 			context_2d.fillStyle	=ep.text_format.backgroundStyle;

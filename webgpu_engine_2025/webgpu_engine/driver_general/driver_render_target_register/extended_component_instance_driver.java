@@ -11,7 +11,7 @@ import kernel_render.render_target;
 import kernel_scene.client_information;
 import kernel_common_class.const_value;
 import kernel_render.render_target_view;
-import kernel_render.render_target_parameter;
+import kernel_render.render_target_flag;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -19,7 +19,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	private int main_target_id;
 	private ArrayList<int[]>canvas_width_height;
 	private ArrayList<register_target_parameter> target_parameter_list;
-	private ArrayList<double[]> clear_color;
 	
 	private boolean do_discard_lod_flag,do_selection_lod_flag;
 
@@ -29,7 +28,6 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		canvas_width_height=null;
 		target_parameter_list=null;
-		clear_color=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id)
 	{
@@ -43,10 +41,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		part p=comp.driver_array.get(driver_id).component_part;
 		String file_name=p.directory_name+p.material_file_name;
 		target_parameter_list=register_target_parameter.load_parameter(file_name,p.file_charset);
-		
-		clear_color=new ArrayList<double[]>();
-		for(int i=0,ni=target_parameter_list.size();i<ni;i++)
-			clear_color.add(new double[] {0,0,0,1});
+
 		do_discard_lod_flag		=true;
 		do_selection_lod_flag	=true;
 	}
@@ -64,15 +59,15 @@ public class extended_component_instance_driver extends component_instance_drive
 			int view_width	=(int)(Math.round(rtp.target_width	*my_canvas_width_height[0]));
 			int view_height	=(int)(Math.round(rtp.target_height	*my_canvas_width_height[1]));
 			
-			render_target_view rtv=new render_target_view(
+			render_target_view my_target_view=new render_target_view(
 					view_x0,view_y0,view_width,view_height,
 					my_canvas_width_height[0],my_canvas_width_height[1]);
 			
-			double aspect_value	=(double)(rtv.view_width)/(double)(rtv.view_height);
+			double aspect_value	=(double)(my_target_view.view_width)/(double)(my_target_view.view_height);
 			box view_volume_box=new box(-aspect_value,-1,-1,aspect_value,1,1);
 			
 			var cam_par=sk.camera_cont.get(rtp.camera_id).parameter;
-			var target_par=render_target_parameter.create_render_parameter(
+			var target_par=render_target_flag.create_render_flag(
 					do_discard_lod_flag,do_selection_lod_flag,
 					ci.parameter.high_or_low_precision_flag
 					?cam_par.high_precision_scale:cam_par.low_precision_scale);
@@ -81,7 +76,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				target_par,rtp.render_target_name,
 				comp.component_id,driver_id,i+i+(ci.parameter.high_or_low_precision_flag?0:1),
 				new component[] {sk.component_cont.root_component},rtp.camera_id,
-				rtp.parameter_channel_id,rtv,view_volume_box,ci.clip_plane,null);
+				rtp.parameter_channel_id,my_target_view,view_volume_box,ci.clip_plane,null);
 
 			if(ci.parameter.current_canvas_id==rtp.canvas_id) {
 				double view_x=(ci.parameter.x+1.0)/2.0;
@@ -127,7 +122,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		ci.request_response.print("[");
 		for(int i=0,ni=target_parameter_list.size();i<ni;i++) {
-			double my_clear_color[]=clear_color.get(i);
+			double my_clear_color[]=target_parameter_list.get(i).clear_color;
 			ci.request_response.
 							print((i<=0)?"[":",[",	my_clear_color[0]).
 							print(",",				my_clear_color[1]).
@@ -203,7 +198,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				end_target_id=target_id;
 			}
 			for(target_id=begin_target_id;target_id<=end_target_id;target_id++) {
-				double my_clear_color[]=clear_color.get(target_id);
+				double my_clear_color[]=target_parameter_list.get(target_id).clear_color;
 				if((str=ci.request_response.get_parameter("red"))!=null)
 					my_clear_color[0]=Double.parseDouble(str);
 				if((str=ci.request_response.get_parameter("green"))!=null)

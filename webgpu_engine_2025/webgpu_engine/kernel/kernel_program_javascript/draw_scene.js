@@ -165,15 +165,15 @@ function draw_scene_target_routine(target_id,scene_target_array,pass_id,scene)
 	var whole_view_width	=target_render_data.target_view_parameter.whole_view_width;
 	var whole_view_height	=target_render_data.target_view_parameter.whole_view_height;
 
-	if(target_render_data.main_display_target_flag){
-		scene.view.main_target_x=0.5*(scene.view.x+1.0)*whole_view_width -view_x0;
-		scene.view.main_target_x=2.0*scene.view.main_target_x/view_width -1.0;
-		scene.view.main_target_y=0.5*(scene.view.y+1.0)*whole_view_height-view_y0;
-		scene.view.main_target_y=2.0*scene.view.main_target_y/view_height-1.0;
-	}
-
 	scene.webgpu.render_pass_encoder.setViewport(
 		view_x0,whole_view_height-(view_y0+view_height),view_width,view_height,0,1);
+		
+	if(target_render_data.main_display_target_flag){
+		var my_main_target_x	=0.5*(scene.view.x+1.0)*whole_view_width -view_x0;
+		var my_main_target_y	=0.5*(scene.view.y+1.0)*whole_view_height-view_y0;
+		scene.view.main_target_x=2.0*my_main_target_x/view_width -1.0;
+		scene.view.main_target_y=2.0*my_main_target_y/view_height-1.0;
+	}
 
 	for(var i=0,ni=method_array.length;i<ni;i++){
 		if(method_array[i].method_id<0)

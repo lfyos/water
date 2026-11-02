@@ -24,7 +24,7 @@ public class list_component_on_collector
 	
 	private boolean register(component comp,int driver_id)
 	{
-		if(cam_result.target.parameter.part_list_only_flag)
+		if(cam_result.target.flag.part_list_only_flag)
 			if(!(comp.uniparameter.part_list_flag))
 				return (comp.children.size()<=0)?true:false;
 		
@@ -36,7 +36,7 @@ public class list_component_on_collector
 		if((my_part=comp.driver_array.get(driver_id).component_part)==null)
 			return false;
 		
-		if(cam_result.target.parameter.discard_cross_clip_plane_flag)
+		if(cam_result.target.flag.discard_cross_clip_plane_flag)
 			if(comp.clip.clip_plane.size()>0)
 				return (comp.children.size()<=0)?true:false;
 	
@@ -61,7 +61,7 @@ public class list_component_on_collector
 			return false;
 		}
 		
-		if(cam_result.target.parameter.discard_unload_component_flag)
+		if(cam_result.target.flag.discard_unload_component_flag)
 			if(ci.render_buffer.mesh_loader.load_test(sk.process_part_sequence,my_part))
 				return false;
 		
@@ -87,17 +87,17 @@ public class list_component_on_collector
 		my_lod_precision_scale=ci.component_instance_driver_cont.get_lod_precision_scale(comp);
 		if(my_lod_precision_scale>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
-		my_lod_precision_scale=cam_result.target.parameter.lod_precision_scale;
+		my_lod_precision_scale=cam_result.target.flag.lod_precision_scale;
 		if(my_lod_precision_scale>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
 
 		lod_precision2*=lod_precision_scale*lod_precision_scale;
 
-		if(cam_result.target.parameter.do_discard_lod_flag)
+		if(cam_result.target.flag.do_discard_lod_flag)
 			if(lod_precision2<=comp.uniparameter.discard_precision2)
 				return true;
 		
-		if(cam_result.target.parameter.do_selection_lod_flag)
+		if(cam_result.target.flag.do_selection_lod_flag)
 			if(comp.multiparameter[cam_result.target.parameter_channel_id].can_display_assembly_flag)
 				for(int i=0,driver_number=comp.driver_array.size();i<driver_number;i++) {
 					part_parameter part_par=comp.driver_array.get(i).component_part.part_par;
@@ -125,7 +125,7 @@ public class list_component_on_collector
 		if(cam_result.clipper_test(comp,sk.component_cont,cam_result.target.parameter_channel_id))
 			return;
 		
-		if((cam_result.target.parameter.do_discard_lod_flag)||(cam_result.target.parameter.do_selection_lod_flag))
+		if((cam_result.target.flag.do_discard_lod_flag)||(cam_result.target.flag.do_selection_lod_flag))
 			if(!(comp.pickup_component_family_flag))			
 				if(do_lod(comp))
 					return;

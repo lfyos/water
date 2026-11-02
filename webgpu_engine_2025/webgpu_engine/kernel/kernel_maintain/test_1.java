@@ -8,7 +8,7 @@ public class test_1 extends travel_through_directory
 {
 	private int number;
 	private static final String mode_string[]= {
-		"tag_root_menu_component"
+		"update_flag"
 	};
 	
 	public void operate_file(String file_name)

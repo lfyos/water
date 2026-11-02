@@ -21,9 +21,9 @@ public class render_target
 	
 	public plane clip_plane;
 	
-	public render_target_parameter parameter;
+	public render_target_flag flag;
 	
-	public double view_parameter[];
+	public double adjust_eye_position_parameter[];
 
 	public render_target(render_target rt)
 	{
@@ -53,22 +53,22 @@ public class render_target
 
 		clip_plane		=(rt.clip_plane==null)?null:(new plane(rt.clip_plane));
 		
-		parameter		=rt.parameter;
+		flag			=rt.flag;
 		
-		view_parameter=new double[] {0,0,0,0,0,0};
-		if(rt.view_parameter!=null) {
-			int ni1=view_parameter.length;
-			int ni2=rt.view_parameter.length;
+		adjust_eye_position_parameter=new double[] {0,0,0,0,0,0};
+		if(rt.adjust_eye_position_parameter!=null) {
+			int ni1=adjust_eye_position_parameter.length;
+			int ni2=rt.adjust_eye_position_parameter.length;
 			for(int i=0,ni=(ni1<ni2)?ni1:ni2;i<ni;i++)
-				view_parameter[i]=rt.view_parameter[i];
+				adjust_eye_position_parameter[i]=rt.adjust_eye_position_parameter[i];
 		}
 	}
-	public render_target(int my_target_id_from,
-			render_target_parameter 				my_parameter,					String my_target_name,
+	public render_target(
+			int my_target_id_from,					render_target_flag 	my_flag,	String my_target_name,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_camera_id,				int my_parameter_channel_id,
 			render_target_view my_target_view,		box my_view_volume_box,			plane my_clip_plane,
-			double my_view_parameter[])
+			double my_adjust_eye_position_parameter[])
 	{
 		target_id				=0;
 		target_id_from			=my_target_id_from;
@@ -92,14 +92,14 @@ public class render_target
 
 		clip_plane		=my_clip_plane;
 
-		parameter		=my_parameter;
+		flag			=my_flag;
 		
-		view_parameter=new double[] {0,0,0,0,0,0};
-		if(my_view_parameter!=null) {
-			int ni1=view_parameter.length;
-			int ni2=my_view_parameter.length;
+		adjust_eye_position_parameter=new double[] {0,0,0,0,0,0};
+		if(my_adjust_eye_position_parameter!=null) {
+			int ni1=adjust_eye_position_parameter.length;
+			int ni2=my_adjust_eye_position_parameter.length;
 			for(int i=0,ni=(ni1<ni2)?ni1:ni2;i<ni;i++)
-				view_parameter[i]=my_view_parameter[i];
+				adjust_eye_position_parameter[i]=my_adjust_eye_position_parameter[i];
 		}
 	}
 }
