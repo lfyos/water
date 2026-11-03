@@ -8,8 +8,9 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	for(var i=0,j=0,ni=init_data.length;i<ni;j++){
 		this.clear_color		[j]=[0,0,0,1];
 		this.target_parameter	[j]={
-			canvas_id		:	(init_data[i++]),
-			load_operation	:	(init_data[i++]>0)?"clear":"load"
+			canvas_id		:	init_data[i++],
+			load_operation	:	init_data[i++],
+			store_operation	:	init_data[i++]
 		};
 	}	
 	this.multisample_texture=new Array(scene.webgpu.canvas.length);
@@ -52,19 +53,20 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		if((my_target_texture_id<0)||(my_target_texture_id>=this.target_parameter.length))
 			return true;
 		
-		var clear_color		=this.clear_color		[my_target_texture_id];
-		var canvas_id		=this.target_parameter	[my_target_texture_id].canvas_id;
-		var load_operation	=this.target_parameter	[my_target_texture_id].load_operation;
+		var my_clear_color		=this.clear_color		[my_target_texture_id];
+		var my_canvas_id		=this.target_parameter	[my_target_texture_id].canvas_id;
+		var my_load_operation	=this.target_parameter	[my_target_texture_id].load_operation;
+		var my_store_operation	=this.target_parameter	[my_target_texture_id].store_operation;
 
-		var my_gpu_texture			=scene.webgpu.context		[canvas_id].getCurrentTexture();
-		var my_multisample_texture	=this.multisample_texture	[canvas_id];
-		var my_depth_texture		=this.depth_texture			[canvas_id];
+		var my_canvas_texture		=scene.webgpu.context		[my_canvas_id].getCurrentTexture();
+		var my_multisample_texture	=this.multisample_texture	[my_canvas_id];
+		var my_depth_texture		=this.depth_texture			[my_canvas_id];
 		
 		do{
 			if(typeof(my_depth_texture)=="object")
 				if(my_depth_texture!=null){
-					if(my_gpu_texture.width==my_depth_texture.width)
-						if(my_gpu_texture.height==my_depth_texture.height)
+					if(my_canvas_texture.width==my_depth_texture.width)
+						if(my_canvas_texture.height==my_depth_texture.height)
 							break;
 					my_multisample_texture.destroy();
 					my_depth_texture.destroy();
@@ -73,27 +75,27 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				{
 					size	:
 					{
-						width	:	my_gpu_texture.width,
-						height	:	my_gpu_texture.height
+						width	:	my_canvas_texture.width,
+						height	:	my_canvas_texture.height
 					},
 					sampleCount	:	scene.parameter.multisample,
 					format		:	scene.webgpu.gpu.getPreferredCanvasFormat(),
 					usage		:	GPUTextureUsage.RENDER_ATTACHMENT
 				});
-			this.multisample_texture[canvas_id]=my_multisample_texture;	
+			this.multisample_texture[my_canvas_id]=my_multisample_texture;	
 			
 			my_depth_texture=scene.webgpu.device.createTexture(
 				{
 					size	:
 					{
-						width	:	my_gpu_texture.width,
-						height	:	my_gpu_texture.height
+						width	:	my_canvas_texture.width,
+						height	:	my_canvas_texture.height
 					},
 					sampleCount	:	scene.parameter.multisample,
 					format		:	"depth24plus-stencil8",
 					usage		:	GPUTextureUsage.RENDER_ATTACHMENT
 				});
-			this.depth_texture[canvas_id]=my_depth_texture;
+			this.depth_texture[my_canvas_id]=my_depth_texture;
 
 			this.should_update_server_flag=true;
 		}while(false);
@@ -104,10 +106,15 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			[
 				{
 					view			:	my_multisample_texture.createView(),
-					resolveTarget	:	my_gpu_texture.createView(),
-					clearValue		:	{ r: clear_color[0], g: clear_color[1], b: clear_color[2], a: clear_color[3] },
-					loadOp			:	load_operation,
-					storeOp			:	"store"
+					resolveTarget	:	my_canvas_texture.createView(),
+					clearValue		:	{
+						r	:	my_clear_color[0],
+						g	:	my_clear_color[1],
+						b	:	my_clear_color[2],
+						a	:	my_clear_color[3]
+					},
+					loadOp			:	my_load_operation,
+					storeOp			:	my_store_operation
 				}
 			],
 			depthStencilAttachment	:
@@ -115,12 +122,12 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				view				:	my_depth_texture.createView(),
 				
 				depthClearValue		:	1.0,
-				depthLoadOp			:	load_operation,
-				depthStoreOp		:	"store",
+				depthLoadOp			:	my_load_operation,
+				depthStoreOp		:	my_store_operation,
 				
 				stencilClearValue	:	0,
-   				stencilLoadOp		:	load_operation,
-   				stencilStoreOp		:	"store"
+   				stencilLoadOp		:	my_load_operation,
+   				stencilStoreOp		:	my_store_operation
 			}
 		};
 		

@@ -3,6 +3,6 @@
 /*	camera_id				*/	0
 /*	parameter_channel_id	*/	2
 /*	canvas_id				*/	0
-/*	clear_target_flag		*/	true
+/*	load operation			*/	clear
+/*	store operation			*/	store
 /*	x0,y0,width,height		*/	0		0		1		1
-

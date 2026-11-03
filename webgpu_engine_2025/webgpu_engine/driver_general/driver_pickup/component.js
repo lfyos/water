@@ -312,24 +312,24 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		var my_value				=[p_value[0],p_value[1],p_value[2]];
 		var my_depth				=p_value[3];
 
-		scene.pickup.render_id			=-1;
-		scene.pickup.part_id			=-1;
-		scene.pickup.data_buffer_id		=-1;
-		scene.pickup.component_id		=-1;
-		scene.pickup.driver_id			=-1;
+		scene.pickup.render_id		=-1;
+		scene.pickup.part_id		=-1;
+		scene.pickup.data_buffer_id	=-1;
+		scene.pickup.component_id	=-1;
+		scene.pickup.driver_id		=-1;
 		
-		scene.pickup.primitive_type_id	=my_primitive_type_id;
+		scene.pickup.primitive_type_id=my_primitive_type_id;
 		
-		scene.pickup.body_id			=-1;
-		scene.pickup.face_id			=-1;
+		scene.pickup.body_id		=-1;
+		scene.pickup.face_id		=-1;
 		
-		scene.pickup.loop_id			=-1;
-		scene.pickup.edge_id			=-1;
-		scene.pickup.primitive_id		=-1;
-		scene.pickup.vertex_id			=-1;
+		scene.pickup.loop_id		=-1;
+		scene.pickup.edge_id		=-1;
+		scene.pickup.primitive_id	=-1;
+		scene.pickup.vertex_id		=-1;
 		
-		scene.pickup.value				=[0,0,0];
-		scene.pickup.depth				=1.0;
+		scene.pickup.value			=[0,0,0];
+		scene.pickup.depth			=1.0;
 		
 		if(scene.scene_id!=my_scene_id)
 			return;

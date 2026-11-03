@@ -6,15 +6,16 @@ import kernel_file_manager.file_reader;
 
 public class register_target_parameter 
 {
-	public String render_target_name;
-	public int camera_id,parameter_channel_id,canvas_id;
-	public boolean load_operation_flag;
-	public double target_x0,target_y0,target_width,target_height;
-	public double clear_color[];
+	public String	render_target_name;
+	public int		camera_id,parameter_channel_id,canvas_id;
+	public String	load_operation,store_operation;
+	public double	target_x0,target_y0,target_width,target_height;
+	public double	adjust_eye_position_parameter[],clear_color[];
 	
 	private register_target_parameter()
 	{
-		 clear_color=new double[] {0,0,0,1};
+		adjust_eye_position_parameter=new double[]{0,0,0,0,0,0};
+		clear_color=new double[] {0,0,0,1};
 	}
 	private static register_target_parameter load_parameter(file_reader fr)
 	{
@@ -36,7 +37,10 @@ public class register_target_parameter
 		rtp.canvas_id			=fr.get_int();
 		if(fr.eof())
 			return null;
-		rtp.load_operation_flag	=fr.get_boolean();
+		rtp.load_operation		=fr.get_string();
+		if(fr.eof())
+			return null;
+		rtp.store_operation		=fr.get_string();
 		if(fr.eof())
 			return null;
 		rtp.target_x0			=fr.get_double();
