@@ -15,7 +15,7 @@ import kernel_component.component_load_source_container;
 public class render_driver
 {
 	public render_driver(file_reader shader_fr,
-			render ren,client_request_response request_response,
+			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 	}
@@ -23,10 +23,10 @@ public class render_driver
 	{
 	}
 	public render_driver clone(
-			render ren,client_request_response request_response,
+			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new render_driver(null,ren,request_response,system_par,scene_par);
+		return new render_driver(null,request_response,system_par,scene_par);
 	}
 	public void initialize_render_driver(render ren,
 			scene_kernel sk,client_request_response request_response)

@@ -18,20 +18,20 @@ import kernel_component.component_load_source_container;
 public class extended_render_driver extends render_driver
 {
 	public extended_render_driver(file_reader shader_fr,
-			render ren,client_request_response request_response,
+			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		super(shader_fr,ren,request_response,system_par,scene_par);
+		super(shader_fr,request_response,system_par,scene_par);
 	}
 	public void destroy()
 	{
 		super.destroy();
 	}
 	public render_driver clone(
-			render ren,client_request_response request_response,
+			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_render_driver(null,ren,request_response,system_par,scene_par);
+		return new extended_render_driver(null,request_response,system_par,scene_par);
 	}
 	public void initialize_render_driver(render ren,
 			scene_kernel sk,client_request_response request_response)

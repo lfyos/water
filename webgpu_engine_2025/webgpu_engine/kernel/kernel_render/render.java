@@ -48,7 +48,7 @@ public class render
 		render_name		=r.render_name;
 		render_id		=r.render_id;
 		part_type_id	=r.part_type_id;
-		driver			=r.driver.clone(r,request_response,system_par,scene_par);
+		driver			=r.driver.clone(request_response,system_par,scene_par);
 		
 		parts=new ArrayList<part>();
 		if(r.parts!=null)
@@ -72,9 +72,9 @@ public class render
 		Object my_render_driver;
 		try{
 			var my_class=Class.forName(my_driver_name);
-			var my_constructor=my_class.getConstructor(file_reader.class,render.class,
+			var my_constructor=my_class.getConstructor(file_reader.class,
 					client_request_response.class,system_parameter.class,scene_parameter.class);
-			my_render_driver=my_constructor.newInstance(f_shader,this,request_response,system_par,scene_par);
+			my_render_driver=my_constructor.newInstance(f_shader,request_response,system_par,scene_par);
 		}catch(Exception e){
 			debug_information.println("Create render driver exception,class name:	",	my_driver_name);
 			debug_information.println("Create render driver exception,file_name:	",	my_file_name);
@@ -94,7 +94,7 @@ public class render
 		}
 		try {
 			render_driver old_driver=(render_driver)my_render_driver;
-			driver=old_driver.clone(this,request_response,system_par,scene_par);
+			driver=old_driver.clone(request_response,system_par,scene_par);
 			old_driver.destroy();
 		}catch(Exception e){
 			driver=null;

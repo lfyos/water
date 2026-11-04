@@ -4,7 +4,6 @@ import java.net.URL;
 import java.io.File;
 import java.net.URLClassLoader;
 
-import kernel_render.render;
 import kernel_driver.render_driver;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
@@ -17,10 +16,8 @@ public class extended_render_driver extends render_driver
 {
 	private render_driver real_render_driver;
 	
-	private render_driver creat_render_driver(
-				String jar_file_name,String jar_class_name,
-				file_reader shader_fr,render ren,
-				client_request_response request_response,
+	private render_driver creat_render_driver(String jar_file_name,String jar_class_name,
+				file_reader shader_fr,client_request_response request_response,
 				system_parameter system_par,scene_parameter scene_par)
 	{
 		File jar_f=new File(jar_file_name);
@@ -41,9 +38,9 @@ public class extended_render_driver extends render_driver
 		try {
 			render_driver_object=jar_loader.loadClass(jar_class_name).
 				getConstructor(
-					file_reader.class,render.class,client_request_response.class,
+					file_reader.class,client_request_response.class,
 					system_parameter.class,scene_parameter.class).
-				newInstance(shader_fr,ren,request_response,system_par,scene_par);
+				newInstance(shader_fr,request_response,system_par,scene_par);
 		}catch(Exception e) {
 			render_driver_object=null;
 		}
@@ -57,11 +54,11 @@ public class extended_render_driver extends render_driver
 				return (render_driver)render_driver_object;	
 		return null;
 	}
-	public extended_render_driver(file_reader shader_fr,render ren,
+	public extended_render_driver(file_reader shader_fr,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		super(shader_fr,ren,request_response,system_par,scene_par);
+		super(shader_fr,request_response,system_par,scene_par);
 		
 		String jar_file_directory[],sub_jar_file_directory="jar_package_directory"+File.separatorChar;
 		
@@ -92,7 +89,7 @@ public class extended_render_driver extends render_driver
 				break;
 			for(int i=0,ni=jar_file_directory.length;i<ni;i++) {
 				real_render_driver=creat_render_driver(jar_file_directory[i]+jar_file_name,
-					jar_class_name,shader_fr,ren,request_response,system_par,scene_par);
+					jar_class_name,shader_fr,request_response,system_par,scene_par);
 				if(real_render_driver!=null) 
 					return;
 			}
@@ -116,13 +113,13 @@ public class extended_render_driver extends render_driver
 			real_render_driver=null;
 		}
 	}
-	public render_driver clone(render ren,
+	public render_driver clone(
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		if(real_render_driver==null)
 			return null;
 		else
-			return real_render_driver.clone(ren,request_response,system_par,scene_par);
+			return real_render_driver.clone(request_response,system_par,scene_par);
 	}
 }
