@@ -103,10 +103,13 @@ fn caculate_vertex_color(
 				var to_light_value	=normalize(camera_info[light_camera_id].eye_point.xyz-p_center.xyz);
 				var half_value		=normalize(to_eye_value+to_light_value);
 				
-				var light_color	=vec4(0.0,0.0,0.0,0.0);
-				light_color		=light_color+material_info.ambient;
-				light_color		=light_color+max(0.0,dot(to_light_value,normal_value))*material_info.diffuse;
-				light_color		=light_color+pow(max(0.0,dot(half_value,normal_value)),material_info.shininess)*material_info.specular;
+				var diffuse_factor	=max(0.0,dot(to_light_value,normal_value));
+				var specular_factor	=max(0.0,dot(half_value,	normal_value));
+					specular_factor	=pow(specular_factor,material_info.shininess);
+				
+				var light_color	=material_info.ambient
+								+material_info.diffuse *diffuse_factor
+								+material_info.specular*specular_factor;
 				
 				if(material_info.vertex_color_type==1)
 					{light_color=my_material*light_color;}
@@ -398,8 +401,8 @@ fn fragment_color_function(vf:vertex_to_fragment_struct) ->fragment_color_target
 		}
 	case 4:		//face color 
 		{
-			ret_val.color=caculate_fragment_color(vf);
 			ret_val.depth=vf.vertex_value.w;
+			ret_val.color=caculate_fragment_color(vf);
 			break;
 		}
 	case 5:		//edge color
