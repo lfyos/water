@@ -52,7 +52,7 @@ public class extended_render_driver extends render_driver
 	}
 	public void initialize_render_driver(render ren,
 			scene_kernel sk,client_request_response request_response)
-	{	
+	{
 	}
 	public void create_render_driver_initialization_data(file_writer fw,
 			render ren,scene_kernel sk,client_request_response request_response)

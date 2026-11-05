@@ -1,10 +1,11 @@
 function construct_part_driver(init_data,create_data,part_object,render_driver,scene)
 {
 	this.render_material=render_driver.render_material;
+	
 	this.material_bindgroup_flag=true;
 	this.material_bindgroup_array=new Array();
 	
-	part_object.material[0].material.push(render_driver.render_material.selected_material);
+	part_object.material[0].material.push(this.render_material.selected_material);
 
 	this.create_bind_group=async function(part_object,render_driver,scene)
 	{
@@ -47,9 +48,12 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 			p=(typeof(p=my_material.emission)=="undefined")?[0,0,0,1]:p;
 			float_buffer_data.push(p[0],p[1],p[2],p[3]);
 			
-			p=(typeof(p=my_material.shininess)=="undefined")?[0,0,0,1]:[p,0,0,1];
-			float_buffer_data.push(p[0],p[1],p[2],p[3]);
-			
+			float_buffer_data.push(
+				(typeof(p=my_material.shininess)=="undefined")?0:p,
+				this.render_material.line_depth_bias,
+				this.render_material.point_depth_bias,
+				this.render_material.point_size);
+
 			p=[	1,0,0,0,		0,1,0,0,	0,0,1,0,	0,0,0,1,
 				1,0,0,0,		0,1,0,0,	0,0,1,0,	0,0,0,1,
 				1,0,0,0,		0,1,0,0,	0,0,1,0,	0,0,0,1,
@@ -109,7 +113,7 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 			}
 
 			float_buffer_data=float_buffer_data.concat(p).concat(
-					render_driver.render_material.light_color_factor);
+					this.render_material.light_color_factor);
 	
 			var int_buffer_length	=int_buffer_data.  length*Int32Array.  BYTES_PER_ELEMENT;
 			var float_buffer_length	=float_buffer_data.length*Float32Array.BYTES_PER_ELEMENT;

@@ -13,11 +13,11 @@ struct material_information
 	diffuse						:	vec4<f32>,
 	specular					:	vec4<f32>,
 	emission					:	vec4<f32>,
-	shininess					:	f32,
 	
-	tmp_float_0					:	f32,
-	tmp_float_1					:	f32,
-	tmp_float_2					:	f32,
+	shininess					:	f32,
+	line_depth_bias				:	f32,
+	point_depth_bias			:	f32,
+	point_size					:	f32,
 	
 	texture_matrix				:	array<mat4x4<f32>,4>,
 	
@@ -36,12 +36,8 @@ struct material_information
 @group(1) @binding(7) var sampler_3	:	sampler;
 @group(1) @binding(8) var sampler_4	:	sampler;
 
-const line_depth_bias	=0.0000025;
-const point_depth_bias	=0.0000050;
-
 override clip_type		: i32;
 override primitive_type	: i32;
-override point_size		: f32;
 
 struct vertex_to_fragment_struct
 {
@@ -190,8 +186,8 @@ fn vertex_routine(
 			vf.vertex_position=target_info.screen_move_matrix_from*vf.vertex_position;
 			
 			vf.vertex_position=vf.vertex_position/vf.vertex_position.w+vf.vertex_texture*
-				vec4(	point_size/f32(target_info.target_view_width_from),
-						point_size/f32(target_info.target_view_height_from),
+				vec4(	material_info.point_size/f32(target_info.target_view_width_from),
+						material_info.point_size/f32(target_info.target_view_height_from),
 						0.0,0.0);
 
 			vf.vertex_position=target_info.negative_screen_move_matrix_from*vf.vertex_position;
@@ -202,8 +198,8 @@ fn vertex_routine(
 		{
 			vf.vertex_texture=point_texture_position[my_vertex_index%6];
 			vf.vertex_position=vf.vertex_position+vf.vertex_texture*
-				vec4(	point_size/f32(target_info.target_view_width ),
-						point_size/f32(target_info.target_view_height),
+				vec4(	material_info.point_size/f32(target_info.target_view_width ),
+						material_info.point_size/f32(target_info.target_view_height),
 						0.0,0.0);
 			break;
 		}
@@ -301,7 +297,7 @@ fn fragment_id_function(vf:vertex_to_fragment_struct) -> fragment_id_target_stru
 		}
 	case 1:		//point id pickup
 		{
-			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			ret_val.depth=vf.vertex_value.w-2.0*material_info.point_depth_bias;
 			ret_val.id_0 =vec4(i32(vf.vertex_id_0.x),i32(vf.vertex_id_0.y),i32(vf.vertex_id_0.z),(target_info.scene_id<<4)+2);
 			ret_val.id_1 =vec4(i32(vf.vertex_id_1.x),i32(vf.vertex_id_1.y),i32(vf.vertex_id_1.z),i32(vf.vertex_id_1.w));
 
@@ -340,7 +336,7 @@ fn fragment_value_function(vf:vertex_to_fragment_struct) ->fragment_color_target
 		}
 	case 3:		//point value pickup
 		{
-			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			ret_val.depth=vf.vertex_value.w-2.0*material_info.point_depth_bias;
 			ret_val.color=vf.vertex_value;
 			
 			if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
@@ -408,19 +404,19 @@ fn fragment_color_function(vf:vertex_to_fragment_struct) ->fragment_color_target
 		}
 	case 5:		//edge color
 		{
-			ret_val.depth=vf.vertex_value.w-line_depth_bias;
+			ret_val.depth=vf.vertex_value.w-material_info.line_depth_bias;
 			ret_val.color=vec4<f32>(0.0,0.0,0.0,1.0);
 			break;
 		}
 	case 6:		//frame color
 		{
-			ret_val.depth=vf.vertex_value.w-line_depth_bias;
+			ret_val.depth=vf.vertex_value.w-material_info.line_depth_bias;
 			ret_val.color=vec4<f32>(0.25,0.25,0.25,1.0);
 			break;
 		}
 	case 7:		//pickup point color
 		{
-			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			ret_val.depth=vf.vertex_value.w-2.0*material_info.point_depth_bias;
 			ret_val.color=vec4<f32>(0.0,0.0,0.0,1.0);
 	
 			if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
@@ -439,28 +435,28 @@ fn fragment_color_function(vf:vertex_to_fragment_struct) ->fragment_color_target
 			var my_primitive_id	=i32(vf.vertex_id_1.z);
 			var my_vertex_id	=i32(vf.vertex_id_1.w);
 			
-			ret_val.depth=2.0*point_depth_bias;
+			ret_val.depth=2.0*material_info.point_depth_bias;
 			ret_val.color=vec4<f32>(0.0,0.0,1.0,1.0);
 			if(system_info.pickup_loop_id!=my_loop_id)
 				{break;}
 			if(system_info.pickup_edge_id!=my_edge_id)
 				{break;}
 			
-			ret_val.depth=1.0*point_depth_bias;
+			ret_val.depth=1.0*material_info.point_depth_bias;
 			ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
 			if(system_info.pickup_primitive_id!=my_primitive_id)
 				{break;}
 			if(system_info.pickup_vertex_id!=my_vertex_id)
 				{break;}
 			
-			ret_val.depth=0.0*point_depth_bias;
+			ret_val.depth=0.0*material_info.point_depth_bias;
 			ret_val.color=vec4<f32>(1.0,0.0,0.0,1.0);
 			break;
 		}
 	case 8:	//normal point color
 		{
 			ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
-			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			ret_val.depth=vf.vertex_value.w-2.0*material_info.point_depth_bias;
 			
 			if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
 				{discard;break;}

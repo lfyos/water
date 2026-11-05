@@ -20,7 +20,6 @@ public class test_1 extends travel_through_directory
 					debug_information.println((++number)+":	"+my_mode_str+":	"+file_name);
 					break;
 				}
-					
 	}
 	
 	public test_1()

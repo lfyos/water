@@ -1,6 +1,5 @@
 function create_one_render_driver(
-	material_offset,array_stride,point_size,
-	material_bindgroup_layout,module,scene)
+	material_offset,array_stride,material_bindgroup_layout,module,scene)
 {
 	var pipeline_descr=
 	{
@@ -20,8 +19,7 @@ function create_one_render_driver(
 			constants	:
 			{
 				primitive_type	:	0,
-				clip_type		:	0,
-				point_size		:	(typeof(point_size)!="number")?10:(point_size)
+				clip_type		:	0
 			},
 			buffers		:
 			[
@@ -396,7 +394,7 @@ function create_one_render_driver(
 
 function new_render_driver(render_id,render_name,init_data,create_data,shader_code,text_array,scene)
 {
-	this.render_material=create_data;
+	this.render_material	=create_data;
 	
 	this.tmp_texture=scene.webgpu.device.createTexture(
 			{
@@ -509,8 +507,7 @@ function new_render_driver(render_id,render_name,init_data,create_data,shader_co
 	for(var i=0,ni=this.pipeline_array.length;i<ni;i++)
 		this.pipeline_array[i]=new create_one_render_driver(
 				this.render_material.material_offset[i],this.render_material.array_stride,
-				this.render_material.point_size,		this.material_bindgroup_layout,
-				my_module,scene);
+				this.material_bindgroup_layout,my_module,scene);
 
 	this.destroy=function()
 	{
