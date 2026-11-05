@@ -10,6 +10,7 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 	{
 		if(scene.terminate_flag)
 			return;
+
 		for(var p,i=0,ni=part_object.material[0].material.length;i<ni;i++){
 			var my_material=part_object.material[0].material[i];
 			

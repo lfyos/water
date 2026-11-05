@@ -21,7 +21,7 @@ function create_one_render_driver(
 			{
 				primitive_type	:	0,
 				clip_type		:	0,
-				point_size		:	(typeof(point_size)!="number")?10:(point_size)				
+				point_size		:	(typeof(point_size)!="number")?10:(point_size)
 			},
 			buffers		:
 			[
