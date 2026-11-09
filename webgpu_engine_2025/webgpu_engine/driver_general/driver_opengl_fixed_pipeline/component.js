@@ -28,18 +28,17 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				}
 			}
 	};
-	
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
 		if(part_driver.material_bindgroup_flag)
 			return;
 		var display_value_id=this.display_parameter.display_value_id;
-		display_value_id=(display_value_id<=0)?0:Math.floor(1+(display_value_id-1)/4);
-		display_value_id=(display_value_id>=render_driver.pipeline_array.length)?0:display_value_id;
-		var my_pipeline	=render_driver.pipeline_array[display_value_id];
+		display_value_id	=(display_value_id<=0)?0:Math.floor(1+(display_value_id-1)/4);
+		display_value_id	=(display_value_id>=render_driver.pipeline_array.length)?0:display_value_id;
+		var my_pipeline		=render_driver.pipeline_array[display_value_id];
 		var display_bitmap	=render_parameter;
-		
+
 		switch(method_data.method_id){
 		default:
 			break;
@@ -57,7 +56,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			}
 			break;
 		case 1:
-			if((display_bitmap&2)!=0){			
+			if((display_bitmap&2)!=0){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
 					this.draw(0,1,scene,part_driver,p,my_pipeline.value_face_pipeline_no_clip);
@@ -80,7 +79,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 					this.draw(0,1,scene,part_driver,p,my_pipeline.depth_face_pipeline_do_clip);
 					this.draw(0,1,scene,part_driver,p,my_pipeline.depth_face_pipeline_do_close);
 				}
-			}		
+			}
 			break;
 		case 4:	
 			if((display_bitmap&8)!=0){
@@ -91,13 +90,28 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				var p=part_object.buffer_object.face.region_data;
 				this.draw(4,3,scene,part_driver,p,my_pipeline.color_frame_pipeline);
 			}
-			if((display_bitmap&32)!=0){
+			if((scene.pickup.component_id==this.component_ids.component_id)
+				&&(scene.pickup.driver_id==this.component_ids.driver_id))
+			{
+				var p=part_object.buffer_object.point.region_data;
+				this.draw(6,1,scene,part_driver,p,my_pipeline.color_pickup_point_pipeline);
+			}else if((display_bitmap&32)!=0){
 				var p=part_object.buffer_object.point.region_data;
 				this.draw(6,1,scene,part_driver,p,my_pipeline.color_normal_point_pipeline);
 			}
+			if(((display_bitmap&64)!=0)&&(this.display_parameter.transparency_value>=1.0)){
+				var p=part_object.buffer_object.face.region_data;
+				if(this.display_parameter.close_clip_plane_number<=0)
+					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_no_clip);
+				else{
+					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_clip);
+					
+					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_close);
+				}
+			}
 			break;
 		case 5:
-			if((display_bitmap&64)!=0){
+			if(((display_bitmap&64)!=0)&&(this.display_parameter.transparency_value<1.0)){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
 					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_no_clip);
@@ -105,11 +119,6 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_clip);
 					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_close);
 				}
-				if(scene.pickup.component_id==this.component_ids.component_id)
-					if(scene.pickup.driver_id==this.component_ids.driver_id){
-						var p=part_object.buffer_object.point.region_data;
-						this.draw(6,1,scene,part_driver,p,my_pipeline.color_pickup_point_pipeline);
-					}
 			}
 			break;
 		}
@@ -118,12 +127,12 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		this.display_parameter=
-		{
-			transparency_value		:	 buffer_data_item[0],
-			close_clip_plane_number	:	 buffer_data_item[1],
-			display_value_id		:	 buffer_data_item[2],
-			effective_selected_flag	:	(buffer_data_item[3]>0)?true:false
-		}
+			{
+				transparency_value			:	 buffer_data_item[0],
+				close_clip_plane_number		:	 buffer_data_item[1],
+				display_value_id			:	 buffer_data_item[2],
+				effective_selected_flag		:	(buffer_data_item[3]>0)?true:false
+			};
 		scene.system_buffer.set_id_information_data(
 			[
 				this.display_parameter.transparency_value,
@@ -131,6 +140,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				this.display_parameter.display_value_id,
 				this.display_parameter.effective_selected_flag?1:0
 			],
-			this.component_ids.component_id,this.component_ids.driver_id);
+			this.component_ids.component_id,
+			this.component_ids.driver_id);
 	};
 };

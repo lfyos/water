@@ -133,20 +133,20 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		
 		scene_target_array[0]={
 			pass_descriptor		:	my_pass_descriptor,
-			
-			method_array		:
+
+			method_array		:	
 			[
 				{
-					method_id	:	2		//render before depth rendering
+					method_id	:	2	//render before depth rendering
 				},
 				{
-					method_id	:	3		//render depth only
+					method_id	:	3	//render depth only
 				},
 				{
-					method_id	:	4		//render after depth rendering
+					method_id	:	4	//render after depth rendering
 				},
 				{
-					method_id	:	5		//render for transparent rendering
+					method_id	:	5	//render for transparent rendering
 				}
 			]
 		};
