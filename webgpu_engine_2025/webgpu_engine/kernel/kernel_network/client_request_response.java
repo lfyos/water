@@ -177,13 +177,11 @@ public class client_request_response extends common_writer
 		case "yes":
 		case "true":
 			return true;
-			
 		case "no":
 		case "off":
 		case "false":
 		case "cancel":
 			return false;
-			
 		default:
 			return default_value;
 		}

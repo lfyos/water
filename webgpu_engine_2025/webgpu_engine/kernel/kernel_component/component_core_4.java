@@ -60,7 +60,9 @@ public class component_core_4 extends component_core_3
 			number=new_display_flag.length;
 		
 		for(int i=0;i<number;i++)
-			this.multiparameter[parameter_channel_id[i]].display_flag=new_display_flag[i];
+			if(parameter_channel_id[i]>=0)
+				if(parameter_channel_id[i]<multiparameter.length)
+					multiparameter[parameter_channel_id[i]].display_flag=new_display_flag[i];
 		
 		for(var p=this;p!=null;p=component_cont.get_component(p.parent_component_id)) 
 			for(int i=0;i<number;i++)

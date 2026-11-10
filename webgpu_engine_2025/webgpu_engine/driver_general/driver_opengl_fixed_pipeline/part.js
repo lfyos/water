@@ -118,7 +118,7 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 			var int_buffer_length	=int_buffer_data.  length*Int32Array.  BYTES_PER_ELEMENT;
 			var float_buffer_length	=float_buffer_data.length*Float32Array.BYTES_PER_ELEMENT;
 			var total_buffer_length	=int_buffer_length+float_buffer_length;
-				
+
 			var my_parameter_buffer=scene.webgpu.device.createBuffer(
 			{
 				size	:	total_buffer_length,

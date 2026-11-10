@@ -15,38 +15,38 @@ public class operate_selection
 		
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return;
-		component_selection cs=new component_selection(sk);
+		component_selection comp_select=new component_selection(sk);
 		
 		switch(str=str.trim()) {
 		case "parent":
 			my_comp=sk.component_cont.latest_selected_component();
-			cs.set_parent_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
+			comp_select.set_parent_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
 			break;
 		case "child":
 			my_comp=sk.component_cont.latest_selected_component();
-			cs.set_child_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
+			comp_select.set_child_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
 			break;
 		case "move":
 			my_comp=sk.component_cont.latest_selected_component();
-			cs.set_moved_descendant_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
+			comp_select.set_moved_descendant_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
 			break;
 		case "display":
-			cs.set_collector_selected(ci.display_component_collector);
+			comp_select.set_collector_selected(ci.display_component_collector);
 			break;
 		case "visible":
 			component_array comp_cont=new component_array();
 			comp_cont.add_visible_component(sk.component_cont.root_component,parameter_channel_id,true);
-			cs.set_component_container_selected(comp_cont);
+			comp_select.set_component_container_selected(comp_cont);
 			break;
 		case "all":
-			cs.set_selected_flag(sk.component_cont.root_component);
+			comp_select.set_selected_flag(sk.component_cont.root_component);
 			break;
 		case "latest":
-			cs.set_selected_flag(sk.component_cont.latest_selected_component());
+			comp_select.set_selected_flag(sk.component_cont.latest_selected_component());
 			break;
 		case "part_list":
 			if((str=ci.request_response.get_parameter("list_id"))!=null)
-				cs.set_collector_selected(sk.collector_stack.get_collector_by_list_id(Long.decode(str)));
+				comp_select.set_collector_selected(sk.collector_stack.get_collector_by_list_id(Long.decode(str)));
 			else if((str=ci.request_response.get_parameter("list_title"))!=null){
 				String request_charset=ci.request_response.implementor.get_request_charset();
 				try{
@@ -55,12 +55,12 @@ public class operate_selection
 				}catch(Exception e) {
 					break;
 				}
-				cs.set_collector_selected(sk.collector_stack.get_collector_by_list_title(str));
+				comp_select.set_collector_selected(sk.collector_stack.get_collector_by_list_title(str));
 			}else
-				cs.set_collector_selected(sk.collector_stack.get_top_collector());
+				comp_select.set_collector_selected(sk.collector_stack.get_top_collector());
 			break;
 		case "clear_all":
-			cs.clear_selected_flag(sk.component_cont.root_component);
+			comp_select.clear_selected_flag(sk.component_cont.root_component);
 			break;
 		case "clear_component":
 		case "swap_component":
@@ -90,13 +90,13 @@ public class operate_selection
 					break;
 			switch(str) {
 			case "clear_component":
-				cs.clear_selected_flag(my_comp);
+				comp_select.clear_selected_flag(my_comp);
 				break;
 			case "swap_component":
-				cs.switch_selected_flag(my_comp);	
+				comp_select.switch_selected_flag(my_comp);	
 				break;
 			case "select_component":
-				cs.set_selected_flag(my_comp);
+				comp_select.set_selected_flag(my_comp);
 				break;
 			}
 			break;
