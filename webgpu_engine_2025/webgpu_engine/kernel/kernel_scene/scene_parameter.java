@@ -307,11 +307,12 @@ public class scene_parameter
 		extra_directory_name=extra_parameter_fr.directory_name;
 		extra_parameter_charset=extra_parameter_fr.get_charset();
 
+		long my_last_time;
 		parameter_last_modified_time=system_par.last_modified_time;
-		if(parameter_last_modified_time<parameter_fr.lastModified_time)
-			parameter_last_modified_time=parameter_fr.lastModified_time;
-		if(parameter_last_modified_time<extra_parameter_fr.lastModified_time)
-			parameter_last_modified_time=extra_parameter_fr.lastModified_time;
+		if(parameter_last_modified_time<(my_last_time=parameter_fr.get_last_modified_time()))
+			parameter_last_modified_time=my_last_time;
+		if(parameter_last_modified_time<(my_last_time=extra_parameter_fr.get_last_modified_time()))
+			parameter_last_modified_time=my_last_time;
 		if(parameter_last_modified_time<ekcp.scene_list_file_last_modified_time)
 			parameter_last_modified_time=ekcp.scene_list_file_last_modified_time;
 		

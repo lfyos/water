@@ -28,7 +28,31 @@ class string_link_list {
 }
 public class common_reader
 {
-	public long lastModified_time;
+	private ArrayList<Long> last_modified_time_stack;
+	public long get_last_modified_time()
+	{
+		int index_id=last_modified_time_stack.size()-1;
+		return (index_id<0)?0:last_modified_time_stack.get(index_id);
+	}
+	public void set_last_modified_time(long new_lastModified_time)
+	{
+		int index_id=last_modified_time_stack.size()-1;
+		if(index_id<0)
+			last_modified_time_stack.add(new_lastModified_time);
+		else
+			last_modified_time_stack.set(index_id,new_lastModified_time);
+	}
+	public void push_last_modified_time(long new_lastModified_time)
+	{
+		int index_id=last_modified_time_stack.size();
+		last_modified_time_stack.add(index_id,new_lastModified_time);
+	}
+	public void pop_last_modified_time()
+	{
+		int index_id=last_modified_time_stack.size()-1;
+		if(index_id>=0)
+			last_modified_time_stack.remove(index_id);
+	}
 	
 	private String charset_name;
 	public String get_charset()
@@ -53,7 +77,7 @@ public class common_reader
 		if((charset_name=my_charset_name)==null)
 			charset_name=Charset.defaultCharset().name();
 		
-		lastModified_time=0;
+		last_modified_time_stack=new ArrayList<Long>();
 
 		mark_flag=false;
 		error_flag=true;
@@ -112,6 +136,10 @@ public class common_reader
 	}
 	public void close()
 	{
+		long my_last_time=get_last_modified_time();
+		last_modified_time_stack.clear();
+		set_last_modified_time(my_last_time);
+
 		mark_flag=false;
 		first_string=null;
 		last_string=null;

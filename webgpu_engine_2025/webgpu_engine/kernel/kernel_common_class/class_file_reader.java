@@ -14,7 +14,7 @@ public class class_file_reader
 			long lastModified_time=connection.getLastModified();
 			InputStream input_stream=connection.getInputStream();
 			common_reader ret_val=new common_reader(input_stream,my_charset);
-			ret_val.lastModified_time=lastModified_time;
+			ret_val.set_last_modified_time(lastModified_time);
 			return ret_val;
 		}catch(Exception e){
 			return null;

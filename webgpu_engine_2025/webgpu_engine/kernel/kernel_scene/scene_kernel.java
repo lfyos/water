@@ -290,8 +290,11 @@ public class scene_kernel
 
 		create_parameter.scene_directory_name		=scene_f.directory_name;
 		create_parameter.scene_file_name			=scene_f.file_name;
-		if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
-			scene_par.scene_last_modified_time		=scene_f.lastModified_time;
+		
+		long my_last_time=scene_f.get_last_modified_time();
+		if(scene_par.scene_last_modified_time<my_last_time)
+			scene_par.scene_last_modified_time		=my_last_time;
+		
 		if(scene_par.scene_shader_directory_name==null)
 			scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		

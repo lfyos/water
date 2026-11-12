@@ -38,7 +38,7 @@ public class component_load_source_item
 		component_name			=my_component_name;
 		token_string			=my_token_string;
 		create_component_data	=my_create_component_list.toArray(
-									new String[my_create_component_list.size()]);	
+									new String[my_create_component_list.size()]);
 		component_last_time		=my_component_last_time;
 		component_file_name		=null;
 		component_file_charset	=null;

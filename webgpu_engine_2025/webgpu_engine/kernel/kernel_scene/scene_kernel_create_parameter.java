@@ -104,8 +104,10 @@ public class scene_kernel_create_parameter
 				scene_charset						=f_name.get_charset();
 				parameter_charset					=f_name.get_charset();
 				extra_parameter_charset				=f_name.get_charset();
-				scene_list_file_last_modified_time	=(f_type.lastModified_time<f_name.lastModified_time)
-													?f_name.lastModified_time:f_type.lastModified_time;
+				
+				long type_t=f_type.get_last_modified_time();
+				long name_t=f_name.get_last_modified_time();
+				scene_list_file_last_modified_time	=(type_t<name_t)?name_t:type_t;
 				
 				success_load_parameter_flag			=true;
 				

@@ -51,8 +51,8 @@ public class component_core_0
 		component_file_name			=fr.file_name;
 		component_charset			=fr.get_charset();
 
-		uniparameter=new component_uniparameter(
-			fr.lastModified_time,normalize_location_flag,part_list_flag);
+		uniparameter=new component_uniparameter(fr.get_last_modified_time(),
+				normalize_location_flag,part_list_flag);
 
 		children					=new ArrayList<component>();
 	}

@@ -160,23 +160,24 @@ public class render
 			audio_file_name		 =file_directory.replace_special_char(audio_file_name);
 
 			part_parameter my_part_par=part_par.clone();
+			long part_last_time=part_f.get_last_modified_time();
 			
-			if(my_part_par.last_modified_time<part_f.lastModified_time)
-				my_part_par.last_modified_time=part_f.lastModified_time;
+			if(my_part_par.last_modified_time<part_last_time)
+				my_part_par.last_modified_time=part_last_time;
 
 			File mesh_f=new File(part_f.directory_name+mesh_file_name);
 			if(mesh_f.exists()) {
 				long my_last_time=mesh_f.lastModified();
-				if(my_last_time<part_f.lastModified_time)
-					mesh_f.setLastModified(part_f.lastModified_time);
+				if(my_last_time<part_last_time)
+					mesh_f.setLastModified(part_last_time);
 				if(my_part_par.last_modified_time<my_last_time)
 					my_part_par.last_modified_time=my_last_time;
 			}
 			File material_f=new File(part_f.directory_name+material_file_name);
 			if(material_f.exists()) {
 				long my_last_time=material_f.lastModified();
-				if(my_last_time<part_f.lastModified_time)
-					material_f.setLastModified(part_f.lastModified_time);
+				if(my_last_time<part_last_time)
+					material_f.setLastModified(part_last_time);
 				if(my_part_par.last_modified_time<my_last_time)
 					my_part_par.last_modified_time=my_last_time;
 			}

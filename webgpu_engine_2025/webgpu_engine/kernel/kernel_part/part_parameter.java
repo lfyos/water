@@ -176,7 +176,7 @@ public class part_parameter
 		directory_name						=f.directory_name;
 		file_name							=f.file_name;
 		
-		last_modified_time					=f.lastModified_time;
+		last_modified_time					=f.get_last_modified_time();
 
 		process_sequence_id					=f.get_int();
 		

@@ -30,13 +30,6 @@ public class component_load_source_container
 		for(component_load_source_item list_item:clsc.tree.tree_get_value_list())
 			tree.add(list_item.component_name,new component_load_source_item(list_item));
 	}
-	private void set_component_last_time(component my_comp,long my_file_last_modified_time)
-	{
-		my_comp.uniparameter.file_last_modified_time=my_file_last_modified_time;
-		for(int i=0,ni=my_comp.children.size();i<ni;i++)
-			set_component_last_time(my_comp.children.get(i),my_file_last_modified_time);
-		return;
-	}
 	public int add_component(file_reader component_fr,
 		String component_name,ArrayList<component>child_component_list,
 		boolean part_list_flag,boolean normalize_location_flag,
@@ -53,11 +46,13 @@ public class component_load_source_container
 		int ret_val=0;
 		for(component_load_source_item clsi:my_tree_node.list){
 			if(clsi.create_component_data!=null) {
+				component_fr.push_last_modified_time(clsi.component_last_time);
+				
 				component_fr.push_string(clsi.create_component_data);
-				component my_comp=new component(clsi.token_string,component_fr,
-						part_list_flag,normalize_location_flag,ccp);
-				set_component_last_time(my_comp,clsi.component_last_time);
-				child_component_list.add(my_comp);
+				child_component_list.add(new component(
+						clsi.token_string,component_fr,part_list_flag,normalize_location_flag,ccp));
+
+				component_fr.pop_last_modified_time();
 				ret_val++;
 			}
 			if(clsi.component_file_name!=null) {
@@ -111,7 +106,7 @@ public class component_load_source_container
 		if(component_parameter.size()<=0)
 			return 0;
 		return list_add_source_item(mount_component_name,token_string,
-				component_parameter,part_fr.lastModified_time);
+				component_parameter,part_fr.get_last_modified_time());
 	}
 	public int register_file_component(
 			file_reader part_fr,String mount_component_name,String token_string)

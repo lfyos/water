@@ -67,8 +67,9 @@ public class javascript_program
 				cr.close();
 				continue;
 			}
-			if(last_modified_time<cr.lastModified_time)
-				last_modified_time=cr.lastModified_time;
+			long lastModified_time=cr.get_last_modified_time();
+			if(last_modified_time<lastModified_time)
+				last_modified_time=lastModified_time;
 			cr.close();
 		}
 	}

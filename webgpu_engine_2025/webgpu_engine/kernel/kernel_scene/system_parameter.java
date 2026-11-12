@@ -173,7 +173,7 @@ public class system_parameter
 		}
 		
 		data_root_directory_name=f.directory_name;
-		last_modified_time=f.lastModified_time;
+		last_modified_time=f.get_last_modified_time();
 		
 		if((local_data_charset=f.get_charset())==null)
 			local_data_charset=my_default_charset;

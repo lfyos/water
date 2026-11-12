@@ -258,8 +258,9 @@ public class render_container
 					debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 					continue;
 				}
-				if(par_list_f.lastModified()<f_render_list.lastModified_time)
-					par_list_f.setLastModified(f_render_list.lastModified_time);
+				long f_render_list_last_time=f_render_list.get_last_modified_time();
+				if(par_list_f.lastModified()<f_render_list_last_time)
+					par_list_f.setLastModified(f_render_list_last_time);
 				
 				debug_information.println();
 				debug_information.println("Begin load part list file:	",	get_part_list_result[i]);
@@ -289,15 +290,15 @@ public class render_container
 			f_shader.close();
 			return;
 		}	
-		if(f_shader.lastModified_time<last_modify_time) {
+		if(f_shader.get_last_modified_time()<last_modify_time) {
 			new File(shader_path_name).setLastModified(last_modify_time);
-			f_shader.lastModified_time=last_modify_time;
+			f_shader.set_last_modified_time(last_modify_time);
 		}
 
 		debug_information.println();
 		debug_information.println("Begin shader and part initialization,file name is ",shader_path_name);
 
-		for(long my_shader_last_time=f_shader.lastModified_time;!(f_shader.eof());){
+		for(long my_shader_last_time=f_shader.get_last_modified_time();!(f_shader.eof());){
 			String render_name,driver_name;
 			if((render_name=f_shader.get_string())==null)
 				continue;
@@ -337,9 +338,9 @@ public class render_container
 					debug_information.println(render_list_file_name[i],"		not exist");
 					continue;
 				}
-				if(f_render_list.lastModified_time<my_shader_last_time) {
+				if(f_render_list.get_last_modified_time()<my_shader_last_time) {
 					new File(render_list_file_name[i]).setLastModified(my_shader_last_time);
-					f_render_list.lastModified_time=my_shader_last_time;
+					f_render_list.set_last_modified_time(my_shader_last_time);
 				}
 				load_one_shader(f_render_list,driver_name,ren,load_par);
 						

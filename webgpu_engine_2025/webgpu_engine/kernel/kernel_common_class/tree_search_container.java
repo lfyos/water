@@ -182,7 +182,7 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> tree_node;
 		if((tree_node=tree.remove(my_key))!=null){
 			dismount_from_list(tree_node);
-			tree_value_list		=null;
+			tree_value_list=null;
 		}
 		return tree_node;
 	}

@@ -38,7 +38,7 @@ public class file_reader extends common_reader
 		file_name=file_directory.replace_special_char(my_user_file_name);
 
 		if(error_flag()) {
-			lastModified_time=0;
+			set_last_modified_time(0);
 			return;
 		}
 		
@@ -46,7 +46,7 @@ public class file_reader extends common_reader
 		
 		directory_name	=f.getParent();
 		file_name		=f.getName();
-		lastModified_time=f.lastModified();
+		set_last_modified_time(f.lastModified());
 		
 		if(directory_name==null)
 			directory_name=".";
