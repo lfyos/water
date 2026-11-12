@@ -70,8 +70,7 @@ public class extended_render_driver extends render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p.directory_name+p.material_file_name,
-						part_fr.get_string(),part_fr.get_string(),part_fr.get_string());
+		return new extended_part_driver();
 	}
 	public render_instance_driver create_render_instance_driver(render ren,
 			scene_kernel sk,client_request_response request_response)

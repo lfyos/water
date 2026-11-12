@@ -5,16 +5,26 @@ mouse_modify_location_part
 	part\part.description
 	part\part.mp3
 	
-	/*	mark_component_name						*/		component_marker_component
-	/*	movement_component_name					*/		movement_manager
-	/*	movement_abstract_menu_component_name	*/		组件拼装拼装提取组件
-
-	
 			/*	terminated_token_string:begin		*/	terminated_token_string
 			
 					/*	component name				*/	mouse_modify_location_component
 					/*	component type				*/	mouse_modify_location_part
 					/*	component location			*/	identity
+					
+					
+						/*	view_range				*/	-1		0.8		-1		1
+						/*	low_precision_scale		*/	0.02
+						/*	mouse_rotate_scale		*/	1.0
+						/*	rotate_type_flag		*/	true
+						/*	exchange_point_flag		*/	true
+						/*	modifier_container_id	*/	0
+						
+						
+						/*	mark_component_name						*/	component_marker_component
+						/*	movement_component_name					*/	movement_manager
+						/*	movement_abstract_menu_component_name	*/	组件拼装拼装提取组件
+					
+					
 					/*	component children number	*/	0
 			
 			/*	terminated_token_string:end			*/	terminated_token_string

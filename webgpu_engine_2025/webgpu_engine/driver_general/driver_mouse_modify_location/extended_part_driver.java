@@ -11,35 +11,19 @@ import kernel_scene.system_parameter;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_common_class.jason_string;
 import kernel_driver.part_instance_driver;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
 
 public class extended_part_driver extends part_driver
 {
-	private String material_file_name;
-	private String mark_component_name,movement_component_name;
-	private String movement_abstract_menu_component_name;
-	
-	public extended_part_driver(String my_material_file_name,
-			String my_mark_component_name,String my_movement_component_name,
-			String my_movement_abstract_menu_component_name)
+	public extended_part_driver()
 	{
 		super();
-		material_file_name				=new String(my_material_file_name);
-		mark_component_name				=new String(my_mark_component_name);
-		movement_component_name			=new String(my_movement_component_name);
-		movement_abstract_menu_component_name=new String(my_movement_abstract_menu_component_name);
 	}
 	public void destroy()
 	{	
 		super.destroy();
-		
-		material_file_name=null;
-		mark_component_name=null;
-		movement_component_name=null;
-		movement_abstract_menu_component_name=null;
 	}
 	public void initialize_part_driver(part p,
 			scene_kernel sk,client_request_response request_response)
@@ -48,28 +32,12 @@ public class extended_part_driver extends part_driver
 	public void create_part_driver_initialization_data(file_writer fw,
 			part p,scene_kernel sk,client_request_response request_response)
 	{
-		String str;
-		
-		fw.println("	{");
-		
-		str=jason_string.change_string(mark_component_name)+",";
-		fw.println("		mark_component_name						:	",str);
-		
-		str=jason_string.change_string(movement_component_name)+",";
-		fw.println("		movement_component_name					:	",str);
-		
-		str=jason_string.change_string(movement_abstract_menu_component_name);
-		fw.println("		movement_abstract_menu_component_name	:	",str);
-		
-		fw.println("	}");
 	}
 	public part_driver clone(part parent,part p,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(material_file_name,
-				mark_component_name,movement_component_name,
-				movement_abstract_menu_component_name);
+		return new extended_part_driver();
 	}
 	public int caculate_material_id(part p,String type_str,
 			int body_id,int face_id,int loop_id,int edge_id,String material[])
@@ -97,18 +65,7 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			scene_kernel sk,client_request_response request_response)
 	{
-		file_reader material_fr=new file_reader(
-			my_component_part.directory_name+my_component_part.material_file_name,my_component_part.file_charset);
-		component_driver ret_val=new extended_component_driver(my_component_part,
-				new double[]
-				{
-					material_fr.get_double(),material_fr.get_double(),
-					material_fr.get_double(),material_fr.get_double()
-				},
-				material_fr.get_double(),	material_fr.get_double(),	material_fr.get_boolean(),
-				material_fr.get_boolean(),	material_fr.get_boolean(),	material_fr.get_int());
-		material_fr.close();
-		return ret_val;
+		return new extended_component_driver(my_component_part,fr);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 			scene_kernel sk,client_request_response request_response)

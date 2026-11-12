@@ -14,8 +14,8 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private double view_range[],low_precision_scale,mouse_rotate_scale;
-	private boolean rotate_type_flag,exchange_point_flag,change_type_flag;
+	private double view_range[];
+	private boolean change_type_flag;
 	private int modifier_container_id;
 
 	public void destroy()
@@ -23,19 +23,15 @@ public class extended_component_instance_driver extends component_instance_drive
 		super.destroy();
 		view_range=null;
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id,double my_view_range[],
-			double my_low_precision_scale,double my_mouse_rotate_scale,boolean my_rotate_type_flag,
-			boolean my_exchange_point_flag,boolean my_change_type_flag,int my_modifier_container_id)
+	public extended_component_instance_driver(component my_comp,int my_driver_id,
+			double my_view_range[],int my_modifier_container_id)
 	{
 		super(my_comp,my_driver_id);
 
 		view_range				=my_view_range;
-		low_precision_scale		=my_low_precision_scale;
-		mouse_rotate_scale		=my_mouse_rotate_scale;
-		rotate_type_flag		=my_rotate_type_flag;
-		exchange_point_flag		=my_exchange_point_flag;
-		change_type_flag		=my_change_type_flag;
-		modifier_container_id=my_modifier_container_id;
+		modifier_container_id	=my_modifier_container_id;
+		
+		change_type_flag		=true;
 	}
 	public void response_initialization_component_data(scene_kernel sk,client_information ci)
 	{
@@ -46,25 +42,18 @@ public class extended_component_instance_driver extends component_instance_drive
 			return true;
 		if(!(cr.target.main_display_target_flag))
 			return true;
-		if(ci.display_camera_result.cam.parameter.change_type_flag^change_type_flag) {
-			change_type_flag=change_type_flag?false:true;
+		if(ci.display_camera_result.cam.parameter.change_type_flag!=change_type_flag) {
+			change_type_flag=ci.display_camera_result.cam.parameter.change_type_flag;
 			update_component_parameter_version(0);
 		}
 		return false;
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(0);
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
-		ci.request_response.print("[",comp.component_id			);
-		ci.request_response.print(",",low_precision_scale		);
-		ci.request_response.print(",",mouse_rotate_scale		);
-		ci.request_response.print(",",rotate_type_flag?1:0		);
-		ci.request_response.print(",",change_type_flag?1:0		);
-		ci.request_response.print(",",exchange_point_flag?1:0	);
-		ci.request_response.print("]"							);
+		ci.request_response.print(change_type_flag?"1":"0");
 	}
 	private void get_data(boolean update_flag,
 			component operate_component,scene_kernel sk,client_information ci)

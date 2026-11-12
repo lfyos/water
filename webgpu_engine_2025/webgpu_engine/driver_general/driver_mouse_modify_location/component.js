@@ -1,39 +1,27 @@
 function send_to_webserver(component_id,event_operation,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	var camera_component_id	=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;
+	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
 	var operate_component_id=((scene.event_component.mouse.function_id>=200)&&(ep.selected_component_id>=0))
 					?(ep.selected_component_id):(camera_component_id);
-	
-	if(event_operation!="mousedown"){			
-		scene.caller.call_server_component(component_id,0,
-		[
+	var call_parameter=[
 			["event_operation",		event_operation],
 			["operate_component_id",operate_component_id]
-		]);
-		return;
-	}
-	
-	scene.caller.call_server_component(component_id,0,
-		[
-			["event_operation",		event_operation],
-			["operate_component_id",operate_component_id]
-		],"json").
-	then(
-		function(response_data)
-		{
-			if(response_data==null)
-				return;
-			if(event_operation!="mousedown")
-				return;
-			ep.selected_component_id=response_data;
-		});
+	];
+	if(event_operation!="mousedown")			
+		scene.caller.call_server_component(component_id,0,call_parameter);
+	else
+		scene.caller.call_server_component(component_id,0,call_parameter,"json").
+			then(
+				function(response_data)
+				{
+					ep.selected_component_id=response_data;
+				});
 }
-
 function send_location_to_webserver(command_str,component_id,scene,do_delay_flag)
 {
 	var ep=scene.component_event_processor[component_id];
-	var camera_component_id	=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;
+	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
 	var operate_component_id=((scene.event_component.mouse.function_id>=200)&&(ep.selected_component_id>=0))
 				?(ep.selected_component_id):(camera_component_id);
 	var current_time=(new Date()).getTime();
@@ -44,8 +32,8 @@ function send_location_to_webserver(command_str,component_id,scene,do_delay_flag
 
 	var str="";
 					
-	str+="&distance="		+(scene.camera.camera_object_parameter[ep.render_data.camera_id].distance.toString());
-	str+="&half_fovy_tanl=" +(scene.camera.camera_object_parameter[ep.render_data.camera_id].half_fovy_tanl.toString());
+	str+="&distance="		+(scene.camera.camera_object_parameter[ep.target_data.camera_id].distance.toString());
+	str+="&half_fovy_tanl=" +(scene.camera.camera_object_parameter[ep.target_data.camera_id].half_fovy_tanl.toString());
 					
 	str+="&data=";
 		
@@ -61,11 +49,10 @@ function send_location_to_webserver(command_str,component_id,scene,do_delay_flag
 		
 	send_to_webserver(component_id,command_str+str,scene);
 }
-
 function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 {
 	var ep							=scene.component_event_processor[component_id];
-	var camera_component_id			=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;
+	var camera_component_id			=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
 	var camera_component_location	=scene.component_location_data.get_component_location(camera_component_id);
 	var center_point				=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
 	var	selected_component_location	=camera_component_location;
@@ -203,10 +190,9 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		return [world_point_0,world_point_1];
 	}
 }
-
 function camera_move(ep,world_point_0,world_point_1,scene)
 {
-	var camera_component_id			=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;
+	var camera_component_id			=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
 	var camera_component_location	=scene.component_location_data.get_component_location(camera_component_id);
 	var loca			=scene.computer.matrix_negative(camera_component_location);
 	var local_point_0	=scene.computer.caculate_coordinate(loca,world_point_0[0],world_point_0[1],world_point_0[2]);
@@ -240,7 +226,6 @@ function component_move(ep,world_point_0,world_point_1,scene)
 		
 	return true;
 }
-	
 function left_location_for_rotation(world_point_0,world_point_1,center_point,scene)
 {
 	var diff;
@@ -277,7 +262,6 @@ function left_location_for_rotation(world_point_0,world_point_1,center_point,sce
 		
 	return	scene.computer.matrix_multiplication(loca_1,scene.computer.matrix_negative(loca_0));
 }
-	
 function camera_rotate(ep,world_point_0,world_point_1,center_point,scene)
 {
 	var left_adjust;
@@ -285,7 +269,7 @@ function camera_rotate(ep,world_point_0,world_point_1,center_point,scene)
 	if((left_adjust=left_location_for_rotation(world_point_0,world_point_1,center_point,scene))==null)
 		return false;
 	
-	var camera_component_id			=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;	
+	var camera_component_id			=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;	
 	var camera_component_location	=scene.component_location_data.get_component_location(camera_component_id);
 	var new_location				=scene.computer.matrix_multiplication(left_adjust,camera_component_location);
 	var loca						=scene.computer.matrix_multiplication(
@@ -319,11 +303,11 @@ function component_rotate(ep,world_point_0,world_point_1,center_point,scene)
 function change_matrix(component_id,vp_0,vp_1,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	var camera_distance	=scene.camera.camera_object_parameter[ep.render_data.camera_id].distance;
-	var half_fovy_tanl=scene.camera.camera_object_parameter[ep.render_data.camera_id].half_fovy_tanl;
-	var project_matrix	=scene.camera.compute_camera_data(ep.render_data,null);
+	var camera_distance	=scene.camera.camera_object_parameter[ep.target_data.camera_id].distance;
+	var half_fovy_tanl=scene.camera.camera_object_parameter[ep.target_data.camera_id].half_fovy_tanl;
+	var project_matrix	=scene.camera.compute_camera_data(ep.target_data,null);
 	
-	var camera_component_id	=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;	
+	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;	
 	var camera_component_location=scene.component_location_data.get_component_location(camera_component_id);
 	var center_point	=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
 	var eye_point		=scene.computer.caculate_coordinate(camera_component_location,0,0,camera_distance);
@@ -403,11 +387,10 @@ function change_matrix(component_id,vp_0,vp_1,scene)
 		break;
 	}
 }
-
 function mousedown(event,component_id,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	if(ep.render_data==null)
+	if(ep.target_data==null)
 		return false;
 		
 	switch(event.button){
@@ -418,7 +401,7 @@ function mousedown(event,component_id,scene)
 		break;
 	case 2:	
 		if(event.ctrlKey||event.shiftKey||event.altKey){
-			scene.caller.call_server_component(ep.part_create_data.movement_component_name,"all",
+			scene.caller.call_server_component(ep.movement_component_name,"all",
 				[["operation","design"],["move_method","listdesignbuffer"]],"json").
 			then(
 				function(response_data)
@@ -427,7 +410,7 @@ function mousedown(event,component_id,scene)
 						return;
 					if(response_data.movement.length<=0)
 						return;
-					var p=ep.part_create_data.movement_abstract_menu_component_name;
+					var p=ep.movement_abstract_menu_component_name;
 					if((p=scene.operate_component.get_component_event_processor(p))!=null)
 						p.active_list(response_data,scene.operate_component.last_operate_component_id,scene);
 				});
@@ -436,29 +419,27 @@ function mousedown(event,component_id,scene)
 			if(scene.pickup.component_id>=0)
 				if((value=prompt("输入标注文字"))!=null)
 					if((value=value.trim()).length>0)
-						scene.caller.call_server_component(ep.part_create_data.mark_component_name,"all",
+						scene.caller.call_server_component(ep.mark_component_name,"all",
 							[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
 		}
 		break;
 	default:
 		break;
 	}
-	
 	return false;
 }
-
 function mouseup(event,component_id,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	if(ep.render_data==null)
+	if(ep.target_data==null)
 		return false;
 
-	scene.caller.call_server_component(ep.part_create_data.movement_component_name,"all",
+	scene.caller.call_server_component(ep.movement_component_name,"all",
 		[["operation","virtual_mount"],["virtual_mount","terminate_follow"]]);
 	switch(event.button){
 	case 0:
 		ep.mouse_up_flag=true;
-		send_location_to_webserver("mouseup",ep.component_id,scene,false);
+		send_location_to_webserver("mouseup",component_id,scene,false);
 		break;
 	case 2:	
 		break;
@@ -466,12 +447,11 @@ function mouseup(event,component_id,scene)
 		break;
 	}
 	return false;		
-}
-	
+}	
 function mousemove(event,component_id,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	if(ep.render_data==null)
+	if(ep.target_data==null)
 		return false;
 	if(ep.mouse_up_flag)
 		return false;
@@ -491,14 +471,14 @@ function mousemove(event,component_id,scene)
 	change_matrix(component_id,this_point,ep.last_point,scene);
 	ep.last_point=this_point;
 		
-	send_location_to_webserver("mousemove",ep.component_id,scene,true);
+	send_location_to_webserver("mousemove",component_id,scene,true);
 		
 	return false;
 }
 function dblclick(event,component_id,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	if(ep.render_data==null)
+	if(ep.target_data==null)
 		return false;
 		
 	if(event.button!=0)
@@ -519,12 +499,12 @@ function dblclick(event,component_id,scene)
 }
 function mousewheel(event,component_id,scene)
 {
-	var ep,mouse_wheel_number		=0;
-	
-	if((ep=scene.component_event_processor[component_id]).render_data==null)
+	var mouse_wheel_number=0;
+	var ep=scene.component_event_processor[component_id];
+	if(ep.target_data==null)
 		return false;
 		
-	var camera_component_id		=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;
+	var camera_component_id		=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
 	ep.move_loca				=scene.component_location_data.component[camera_component_id].move_matrix;
 	
 	if(typeof(event.wheelDelta)=="number")
@@ -536,25 +516,24 @@ function mousewheel(event,component_id,scene)
 	if(event.ctrlKey||event.altKey||event.shiftKey)	
 		mouse_wheel_number*=ep.low_precision_scale;
 
-	var p=scene.camera.camera_object_parameter[ep.render_data.camera_id];
+	var p=scene.camera.camera_object_parameter[ep.target_data.camera_id];
 	if(ep.change_type_flag)
 		p.distance		/=Math.exp(mouse_wheel_number);
 	else
 		p.half_fovy_tanl/=Math.exp(mouse_wheel_number);
 	p.should_update_buffer_data_flag=true;
 		
-	send_location_to_webserver("mousemove",ep.component_id,scene,true);
+	send_location_to_webserver("mousemove",component_id,scene,true);
 	
 	return false;
 }
-
 function mobile_phone(event,component_id,scene)
 {
 	event.preventDefault();
 		
 	var ep=scene.component_event_processor[component_id];
 	
-	if(ep.render_data==null)
+	if(ep.target_data==null)
 		return false;
 		
 	var x0,y0,x1,y1,dx,dy,btn=scene.canvas;
@@ -598,7 +577,7 @@ function mobile_phone(event,component_id,scene)
 			change_matrix(component_id,[x1,y1,0,1],ep.last_point,scene);
 				
 			ep.last_point=[x1,y1,0,1];
-			send_location_to_webserver("mousemove",ep.component_id,scene,true);
+			send_location_to_webserver("mousemove",component_id,scene,true);
 			break;
 		}
 		break;
@@ -619,14 +598,14 @@ function mobile_phone(event,component_id,scene)
 		switch(event.type){
 		case "touchmove":
 			var mouse_wheel_number=0.125*Math.log((dx*dx+dy*dy)/(ep.touchstart_distance_2));
-			var p=scene.camera.camera_object_parameter[ep.render_data.camera_id];
+			var p=scene.camera.camera_object_parameter[ep.target_data.camera_id];
 			if(ep.change_type_flag)
 				p.distance		 /=Math.exp(mouse_wheel_number);
 			else
 				p.half_fovy_tanl/=Math.exp(mouse_wheel_number);
 			p.should_update_buffer_data_flag=true;
 			
-			send_location_to_webserver("mousemove",ep.component_id,scene,false);
+			send_location_to_webserver("mousemove",component_id,scene,false);
 		case "touchstart":
 			ep.touchstart_distance_2=dx*dx+dy*dy;
 			break;
@@ -641,13 +620,20 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	
 	var ep=new Object();
 	
-	ep.part_create_data	=part_driver.part_create_data;
+	ep.change_type_flag			=true;
+	ep.low_precision_scale		= create_data[0];
+	ep.mouse_rotate_scale		= create_data[1];
+	ep.rotate_type_flag			=(create_data[2]>0.5)?true:false;
+	ep.exchange_point_flag		=(create_data[3]>0.5)?true:false;
+	ep.mark_component_name		= create_data[4];
+	ep.movement_component_name	= create_data[5];
+	ep.movement_abstract_menu_component_name=create_data[6];
 	
 	ep.send_mousemove_time	=0;			
 	ep.mouse_up_flag		=true;
 	
 	ep.selected_component_id=-1;
-	ep.render_data			=null;
+	ep.target_data			=null;
 			
 	ep.mousedown	=mousedown;
 	ep.mouseup		=mouseup;
@@ -663,7 +649,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	ep.touchstart_distance_2=1.0;
 
 	ep.selected_component_id=-1;
-			
+		
 	ep.start_time=(new Date()).getTime();
 	
 	var old_ep;
@@ -672,32 +658,15 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		
 	scene.component_event_processor[this.component_ids.component_id]=ep;
 
-	this.component_id=this.component_ids.component_id;
-	this.buffer_data=null;
-	
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)	
 	{
-		var component_id		=this.buffer_data[0];
-		var low_precision_scale	=this.buffer_data[1];
-		var mouse_rotate_scale	=this.buffer_data[2];
-		var rotate_type_flag	=(this.buffer_data[3]>0.5)?true:false;
-		var change_type_flag	=(this.buffer_data[4]>0.5)?true:false;
-		var exchange_point_flag	=(this.buffer_data[5]>0.5)?true:false;
-			
-		var ep=scene.component_event_processor[component_id];
-		
-		ep.render_data			=target_data;
-		
-		ep.component_id			=component_id;
-		ep.low_precision_scale	=low_precision_scale;
-		ep.mouse_rotate_scale	=mouse_rotate_scale;
-		ep.rotate_type_flag		=rotate_type_flag;
-		ep.change_type_flag		=change_type_flag;
-		ep.exchange_point_flag	=exchange_point_flag;
+		var ep=scene.component_event_processor[this.component_ids.component_id];
+		ep.target_data=target_data;
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		this.buffer_data=buffer_data_item;
+		var ep=scene.component_event_processor[this.component_ids.component_id];
+		ep.change_type_flag=(buffer_data_item>0.5)?true:false;
 	}
 };
