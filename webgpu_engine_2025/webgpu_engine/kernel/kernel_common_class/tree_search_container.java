@@ -156,12 +156,13 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			tree_node.list.add(my_value);
 			return tree_node;
 		}
-		if(value_comparator==null) {
+		ArrayList<VALUE_TYPE> my_value_list=tree_node.list;
+		int my_value_list_size=my_value_list.size();
+		if((value_comparator==null)||(my_value_list_size<=0)){
 			tree_node.list.add(tree_node.list.size(),my_value);
 			return tree_node;
 		}
-		ArrayList<VALUE_TYPE> my_value_list=tree_node.list;
-		for(int begin_pointer=0,end_pointer=my_value_list.size()-1;;) {
+		for(int begin_pointer=0,end_pointer=my_value_list_size-1;;) {
 			int middle_pointer=(begin_pointer+end_pointer)/2;
 			if(value_comparator.compare(my_value,my_value_list.get(middle_pointer))<0){
 				if((end_pointer=middle_pointer-1)<begin_pointer) {

@@ -19,9 +19,9 @@ public class component_selection
 	private void do_set_selected_flag(component my_comp)
 	{
 		if(my_comp!=null){
-			long cur_time=current_time.nanoseconds();
+			my_comp.uniparameter.selected_time=current_time.nanoseconds();
+			component_cont.mark_latest_selected_component(my_comp);
 			
-			my_comp.uniparameter.selected_time=cur_time;
 			for(component comp=my_comp;comp!=null;
 					comp=component_cont.get_component(comp.parent_component_id))
 				if(comp.uniparameter.selected_flag)

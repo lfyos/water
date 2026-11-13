@@ -201,7 +201,7 @@ public class distance_tag_item
 			coordinate_component_id=sk.component_cont.root_component.component_id;
 			break;
 		case "search_component":
-			if((comp=sk.component_cont.latest_selected_component())!=null)
+			if((comp=sk.component_cont.get_latest_selected_component())!=null)
 				coordinate_component_id=comp.component_id;
 			break;
 		case "view_component":

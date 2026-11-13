@@ -279,7 +279,7 @@ public class locate_camera
 	{
 		component comp;
 		if((comp=par.comp)==null){
-			if((comp=component_cont.latest_selected_component())==null)
+			if((comp=component_cont.get_latest_selected_component())==null)
 				return false;;
 			if(!(comp.uniparameter.effective_selected_flag))
 				return false;

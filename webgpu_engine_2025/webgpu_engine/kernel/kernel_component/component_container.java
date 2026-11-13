@@ -8,6 +8,7 @@ import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
+import kernel_common_class.tree_search_container;
 import kernel_common_class.tree_string_search_container;
 
 public class component_container 
@@ -22,6 +23,7 @@ public class component_container
 	
 	private component component_pointer[];
 	private tree_string_search_container<component> search_component_cont;
+	private tree_search_container<Integer,Integer> manager_of_latest_selected_component;
 	
 	public void destroy()
 	{
@@ -48,6 +50,10 @@ public class component_container
 				}
 			component_pointer=null;
 		}
+		if(manager_of_latest_selected_component!=null) {
+			manager_of_latest_selected_component.destroy();
+			manager_of_latest_selected_component=null;
+		}
 	}
 	public component get_component(int component_id)
 	{
@@ -62,16 +68,19 @@ public class component_container
 		var my_list=search_component_cont.search_value_list(my_search_component_name);
 		return (my_list==null)?null:my_list.get(0);
 	}
-	public component latest_selected_component()
+	public void mark_latest_selected_component(component comp)
 	{
-		component ret_val;
-		if((ret_val=root_component)!=null)
-			if(component_pointer!=null)
-				for(int i=0,ni=component_pointer.length;i<ni;i++)
-					if(component_pointer[i]!=null)
-						if(ret_val.uniparameter.selected_time<component_pointer[i].uniparameter.selected_time)
-							ret_val=component_pointer[i];
-		return ret_val;
+		if(comp==null)
+			return;
+		if(manager_of_latest_selected_component.search_tree_node(comp.component_id)!=null)
+			return;
+		manager_of_latest_selected_component.add(comp.component_id,comp.component_id);
+		return;
+	}
+	public component get_latest_selected_component()
+	{
+		var tree_node=manager_of_latest_selected_component.get_last_tree_node();
+		return (tree_node==null)?root_component:(component_pointer[tree_node.key]);
 	}
 	public box get_effective_box(int parameter_channel_id)
 	{
@@ -198,5 +207,6 @@ public class component_container
 			debug_information.println("End loading assemble");
 			debug_information.println();
 		}
+		manager_of_latest_selected_component=new tree_search_container<Integer,Integer>(); 
 	}
 }

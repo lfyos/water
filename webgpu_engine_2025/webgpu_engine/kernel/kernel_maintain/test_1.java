@@ -36,10 +36,10 @@ public class test_1 extends travel_through_directory
 	{
 		String path_name[]={
 //				"G:\\water_all",
-				"G:\\water_all\\data",
-				"E:\\project_data"
+//				"G:\\water_all\\data",
+//				"E:\\project_data"
 		};
-		
+
 		debug_information.println("start search");
 		
 		for(String my_path_name:path_name) {

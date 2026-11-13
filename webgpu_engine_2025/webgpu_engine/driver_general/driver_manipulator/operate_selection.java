@@ -19,15 +19,15 @@ public class operate_selection
 		
 		switch(str=str.trim()) {
 		case "parent":
-			my_comp=sk.component_cont.latest_selected_component();
+			my_comp=sk.component_cont.get_latest_selected_component();
 			comp_select.set_parent_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
 			break;
 		case "child":
-			my_comp=sk.component_cont.latest_selected_component();
+			my_comp=sk.component_cont.get_latest_selected_component();
 			comp_select.set_child_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
 			break;
 		case "move":
-			my_comp=sk.component_cont.latest_selected_component();
+			my_comp=sk.component_cont.get_latest_selected_component();
 			comp_select.set_moved_descendant_selected((my_comp!=null)?my_comp:(sk.component_cont.root_component));
 			break;
 		case "display":
@@ -42,7 +42,7 @@ public class operate_selection
 			comp_select.set_selected_flag(sk.component_cont.root_component);
 			break;
 		case "latest":
-			comp_select.set_selected_flag(sk.component_cont.latest_selected_component());
+			comp_select.set_selected_flag(sk.component_cont.get_latest_selected_component());
 			break;
 		case "part_list":
 			if((str=ci.request_response.get_parameter("list_id"))!=null)
@@ -86,7 +86,7 @@ public class operate_selection
 					my_comp=sk.component_cont.get_component(Integer.decode(component_str));
 			}
 			if(my_comp==null)
-				if((my_comp=sk.component_cont.latest_selected_component())==null)
+				if((my_comp=sk.component_cont.get_latest_selected_component())==null)
 					break;
 			switch(str) {
 			case "clear_component":

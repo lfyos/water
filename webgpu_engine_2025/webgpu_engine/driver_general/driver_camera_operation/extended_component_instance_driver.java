@@ -86,7 +86,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				return comp.absolute_location;
 			break;
 		case "selection":
-			if((comp=sk.component_cont.latest_selected_component())!=null)
+			if((comp=sk.component_cont.get_latest_selected_component())!=null)
 				if(comp.uniparameter.selected_flag)
 					return comp.absolute_location;
 			break;
