@@ -21,6 +21,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void destroy()
 	{
 		super.destroy();
+
 		view_range=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
@@ -30,7 +31,6 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		view_range				=my_view_range;
 		modifier_container_id	=my_modifier_container_id;
-		
 		change_type_flag		=true;
 	}
 	public void response_initialization_component_data(scene_kernel sk,client_information ci)
@@ -78,25 +78,30 @@ public class extended_component_instance_driver extends component_instance_drive
 				display_flag=true;
 			}
 		}
-		if(operate_component!=null)
-			if(operate_component.component_id!=sk.component_cont.root_component.component_id)
-				if((str=ci.request_response.get_parameter("data"))!=null){
-					str+=",";
-					double data[]=new double[16];
-					for(int i=0,j=0,k=0,ni=data.length;i<ni;i++,j=k){
-						for(k=j;;k++){
-							if(k>=str.length())
-								return;
-							if(str.charAt(k)==',')
-								break;
-						}
-						data[i]=Double.parseDouble(str.substring(j,k++));
-					}
-					operate_component.set_component_move_location((new location(data)).normalize(),sk.component_cont);
-					ci.render_buffer.location_buffer.synchronize_location_version(operate_component,sk,update_flag);
-					
-					display_flag=true;
+
+		outer: do{
+			if(operate_component==null)
+				break;
+			if(operate_component.component_id==sk.component_cont.root_component.component_id)
+				break;
+			if((str=ci.request_response.get_parameter("data"))==null)
+				break;
+			str+=",";
+			double data[]=new double[16];
+			for(int i=0,j=0,k=0,ni=data.length;i<ni;i++,j=k){
+				for(k=j;;k++){
+					if(k>=str.length())
+						break outer;
+					if(str.charAt(k)==',')
+						break;
 				}
+				data[i]=Double.parseDouble(str.substring(j,k++));
+			}
+			operate_component.set_component_move_location((new location(data)).normalize(),sk.component_cont);
+			ci.render_buffer.location_buffer.synchronize_location_version(operate_component,sk,update_flag);
+			display_flag=true;
+		}while(false);
+		
 		if(ci.clip_plane!=null)
 			if((str=ci.request_response.get_parameter("clip_plane_modification"))!=null)
 				ci.clip_plane.D+=Double.parseDouble(str);
@@ -131,7 +136,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("operate_component_id"))==null)
-			return null;		
+			return null;
 		component operate_component=sk.component_cont.get_component(Integer.decode(str));
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return null;
@@ -154,15 +159,15 @@ public class extended_component_instance_driver extends component_instance_drive
 			return null;
 		case "mouseup":
 			get_data(true,operate_component,sk,ci);
-			if(operate_component!=null){
-				operate_component.uniparameter.do_response_location_flag=true;
-				operate_component.set_component_move_location(operate_component.move_location,sk.component_cont);
-				if(operate_component.component_id==camera_component_id)
-					ci.display_camera_result.cam.push_restore_stack(
-						sk.modifier_cont[modifier_container_id],false,
-						ci.display_camera_result.cam.eye_component.move_location,
-						ci.display_camera_result.cam.parameter);
-			}
+			if(operate_component!=null)
+				if(operate_component.component_id!=sk.component_cont.root_component.component_id){
+					operate_component.uniparameter.do_response_location_flag=true;
+					if(operate_component.component_id==camera_component_id)
+						ci.display_camera_result.cam.push_restore_stack(
+							sk.modifier_cont[modifier_container_id],false,
+							ci.display_camera_result.cam.eye_component.move_location,
+							ci.display_camera_result.cam.parameter);
+				}
 			return null;
 		case "mousemove":
 			get_data(false,operate_component,sk,ci);

@@ -53,18 +53,16 @@ public class extended_component_driver  extends component_driver
 			file_writer fw,component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		fw.print("[");
-		
-		fw.print(		low_precision_scale);
-		fw.print(",",	mouse_rotate_scale	);
-		fw.print(",",	rotate_type_flag	?"1":"0");
-		fw.print(",",	exchange_point_flag?"1":"0");
+		fw.	print("[",	low_precision_scale).
+			print(",",	mouse_rotate_scale).
+			print(",",	rotate_type_flag	?"1":"0").
+			print(",",	exchange_point_flag	?"1":"0").
 
-		fw.print(",",	jason_string.change_string(mark_component_name));
-		fw.print(",",	jason_string.change_string(movement_component_name));
-		fw.print(",",	jason_string.change_string(movement_abstract_menu_component_name));
+			print(",",	jason_string.change_string(mark_component_name)).
+			print(",",	jason_string.change_string(movement_component_name)).
+			print(",",	jason_string.change_string(movement_abstract_menu_component_name)).
 
-		fw.println("]");
+			println("]");
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

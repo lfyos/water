@@ -9,6 +9,8 @@ function construct_event_listener(my_canvas_id,my_scene)
 	
 	this.set_view=function(event)
 	{
+		event.preventDefault();
+				
 		var rect	=this.canvas.getBoundingClientRect();
 		var left	=rect.left;
 		var right	=rect.right;
@@ -58,7 +60,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmousemove(event,my_scene))
@@ -107,7 +109,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_down_flag=true;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmousedown(event,my_scene))
@@ -156,7 +158,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		
 		var ep,component_id;
 		
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmouseup(event,my_scene))
@@ -204,7 +206,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_inside_canvas_flag=true;
 	
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemdblclick(event,my_scene))
@@ -251,7 +253,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmousewheel(event,my_scene))
@@ -296,7 +298,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmouseover(event,my_scene))
@@ -342,7 +344,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_down_flag=false;
 
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmouseout(event,my_scene))
@@ -389,7 +391,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmouseenter(event,my_scene))
@@ -435,7 +437,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		this.mouse_down_flag=false;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_view(event);
 		
 		if(my_scene.system_event_processor.systemmouseleave(event,my_scene))
@@ -474,15 +476,14 @@ function construct_event_listener(my_canvas_id,my_scene)
 	this.scene.system_event_processor.contextmenu		=function(event,scene)						{return false;};
 	this.contextmenu_event_listener=function (event)
 	{
+		event.preventDefault();
+				
 		var my_scene;
 		if((my_scene=this.scene).terminate_flag)
 			return;
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		var ep,component_id;
-		
-		event.preventDefault();
-		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		if(my_scene.system_event_processor.systemcontextmenu(event,my_scene))
 			return;
@@ -527,7 +528,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_mobile_view(event);
 
 		if(my_scene.system_event_processor.systemtouchstart(event,my_scene))
@@ -575,7 +576,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_mobile_view(event);
 
 		if(my_scene.system_event_processor.systemtouchend(event,my_scene))
@@ -620,7 +621,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		this.set_mobile_view(event);
 
 		if(my_scene.system_event_processor.systemtouchmove(event,my_scene))
@@ -659,14 +660,14 @@ function construct_event_listener(my_canvas_id,my_scene)
 	this.scene.system_event_processor.keydown		=function(event,scene){return false;};
 	this.keydown_event_listener=function (event)
 	{
+		event.preventDefault();
+		
 		var my_scene;
 		if((my_scene=this.scene).terminate_flag)
 			return;
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		var ep,component_id;
-		event.preventDefault();
-		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		if(my_scene.system_event_processor.systemkeydown(event,my_scene))
 			return;
@@ -704,13 +705,15 @@ function construct_event_listener(my_canvas_id,my_scene)
 	this.scene.system_event_processor.keypress			=function(event,scene){return false;};
 	this.keypress_event_listener=function (event)
 	{
+		event.preventDefault();
+				
 		var my_scene;
 		if((my_scene=this.scene).terminate_flag)
 			return;
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		var ep,component_id;
-		event.preventDefault();
+		
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 
 		if(my_scene.system_event_processor.systemkeypress(event,my_scene))
@@ -749,14 +752,14 @@ function construct_event_listener(my_canvas_id,my_scene)
 	this.scene.system_event_processor.keyup		=function(event,scene){return false;};
 	this.keyup_event_listener=function (event)
 	{
+		event.preventDefault();
+		
 		var my_scene;
 		if((my_scene=this.scene).terminate_flag)
 			return;
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		var ep,component_id;
-		event.preventDefault();
-		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
 		switch(event.keyCode){
 		case 48://0

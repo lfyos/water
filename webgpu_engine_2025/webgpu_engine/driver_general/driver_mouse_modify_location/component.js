@@ -2,13 +2,13 @@ function send_to_webserver(component_id,event_operation,scene)
 {
 	var ep=scene.component_event_processor[component_id];
 	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
-	var operate_component_id=((scene.event_component.mouse.function_id>=200)&&(ep.selected_component_id>=0))
-					?(ep.selected_component_id):(camera_component_id);
+	var operate_component_id=(scene.event_component.mouse.function_id>=200)
+			?ep.selected_component_id:camera_component_id;
 	var call_parameter=[
 			["event_operation",		event_operation],
 			["operate_component_id",operate_component_id]
 	];
-	if(event_operation!="mousedown")			
+	if(event_operation!="mousedown")
 		scene.caller.call_server_component(component_id,0,call_parameter);
 	else
 		scene.caller.call_server_component(component_id,0,call_parameter,"json").
@@ -20,16 +20,18 @@ function send_to_webserver(component_id,event_operation,scene)
 }
 function send_location_to_webserver(command_str,component_id,scene,do_delay_flag)
 {
-	var ep=scene.component_event_processor[component_id];
-	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
-	var operate_component_id=((scene.event_component.mouse.function_id>=200)&&(ep.selected_component_id>=0))
-				?(ep.selected_component_id):(camera_component_id);
 	var current_time=(new Date()).getTime();
+	var ep=scene.component_event_processor[component_id];
+	
 	if(do_delay_flag)
 		if((current_time-ep.send_mousemove_time)<scene.parameter.delay_time_length)
 			return;
 	ep.send_mousemove_time=current_time;
-
+	
+	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
+	var operate_component_id=(scene.event_component.mouse.function_id>=200)
+				?ep.selected_component_id:camera_component_id;
+				
 	var str="";
 					
 	str+="&distance="		+(scene.camera.camera_object_parameter[ep.target_data.camera_id].distance.toString());
@@ -55,13 +57,10 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 	var camera_component_id			=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
 	var camera_component_location	=scene.component_location_data.get_component_location(camera_component_id);
 	var center_point				=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
-	var	selected_component_location	=camera_component_location;
-
+	var	selected_component_location	=(ep.selected_component_id<0)?camera_component_location:
+								(scene.component_location_data.get_component_location(ep.selected_component_id));
 	var p,pl,matrix;
-		
-	if(ep.selected_component_id>=0)
-		selected_component_location=scene.component_location_data.get_component_location(ep.selected_component_id);
-		
+
 	switch(scene.event_component.mouse.function_id%100){
 	case 2:
 		pl		=scene.computer.create_plane_from_two_point(
@@ -303,11 +302,11 @@ function component_rotate(ep,world_point_0,world_point_1,center_point,scene)
 function change_matrix(component_id,vp_0,vp_1,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	var camera_distance	=scene.camera.camera_object_parameter[ep.target_data.camera_id].distance;
-	var half_fovy_tanl=scene.camera.camera_object_parameter[ep.target_data.camera_id].half_fovy_tanl;
-	var project_matrix	=scene.camera.compute_camera_data(ep.target_data,null);
+	var project_matrix	=ep.target_data.project_matrix;
+	var camera_distance	=project_matrix.distance;
+	var half_fovy_tanl	=project_matrix.half_fovy_tanl;
 	
-	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;	
+	var camera_component_id	=project_matrix.camera_component_id;	
 	var camera_component_location=scene.component_location_data.get_component_location(camera_component_id);
 	var center_point	=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
 	var eye_point		=scene.computer.caculate_coordinate(camera_component_location,0,0,camera_distance);
@@ -529,8 +528,6 @@ function mousewheel(event,component_id,scene)
 }
 function mobile_phone(event,component_id,scene)
 {
-	event.preventDefault();
-		
 	var ep=scene.component_event_processor[component_id];
 	
 	if(ep.target_data==null)
