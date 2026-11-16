@@ -30,22 +30,22 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 			p.should_update_buffer_data_flag=true;
 			switch(camera_data[i++]){
 			case 0:
-				p.component_id	 =camera_data[i++];
+				p.component_id		=camera_data[i++];
 				break;
 			case 1:
-				p.distance		 =camera_data[i++];
+				p.distance		 	=camera_data[i++];
 				break;
 			case 2:
-				p.bak_distance	 =camera_data[i++];
+				p.bak_distance	 	=camera_data[i++];
 				break;
 			case 3:
-				p.half_fovy_tanl =camera_data[i++];
+				p.half_fovy_tanl 	=camera_data[i++];
 				break;
 			case 4:
-				p.bak_half_fovy_tanl =camera_data[i++];
+				p.bak_half_fovy_tanl=camera_data[i++];
 				break;
 			case 5:
-				p.near_value_ratio	 =camera_data[i++];
+				p.near_value_ratio	=camera_data[i++];
 				break;
 			case 6:
 				p.far_value_ratio	=camera_data[i++];

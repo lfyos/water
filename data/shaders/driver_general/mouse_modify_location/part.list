@@ -16,7 +16,11 @@ mouse_modify_location_part
 						/*	low_precision_scale		*/	0.02
 						/*	mouse_rotate_scale		*/	1.0
 						/*	rotate_type_flag		*/	true
-						/*	exchange_point_flag		*/	true
+						/*	exchange_point_flag		*/	
+														false	//camera rotate
+														false	//camera move
+														false	//component rotate
+														false	//component move
 						/*	modifier_container_id	*/	0
 						
 						
