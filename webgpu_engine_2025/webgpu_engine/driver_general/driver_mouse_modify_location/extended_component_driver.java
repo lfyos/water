@@ -12,7 +12,7 @@ import kernel_file_manager.file_writer;
 
 public class extended_component_driver  extends component_driver
 {
-	private double view_range[],low_precision_scale,mouse_rotate_scale;
+	private double view_range[],mouse_rotate_scale;
 	private boolean rotate_type_flag;
 	private int modifier_container_id;
 	private String mark_component_name,movement_component_name;
@@ -29,7 +29,6 @@ public class extended_component_driver  extends component_driver
 		super(my_component_part);
 		
 		view_range=new double[]{fr.get_double(),fr.get_double(),fr.get_double(),fr.get_double()};
-		low_precision_scale		=fr.get_double();
 		mouse_rotate_scale		=fr.get_double();
 		rotate_type_flag		=fr.get_boolean();
 		modifier_container_id	=fr.get_int();
@@ -52,8 +51,7 @@ public class extended_component_driver  extends component_driver
 			file_writer fw,component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		fw.	print("[",	low_precision_scale).
-			print(",",	mouse_rotate_scale).
+		fw.	print("[",	mouse_rotate_scale).
 			print(",",	rotate_type_flag	?"1":"0").
 			print(",",	jason_string.change_string(mark_component_name)).
 			print(",",	jason_string.change_string(movement_component_name)).

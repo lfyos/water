@@ -367,6 +367,30 @@ function change_matrix(component_id,vp_0,vp_1,scene)
 		break;
 	}
 }
+
+function caculate_low_precision_scale(event)
+{
+	var index_id=0;
+	
+	if(event.shiftKey)
+		index_id+=1;
+	if(event.ctrlKey)
+		index_id+=2;
+	if(event.altKey)
+		index_id+=4;
+	
+	var my_scale_array=[
+		1.0,
+		2.0,
+		4.0,
+		8.0,
+		16.0,
+		32.0,
+		64.0,
+		128.0
+	];
+	return 1.0/my_scale_array[index_id];
+}
 function mousedown(event,component_id,scene)
 {
 	var ep=scene.component_event_processor[component_id];
@@ -440,15 +464,13 @@ function mousemove(event,component_id,scene)
 	if((dx*dx+dy*dy)<(scene.computer.min_value2()))
 		return false;
 	var this_point=[scene.view.x,scene.view.y,0,1];
-		
-	if(event.ctrlKey||event.altKey||event.shiftKey)
-		ep.last_point=[
-			this_point[0]+ep.low_precision_scale*(ep.last_point[0]-this_point[0]),
-			this_point[1]+ep.low_precision_scale*(ep.last_point[1]-this_point[1]),
+	var my_low_precision_scale=caculate_low_precision_scale(event);
+	change_matrix(component_id,this_point,
+		[
+			this_point[0]+my_low_precision_scale*(ep.last_point[0]-this_point[0]),
+			this_point[1]+my_low_precision_scale*(ep.last_point[1]-this_point[1]),
 			0,1
-		];
-			
-	change_matrix(component_id,this_point,ep.last_point,scene);
+		],scene);
 	ep.last_point=this_point;
 		
 	send_location_to_webserver("mousemove",component_id,scene,true);
@@ -492,9 +514,9 @@ function mousewheel(event,component_id,scene)
 	else if(typeof(event.detail)=="number")
 			mouse_wheel_number-=event.detail/50.0;					//for firefox
 	else
-			return false;		
-	if(event.ctrlKey||event.altKey||event.shiftKey)	
-		mouse_wheel_number*=ep.low_precision_scale;
+			return false;
+
+	mouse_wheel_number*=caculate_low_precision_scale(event);
 
 	var p=scene.camera.camera_object_parameter[ep.target_data.camera_id];
 	if(ep.change_type_flag)
@@ -599,12 +621,11 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	var ep=new Object();
 	
 	ep.change_type_flag			=true;
-	ep.low_precision_scale		= create_data[0];
-	ep.mouse_rotate_scale		= create_data[1];
-	ep.rotate_type_flag			=(create_data[2]>0.5)?true:false;
-	ep.mark_component_name		= create_data[3];
-	ep.movement_component_name	= create_data[4];
-	ep.movement_abstract_menu_component_name=create_data[5];
+	ep.mouse_rotate_scale		= create_data[0];
+	ep.rotate_type_flag			=(create_data[1]>0.5)?true:false;
+	ep.mark_component_name		= create_data[2];
+	ep.movement_component_name	= create_data[3];
+	ep.movement_abstract_menu_component_name=create_data[4];
 	
 	ep.send_mousemove_time	=0;
 	ep.mouse_up_flag		=true;
