@@ -60,28 +60,31 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 	var p,pl,matrix;
 
 	switch(scene.event_component.mouse.function_id%100){
-	case 2:
+	default:
+	case 0:
+		return [world_point_0,world_point_1];
+	case 1:
 		pl		=scene.computer.create_plane_from_two_point(
 					center_point,scene.computer.add_operation(center_point,[1,0,0,1]));
 		matrix	=scene.computer.project_to_plane_location(pl[0],pl[1],pl[2],pl[3],1.0);
 		return	[	scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]),
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
-	case 3:
+	case 2:
 		pl		=scene.computer.create_plane_from_two_point(
 					center_point,scene.computer.add_operation(center_point,[0,1,0,1]));
 		matrix	=scene.computer.project_to_plane_location(pl[0],pl[1],pl[2],pl[3],1.0);
 		return	[	scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]),
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
-	case 4:
+	case 3:
 		pl		=scene.computer.create_plane_from_two_point(
 					center_point,scene.computer.add_operation(center_point,[0,0,1,1]));
 		matrix	=scene.computer.project_to_plane_location(pl[0],pl[1],pl[2],pl[3],1.0);
 		return	[	scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]),
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
-	case 5:
+	case 4:
 		p=scene.computer.sub_operation(
 				scene.computer.caculate_coordinate(selected_component_location,1,0,0),
 				scene.computer.caculate_coordinate(selected_component_location,0,0,0));
@@ -91,7 +94,7 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		return	[	scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]),
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
-	case 6:
+	case 5:
 		p=scene.computer.sub_operation(
 				scene.computer.caculate_coordinate(selected_component_location,0,1,0),
 				scene.computer.caculate_coordinate(selected_component_location,0,0,0));
@@ -100,7 +103,7 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		return	[	scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]),
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
-	case 7:
+	case 6:
 		p=scene.computer.sub_operation(
 				scene.computer.caculate_coordinate(selected_component_location,0,0,1),
 				scene.computer.caculate_coordinate(selected_component_location,0,0,0));
@@ -110,7 +113,7 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		return	[	scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]),
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
-	case 8:
+	case 7:
 		matrix			=scene.computer.matrix_negative(camera_component_location);
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
 		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
@@ -120,7 +123,7 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
 		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
 		return [world_point_0,world_point_1];
-	case 9:
+	case 8:
 		matrix			=scene.computer.matrix_negative(camera_component_location);
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
 		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
@@ -130,7 +133,7 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
 		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
 		return [world_point_0,world_point_1];
-	case 10:
+	case 9:
 		p=scene.computer.sub_operation(
 				scene.computer.caculate_coordinate(camera_component_location,0,0,1),
 				scene.computer.caculate_coordinate(camera_component_location,0,0,0));
@@ -139,23 +142,33 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		return	[	scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]),
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
-	case 11:
+	case 10:
 		world_point_0[1]=world_point_1[1];
+		world_point_0[2]=world_point_1[2];
+		return [world_point_0,world_point_1];
+	case 11:
+		world_point_0[0]=world_point_1[0];
 		world_point_0[2]=world_point_1[2];
 		return [world_point_0,world_point_1];
 	case 12:
 		world_point_0[0]=world_point_1[0];
-		world_point_0[2]=world_point_1[2];
+		world_point_0[1]=world_point_1[1];
 		return [world_point_0,world_point_1];
 	case 13:
-		world_point_0[0]=world_point_1[0];
+		matrix			=scene.computer.matrix_negative(selected_component_location);
+		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
+		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
 		world_point_0[1]=world_point_1[1];
+		world_point_0[2]=world_point_1[2];
+		matrix			=selected_component_location;
+		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
+		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
 		return [world_point_0,world_point_1];
 	case 14:
 		matrix			=scene.computer.matrix_negative(selected_component_location);
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
 		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
-		world_point_0[1]=world_point_1[1];
+		world_point_0[0]=world_point_1[0];
 		world_point_0[2]=world_point_1[2];
 		matrix			=selected_component_location;
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
@@ -166,22 +179,10 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
 		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
 		world_point_0[0]=world_point_1[0];
-		world_point_0[2]=world_point_1[2];
-		matrix			=selected_component_location;
-		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
-		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
-		return [world_point_0,world_point_1];
-	case 16:
-		matrix			=scene.computer.matrix_negative(selected_component_location);
-		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
-		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
-		world_point_0[0]=world_point_1[0];
 		world_point_0[1]=world_point_1[1];
 		matrix			=selected_component_location;
 		world_point_0	=scene.computer.caculate_coordinate(matrix,world_point_0[0],world_point_0[1],world_point_0[2]);
 		world_point_1	=scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2]);
-		return [world_point_0,world_point_1];
-	default:
 		return [world_point_0,world_point_1];
 	}
 }
@@ -315,15 +316,6 @@ function change_matrix(component_id,vp_0,vp_1,scene)
 	var center_point	=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
 	var eye_point		=scene.computer.caculate_coordinate(camera_component_location,0,0,camera_distance);
 	
-	switch(scene.event_component.mouse.function_id%100){
-	case 0:
-		vp_1=scene.computer.sub_operation(vp_1,vp_0);
-		vp_0=[0,0,0,1];
-		break;
-	default:
-		break;
-	}
-	
 	var world_point_0,world_point_1;
 	
 	switch(Math.floor(scene.event_component.mouse.function_id/100)){
@@ -346,7 +338,7 @@ function change_matrix(component_id,vp_0,vp_1,scene)
 			break;
 		}
 	case 1:	//camera_move
-	case 3:	//component_rotate
+	case 3:	//component_move
 		var point_depth=scene.computer.caculate_coordinate(project_matrix.matrix,
 										center_point[0],center_point[1],center_point[2])[2];
 		world_point_0	=scene.computer.caculate_coordinate(project_matrix.negative_matrix,

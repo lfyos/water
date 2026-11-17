@@ -127,7 +127,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				false	8	0.25	1.2		view_rotate.png
+				false	8	0.25	1.1		rotate.png
 				
 				token_program	设置视口旋转方式
 				function(component_name,component_id,scene)
@@ -138,13 +138,13 @@
 							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=scene.component_event_processor[component_id];
-							var function_id=Math.floor(ep.y*12.0);
-							if((function_id<0)||(function_id>11))
+							var function_id=Math.floor(ep.y*11.0);
+							if((function_id<0)||(function_id>10))
 								return;
 								
-							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
+							ep.hightlight=[0,function_id/11.0,1.0,function_id/11.0+1.0/11.0];
 							
-							if(function_id==11){
+							if(function_id==10){
 								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
 								scene.system_call_processor.set_menu_hide(component_id);
 								return;
@@ -169,7 +169,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				false	8	0.25	1.8		view_move.png
+				false	8	0.25	1.7		move.png
 				
 				token_program	设置视口平移方式
 				function(component_name,component_id,scene)
@@ -180,11 +180,11 @@
 							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=scene.component_event_processor[component_id];
-							var function_id=Math.floor(ep.y*18.0);
-							if((function_id<0)||(function_id>17))
+							var function_id=Math.floor(ep.y*17.0);
+							if((function_id<0)||(function_id>16))
 								return;
-							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
-							if(function_id==17){
+							ep.hightlight=[0,function_id/17.0,1.0,function_id/17.0+1.0/17.0];
+							if(function_id==16){
 								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
 								scene.system_call_processor.set_menu_hide(component_id);
 								return;
@@ -209,7 +209,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				false	8	0.25	1.2		component_rotate.png
+				false	8	0.25	1.1		rotate.png
 				
 				token_program	设置组件旋转方式
 				function(component_name,component_id,scene)
@@ -220,11 +220,11 @@
 							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=scene.component_event_processor[component_id];
-							var function_id=Math.floor(ep.y*12.0);
-							if((function_id<0)||(function_id>11))
+							var function_id=Math.floor(ep.y*11.0);
+							if((function_id<0)||(function_id>10))
 								return;
-							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
-							if(function_id==11){
+							ep.hightlight=[0,function_id/11.0,1.0,function_id/11.0+1.0/11.0];
+							if(function_id==10){
 								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
 								scene.system_call_processor.set_menu_hide(component_id);
 								return;
@@ -251,7 +251,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-			false	8	0.25	1.8		component_move.png
+			false	8	0.25	1.8		move.png
 				
 				token_program	设置组件平移方式
 				function(component_name,component_id,scene)
@@ -262,11 +262,11 @@
 							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=scene.component_event_processor[component_id];
-							var function_id=Math.floor(ep.y*18.0);
-							if((function_id<0)||(function_id>17))
+							var function_id=Math.floor(ep.y*17.0);
+							if((function_id<0)||(function_id>16))
 								return;
-							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
-							if(function_id==17){
+							ep.hightlight=[0,function_id/17.0,1.0,function_id/17.0+1.0/17.0];
+							if(function_id==16){
 								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
 								scene.system_call_processor.set_menu_hide(component_id);
 								return;
