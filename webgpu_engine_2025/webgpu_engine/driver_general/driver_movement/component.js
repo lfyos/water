@@ -13,6 +13,6 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			scene.component_call_processor[this.component_ids.component_id]=new Object();
 			ep=scene.component_call_processor[this.component_ids.component_id];
 		}
-		ep.suspend_status=buffer_data_item;	
+		ep.suspend_status=buffer_data_item;
 	}
 };

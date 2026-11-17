@@ -27,8 +27,7 @@ public class extended_component_driver  extends component_driver
 		};
 		sound_pre_string=null;
 	}
-	public extended_component_driver(part my_component_part,
-			file_reader f,String my_sound_pre_string,client_request_response request_response)
+	public extended_component_driver(part my_component_part,String my_sound_pre_string)
 	{
 		super(my_component_part);
 		sound_pre_string=my_sound_pre_string;

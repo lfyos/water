@@ -42,10 +42,10 @@
 									break;
 								}
 								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 								scene.event_component.touch.	component_name	="mouse_modify_location_component";
 								scene.event_component.mouse.	function_id		=mouse_usage[0];
-								scene.event_component.keyboard.function_id		=mouse_usage[0];
+								scene.event_component.keyboard.	function_id		=mouse_usage[0];
 								scene.event_component.touch.	function_id		=mouse_usage[0];
 								break;
 							case 1:
@@ -55,10 +55,10 @@
 									break;
 								}
 								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 								scene.event_component.touch.	component_name	="mouse_modify_location_component";
 								scene.event_component.mouse.	function_id		=mouse_usage[1]+100;
-								scene.event_component.keyboard.function_id		=mouse_usage[1]+100;
+								scene.event_component.keyboard.	function_id		=mouse_usage[1]+100;
 								scene.event_component.touch.	function_id		=mouse_usage[1]+100;
 								break;
 							case 2:
@@ -68,10 +68,10 @@
 									break;
 								}
 								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 								scene.event_component.touch.	component_name	="mouse_modify_location_component";
 								scene.event_component.mouse.	function_id		=mouse_usage[2]+200;
-								scene.event_component.keyboard.function_id		=mouse_usage[2]+200;
+								scene.event_component.keyboard.	function_id		=mouse_usage[2]+200;
 								scene.event_component.touch.	function_id		=mouse_usage[2]+200;
 								break;
 							case 3:
@@ -81,10 +81,10 @@
 									break;
 								}
 								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 								scene.event_component.touch.	component_name	="mouse_modify_location_component";
 								scene.event_component.mouse.	function_id		=mouse_usage[3]+300;
-								scene.event_component.keyboard.function_id		=mouse_usage[3]+300;
+								scene.event_component.keyboard.	function_id		=mouse_usage[3]+300;
 								scene.event_component.touch.	function_id		=mouse_usage[3]+300;
 								break;
 							case 4:
@@ -94,21 +94,21 @@
 									break;
 								}
 								scene.event_component.mouse.	component_name	="component_selection_component";
-								scene.event_component.keyboard.component_name	="component_selection_component";
+								scene.event_component.keyboard.	component_name	="component_selection_component";
 								scene.event_component.mouse.	function_id		=mouse_usage[4];
-								scene.event_component.keyboard.function_id		=mouse_usage[4];
+								scene.event_component.keyboard.	function_id		=mouse_usage[4];
 								break;
 							case 5:
 								scene.event_component.mouse.	component_name	="distance_tag_component";
-								scene.event_component.keyboard.component_name	="distance_tag_component";
+								scene.event_component.keyboard.	component_name	="distance_tag_component";
 								scene.event_component.mouse.	function_id		=0;
-								scene.event_component.keyboard.function_id		=0;
+								scene.event_component.keyboard.	function_id		=0;
 								break;
 							case 6:
 								scene.event_component.mouse.	component_name	="component_marker_component";
-								scene.event_component.keyboard.component_name	="component_marker_component";
+								scene.event_component.keyboard.	component_name	="component_marker_component";
 								scene.event_component.mouse.	function_id		=0;
-								scene.event_component.keyboard.function_id		=0;
+								scene.event_component.keyboard.	function_id		=0;
 								break;
 							default:
 								scene.system_call_processor.set_menu_show("交互界面主菜单");
@@ -151,10 +151,10 @@
 							}
 							mouse_usage[0]=function_id;
 							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 							scene.event_component.touch.	component_name	="mouse_modify_location_component";
 							scene.event_component.mouse.	function_id		=mouse_usage[0];
-							scene.event_component.keyboard.function_id		=mouse_usage[0];
+							scene.event_component.keyboard.	function_id		=mouse_usage[0];
 							scene.event_component.touch.	function_id		=mouse_usage[0];
 							return;							
 						}
@@ -192,10 +192,10 @@
 							mouse_usage[1]=function_id;
 							
 							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 							scene.event_component.touch.	component_name	="mouse_modify_location_component";
 							scene.event_component.mouse.	function_id		=mouse_usage[1]+100;
-							scene.event_component.keyboard.function_id		=mouse_usage[1]+100;
+							scene.event_component.keyboard.	function_id		=mouse_usage[1]+100;
 							scene.event_component.touch.	function_id		=mouse_usage[1]+100;
 							return;
 						}
@@ -232,10 +232,10 @@
 							mouse_usage[2]=function_id;
 
 							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 							scene.event_component.touch.	component_name	="mouse_modify_location_component";
 							scene.event_component.mouse.	function_id		=mouse_usage[2]+200;
-							scene.event_component.keyboard.function_id		=mouse_usage[2]+200;
+							scene.event_component.keyboard.	function_id		=mouse_usage[2]+200;
 							scene.event_component.touch.	function_id		=mouse_usage[2]+200;
 							
 							return;
@@ -274,10 +274,10 @@
 							mouse_usage[3]=function_id;
 		
 							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
-							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.	component_name	="mouse_modify_location_component";
 							scene.event_component.touch.	component_name	="mouse_modify_location_component";
 							scene.event_component.mouse.	function_id		=mouse_usage[3]+300;
-							scene.event_component.keyboard.function_id		=mouse_usage[3]+300;
+							scene.event_component.keyboard.	function_id		=mouse_usage[3]+300;
 							scene.event_component.touch.	function_id		=mouse_usage[3]+300;
 							
 							return;

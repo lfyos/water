@@ -13,7 +13,7 @@ import kernel_file_manager.file_writer;
 public class extended_component_driver  extends component_driver
 {
 	private double view_range[],low_precision_scale,mouse_rotate_scale;
-	private boolean rotate_type_flag,exchange_point_flag[];
+	private boolean rotate_type_flag;
 	private int modifier_container_id;
 	private String mark_component_name,movement_component_name;
 	private String movement_abstract_menu_component_name;
@@ -23,7 +23,6 @@ public class extended_component_driver  extends component_driver
 		super.destroy();
 		
 		view_range=null;
-		exchange_point_flag=null;
 	}
 	public extended_component_driver(part my_component_part,file_reader fr)
 	{
@@ -33,11 +32,6 @@ public class extended_component_driver  extends component_driver
 		low_precision_scale		=fr.get_double();
 		mouse_rotate_scale		=fr.get_double();
 		rotate_type_flag		=fr.get_boolean();
-		exchange_point_flag		=new boolean[] {
-										fr.get_boolean(),	//camera rotate
-										fr.get_boolean(),	//camera move
-										fr.get_boolean(),	//component rotate
-										fr.get_boolean()};	//component move
 		modifier_container_id	=fr.get_int();
 		
 		mark_component_name		=fr.get_string();
@@ -61,15 +55,9 @@ public class extended_component_driver  extends component_driver
 		fw.	print("[",	low_precision_scale).
 			print(",",	mouse_rotate_scale).
 			print(",",	rotate_type_flag	?"1":"0").
-			print(",",	exchange_point_flag[0]?"1":"0").
-			print(",",	exchange_point_flag[1]?"1":"0").
-			print(",",	exchange_point_flag[2]?"1":"0").
-			print(",",	exchange_point_flag[3]?"1":"0").
-
 			print(",",	jason_string.change_string(mark_component_name)).
 			print(",",	jason_string.change_string(movement_component_name)).
 			print(",",	jason_string.change_string(movement_abstract_menu_component_name)).
-
 			println("]");
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,

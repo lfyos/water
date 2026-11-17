@@ -68,7 +68,7 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,fr,sound_pre_string,request_response);
+		return new extended_component_driver(my_component_part,sound_pre_string);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 			scene_kernel sk,client_request_response request_response)

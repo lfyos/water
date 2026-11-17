@@ -8,7 +8,7 @@ public class test_1 extends travel_through_directory
 {
 	private int number;
 	private static final String mode_string[]= {
-		"driver_opengl_fixed_pipeline.extended_render_driver"
+		"mouse_usage"
 	};
 	
 	public void operate_file(String file_name)
@@ -36,8 +36,7 @@ public class test_1 extends travel_through_directory
 	{
 		String path_name[]={
 //				"G:\\water_all",
-//				"G:\\water_all\\data",
-//				"E:\\project_data"
+				"G:\\water_all\\data\\shaders\\driver_general\\interface",
 		};
 
 		debug_information.println("start search");

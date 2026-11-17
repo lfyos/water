@@ -68,8 +68,6 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 					scene.computer.caculate_coordinate(matrix,world_point_1[0],world_point_1[1],world_point_1[2])
 				];
 	case 3:
-	case 50:
-	case 51:
 		pl		=scene.computer.create_plane_from_two_point(
 					center_point,scene.computer.add_operation(center_point,[0,1,0,1]));
 		matrix	=scene.computer.project_to_plane_location(pl[0],pl[1],pl[2],pl[3],1.0);
@@ -324,7 +322,7 @@ function change_matrix(component_id,vp_0,vp_1,scene)
 		break;
 	default:
 		break;
-	}		
+	}
 	
 	var world_point_0,world_point_1;
 	
@@ -359,33 +357,19 @@ function change_matrix(component_id,vp_0,vp_1,scene)
 	}
 	
 	var world_point	=world_point_modifier(component_id,world_point_0,world_point_1,scene);
-	
+	var rotate_center_point=ep.rotate_type_flag?center_point:eye_point;
 	switch(Math.floor(scene.event_component.mouse.function_id/100)){
 	case 0:	//camera_rotate
-		camera_rotate(ep,
-			ep.exchange_point_flag.camera_rotate?world_point[1]:world_point[0],
-			ep.exchange_point_flag.camera_rotate?world_point[0]:world_point[1],
-			ep.rotate_type_flag?center_point:eye_point,
-			scene);
+		camera_rotate	(ep,world_point[0],world_point[1],rotate_center_point,scene);
 		break;
 	case 1:	//camera_move
-		camera_move(ep,
-			ep.exchange_point_flag.camera_move?world_point[1]:world_point[0],
-			ep.exchange_point_flag.camera_move?world_point[0]:world_point[1],
-			scene);
+		camera_move		(ep,world_point[0],world_point[1],scene);
 		break;
 	case 2:	//component_rotate
-		component_rotate(ep,
-			ep.exchange_point_flag.component_rotate?world_point[0]:world_point[1],
-			ep.exchange_point_flag.component_rotate?world_point[1]:world_point[0],
-			ep.rotate_type_flag?center_point:eye_point,
-			scene);
+		component_rotate(ep,world_point[1],world_point[0],rotate_center_point,scene);
 		break;
 	case 3:	//component_move
-		component_move(ep,
-			ep.exchange_point_flag.component_move?world_point[0]:world_point[1],
-			ep.exchange_point_flag.component_move?world_point[1]:world_point[0],
-			scene);
+		component_move	(ep,world_point[1],world_point[0],scene);
 		break;
 	default:
 		break;
@@ -461,7 +445,7 @@ function mousemove(event,component_id,scene)
 		return false;
 	var dx=scene.view.x-ep.last_point[0];
 	var dy=scene.view.y-ep.last_point[1];
-	if(scene.computer.min_value2()>=(dx*dx+dy*dy))
+	if((dx*dx+dy*dy)<(scene.computer.min_value2()))
 		return false;
 	var this_point=[scene.view.x,scene.view.y,0,1];
 		
@@ -626,15 +610,9 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	ep.low_precision_scale		= create_data[0];
 	ep.mouse_rotate_scale		= create_data[1];
 	ep.rotate_type_flag			=(create_data[2]>0.5)?true:false;
-	ep.exchange_point_flag		={
-									camera_rotate		:(create_data[3]>0.5)?true:false,
-									camera_move			:(create_data[4]>0.5)?true:false,
-									component_rotate	:(create_data[5]>0.5)?true:false,
-									component_move		:(create_data[6]>0.5)?true:false
-								};
-	ep.mark_component_name		= create_data[7];
-	ep.movement_component_name	= create_data[8];
-	ep.movement_abstract_menu_component_name=create_data[9];
+	ep.mark_component_name		= create_data[3];
+	ep.movement_component_name	= create_data[4];
+	ep.movement_abstract_menu_component_name=create_data[5];
 	
 	ep.send_mousemove_time	=0;
 	ep.mouse_up_flag		=true;
