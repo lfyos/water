@@ -251,7 +251,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-			false	8	0.25	1.8		move.png
+			false	8	0.25	1.7		move.png
 				
 				token_program	设置组件平移方式
 				function(component_name,component_id,scene)
