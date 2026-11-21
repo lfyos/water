@@ -26,11 +26,6 @@ struct target_information
 	center_plane							:	vec4<f32>,
 	
 	clip_plane								:	vec4<f32>,
-	
-	original_far_center_point				:	vec4<f32>,
-	original_center_point					:	vec4<f32>,
-	original_near_center_point				:	vec4<f32>,
-	original_eye_point						:	vec4<f32>,
 		
 	far_center_point						:	vec4<f32>,
 	center_point							:	vec4<f32>,

@@ -221,17 +221,7 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		var camera_id				=target_parameter.camera_id;
 		var camera_distance			=this.camera_object_parameter[camera_id].distance;
 		var camera_component_id		=this.camera_object_parameter[camera_id].component_id;
-		var adjust_par				=target_parameter.adjust_eye_position_parameter;
-		var camera_absolute_matrix	=my_computer.matrix_multiplication(
-				this.component_location_data.get_component_location(camera_component_id),
-				my_computer.create_move_rotate_matrix(
-					adjust_par.x_move_scale*camera_distance,
-					adjust_par.y_move_scale*camera_distance,
-					adjust_par.z_move_scale*camera_distance,
-					adjust_par.x_rotate_angle,
-					adjust_par.y_rotate_angle,
-					adjust_par.z_rotate_angle));
-		
+		var camera_absolute_matrix	=this.component_location_data.get_component_location(camera_component_id);
 		var lookat_matrix			=my_computer.matrix_multiplication(camera_absolute_matrix,
 					[
 							1,	0,	0,					0,
@@ -246,14 +236,15 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		};
 	};
 
-	this.compute_camera_data=function(target_parameter,target_parameter_from)
+	this.compute_camera_data=function(target_parameter)
 	{	
 		var my_computer=this.component_location_data.computer;
 		
-		var camera_id						=target_parameter.camera_id;
-		var screen_move_matrix				=this.compute_screen_move_matrix(target_parameter);
-		var screen_move_matrix_from			=(target_parameter_from==null)?screen_move_matrix:		
-											(this.compute_screen_move_matrix(target_parameter_from));	
+		var camera_id				=target_parameter.camera_id;
+		var screen_move_matrix		=this.compute_screen_move_matrix(target_parameter);
+		var screen_move_matrix_from =(target_parameter.target_parameter_from==null)
+				?screen_move_matrix:(this.compute_screen_move_matrix(target_parameter.target_parameter_from));
+												
 		var frustem_projection_matrix		=this.compute_frustem_projection_matrix(target_parameter);
 		var orthographic_projection_matrix	=this.compute_orthographic_projection_matrix(target_parameter);
 		var lookat_matrix					=this.compute_lookat_matrix(target_parameter,my_computer);
@@ -315,11 +306,11 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		project_matrix.original_center_point	 =my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,0);
 		project_matrix.original_near_center_point=my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance-project_matrix.near_value);
 		project_matrix.original_eye_point		 =my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance);
-
-		project_matrix.far_center_point			=my_computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,-(project_matrix.far_value));
-		project_matrix.center_point				=my_computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,-(project_matrix.distance));
-		project_matrix.near_center_point		=my_computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,-(project_matrix.near_value));
-		project_matrix.eye_point				=my_computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,0);
+	
+		project_matrix.far_center_point 		=my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance-project_matrix.far_value);
+		project_matrix.center_point	 			=my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,0);
+		project_matrix.near_center_point		=my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance-project_matrix.near_value);
+		project_matrix.eye_point				=my_computer.caculate_coordinate(project_matrix.camera_absolute_matrix,0,0,project_matrix.distance);
 		
 	 	var center_point_depth					=my_computer.caculate_coordinate(project_matrix.matrix,
 	 			project_matrix.center_point[0],project_matrix.center_point[1],project_matrix.center_point[2])[2];

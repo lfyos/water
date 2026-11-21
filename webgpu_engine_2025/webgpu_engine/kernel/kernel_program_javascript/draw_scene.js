@@ -70,13 +70,13 @@ function back_process_scene_routine(scene)
 
 function scene_target_begin_routine(target_id,scene_target_array,scene)
 {
-	var target_render_data=scene.render_target_array[target_id];
+	var target_parameter=scene.render_target_array[target_id];
 		
-	if(!(target_render_data.do_render_flag))
+	if(!(target_parameter.do_render_flag))
 		return false;
-	var render_id		=target_render_data.target_ids.render_id;
-	var part_id			=target_render_data.target_ids.part_id;
-	var data_buffer_id	=target_render_data.target_ids.data_buffer_id;
+	var render_id		=target_parameter.target_ids.render_id;
+	var part_id			=target_parameter.target_ids.part_id;
+	var data_buffer_id	=target_parameter.target_ids.data_buffer_id;
 
 	var target_render_driver	=scene.render_driver[render_id];
 	var target_part_driver		=scene.part_driver[render_id][part_id];
@@ -89,25 +89,25 @@ function scene_target_begin_routine(target_id,scene_target_array,scene)
 	if(typeof(target_component_driver.scene_target_begin)!="function")
 		return false;
 	if(!(target_component_driver.scene_target_begin(scene_target_array,
-		target_render_data,target_part_object,target_part_driver,target_render_driver,scene)))
+		target_parameter,target_part_object,target_part_driver,target_render_driver,scene)))
 			return false;
 		
-	var target_render_data_from=null;
-	if(target_render_data.target_id_from>=0)
-		target_render_data_from=scene.render_target_array[target_render_data.target_id_from];
-	target_render_data.project_matrix=scene.camera.compute_camera_data(
-								target_render_data,target_render_data_from);
-	scene.system_buffer.set_target_buffer(target_render_data,target_render_data_from);
+	target_parameter.target_parameter_from=null;
+	if(target_parameter.target_id_from>=0)
+		target_parameter.target_parameter_from=scene.render_target_array[target_parameter.target_id_from];
+	
+	target_parameter.project_matrix=scene.camera.compute_camera_data(target_parameter);
+	scene.system_buffer.set_target_buffer(target_parameter);
 
 	return true;
 }
 function scene_target_end_routine(target_id,scene_target_array,scene)
 {
-	var target_render_data=scene.render_target_array[target_id];
+	var target_parameter=scene.render_target_array[target_id];
 		
-	var render_id		=target_render_data.target_ids.render_id;
-	var part_id			=target_render_data.target_ids.part_id;
-	var data_buffer_id	=target_render_data.target_ids.data_buffer_id;
+	var render_id		=target_parameter.target_ids.render_id;
+	var part_id			=target_parameter.target_ids.part_id;
+	var data_buffer_id	=target_parameter.target_ids.data_buffer_id;
 			
 	var target_render_driver	=scene.render_driver[render_id];
 	var target_part_driver		=scene.part_driver[render_id][part_id];
@@ -120,16 +120,16 @@ function scene_target_end_routine(target_id,scene_target_array,scene)
 		return;
 	if(typeof(target_component_driver.scene_target_end)!="function")
 		return;
-	target_component_driver.scene_target_end(scene_target_array,target_render_data,
+	target_component_driver.scene_target_end(scene_target_array,target_parameter,
 		target_part_object,target_part_driver,target_render_driver,scene);
 	return;
 }
 async function scene_target_complete_routine(target_id,scene)
 {
-	var target_render_data=scene.render_target_array[target_id];
-	var render_id		=target_render_data.target_ids.render_id;
-	var part_id			=target_render_data.target_ids.part_id;
-	var data_buffer_id	=target_render_data.target_ids.data_buffer_id;
+	var target_parameter=scene.render_target_array[target_id];
+	var render_id		=target_parameter.target_ids.render_id;
+	var part_id			=target_parameter.target_ids.part_id;
+	var data_buffer_id	=target_parameter.target_ids.data_buffer_id;
 					
 	var target_render_driver=scene.render_driver[render_id];
 	var target_part_driver	=scene.part_driver[render_id][part_id];
@@ -142,7 +142,7 @@ async function scene_target_complete_routine(target_id,scene)
 		return;
 	if(typeof(target_component_driver.scene_target_complete)!="function")
 		return;
-	await target_component_driver.scene_target_complete(target_render_data,
+	await target_component_driver.scene_target_complete(target_parameter,
 			target_part_object,target_part_driver,target_render_driver,scene);
 }
 function draw_scene_target_routine(target_id,scene_target_array,pass_id,scene)
@@ -156,19 +156,19 @@ function draw_scene_target_routine(target_id,scene_target_array,pass_id,scene)
 	if(method_array.length<=0)
 		return;
 
-	var target_render_data	=scene.render_target_array[target_id];
+	var target_parameter	=scene.render_target_array[target_id];
 	
-	var view_x0				=target_render_data.target_view_parameter.view_x0;
-	var view_y0				=target_render_data.target_view_parameter.view_y0;
-	var view_width			=target_render_data.target_view_parameter.view_width;	
-	var view_height			=target_render_data.target_view_parameter.view_height;
-	var whole_view_width	=target_render_data.target_view_parameter.whole_view_width;
-	var whole_view_height	=target_render_data.target_view_parameter.whole_view_height;
+	var view_x0				=target_parameter.target_view_parameter.view_x0;
+	var view_y0				=target_parameter.target_view_parameter.view_y0;
+	var view_width			=target_parameter.target_view_parameter.view_width;	
+	var view_height			=target_parameter.target_view_parameter.view_height;
+	var whole_view_width	=target_parameter.target_view_parameter.whole_view_width;
+	var whole_view_height	=target_parameter.target_view_parameter.whole_view_height;
 
 	scene.webgpu.render_pass_encoder.setViewport(
 		view_x0,whole_view_height-(view_y0+view_height),view_width,view_height,0,1);
 		
-	if(target_render_data.main_display_target_flag){
+	if(target_parameter.main_display_target_flag){
 		var my_main_target_x	=0.5*(scene.view.x+1.0)*whole_view_width -view_x0;
 		var my_main_target_y	=0.5*(scene.view.y+1.0)*whole_view_height-view_y0;
 		scene.view.main_target_x=2.0*my_main_target_x/view_width -1.0;
@@ -196,9 +196,9 @@ function draw_scene_target_routine(target_id,scene_target_array,pass_id,scene)
 				if((typeof(part_driver)!="object")||(part_driver==null))
 					continue;
 				var component_render_parameter=part_object.component_render_parameter;
-				if(target_render_data.target_id>=component_render_parameter.length)
+				if(target_parameter.target_id>=component_render_parameter.length)
 					continue;
-			   	var render_parameter_array=component_render_parameter[target_render_data.target_id];
+			   	var render_parameter_array=component_render_parameter[target_parameter.target_id];
 				for(var j=0,nj=render_parameter_array.length;j<nj;j++){
 					var data_buffer_id	=render_parameter_array[j][0];
 					var render_parameter=render_parameter_array[j][1];
@@ -209,7 +209,7 @@ function draw_scene_target_routine(target_id,scene_target_array,pass_id,scene)
 						method_array[i].method_id,component_ids.component_id,component_ids.driver_id);
 
 					component_driver.draw_component(method_array[i],render_parameter,
-						target_render_data,part_object,part_driver,render_driver,scene);
+						target_parameter,part_object,part_driver,render_driver,scene);
 				}
 			}
 		}

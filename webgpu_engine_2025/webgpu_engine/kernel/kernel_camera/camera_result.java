@@ -73,13 +73,7 @@ public class camera_result
 	
 	private void basic_init()
 	{
-		camera_absolute_matrix		=cam.eye_component.absolute_location.multiply(
-				location.move_rotate(	target.adjust_eye_position_parameter[0]*cam.parameter.distance,
-										target.adjust_eye_position_parameter[1]*cam.parameter.distance,
-										target.adjust_eye_position_parameter[2]*cam.parameter.distance,
-										target.adjust_eye_position_parameter[3],
-										target.adjust_eye_position_parameter[4],
-										target.adjust_eye_position_parameter[5]));
+		camera_absolute_matrix		=cam.eye_component.absolute_location;
 		var negative_lookat_matrix	=camera_absolute_matrix.multiply(
 					location.move_rotate(0,0,cam.parameter.distance,0,0,0));
 		var lookat_matrix			=negative_lookat_matrix.negative();

@@ -184,17 +184,6 @@ async function request_render_data(scene)
 					p.target_view_parameter.whole_view_height	=my_data[j++];
 
 					break;
-				case 11:
-					p.adjust_eye_position_parameter=new Object();
-					
-					p.adjust_eye_position_parameter.x_move_scale	=my_data[j++];
-					p.adjust_eye_position_parameter.y_move_scale	=my_data[j++];
-					p.adjust_eye_position_parameter.z_move_scale	=my_data[j++];
-					p.adjust_eye_position_parameter.x_rotate_angle	=my_data[j++];
-					p.adjust_eye_position_parameter.y_rotate_angle	=my_data[j++];
-					p.adjust_eye_position_parameter.z_rotate_angle	=my_data[j++];
-					
-					break;
 				}
 		}
 		return;

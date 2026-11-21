@@ -39,7 +39,7 @@ public class extended_component_instance_driver extends component_instance_drive
 						cr.target.target_component_array,cr.target.camera_id,cr.target.parameter_channel_id,
 						new render_target_viewport(0,0,1,1,1,1),
 						cr.target.target_viewport.caculate_view_box(ci.parameter.x,ci.parameter.y,1),
-						cr.target.clip_plane,cr.target.adjust_eye_position_parameter));
+						cr.target.clip_plane));
 			return false;
 		}
 		return true;

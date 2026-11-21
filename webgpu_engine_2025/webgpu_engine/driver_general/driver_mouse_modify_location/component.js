@@ -1,8 +1,9 @@
 function send_to_webserver(component_id,event_operation,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	var operate_component_id=(scene.event_component.mouse.function_id>=200)
-			?(ep.selected_component_id):(ep.target_data.project_matrix.camera_component_id);
+	var operate_component_id=(scene.event_component.mouse.function_id>=200)?(ep.selected_component_id)
+			:(scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id);		
+			
 	var call_parameter=[
 			["event_operation",		event_operation],
 			["operate_component_id",operate_component_id]
@@ -27,8 +28,8 @@ function send_location_to_webserver(command_str,component_id,scene,do_delay_flag
 			return;
 	ep.send_mousemove_time=current_time;
 
-	var operate_component_id=(scene.event_component.mouse.function_id>=200)
-			?(ep.selected_component_id):(ep.target_data.project_matrix.camera_component_id);
+	var operate_component_id=(scene.event_component.mouse.function_id>=200)?(ep.selected_component_id)
+			:(scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id);
 				
 	var str="";
 					
@@ -52,7 +53,8 @@ function send_location_to_webserver(command_str,component_id,scene,do_delay_flag
 function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 {
 	var ep							=scene.component_event_processor[component_id];
-	var camera_component_location	=ep.target_data.project_matrix.camera_absolute_matrix;
+	var camera_component_id			=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
+	var camera_component_location	=scene.component_location_data.get_component_location(camera_component_id);
 	
 	var center_point				=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
 	var	selected_component_location	=(ep.selected_component_id<0)?camera_component_location:
@@ -188,8 +190,8 @@ function world_point_modifier(component_id,world_point_0,world_point_1,scene)
 }
 function camera_move(ep,world_point_0,world_point_1,scene)
 {
-	var camera_component_id		=ep.target_data.project_matrix.camera_component_id;
-	var global_location			=ep.target_data.project_matrix.camera_absolute_matrix;
+	var camera_component_id		=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
+	var global_location			=scene.component_location_data.get_component_location(camera_component_id);
 
 	var local_location			=scene.computer.matrix_negative(global_location);
 	var local_point_0			=scene.computer.caculate_coordinate(local_location,
@@ -270,9 +272,10 @@ function camera_rotate(ep,world_point_0,world_point_1,center_point,scene)
 		
 	if((left_adjust=left_location_for_rotation(world_point_0,world_point_1,center_point,scene))==null)
 		return false;
+
+	var camera_component_id		=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
+	var old_location			=scene.component_location_data.get_component_location(camera_component_id);
 	
-	var camera_component_id		=ep.target_data.project_matrix.camera_component_id;
-	var old_location			=ep.target_data.project_matrix.camera_absolute_matrix;
 	var negitave_old_location	=scene.computer.matrix_negative(old_location);
 	
 	var new_location			=scene.computer.matrix_multiplication(left_adjust,old_location);
@@ -308,13 +311,15 @@ function component_rotate(ep,world_point_0,world_point_1,center_point,scene)
 function change_matrix(component_id,vp_0,vp_1,scene)
 {
 	var ep=scene.component_event_processor[component_id];
-	var project_matrix	=ep.target_data.project_matrix;
-	var camera_distance	=project_matrix.distance;
-	var half_fovy_tanl	=project_matrix.half_fovy_tanl;	
+	var camera_parameter	=scene.camera.camera_object_parameter[ep.target_data.camera_id];
+	var camera_component_id	=camera_parameter.component_id;
+	var camera_distance		=camera_parameter.distance;
+	var half_fovy_tanl		=camera_parameter.half_fovy_tanl;
+	var project_matrix		=scene.camera.compute_camera_data(ep.target_data);
 	
-	var camera_component_location=project_matrix.camera_absolute_matrix;
-	var center_point	=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
-	var eye_point		=scene.computer.caculate_coordinate(camera_component_location,0,0,camera_distance);
+	var camera_component_location=scene.component_location_data.get_component_location(camera_component_id);
+	var center_point		=scene.computer.caculate_coordinate(camera_component_location,0,0,0);
+	var eye_point			=scene.computer.caculate_coordinate(camera_component_location,0,0,camera_distance);
 	
 	var world_point_0,world_point_1;
 	
@@ -506,7 +511,7 @@ function mousewheel(event,component_id,scene)
 	if(ep.target_data==null)
 		return false;
 	
-	var camera_component_id	=ep.target_data.project_matrix.camera_component_id;
+	var camera_component_id	=scene.camera.camera_object_parameter[ep.target_data.camera_id].component_id;
 	ep.move_loca			=scene.component_location_data.component[camera_component_id].move_matrix;
 	
 	if(typeof(event.wheelDelta)=="number")

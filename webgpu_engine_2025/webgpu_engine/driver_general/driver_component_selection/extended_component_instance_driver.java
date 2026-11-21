@@ -95,7 +95,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				my_target_parameter,null,comp.component_id,driver_id,0,
 				new component[]{sk.component_cont.root_component},
 				my_target.camera_id,my_target.parameter_channel_id,null,
-				view_volume_box,ci.clip_plane,null);
+				view_volume_box,ci.clip_plane);
 		camera_result camera_result=new camera_result(
 				ci.display_camera_result.cam,cam_target,sk.component_cont);
 		var collector=new list_component_on_collector(sk,ci,camera_result).collector;
